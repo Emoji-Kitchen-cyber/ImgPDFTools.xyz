@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://pixelpress-smoky.vercel.app/unit-converter.html">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
     :root {
       --bg: #f5f5f7; --surface: rgba(255,255,255,0.75); --card: #ffffff;
       --border: rgba(0,0,0,0.06); --text: #1d1d1f; --muted: #6e6e73;
@@ -22,7 +22,6 @@
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
     
-    /* Navigation */
     nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:var(--surface); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
     .nav-left { display:flex; align-items:center; gap:1rem; }
     .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.1rem; cursor:pointer; text-decoration:none; transition:0.2s; }
@@ -30,64 +29,46 @@
     .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; text-transform:uppercase; text-decoration:none; color:inherit; }
     .nav-logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 
-    /* Main Layout */
-    .main { flex:1; max-width:900px; margin:0 auto; width:100%; padding:2rem 20px; display:grid; grid-template-columns:1fr 300px; gap:2rem; }
-    @media(max-width:768px) { .main { grid-template-columns:1fr; } }
+    .main { flex:1; max-width:800px; margin:0 auto; width:100%; padding:1.5rem 16px 4rem; display:flex; flex-direction:column; gap:1.5rem; }
 
-    /* Left Panel */
-    .left-panel { display:flex; flex-direction:column; gap:1.5rem; }
+    /* Category Chips - Horizontal Scroll on Mobile */
+    .cat-scroll { display:flex; gap:8px; overflow-x:auto; padding-bottom:8px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .cat-scroll::-webkit-scrollbar { display:none; }
+    .cat-chip { padding:10px 18px; border-radius:999px; background:var(--card); border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:0.85rem; white-space:nowrap; transition:0.2s; display:flex; align-items:center; gap:6px; flex-shrink:0; }
+    .cat-chip:hover { border-color:var(--accent); }
+    .cat-chip.active { background:var(--accent); color:white; border-color:var(--accent); }
 
-    /* Category Tabs */
-    .tabs { display:flex; flex-wrap:wrap; gap:6px; }
-    .tab { padding:8px 16px; border-radius:999px; background:var(--card); border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:0.85rem; white-space:nowrap; transition:0.2s; color:var(--muted); }
-    .tab:hover { border-color:var(--accent); color:var(--text); }
-    .tab.active { background:var(--accent); color:white; border-color:var(--accent); }
+    /* Main Converter Card */
+    .converter-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:clamp(1rem,3vw,1.5rem); }
+    .converter-row { display:flex; align-items:center; gap:12px; }
+    @media(max-width:550px) { .converter-row { flex-direction:column; } }
+    .input-block { flex:1; }
+    .input-block label { display:block; font-size:0.75rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px; }
+    .input-block input { width:100%; padding:14px 16px; border:2px solid var(--border); border-radius:12px; background:var(--bg); color:var(--text); font-size:1.4rem; font-weight:600; outline:none; transition:0.2s; }
+    .input-block input:focus { border-color:var(--accent); box-shadow:0 0 0 4px var(--glow); }
+    .input-block select { width:100%; padding:10px 12px; margin-top:8px; border:1px solid var(--border); border-radius:8px; background:var(--bg); color:var(--text); font-size:0.9rem; cursor:pointer; }
+    .swap-circle { width:48px; height:48px; border-radius:50%; background:var(--accent); color:white; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:1.2rem; transition:0.3s; flex-shrink:0; }
+    .swap-circle:hover { transform:rotate(180deg) scale(1.1); }
+    @media(max-width:550px) { .swap-circle { transform:rotate(90deg); } .swap-circle:hover { transform:rotate(270deg) scale(1.1); } }
+    .rate-badge { display:inline-block; margin-top:12px; padding:6px 14px; background:var(--bg); border:1px solid var(--border); border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:var(--muted); }
 
-    /* Converter Box */
-    .converter-box { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; }
-    .converter { display:flex; align-items:center; gap:1rem; }
-    @media(max-width:500px) { .converter { flex-direction:column; } }
-    .input-group { flex:1; }
-    .input-group label { display:block; font-size:0.8rem; font-weight:600; color:var(--muted); margin-bottom:6px; text-transform:uppercase; }
-    .input-group input { width:100%; padding:12px; border:1px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text); font-size:1.5rem; font-weight:600; outline:none; }
-    .input-group input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
-    .input-group select { width:100%; padding:10px; margin-top:8px; border:1px solid var(--border); border-radius:8px; background:var(--bg); color:var(--text); font-size:0.9rem; cursor:pointer; }
-    .swap-btn { width:44px; height:44px; border-radius:50%; background:var(--card); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; cursor:pointer; color:var(--muted); transition:0.2s; flex-shrink:0; align-self:flex-end; margin-bottom:4px; }
-    .swap-btn:hover { color:var(--accent); border-color:var(--accent); transform:rotate(180deg); }
-
-    /* Rate Display */
-    .rate { text-align:center; font-size:0.9rem; color:var(--muted); padding:0.8rem; background:var(--bg); border-radius:8px; margin-top:1rem; font-family:'JetBrains Mono',monospace; }
-
-    /* Action Buttons */
-    .actions { display:flex; gap:8px; flex-wrap:wrap; }
-    .btn { padding:8px 16px; border-radius:8px; border:1px solid var(--border); background:var(--card); color:var(--text); font-weight:600; cursor:pointer; display:inline-flex; align-items:center; gap:6px; font-size:0.85rem; transition:0.2s; }
+    /* Action Bar */
+    .action-bar { display:flex; gap:8px; flex-wrap:wrap; }
+    .btn { padding:10px 18px; border-radius:10px; border:1px solid var(--border); background:var(--card); color:var(--text); font-weight:600; cursor:pointer; font-size:0.85rem; transition:0.2s; display:inline-flex; align-items:center; gap:6px; }
     .btn:hover { border-color:var(--accent); }
-    .btn-primary { background:var(--accent); color:white; border:none; }
-    .btn-primary:hover { background:var(--accent2); }
+    .btn-accent { background:var(--accent); color:white; border:none; }
+    .btn-accent:hover { background:var(--accent2); }
 
-    /* Right Panel - Sticky Table of Contents */
-    .right-panel { display:flex; flex-direction:column; gap:1rem; }
-    .toc-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.2rem; position:sticky; top:80px; }
-    .toc-card h3 { font-family:'Syne',sans-serif; font-size:1rem; margin-bottom:1rem; display:flex; align-items:center; gap:8px; }
-    .toc-list { display:flex; flex-direction:column; gap:4px; }
-    .toc-item { padding:8px 12px; border-radius:8px; cursor:pointer; font-size:0.85rem; font-weight:500; color:var(--muted); transition:0.2s; border:1px solid transparent; }
-    .toc-item:hover { background:var(--bg); color:var(--text); border-color:var(--border); }
-    .toc-item.active { background:var(--glow); color:var(--accent); border-color:var(--accent); font-weight:600; }
-
-    /* History & Favorites */
-    .history-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.2rem; }
-    .history-card h3 { font-family:'Syne',sans-serif; font-size:0.95rem; margin-bottom:0.8rem; display:flex; align-items:center; gap:8px; }
-    .hist-item, .fav-item { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:var(--bg); border-radius:8px; margin-bottom:6px; font-size:0.85rem; }
-    .hist-item span, .fav-item span { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .hist-item i, .fav-item i { cursor:pointer; color:var(--accent); flex-shrink:0; margin-left:8px; }
-
-    /* On mobile, TOC becomes horizontal scroll */
-    @media(max-width:768px) {
-      .right-panel { order:-1; }
-      .toc-card { position:static; }
-      .toc-list { flex-direction:row; flex-wrap:wrap; gap:4px; }
-      .toc-item { font-size:0.75rem; padding:6px 10px; white-space:nowrap; }
-    }
+    /* Bottom Grid */
+    .bottom-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    @media(max-width:600px) { .bottom-grid { grid-template-columns:1fr; } }
+    .info-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1rem; }
+    .info-card h3 { font-family:'Syne',sans-serif; font-size:0.95rem; margin-bottom:0.8rem; display:flex; align-items:center; gap:8px; }
+    .list-item { display:flex; justify-content:space-between; align-items:center; padding:8px 10px; background:var(--bg); border-radius:8px; margin-bottom:4px; font-size:0.85rem; }
+    .list-item span { flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .list-item i { cursor:pointer; color:var(--muted); flex-shrink:0; margin-left:8px; transition:0.2s; }
+    .list-item i:hover { color:var(--accent); }
+    .empty-text { color:var(--muted); font-size:0.85rem; padding:1rem 0; }
 
     footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); margin-top:auto; }
   </style>
@@ -102,61 +83,52 @@
   </nav>
 
   <div class="main">
-    <!-- Left Panel -->
-    <div class="left-panel">
-      <!-- Tabs -->
-      <div class="tabs" id="tabs">
-        <button class="tab active" data-cat="length">📏 Length</button>
-        <button class="tab" data-cat="area">📐 Area</button>
-        <button class="tab" data-cat="volume">🧪 Volume</button>
-        <button class="tab" data-cat="weight">⚖️ Weight</button>
-        <button class="tab" data-cat="temp">🌡️ Temp</button>
-        <button class="tab" data-cat="speed">💨 Speed</button>
-        <button class="tab" data-cat="time">⏱️ Time</button>
-        <button class="tab" data-cat="digital">💾 Digital</button>
-      </div>
-
-      <!-- Converter -->
-      <div class="converter-box">
-        <div class="converter">
-          <div class="input-group">
-            <label>From</label>
-            <input type="number" id="inputVal" value="1" step="any" />
-            <select id="inputUnit"></select>
-          </div>
-          <div class="swap-btn" id="swapBtn" title="Swap units"><i class="fa-solid fa-right-left"></i></div>
-          <div class="input-group">
-            <label>To</label>
-            <input type="text" id="outputVal" readonly />
-            <select id="outputUnit"></select>
-          </div>
-        </div>
-        <div class="rate" id="rateDisplay"></div>
-      </div>
-
-      <!-- Actions -->
-      <div class="actions">
-        <button class="btn" id="copyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-        <button class="btn" id="favBtn"><i class="fa-regular fa-heart"></i> Save</button>
-        <button class="btn" id="clearHistoryBtn"><i class="fa-solid fa-trash"></i> Clear</button>
-      </div>
-
-      <!-- History -->
-      <div class="history-card">
-        <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Conversions</h3>
-        <div id="history"><p style="color:var(--muted);font-size:0.85rem;">No history yet</p></div>
-      </div>
+    <!-- Category Chips -->
+    <div class="cat-scroll" id="catChips">
+      <button class="cat-chip active" data-cat="length"><i class="fa-solid fa-ruler"></i> Length</button>
+      <button class="cat-chip" data-cat="area"><i class="fa-solid fa-draw-polygon"></i> Area</button>
+      <button class="cat-chip" data-cat="volume"><i class="fa-solid fa-flask"></i> Volume</button>
+      <button class="cat-chip" data-cat="weight"><i class="fa-solid fa-weight-scale"></i> Weight</button>
+      <button class="cat-chip" data-cat="temp"><i class="fa-solid fa-temperature-quarter"></i> Temp</button>
+      <button class="cat-chip" data-cat="speed"><i class="fa-solid fa-gauge-high"></i> Speed</button>
+      <button class="cat-chip" data-cat="time"><i class="fa-solid fa-clock"></i> Time</button>
+      <button class="cat-chip" data-cat="digital"><i class="fa-solid fa-memory"></i> Digital</button>
     </div>
 
-    <!-- Right Panel - Sticky TOC -->
-    <div class="right-panel">
-      <div class="toc-card">
-        <h3><i class="fa-solid fa-list"></i> Categories</h3>
-        <div class="toc-list" id="tocList"></div>
+    <!-- Converter -->
+    <div class="converter-card">
+      <div class="converter-row">
+        <div class="input-block">
+          <label>From</label>
+          <input type="number" id="inputVal" value="1" step="any" />
+          <select id="inputUnit"></select>
+        </div>
+        <button class="swap-circle" id="swapBtn" title="Swap"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+        <div class="input-block">
+          <label>To</label>
+          <input type="text" id="outputVal" readonly />
+          <select id="outputUnit"></select>
+        </div>
       </div>
-      <div class="history-card">
-        <h3><i class="fa-solid fa-heart"></i> Favorites</h3>
-        <div id="favorites"><p style="color:var(--muted);font-size:0.85rem;">No favorites yet</p></div>
+      <div class="rate-badge" id="rateDisplay"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="action-bar">
+      <button class="btn" id="copyBtn"><i class="fa-solid fa-copy"></i> Copy Result</button>
+      <button class="btn btn-accent" id="favBtn"><i class="fa-regular fa-heart"></i> Save Favorite</button>
+      <button class="btn" id="clearBtn"><i class="fa-solid fa-broom"></i> Clear History</button>
+    </div>
+
+    <!-- Bottom Cards -->
+    <div class="bottom-grid">
+      <div class="info-card">
+        <h3><i class="fa-solid fa-clock-rotate-left"></i> History</h3>
+        <div id="history"><p class="empty-text">No conversions yet</p></div>
+      </div>
+      <div class="info-card">
+        <h3><i class="fa-solid fa-star"></i> Favorites</h3>
+        <div id="favorites"><p class="empty-text">No favorites yet</p></div>
       </div>
     </div>
   </div>
@@ -165,7 +137,6 @@
 
   <script>
     (function() {
-      // Theme sync
       function syncTheme() {
         const saved = localStorage.getItem('pixelpress-theme');
         const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
@@ -179,7 +150,6 @@
       });
       syncTheme();
 
-      // Units database
       const unitsDB = {
         length: { meters:1, kilometers:0.001, centimeters:100, millimeters:1000, miles:0.000621371, yards:1.09361, feet:3.28084, inches:39.3701 },
         area: { sqmeters:1, sqkilometers:1e-6, sqcentimeters:10000, sqmiles:3.861e-7, acres:0.000247105, hectares:0.0001 },
@@ -198,159 +168,115 @@
       const outputUnit = document.getElementById('outputUnit');
       const rateDisplay = document.getElementById('rateDisplay');
 
-      // Build TOC
-      function buildTOC() {
-        const tocList = document.getElementById('tocList');
-        tocList.innerHTML = '';
-        Object.keys(unitsDB).forEach(cat => {
-          const div = document.createElement('div');
-          div.className = `toc-item ${cat === currentCat ? 'active' : ''}`;
-          div.dataset.cat = cat;
-          div.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
-          div.addEventListener('click', () => switchCategory(cat));
-          tocList.appendChild(div);
-        });
-      }
-
-      function switchCategory(cat) {
+      function switchCat(cat) {
         currentCat = cat;
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
         document.querySelector(`[data-cat="${cat}"]`)?.classList.add('active');
-        document.querySelectorAll('.toc-item').forEach(t => t.classList.remove('active'));
-        document.querySelector(`.toc-item[data-cat="${cat}"]`)?.classList.add('active');
         populateUnits();
       }
 
       function populateUnits() {
         inputUnit.innerHTML = ''; outputUnit.innerHTML = '';
-        const unitNames = Object.keys(unitsDB[currentCat]);
-        unitNames.forEach((u,i) => {
-          const option = `<option value="${u}">${u.charAt(0).toUpperCase()+u.slice(1)}</option>`;
-          inputUnit.innerHTML += option;
-          outputUnit.innerHTML += option;
+        Object.keys(unitsDB[currentCat]).forEach(u => {
+          const opt = `<option value="${u}">${u.charAt(0).toUpperCase()+u.slice(1)}</option>`;
+          inputUnit.innerHTML += opt;
+          outputUnit.innerHTML += opt;
         });
         if (outputUnit.options.length > 1) outputUnit.selectedIndex = 1;
         convert();
       }
 
-      function convertTemp(val, from, to) {
-        if (from === to) return val;
-        let c = val;
-        if (from === 'fahrenheit') c = (val - 32) * 5/9;
-        else if (from === 'kelvin') c = val - 273.15;
-        if (to === 'celsius') return c;
-        if (to === 'fahrenheit') return c * 9/5 + 32;
-        if (to === 'kelvin') return c + 273.15;
+      function convertTemp(v, f, t) {
+        if (f===t) return v;
+        let c = v;
+        if (f==='fahrenheit') c=(v-32)*5/9;
+        else if (f==='kelvin') c=v-273.15;
+        if (t==='celsius') return c;
+        if (t==='fahrenheit') return c*9/5+32;
+        return c+273.15;
       }
 
       function convert() {
-        const val = parseFloat(inputVal.value);
-        if (isNaN(val)) { outputVal.value = ''; rateDisplay.textContent = ''; return; }
+        const v = parseFloat(inputVal.value);
+        if (isNaN(v)) { outputVal.value=''; rateDisplay.textContent=''; return; }
         const from = inputUnit.value, to = outputUnit.value;
-        let result, rate;
-        if (currentCat === 'temp') {
-          result = convertTemp(val, from, to);
+        let result;
+        if (currentCat==='temp') {
+          result = convertTemp(v, from, to);
           rateDisplay.textContent = '';
         } else {
-          const base = val / unitsDB[currentCat][from];
-          result = base * unitsDB[currentCat][to];
-          rate = unitsDB[currentCat][to] / unitsDB[currentCat][from];
+          result = (v / unitsDB[currentCat][from]) * unitsDB[currentCat][to];
+          const rate = unitsDB[currentCat][to] / unitsDB[currentCat][from];
           rateDisplay.textContent = `1 ${from} = ${rate.toPrecision(6)} ${to}`;
         }
         outputVal.value = Number.isInteger(result) ? result : parseFloat(result.toFixed(8));
-        addToHistory(val, from, to, result);
+        addHistory(v, from, to, result);
       }
 
-      function addToHistory(val, from, to, result) {
-        const history = JSON.parse(localStorage.getItem('unitHistory') || '[]');
-        history.unshift({ val, from, to, result, cat: currentCat, time: new Date().toISOString() });
-        if (history.length > 20) history.pop();
-        localStorage.setItem('unitHistory', JSON.stringify(history));
+      function addHistory(v,f,t,r) {
+        const h = JSON.parse(localStorage.getItem('unitHistory')||'[]');
+        h.unshift({v,f,t,r,cat:currentCat,time:new Date().toISOString()});
+        if(h.length>20) h.pop();
+        localStorage.setItem('unitHistory',JSON.stringify(h));
         renderHistory();
       }
 
       function renderHistory() {
-        const histDiv = document.getElementById('history');
-        const history = JSON.parse(localStorage.getItem('unitHistory') || '[]');
-        if (history.length === 0) { histDiv.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">No history yet</p>'; return; }
-        histDiv.innerHTML = history.slice(0,5).map((h,i) => `
-          <div class="hist-item">
-            <span>${h.val} ${h.from} → ${h.result} ${h.to}</span>
-            <i class="fa-solid fa-arrow-up-right-from-square" onclick="loadHistory(${i})"></i>
+        const div = document.getElementById('history');
+        const h = JSON.parse(localStorage.getItem('unitHistory')||'[]');
+        if(!h.length){ div.innerHTML='<p class="empty-text">No conversions yet</p>'; return; }
+        div.innerHTML = h.slice(0,5).map((x,i)=>`
+          <div class="list-item">
+            <span>${x.v} ${x.f} → ${x.r} ${x.t}</span>
+            <i class="fa-solid fa-arrow-up-right-from-square" onclick="loadHist(${i})"></i>
           </div>
         `).join('');
       }
-
-      window.loadHistory = (index) => {
-        const history = JSON.parse(localStorage.getItem('unitHistory') || '[]');
-        if (index < history.length) {
-          const h = history[index];
-          switchCategory(h.cat);
-          populateUnits();
-          inputVal.value = h.val;
-          inputUnit.value = h.from;
-          outputUnit.value = h.to;
-          convert();
-        }
+      window.loadHist = (i) => {
+        const h = JSON.parse(localStorage.getItem('unitHistory')||'[]');
+        if(i<h.length){ const x=h[i]; switchCat(x.cat); populateUnits(); inputVal.value=x.v; inputUnit.value=x.f; outputUnit.value=x.t; convert(); }
       };
 
-      function addFavourite() {
-        const favs = JSON.parse(localStorage.getItem('unitFavs') || '[]');
-        const pair = { cat: currentCat, from: inputUnit.value, to: outputUnit.value };
-        if (!favs.some(f => f.cat===pair.cat && f.from===pair.from && f.to===pair.to)) {
-          favs.push(pair);
-          localStorage.setItem('unitFavs', JSON.stringify(favs));
-          renderFavs();
-        }
+      function addFav() {
+        const f = JSON.parse(localStorage.getItem('unitFavs')||'[]');
+        const p = {cat:currentCat,from:inputUnit.value,to:outputUnit.value};
+        if(!f.some(x=>x.cat===p.cat&&x.from===p.from&&x.to===p.to)){ f.push(p); localStorage.setItem('unitFavs',JSON.stringify(f)); renderFavs(); }
       }
-
       function renderFavs() {
-        const favDiv = document.getElementById('favorites');
-        const favs = JSON.parse(localStorage.getItem('unitFavs') || '[]');
-        if (favs.length === 0) { favDiv.innerHTML = '<p style="color:var(--muted);font-size:0.85rem;">No favorites yet</p>'; return; }
-        favDiv.innerHTML = favs.map((f,i) => `
-          <div class="fav-item">
-            <span>${f.from} → ${f.to} (${f.cat})</span>
-            <i class="fa-solid fa-xmark" onclick="removeFav(${i})"></i>
+        const div = document.getElementById('favorites');
+        const f = JSON.parse(localStorage.getItem('unitFavs')||'[]');
+        if(!f.length){ div.innerHTML='<p class="empty-text">No favorites yet</p>'; return; }
+        div.innerHTML = f.map((x,i)=>`
+          <div class="list-item">
+            <span>${x.from} → ${x.to} (${x.cat})</span>
+            <i class="fa-solid fa-xmark" onclick="delFav(${i})"></i>
           </div>
         `).join('');
       }
-
-      window.removeFav = (index) => {
-        const favs = JSON.parse(localStorage.getItem('unitFavs') || '[]');
-        favs.splice(index,1);
-        localStorage.setItem('unitFavs', JSON.stringify(favs));
-        renderFavs();
+      window.delFav = (i) => {
+        const f = JSON.parse(localStorage.getItem('unitFavs')||'[]');
+        f.splice(i,1); localStorage.setItem('unitFavs',JSON.stringify(f)); renderFavs();
       };
 
-      document.getElementById('swapBtn').addEventListener('click', () => {
-        const tmp = inputUnit.value;
-        inputUnit.value = outputUnit.value;
-        outputUnit.value = tmp;
-        convert();
+      document.getElementById('swapBtn').addEventListener('click',()=>{
+        const t = inputUnit.value; inputUnit.value=outputUnit.value; outputUnit.value=t; convert();
+      });
+      document.getElementById('copyBtn').addEventListener('click',()=>{
+        navigator.clipboard.writeText(outputVal.value).then(()=>alert('Copied!'));
+      });
+      document.getElementById('favBtn').addEventListener('click',addFav);
+      document.getElementById('clearBtn').addEventListener('click',()=>{
+        localStorage.removeItem('unitHistory'); renderHistory();
       });
 
-      document.getElementById('copyBtn').addEventListener('click', () => {
-        navigator.clipboard.writeText(outputVal.value).then(() => alert('Copied!'));
+      document.querySelectorAll('.cat-chip').forEach(chip => {
+        chip.addEventListener('click', (e) => switchCat(e.currentTarget.dataset.cat));
       });
 
-      document.getElementById('favBtn').addEventListener('click', addFavourite);
-      document.getElementById('clearHistoryBtn').addEventListener('click', () => {
-        localStorage.removeItem('unitHistory');
-        renderHistory();
-      });
+      inputVal.addEventListener('input',convert);
+      inputUnit.addEventListener('change',convert);
+      outputUnit.addEventListener('change',convert);
 
-      document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', (e) => {
-          switchCategory(e.target.dataset.cat);
-        });
-      });
-
-      inputVal.addEventListener('input', convert);
-      inputUnit.addEventListener('change', convert);
-      outputUnit.addEventListener('change', convert);
-
-      buildTOC();
       populateUnits();
       renderHistory();
       renderFavs();
