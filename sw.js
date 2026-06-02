@@ -11,7 +11,7 @@ const ASSETS_TO_CACHE = [
   '/terms.html',
   '/disclaimer.html',
   '/blog/index.html',
-  '/manifest.json'
+  '/site.webmanifest'
 ];
 
 // Install Event - Cache initial core files and force activation
