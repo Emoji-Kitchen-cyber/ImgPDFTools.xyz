@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favicon Generator Guide – PixelPress Blog</title>
+  <meta name="description" content="Learn how to create multi‑size favicons for websites and apps using PixelPress free Favicon Generator.">
+  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/blog/favicon-guide.html">
+  <meta property="og:title" content="Favicon Generator Guide – PixelPress">
+  <meta property="og:description" content="Create perfect favicons for all devices and browsers.">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root {
+      --bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#22222e;--accent:#ec4899;--accent2:#a78bfa;--text:#e8e8f0;--muted:#6b6b80;--radius:14px;--fhead:'Syne',sans-serif;--fbody:'DM Sans',sans-serif;
+    }
+    [data-theme="light"]{--bg:#f5f5f7;--surface:#fff;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh}
+    a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:rgba(10,10,15,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:var(--fhead);font-weight:800;font-size:1.15rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .progress-container{position:fixed;top:64px;left:0;width:100%;height:3px;background:transparent;z-index:101}
+    .progress-bar{height:100%;background:var(--accent);width:0%}
+    .main{max-width:860px;margin:0 auto;padding:2rem 20px 4rem}
+    .hero{text-align:center;padding:3rem 0 2rem}
+    .hero h1{font-family:var(--fhead);font-size:clamp(2rem,5vw,2.8rem);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero p{color:var(--muted);font-size:1.1rem;max-width:600px;margin:1rem auto}
+    .toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:2rem 0}
+    .toc h3{font-family:var(--fhead);margin-bottom:1rem}
+    .toc ul{list-style:none}
+    .toc li{margin-bottom:8px}
+    .toc a{color:var(--accent);font-weight:500}
+    .section{margin:2.5rem 0}
+    .section h2{font-family:var(--fhead);font-size:1.5rem;margin-bottom:1rem}
+    .section p{color:var(--muted);line-height:1.8;margin-bottom:1rem}
+    .section ul{padding-left:20px;color:var(--muted);line-height:1.8}
+    .cta-box{background:linear-gradient(135deg,rgba(236,72,153,.15),rgba(167,139,250,.1));border:1px solid var(--accent);border-radius:var(--radius);padding:2rem;text-align:center;margin:3rem 0}
+    .cta-btn{display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:8px;font-weight:600;margin-top:1rem;transition:0.2s}
+    .cta-btn:hover{transform:translateY(-2px)}
+    .faq{margin:3rem 0}
+    .faq-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden}
+    .faq-trigger{width:100%;padding:16px 20px;background:var(--card);border:none;text-align:left;font-weight:600;font-size:15px;cursor:pointer;display:flex;justify-content:space-between;color:var(--text)}
+    .faq-content{padding:0 20px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;color:var(--muted);line-height:1.7}
+    .faq-item.open .faq-content{max-height:300px;padding:20px}
+    footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border)}
+    @media(max-width:600px){.main{padding:1rem 16px}}
+  </style>
+</head>
+<body>
+  <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+  <nav><a href="../index.html" class="nav-logo">PIXELPRESS</a><a href="./index.html" style="color:var(--muted);font-size:.9rem">← Blog</a></nav>
+  <main class="main">
+    <div class="hero">
+      <h1>How to Create Multi‑Size Favicons</h1>
+      <p>A complete guide to generating perfect favicons for every device, browser, and platform using PixelPress.</p>
+    </div>
+    <nav class="toc">
+      <h3>Table of Contents</h3>
+      <ul>
+        <li><a href="#s1">1. What is a Favicon?</a></li>
+        <li><a href="#s2">2. Standard Favicon Sizes</a></li>
+        <li><a href="#s3">3. Using PixelPress Favicon Generator</a></li>
+        <li><a href="#s4">4. Implementation in HTML</a></li>
+        <li><a href="#faq">5. Frequently Asked Questions</a></li>
+      </ul>
+    </nav>
+
+    <div class="section" id="s1">
+      <h2>What is a Favicon?</h2>
+      <p>A favicon (favorite icon) is the small icon displayed in browser tabs, bookmarks, and shortcuts. It represents your brand identity in a 16×16 or 32×32 pixel square. Modern websites need multiple sizes for different devices.</p>
+    </div>
+
+    <div class="section" id="s2">
+      <h2>Standard Favicon Sizes</h2>
+      <ul>
+        <li><strong>16×16</strong> – Browser tab (most common)</li>
+        <li><strong>32×32</strong> – Taskbar / bookmarks</li>
+        <li><strong>48×48</strong> – Windows tiles</li>
+        <li><strong>64×64</strong> – Safari Reading List</li>
+        <li><strong>180×180</strong> – Apple Touch Icon</li>
+        <li><strong>192×192</strong> – Android Chrome</li>
+        <li><strong>512×512</strong> – PWA splash screen</li>
+      </ul>
+    </div>
+
+    <div class="section" id="s3">
+      <h2>Using PixelPress Favicon Generator</h2>
+      <p>PixelPress Favicon Generator takes any JPG, PNG, or WebP image and converts it into a complete favicon package. Upload your logo, select sizes, and download the .ico file with all resolutions embedded.</p>
+    </div>
+
+    <div class="section" id="s4">
+      <h2>Implementation in HTML</h2>
+      <p>Once you have your favicon.ico file, upload it to your website root and add this code inside &lt;head&gt;:</p>
+      <pre style="background:var(--card);padding:1rem;border-radius:8px;color:var(--accent);overflow-x:auto">&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;</pre>
+    </div>
+
+    <div class="cta-box">
+      <h3>Ready to create your favicon?</h3>
+      <p>Use PixelPress Favicon Generator – free, instant, client‑side.</p>
+      <a href="../favicon-generator.html" class="cta-btn">Launch Favicon Generator →</a>
+    </div>
+
+    <div class="faq" id="faq">
+      <h2 style="font-family:var(--fhead);margin-bottom:1rem">Frequently Asked Questions</h2>
+      <div class="faq-item"><button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">What format should my source image be? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-content">JPG, PNG, or WebP. PNG with transparent background works best for favicons.</div></div>
+      <div class="faq-item"><button class="faq-trigger" onclick="this.parentElement.classList.toggle('open')">Is favicon generation free? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-content">Yes! PixelPress Favicon Generator is 100% free with no watermarks or sign‑ups.</div></div>
+    </div>
+  </main>
+  <footer>© 2026 PixelPress. All rights reserved.</footer>
+  <script>
+    window.addEventListener('scroll',()=>{const s=document.body.scrollTop||document.documentElement.scrollTop;const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progressBar').style.width=(h>0?(s/h)*100:0)+'%'});
+    document.addEventListener('DOMContentLoaded',()=>{document.documentElement.setAttribute('data-theme',localStorage.getItem('pixelpress-theme')||'dark')});
+  </script>
+</body>
+</html>
