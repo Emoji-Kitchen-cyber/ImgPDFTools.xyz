@@ -31,14 +31,12 @@
     }
     a { color:inherit; text-decoration:none; }
 
-    /* Noise overlay */
     body::before {
       content:''; position:fixed; inset:0;
       background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
       opacity:0.02; pointer-events:none; z-index:0;
     }
 
-    /* NAV */
     nav {
       position:sticky; top:0; z-index:100; display:flex; align-items:center;
       justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px;
@@ -54,7 +52,6 @@
     .nav-links a:hover, .nav-links a.active { color:var(--text); }
     .theme-toggle { background:var(--card); border:1px solid var(--border); width:38px; height:38px; border-radius:50%; cursor:pointer; color:var(--text); display:flex; align-items:center; justify-content:center; }
 
-    /* HERO */
     .hero {
       position:relative; overflow:hidden; padding:clamp(3rem,8vw,6rem) clamp(1rem,5vw,3rem) clamp(2rem,5vw,4rem); text-align:center;
     }
@@ -80,7 +77,6 @@
     }
     .hero p { font-size:1.05rem; color:var(--muted); max-width:540px; margin:0 auto 2rem; }
 
-    /* SEARCH */
     .search-wrap { max-width:500px; margin:0 auto 1.5rem; position:relative; }
     .search-input {
       width:100%; padding:12px 20px 12px 44px; border:1px solid var(--border); border-radius:12px;
@@ -89,7 +85,6 @@
     .search-input:focus { border-color:var(--accent); box-shadow:0 0 0 4px rgba(236,72,153,0.1); }
     .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); }
 
-    /* FILTERS */
     .filters {
       display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem;
       margin-bottom:clamp(2rem,4vw,3.5rem); padding:0 clamp(1rem,5vw,3rem);
@@ -102,11 +97,9 @@
     .filter-btn:hover { border-color:var(--accent); color:var(--text); }
     .filter-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
 
-    /* GRID */
     .grid-wrap { padding:0 clamp(1rem,5vw,3rem) clamp(3rem,6vw,5rem); max-width:1300px; margin-inline:auto; }
     .articles-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:1.5rem; }
 
-    /* CARD */
     .card {
       background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
       padding:1.6rem; display:flex; flex-direction:column; gap:0.85rem;
@@ -131,7 +124,6 @@
     .card[hidden] { display:none; }
     .badge-new { background:var(--green); color:#fff; font-size:0.65rem; padding:2px 8px; border-radius:999px; margin-left:6px; }
 
-    /* CTA */
     .cta-banner { max-width:1300px; margin:0 auto clamp(2rem,4vw,3rem); padding:0 clamp(1rem,5vw,3rem); }
     .cta-inner {
       display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem;
@@ -146,7 +138,6 @@
     }
     .cta-btn:hover { opacity:0.88; transform:translateY(-1px); }
 
-    /* FOOTER */
     footer {
       border-top:1px solid var(--border); padding:2rem clamp(1rem,5vw,3rem);
       display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
@@ -204,7 +195,7 @@
   <main class="grid-wrap">
     <div class="articles-grid" id="articlesGrid">
 
-      <!-- ========== EXISTING CARDS (unchanged) ========== -->
+      <!-- ========== EXISTING 10 CARDS ========== -->
       <article class="card" data-category="image" onclick="location.href='../blog/compress-guide.html'">
         <span class="card-category">Image Compression</span>
         <h2>How to Compress Images Without Losing Quality</h2>
@@ -275,85 +266,85 @@
         <div class="card-meta"><span>📖 9 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- ========== NEW TOOL CARDS ========== -->
-      <article class="card" data-category="design" onclick="location.href='../favicon-generator.html'">
+      <!-- ========== 12 NEW TOOL CARDS (Blog Article Links) ========== -->
+      <article class="card" data-category="design" onclick="location.href='./favicon-guide.html'">
         <span class="card-category">Icon Generation<span class="badge-new">NEW</span></span>
         <h2>Favicon Generator – Create Multi‑Size Icons</h2>
         <p>Convert any image into standard .ico files with multiple resolutions for websites and apps.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="gis" onclick="location.href='../geoforge.html'">
+      <article class="card" data-category="gis" onclick="location.href='./geoforge-guide.html'">
         <span class="card-category">GIS Mapping<span class="badge-new">NEW</span></span>
         <h2>GeoForge – Create Shapefiles Online</h2>
         <p>Draw points, lines & polygons on live maps. Export as Shapefile ZIP, GeoJSON, KML – ArcGIS & QGIS ready.</p>
         <div class="card-meta"><span>📖 12 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="pdf" onclick="location.href='../merge-pdf.html'">
+      <article class="card" data-category="pdf" onclick="location.href='./merge-pdf-guide.html'">
         <span class="card-category">PDF Merging<span class="badge-new">NEW</span></span>
         <h2>Merge PDF – Combine Multiple Documents</h2>
         <p>Combine PDFs into a single file in any order. Fast, free, and entirely browser‑based.</p>
         <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="ai" onclick="location.href='../ocr.html'">
+      <article class="card" data-category="ai" onclick="location.href='./ocr-guide.html'">
         <span class="card-category">AI & OCR<span class="badge-new">NEW</span></span>
         <h2>OCR Scanner – Extract Text from Images</h2>
         <p>Extract text from any image with 100+ languages using Tesseract.js – fully client‑side.</p>
         <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="design" onclick="location.href='../palette-generator.html'">
+      <article class="card" data-category="design" onclick="location.href='./palette-guide.html'">
         <span class="card-category">Color Tools<span class="badge-new">NEW</span></span>
         <h2>Palette Generator – Create Beautiful Color Schemes</h2>
         <p>Generate complementary, analogous, triadic palettes. Extract colors from images.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="utility" onclick="location.href='../password-generator.html'">
+      <article class="card" data-category="utility" onclick="location.href='./password-guide.html'">
         <span class="card-category">Security<span class="badge-new">NEW</span></span>
         <h2>Password Generator – Strong Random Passwords</h2>
         <p>Cryptographically secure passwords with passphrase mode, batch generation, and entropy meter.</p>
         <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="pdf" onclick="location.href='../pdf-annotator.html'">
+      <article class="card" data-category="pdf" onclick="location.href='./pdf-annotator-guide.html'">
         <span class="card-category">PDF Editing<span class="badge-new">NEW</span></span>
         <h2>PDF Annotator – Draw, Sign & Highlight</h2>
         <p>Add text, draw, highlight, and sign PDFs directly in your browser. No software needed.</p>
         <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="utility" onclick="location.href='../qr-generator.html'">
+      <article class="card" data-category="utility" onclick="location.href='./qr-guide.html'">
         <span class="card-category">QR Codes<span class="badge-new">NEW</span></span>
         <h2>QR Code Generator – Custom Styled Codes</h2>
         <p>Generate trackable vector QR codes with logos, gradients, and batch export.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="design" onclick="location.href='../screenshot-editor.html'">
+      <article class="card" data-category="design" onclick="location.href='./screenshot-editor-guide.html'">
         <span class="card-category">Mockups<span class="badge-new">NEW</span></span>
         <h2>Screenshot Editor – Beautiful Device Frames</h2>
         <p>Wrap screenshots in device frames, gradients, and custom backgrounds. Export as PNG/JPEG.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="pdf" onclick="location.href='../split-pdf.html'">
+      <article class="card" data-category="pdf" onclick="location.href='./split-pdf-guide.html'">
         <span class="card-category">PDF Splitting<span class="badge-new">NEW</span></span>
         <h2>Split PDF – Extract Pages Instantly</h2>
         <p>Split PDFs by page range or extract every page as a separate file. 100% client‑side.</p>
         <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="design" onclick="location.href='../thumbnail-maker.html'">
+      <article class="card" data-category="design" onclick="location.href='./thumbnail-guide.html'">
         <span class="card-category">Thumbnails<span class="badge-new">NEW</span></span>
         <h2>Thumbnail Maker – YouTube & Social Cards</h2>
         <p>Design streaming thumbnails with text, shapes, and images. Export in multiple formats.</p>
         <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <article class="card" data-category="utility" onclick="location.href='../unit-converter.html'">
+      <article class="card" data-category="utility" onclick="location.href='./unit-converter-guide.html'">
         <span class="card-category">Calculators<span class="badge-new">NEW</span></span>
         <h2>Unit Converter – Length, Weight, Digital & More</h2>
         <p>Convert between hundreds of units with live rate display and history saving.</p>
@@ -379,7 +370,6 @@
   </footer>
 
   <script>
-    // Theme toggle
     (function() {
       const saved = localStorage.getItem('pixelpress-theme') || 'dark';
       document.documentElement.setAttribute('data-theme', saved);
@@ -391,7 +381,6 @@
       });
     })();
 
-    // Filter + Search
     const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.card');
     const searchInput = document.getElementById('blogSearch');
@@ -399,15 +388,12 @@
     function applyFilters() {
       const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
       const query = searchInput?.value.toLowerCase().trim() || '';
-
       cards.forEach(card => {
         const cat = card.dataset.category;
         const title = card.querySelector('h2')?.textContent.toLowerCase() || '';
         const excerpt = card.querySelector('p')?.textContent.toLowerCase() || '';
-
         const matchCat = activeFilter === 'all' || cat === activeFilter;
         const matchSearch = !query || title.includes(query) || excerpt.includes(query);
-
         if (matchCat && matchSearch) {
           card.removeAttribute('hidden');
           card.style.animation = 'none';
