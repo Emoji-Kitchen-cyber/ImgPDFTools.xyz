@@ -5,64 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Favicon Generator Guide — PixelPress Blog</title>
   <meta name="description" content="Complete guide to creating multi-size favicons for all browsers and devices using PixelPress free Favicon Generator.">
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/blog/favicon-guide.html">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
     :root{--bg:#0a0a0f;--card:#16161f;--border:#22222e;--accent:#ec4899;--accent2:#a78bfa;--text:#e8e8f0;--muted:#6b6b80;--radius:14px}
     [data-theme="light"]{--bg:#f5f5f7;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;transition:0.3s}
+    body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;min-height:100vh;line-height:1.7;transition:0.3s}
     a{color:inherit;text-decoration:none}
-    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:rgba(10,10,15,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.15rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .progress-bar{position:fixed;top:64px;left:0;height:3px;background:var(--accent);z-index:101;transition:width .1s}
-    .main{max-width:860px;margin:0 auto;padding:2rem 20px 4rem}
-    .hero{text-align:center;padding:2rem 0}
-    .badge{display:inline-block;padding:4px 14px;background:rgba(236,72,153,.1);border:1px solid var(--accent);border-radius:999px;font-size:.75rem;color:var(--accent);margin-bottom:1rem}
-    .hero h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;line-height:1.3;margin-bottom:.8rem}
-    .meta{color:var(--muted);font-size:.85rem}
-    .toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:2rem 0}
-    .toc h3{font-family:'Syne',sans-serif;margin-bottom:.8rem}
-    .toc ol{padding-left:20px;color:var(--muted)}
-    .toc li{margin-bottom:4px}
-    .toc a{color:var(--accent)}
-    .section{margin:2.5rem 0}
-    .section h2{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
-    .section p{color:var(--muted);line-height:1.9;margin-bottom:1rem}
-    .section ul,.section ol{padding-left:24px;color:var(--muted);line-height:1.9}
-    .cta{background:linear-gradient(135deg,rgba(236,72,153,.12),rgba(167,139,250,.08));border:1px solid var(--accent);border-radius:var(--radius);padding:2rem;text-align:center;margin:3rem 0}
-    .cta h3{font-family:'Syne',sans-serif;margin-bottom:.5rem}
-    .btn{display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:10px;font-weight:600;transition:.2s}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,.3)}
-    .faq-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:8px;overflow:hidden}
-    .faq-q{width:100%;padding:14px 20px;background:var(--card);border:none;text-align:left;font-weight:600;cursor:pointer;display:flex;justify-content:space-between;color:var(--text)}
-    .faq-a{max-height:0;overflow:hidden;transition:.3s;color:var(--muted);line-height:1.8;padding:0 20px}
-    .faq-item.open .faq-a{max-height:300px;padding:0 20px 16px}
-    footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border);font-size:.85rem}
-    @media(max-width:600px){.main{padding:1rem 14px}}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:64px;background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+    .logo{font-weight:800;font-size:1.1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .main{max-width:780px;margin:0 auto;padding:2rem 20px 4rem}
+    h1{font-size:2rem;margin-bottom:1rem}
+    h2{font-size:1.4rem;margin:2rem 0 .8rem;border-bottom:1px solid var(--border);padding-bottom:.4rem}
+    p{color:var(--muted);margin-bottom:1rem}
+    ul,ol{padding-left:20px;color:var(--muted);margin-bottom:1rem}
+    li{margin-bottom:6px}
+    .btn{display:inline-block;padding:12px 28px;background:var(--accent);color:#fff;border-radius:10px;font-weight:600;text-decoration:none;transition:.2s;margin-top:1rem}
+    .btn:hover{background:#db2777}
+    .section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:1.5rem 0}
+    footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border);font-size:.85rem;margin-top:3rem}
   </style>
 </head>
 <body>
-  <div class="progress-bar" id="progressBar"></div>
-  <nav><a href="../index.html" class="nav-logo">PIXELPRESS</a><a href="./index.html" style="color:var(--muted);font-size:.9rem">← Blog</a></nav>
-  <main class="main">
-    <div class="hero"><div class="badge">ICON DESIGN</div><h1>How to Create Multi‑Size Favicons for Every Device</h1><div class="meta">📅 June 2026 &nbsp;|&nbsp; ⏱ 7 Min Read</div></div>
-    <nav class="toc"><h3>📋 In This Guide</h3><ol><li><a href="#s1">What is a Favicon?</a></li><li><a href="#s2">Standard Sizes</a></li><li><a href="#s3">Using the Generator</a></li><li><a href="#s4">HTML Implementation</a></li><li><a href="#faq">FAQs</a></li></ol></nav>
-    <div class="section" id="s1"><h2>1. What is a Favicon?</h2><p>A favicon is the tiny icon displayed in browser tabs, bookmarks, and search results. It's a critical branding element — often the first visual cue visitors see. Without a proper favicon, your website looks unprofessional and incomplete.</p></div>
-    <div class="section" id="s2"><h2>2. Standard Favicon Sizes</h2><p>Different platforms require different dimensions. PixelPress Favicon Generator creates all standard sizes automatically: 16×16, 32×32, 48×48, 64×64, 96×96, 128×128, 180×180 (Apple Touch), 192×192 (Android), and 512×512 (PWA).</p></div>
-    <div class="section" id="s3"><h2>3. Using the Generator</h2><p>Upload your logo or icon (PNG with transparency works best). Select the sizes you need, then click "Generate Favicon". The tool processes everything locally in your browser — no uploads to any server. Download a ZIP containing all sizes plus a ready‑to‑use .ico file.</p></div>
-    <div class="section" id="s4"><h2>4. HTML Implementation</h2><p>Place the generated files in your website's root folder and add this code inside your &lt;head&gt; tag:</p><pre style="background:var(--card);padding:1rem;border-radius:8px;overflow-x:auto;color:var(--accent2)">&lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;<br>&lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;</pre></div>
-    <div class="cta"><h3>🚀 Ready to Create Your Favicon?</h3><p>Generate multi‑size favicons instantly — free, no sign‑up, 100% client‑side.</p><a href="../favicon-generator.html" class="btn">Launch Favicon Generator →</a></div>
-    <div class="faq" id="faq"><h2 style="font-family:'Syne',sans-serif;margin-bottom:1rem">❓ FAQs</h2>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What format should my source image be? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">PNG with transparent background is ideal. JPG and WebP are also supported.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the tool really free? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes! 100% free, no sign‑up, no watermarks, no limits.</div></div>
-    </div>
-  </main>
-  <footer>© 2026 PixelPress &nbsp;|&nbsp; <a href="../privacy-policy.html" style="color:var(--accent)">Privacy</a></footer>
-  <script>
-    window.addEventListener('scroll',()=>{const s=document.body.scrollTop||document.documentElement.scrollTop;const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progressBar').style.width=(h>0?(s/h)*100:0)+'%'});
-    document.addEventListener('DOMContentLoaded',()=>{document.documentElement.setAttribute('data-theme',localStorage.getItem('pixelpress-theme')||'dark')});
-  </script>
+  <nav><a href="../index.html" class="logo">PIXELPRESS</a><a href="./index.html" style="color:var(--muted);font-size:.9rem">← Blog</a></nav>
+  <div class="main">
+    <h1>🎯 Favicon Generator — Create Multi‑Size Icons for Every Device</h1>
+    <p>A favicon is the small icon appearing in browser tabs, bookmarks, and search results. It's a critical branding element. PixelPress Favicon Generator creates all standard sizes — 16×16 to 512×512 — automatically, right in your browser.</p>
+    <div class="section"><h2>📏 Standard Sizes</h2><p>16×16, 32×32, 48×48, 64×64, 96×96, 128×128, 180×180 (Apple Touch), 192×192 (Android), 512×512 (PWA). All packaged in a single ZIP.</p></div>
+    <div class="section"><h2>🛠️ How to Use</h2><ol><li>Upload your logo (PNG with transparency works best)</li><li>Select desired sizes</li><li>Click "Generate Favicon"</li><li>Download the ZIP</li><li>Place files in your website root and add the HTML link tag</li></ol></div>
+    <div class="section"><h2>❓ FAQ</h2><p><strong>Is it free?</strong> Yes — 100% free, no sign‑up, no watermarks.<br><strong>What format source?</strong> PNG with transparency is ideal. JPG and WebP also work.</p></div>
+    <a href="../favicon-generator.html" class="btn">🚀 Launch Favicon Generator →</a>
+  </div>
+  <footer>© 2026 PixelPress | <a href="../privacy-policy.html" style="color:var(--accent)">Privacy</a></footer>
 </body>
 </html>
