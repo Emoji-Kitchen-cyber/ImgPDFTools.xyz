@@ -1,161 +1,375 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
-</script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Resize IMAGE - Most Advanced Online Resizer | PixelPress</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="./css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resize Image – PixelPress</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    .tool-container { max-width: 900px; margin: 40px auto; padding: 20px; }
-    .upload-box {
-      border: 2px dashed #cbd5e1; background: #ffffff; padding: 50px 20px;
-      text-align: center; border-radius: 16px; cursor: pointer; transition: all 0.3s;
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root {
+      --bg: #f5f5f7; --surface: rgba(255,255,255,0.75); --card: #ffffff;
+      --border: rgba(0,0,0,0.06); --text: #1d1d1f; --muted: #6e6e73;
+      --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236,72,153,0.1); --r: 16px;
+      --green: #10b981; --red: #ef4444;
     }
-    .upload-box:hover { border-color: #ec4899; background: #fdf4ff; }
-    .upload-box i { font-size: 50px; color: #ec4899; margin-bottom: 15px; }
-    
-    /* Workspace Grid */
-    .resize-workspace { display: grid; grid-template-columns: 1fr 340px; gap: 25px; margin-top: 30px; display: none; }
-    .preview-panel { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 350px; }
-    .preview-panel img { max-width: 100%; max-height: 400px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    .img-meta { margin-top: 15px; font-size: 13px; color: #64748b; font-weight: 500; }
-
-    /* Control Panel Options */
-    .control-panel { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); }
-    .tabs { display: flex; border-bottom: 2px solid #f1f5f9; margin-bottom: 20px; gap: 10px; }
-    .tab-btn { flex: 1; padding: 12px; background: none; border: none; font-size: 14px; font-weight: 700; color: #64748b; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
-    .tab-btn.active { color: #ec4899; border-bottom-color: #ec4899; }
-    
-    .config-section { display: none; }
-    .config-section.active { display: block; }
-    
-    .input-group { margin-bottom: 15px; }
-    .input-group label { display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px; text-transform: uppercase; }
-    .input-wrapper { display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; padding: 2px 10px; background: #f8fafc; }
-    .input-wrapper input { border: none; background: transparent; width: 100%; padding: 10px 5px; font-size: 15px; font-weight: 600; color: #0f172a; outline: none; }
-    .input-wrapper span { font-size: 13px; font-weight: 700; color: #94a3b8; }
-    
-    .checkbox-group { display: flex; align-items: center; gap: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; color: #475569; }
-    .checkbox-group input { width: 16px; height: 16px; accent-color: #ec4899; cursor: pointer; }
-
-    /* Percent Option Buttons */
-    .percent-options { display: flex; flex-direction: column; gap: 10px; }
-    .percent-card { border: 1px solid #e2e8f0; padding: 14px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; }
-    .percent-card:hover { border-color: #ec4899; background: #fdf4ff; }
-    .percent-card.active { border-color: #ec4899; background: #ec4899; color: white; }
-    .percent-card .title { font-weight: 700; font-size: 14px; }
-    .percent-card .sub { font-size: 12px; opacity: 0.8; }
-
-    /* Action Button */
-    .action-btn { width: 100%; background: #ec4899; color: white; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 20px; transition: background 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .action-btn:hover { background: #db2777; }
-    
-    #fileInput { display: none; }
+    [data-theme="dark"] {
+      --bg: #09090e; --surface: rgba(21,21,30,0.7); --card: #15151e;
+      --border: rgba(255,255,255,0.08); --text: #e8e8f0; --muted: #86868b;
+      --glow: rgba(236,72,153,0.25);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:var(--surface); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+    .nav-left { display:flex; align-items:center; gap:1rem; }
+    .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.1rem; cursor:pointer; text-decoration:none; transition:0.2s; }
+    .back-btn:hover { border-color:var(--accent); transform:scale(1.05); }
+    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; text-transform:uppercase; text-decoration:none; color:inherit; }
+    .nav-logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .main { flex:1; max-width:1100px; margin:0 auto; width:100%; padding:2rem 20px; }
+    .upload-area { border:2px dashed var(--border); border-radius:var(--r); padding:3rem; text-align:center; cursor:pointer; transition:0.2s; background:var(--card); margin-bottom:1.5rem; }
+    .upload-area:hover { border-color:var(--accent); background:var(--glow); }
+    .upload-area i { font-size:3rem; color:var(--accent); }
+    .upload-area input { display:none; }
+    .workspace { display:grid; grid-template-columns:1fr 380px; gap:1.5rem; }
+    @media(max-width:850px){ .workspace{grid-template-columns:1fr;} }
+    .preview-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:350px; }
+    .preview-panel img { max-width:100%; max-height:400px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.05); }
+    .preview-meta { margin-top:1rem; font-size:0.9rem; color:var(--muted); text-align:center; }
+    .controls-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; display:flex; flex-direction:column; gap:1.2rem; }
+    .tabs { display:flex; gap:4px; border-bottom:2px solid var(--border); padding-bottom:0; }
+    .tab-btn { flex:1; padding:10px; background:none; border:none; font-size:13px; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:0.2s; }
+    .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; }
+    .input-group { margin-bottom:1rem; }
+    .input-group label { display:block; font-size:0.8rem; font-weight:600; color:var(--muted); text-transform:uppercase; margin-bottom:4px; }
+    .input-row { display:flex; align-items:center; gap:8px; }
+    .input-row input { flex:1; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--bg); color:var(--text); font-size:1rem; font-weight:600; outline:none; }
+    .input-row span { font-size:0.9rem; font-weight:700; color:var(--muted); }
+    .lock-btn { background:var(--bg); border:1px solid var(--border); width:38px; height:38px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1rem; transition:0.2s; }
+    .lock-btn.locked { background:var(--accent); color:white; border-color:var(--accent); }
+    .preset-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .preset-btn { padding:12px; border:1px solid var(--border); border-radius:8px; background:var(--bg); cursor:pointer; text-align:center; font-size:0.85rem; font-weight:600; transition:0.2s; }
+    .preset-btn:hover { border-color:var(--accent); background:var(--glow); }
+    .preset-btn.active { background:var(--accent); color:white; border-color:var(--accent); }
+    .percent-slider { display:flex; align-items:center; gap:10px; }
+    .percent-slider input[type=range] { flex:1; accent-color:var(--accent); }
+    .percent-slider span { font-weight:700; min-width:45px; text-align:right; }
+    .format-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; }
+    .format-btn { padding:8px; border:1px solid var(--border); border-radius:6px; background:var(--bg); cursor:pointer; text-align:center; font-size:0.8rem; font-weight:600; }
+    .format-btn.active { background:var(--accent); color:white; border-color:var(--accent); }
+    .btn { padding:12px 20px; border:none; border-radius:10px; font-weight:600; cursor:pointer; transition:0.2s; display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.95rem; width:100%; }
+    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 25px var(--glow); }
+    .btn-success { background:var(--green); color:white; }
+    .btn:disabled { opacity:0.5; pointer-events:none; }
+    .stats-row { display:flex; gap:12px; margin-top:0.5rem; }
+    .stat-chip { flex:1; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px; text-align:center; font-size:0.75rem; }
+    .stat-chip strong { display:block; color:var(--accent); font-size:1rem; }
+    footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); margin-top:auto; }
   </style>
 </head>
 <body>
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+    </div>
+    <button id="themeToggle" class="back-btn">🌓</button>
+  </nav>
 
-  <!-- Top bar configuration from your template -->
-  <header class="brand-header" style="background:#fff; padding:15px 20px; border-bottom:1px solid #e2e8f0; display:flex; align-items:center; justify-content:space-between;">
-    <a href="./index.html" style="text-decoration:none; color:#0f172a; font-weight:800; font-size:20px;"><i class="fa-solid fa-arrow-left" style="margin-right:10px;"></i>PIXEL<span style="color:#ec4899">PRESS</span></a>
-    <span style="font-weight:700; font-size:14px; color:#64748b; text-transform:uppercase;">Advanced Resizer Matrix</span>
-  </header>
-
-  <div class="tool-container">
-    <!-- Step 1: Upload DropZone -->
-    <div class="upload-box" id="dropZone" onclick="document.getElementById('fileInput').click()">
-      <i class="fa-solid fa-cloud-arrow-up"></i>
-      <h3 style="font-size:20px; margin-bottom:8px;">Choose image file to resize</h3>
-      <p style="color:#64748b; font-size:14px;">Supports JPG, PNG, WEBP formats securely</p>
-      <input type="file" id="fileInput" accept="image/jpeg, image/png, image/webp">
+  <div class="main">
+    <div class="upload-area" id="uploadZone">
+      <i class="fa-solid fa-cloud-upload"></i>
+      <h2>Drop image or click to upload</h2>
+      <p style="color:var(--muted);">JPG, PNG, WebP – batch resize supported</p>
+      <input type="file" id="fileInput" accept="image/*" multiple />
     </div>
 
-    <!-- Step 2: Advanced Dynamic Workspace Grid -->
-    <div class="resize-workspace" id="workspace">
-      <!-- Left Panel: Intelligent Preview -->
+    <div class="workspace" id="workspace" style="display:none;">
       <div class="preview-panel">
-        <img id="imagePreview" src="" alt="Source Preview">
-        <div class="img-meta" id="imgMeta">Original: 0 x 0 px</div>
+        <img id="previewImg" src="" alt="Preview" />
+        <div class="preview-meta" id="previewMeta">Original: 0 × 0 px</div>
+        <div class="stats-row" id="statsRow" style="display:none;">
+          <div class="stat-chip"><strong id="origSize">—</strong> Original</div>
+          <div class="stat-chip"><strong id="newSize">—</strong> Resized</div>
+          <div class="stat-chip"><strong id="newDims">—</strong> New Dims</div>
+        </div>
       </div>
 
-      <!-- Right Panel: Advanced Controls Controller -->
-      <div class="control-panel">
+      <div class="controls-panel">
         <div class="tabs">
-          <button class="tab-btn active" onclick="switchTab('pixels')"><i class="fa-solid fa-vector-square" style="margin-right:6px;"></i> By Pixels</button>
-          <button class="tab-btn" onclick="switchTab('percentage')"><i class="fa-solid fa-percent" style="margin-right:6px;"></i> By %</button>
+          <button class="tab-btn active" data-tab="pixels">📏 By Pixels</button>
+          <button class="tab-btn" data-tab="percent">% By Percent</button>
+          <button class="tab-btn" data-tab="presets">📐 Presets</button>
         </div>
 
-        <!-- Tab Content 1: Custom Exact Pixels Configuration -->
-        <div id="pixelsSection" class="config-section active">
-          <div class="input-group">
-            <label>Width Size</label>
-            <div class="input-wrapper">
-              <input type="number" id="resizeWidth" value="0">
-              <span>PX</span>
-            </div>
-          </div>
-          <div class="input-group">
-            <label>Height Size</label>
-            <div class="input-wrapper">
-              <input type="number" id="resizeHeight" value="0">
-              <span>PX</span>
-            </div>
-          </div>
-          <div class="checkbox-group">
-            <input type="checkbox" id="maintainAspect" checked>
-            <label for="maintainAspect">Lock Aspect Ratio (Keep Proportions)</label>
+        <!-- Pixels Tab -->
+        <div class="tab-content active" id="pixelsTab">
+          <div class="input-group"><label>Width (px)</label><div class="input-row"><input type="number" id="widthInput" value="0" /><span>px</span></div></div>
+          <div class="input-group"><label>Height (px)</label><div class="input-row"><input type="number" id="heightInput" value="0" /><span>px</span></div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem;">
+            <button class="lock-btn locked" id="lockBtn" title="Lock Aspect Ratio"><i class="fa-solid fa-lock"></i></button>
+            <span style="font-size:0.8rem;color:var(--muted);">Lock Aspect Ratio</span>
           </div>
         </div>
 
-        <!-- Tab Content 2: Smart Percent Scaling Matrix -->
-        <div id="percentageSection" class="config-section">
-          <div class="percent-options">
-            <div class="percent-card active" data-percent="75" onclick="selectPercent(75, this)">
-              <div class="title">75% Smaller</div>
-              <div class="sub" id="label75">Resize to 75% of original bounds</div>
-            </div>
-            <div class="percent-card" data-percent="50" onclick="selectPercent(50, this)">
-              <div class="title">50% Medium Scale</div>
-              <div class="sub" id="label50">Resize to 50% of original bounds</div>
-            </div>
-            <div class="percent-card" data-percent="25" onclick="selectPercent(25, this)">
-              <div class="title">25% Compact Scale</div>
-              <div class="sub" id="label25">Resize to 25% of original bounds</div>
-            </div>
+        <!-- Percent Tab -->
+        <div class="tab-content" id="percentTab">
+          <div class="percent-slider">
+            <input type="range" id="percentSlider" min="10" max="200" value="75" />
+            <span id="percentValue">75%</span>
           </div>
-        </div>
-        
-        <!-- Advanced Render Engine Presets Layer -->
-        <div style="margin-top:20px; padding-top:15px; border-top:1px solid #f1f5f9;">
-          <div class="input-group">
-            <label style="font-size:11px; color:#94a3b8;">Output Optimization Preset</label>
-            <select id="outputQuality" style="width:100%; padding:10px; border-radius:8px; border:1px solid #cbd5e1; background:#f8fafc; font-weight:600; color:#334155; outline:none; cursor:pointer;">
-              <option value="0.92">High Quality (Recommended)</option>
-              <option value="0.80">Medium Quality (Optimized Space)</option>
-              <option value="0.65">Low Quality (Maximum Compression)</option>
-            </select>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:1rem;">
+            <button class="preset-btn" data-pct="25">25%</button>
+            <button class="preset-btn" data-pct="50">50%</button>
+            <button class="preset-btn active" data-pct="75">75%</button>
+            <button class="preset-btn" data-pct="100">100%</button>
+            <button class="preset-btn" data-pct="150">150%</button>
+            <button class="preset-btn" data-pct="200">200%</button>
           </div>
         </div>
 
-        <!-- Run Trigger Execution Core Call -->
-        <button class="action-btn" id="processBtn" onclick="executeResize()"><i class="fa-solid fa-arrows-up-to-line"></i> Resize Image Now</button>
+        <!-- Presets Tab -->
+        <div class="tab-content" id="presetsTab">
+          <div class="preset-grid">
+            <button class="preset-btn" data-preset="instagram">Instagram (1080×1080)</button>
+            <button class="preset-btn" data-preset="facebook">Facebook (1200×630)</button>
+            <button class="preset-btn" data-preset="twitter">Twitter (1200×675)</button>
+            <button class="preset-btn" data-preset="linkedin">LinkedIn (1200×627)</button>
+            <button class="preset-btn" data-preset="youtube">YouTube (1280×720)</button>
+            <button class="preset-btn" data-preset="thumbnail">Thumbnail (150×150)</button>
+            <button class="preset-btn" data-preset="story">Story (1080×1920)</button>
+            <button class="preset-btn" data-preset="pinterest">Pinterest (1000×1500)</button>
+          </div>
+        </div>
+
+        <!-- Format & Quality -->
+        <div style="border-top:1px solid var(--border);padding-top:1rem;">
+          <div class="input-group"><label>Output Format</label><div class="format-grid"><button class="format-btn active" data-fmt="jpeg">JPG</button><button class="format-btn" data-fmt="png">PNG</button><button class="format-btn" data-fmt="webp">WebP</button></div></div>
+          <div class="input-group"><label>Quality</label><div class="percent-slider"><input type="range" id="qualitySlider" min="10" max="100" value="90" /><span id="qualityVal">90%</span></div></div>
+        </div>
+
+        <button class="btn btn-primary" id="resizeBtn"><i class="fa-solid fa-arrows-up-to-line"></i> Resize & Download</button>
       </div>
     </div>
   </div>
 
-  <!-- Shared Global Framework Assets Caller -->
-  <script src="./js/common.js"></script>
-  <script src="./js/resize.js"></script>
+  <footer>© 2026 PixelPress – All processing is local & private</footer>
+
+  <script>
+    (function() {
+      // Theme
+      function syncTheme() {
+        const saved = localStorage.getItem('pixelpress-theme') || 'light';
+        document.documentElement.setAttribute('data-theme', saved);
+      }
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('pixelpress-theme', next);
+      });
+      syncTheme();
+
+      // State
+      let originalImage = null;
+      let originalFile = null;
+      let aspectRatio = 1;
+      let aspectLocked = true;
+      let currentMode = 'pixels';
+      let selectedPercent = 75;
+      let outputFormat = 'jpeg';
+      let outputQuality = 0.9;
+
+      // DOM
+      const uploadZone = document.getElementById('uploadZone');
+      const fileInput = document.getElementById('fileInput');
+      const workspace = document.getElementById('workspace');
+      const previewImg = document.getElementById('previewImg');
+      const previewMeta = document.getElementById('previewMeta');
+      const widthInput = document.getElementById('widthInput');
+      const heightInput = document.getElementById('heightInput');
+      const lockBtn = document.getElementById('lockBtn');
+      const percentSlider = document.getElementById('percentSlider');
+      const percentValue = document.getElementById('percentValue');
+      const qualitySlider = document.getElementById('qualitySlider');
+      const qualityVal = document.getElementById('qualityVal');
+      const resizeBtn = document.getElementById('resizeBtn');
+      const statsRow = document.getElementById('statsRow');
+
+      // Upload
+      uploadZone.addEventListener('click', () => fileInput.click());
+      fileInput.addEventListener('change', (e) => {
+        if (e.target.files[0]) loadImage(e.target.files[0]);
+      });
+      uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.style.borderColor = 'var(--accent)'; });
+      uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = 'var(--border)'; });
+      uploadZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadZone.style.borderColor = 'var(--border)';
+        if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
+      });
+
+      function loadImage(file) {
+        originalFile = file;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          const img = new Image();
+          img.onload = () => {
+            originalImage = img;
+            aspectRatio = img.width / img.height;
+            widthInput.value = img.width;
+            heightInput.value = img.height;
+            previewImg.src = ev.target.result;
+            previewMeta.textContent = `Original: ${img.width} × ${img.height} px | ${formatBytes(file.size)}`;
+            uploadZone.style.display = 'none';
+            workspace.style.display = 'grid';
+            updatePercentLabels();
+          };
+          img.src = ev.target.result;
+        };
+        reader.readAsDataURL(file);
+        fileInput.value = '';
+      }
+
+      function updatePercentLabels() {
+        if (!originalImage) return;
+        const pct = parseInt(percentSlider.value);
+        const w = Math.round(originalImage.width * pct / 100);
+        const h = Math.round(originalImage.height * pct / 100);
+        percentValue.textContent = pct + '%';
+        document.querySelectorAll('.preset-btn[data-pct]').forEach(b => {
+          b.classList.toggle('active', parseInt(b.dataset.pct) === pct);
+        });
+      }
+
+      // Tabs
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+          document.getElementById(btn.dataset.tab + 'Tab').classList.add('active');
+          currentMode = btn.dataset.tab;
+        });
+      });
+
+      // Lock aspect ratio
+      lockBtn.addEventListener('click', () => {
+        aspectLocked = !aspectLocked;
+        lockBtn.classList.toggle('locked', aspectLocked);
+        lockBtn.innerHTML = aspectLocked ? '<i class="fa-solid fa-lock"></i>' : '<i class="fa-solid fa-lock-open"></i>';
+      });
+
+      // Width/Height sync
+      widthInput.addEventListener('input', () => {
+        if (aspectLocked && originalImage && widthInput.value) {
+          heightInput.value = Math.round(parseInt(widthInput.value) / aspectRatio);
+        }
+      });
+      heightInput.addEventListener('input', () => {
+        if (aspectLocked && originalImage && heightInput.value) {
+          widthInput.value = Math.round(parseInt(heightInput.value) * aspectRatio);
+        }
+      });
+
+      // Percent slider
+      percentSlider.addEventListener('input', () => {
+        selectedPercent = parseInt(percentSlider.value);
+        updatePercentLabels();
+      });
+
+      // Percent preset buttons
+      document.querySelectorAll('.preset-btn[data-pct]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedPercent = parseInt(btn.dataset.pct);
+          percentSlider.value = selectedPercent;
+          updatePercentLabels();
+        });
+      });
+
+      // Social presets
+      document.querySelectorAll('.preset-btn[data-preset]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const presets = {
+            instagram: [1080,1080], facebook: [1200,630], twitter: [1200,675],
+            linkedin: [1200,627], youtube: [1280,720], thumbnail: [150,150],
+            story: [1080,1920], pinterest: [1000,1500]
+          };
+          const [w,h] = presets[btn.dataset.preset];
+          widthInput.value = w;
+          heightInput.value = aspectLocked ? Math.round(w / aspectRatio) : h;
+          document.querySelectorAll('.tab-btn[data-tab="pixels"]')[0].click();
+        });
+      });
+
+      // Format
+      document.querySelectorAll('.format-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          outputFormat = btn.dataset.fmt;
+        });
+      });
+
+      // Quality
+      qualitySlider.addEventListener('input', () => {
+        outputQuality = parseInt(qualitySlider.value) / 100;
+        qualityVal.textContent = qualitySlider.value + '%';
+      });
+
+      // Resize & Download
+      resizeBtn.addEventListener('click', () => {
+        if (!originalImage) return;
+        let targetW, targetH;
+
+        if (currentMode === 'pixels') {
+          targetW = parseInt(widthInput.value) || originalImage.width;
+          targetH = parseInt(heightInput.value) || originalImage.height;
+        } else if (currentMode === 'percent') {
+          const pct = parseInt(percentSlider.value);
+          targetW = Math.round(originalImage.width * pct / 100);
+          targetH = Math.round(originalImage.height * pct / 100);
+        } else {
+          targetW = parseInt(widthInput.value) || originalImage.width;
+          targetH = parseInt(heightInput.value) || originalImage.height;
+        }
+
+        if (targetW <= 0 || targetH <= 0) return alert('Invalid dimensions');
+
+        const canvas = document.createElement('canvas');
+        canvas.width = targetW;
+        canvas.height = targetH;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(originalImage, 0, 0, targetW, targetH);
+
+        const mime = outputFormat === 'png' ? 'image/png' : outputFormat === 'webp' ? 'image/webp' : 'image/jpeg';
+        canvas.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `resized-${targetW}x${targetH}.${outputFormat}`;
+          a.click();
+          URL.revokeObjectURL(url);
+
+          // Update stats
+          document.getElementById('origSize').textContent = formatBytes(originalFile.size);
+          document.getElementById('newSize').textContent = formatBytes(blob.size);
+          document.getElementById('newDims').textContent = `${targetW}×${targetH}`;
+          statsRow.style.display = 'flex';
+        }, mime, outputQuality);
+      });
+
+      function formatBytes(bytes) {
+        if (bytes === 0) return '0 B';
+        const k = 1024;
+        const sizes = ['B','KB','MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+      }
+    })();
+  </script>
 </body>
 </html>
-
