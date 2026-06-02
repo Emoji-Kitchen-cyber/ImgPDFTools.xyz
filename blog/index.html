@@ -25,131 +25,53 @@
       --text: #1d1d1f; --muted: #6e6e73; --tag-bg: #f0f0f5;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background:var(--bg); color:var(--text); font-family:var(--fbody);
-      min-height:100vh; -webkit-font-smoothing:antialiased; transition:0.3s;
-    }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh; -webkit-font-smoothing:antialiased; transition:0.3s; }
     a { color:inherit; text-decoration:none; }
-
-    body::before {
-      content:''; position:fixed; inset:0;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity:0.02; pointer-events:none; z-index:0;
-    }
-
-    nav {
-      position:sticky; top:0; z-index:100; display:flex; align-items:center;
-      justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px;
-      background:rgba(10,10,15,0.85); backdrop-filter:blur(16px); border-bottom:1px solid var(--border);
-    }
-    .nav-logo {
-      font-family:var(--fhead); font-weight:800; font-size:1.15rem; letter-spacing:0.05em;
-      background:linear-gradient(135deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
+    nav { position:sticky; top:0; z-index:100; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:rgba(10,10,15,0.85); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+    .nav-logo { font-family:var(--fhead); font-weight:800; font-size:1.15rem; letter-spacing:0.05em; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
     .nav-links { display:flex; gap:2rem; list-style:none; }
     .nav-links a { font-size:0.875rem; font-weight:500; color:var(--muted); transition:0.2s; }
     .nav-links a:hover, .nav-links a.active { color:var(--text); }
     .theme-toggle { background:var(--card); border:1px solid var(--border); width:38px; height:38px; border-radius:50%; cursor:pointer; color:var(--text); display:flex; align-items:center; justify-content:center; }
-
-    .hero {
-      position:relative; overflow:hidden; padding:clamp(3rem,8vw,6rem) clamp(1rem,5vw,3rem) clamp(2rem,5vw,4rem); text-align:center;
-    }
-    .hero::after {
-      content:''; position:absolute; top:-120px; left:50%; transform:translateX(-50%);
-      width:600px; height:400px; background:radial-gradient(ellipse at center, rgba(236,72,153,0.18) 0%, transparent 70%); pointer-events:none;
-    }
-    .hero-badge {
-      display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.85rem;
-      background:var(--tag-bg); border:1px solid var(--border); border-radius:999px;
-      font-family:var(--fmono); font-size:0.72rem; color:var(--accent2); letter-spacing:0.08em;
-      text-transform:uppercase; margin-bottom:1.25rem;
-    }
+    .hero { position:relative; overflow:hidden; padding:clamp(3rem,8vw,6rem) clamp(1rem,5vw,3rem) clamp(2rem,5vw,4rem); text-align:center; }
+    .hero::after { content:''; position:absolute; top:-120px; left:50%; transform:translateX(-50%); width:600px; height:400px; background:radial-gradient(ellipse at center, rgba(236,72,153,0.18) 0%, transparent 70%); pointer-events:none; }
+    .hero-badge { display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.85rem; background:var(--tag-bg); border:1px solid var(--border); border-radius:999px; font-family:var(--fmono); font-size:0.72rem; color:var(--accent2); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:1.25rem; }
     .hero-badge span { display:inline-block; width:6px; height:6px; background:var(--accent2); border-radius:50%; animation:pulse 2s ease-in-out infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
-    .hero h1 {
-      font-family:var(--fhead); font-size:clamp(2rem,5vw,3.5rem); font-weight:800;
-      line-height:1.1; letter-spacing:-0.02em; margin-bottom:1rem; max-width:720px; margin-inline:auto;
-    }
-    .hero h1 em {
-      font-style:normal; background:linear-gradient(135deg,var(--accent) 20%,var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-    }
+    .hero h1 { font-family:var(--fhead); font-size:clamp(2rem,5vw,3.5rem); font-weight:800; line-height:1.1; letter-spacing:-0.02em; margin-bottom:1rem; max-width:720px; margin-inline:auto; }
+    .hero h1 em { font-style:normal; background:linear-gradient(135deg,var(--accent) 20%,var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
     .hero p { font-size:1.05rem; color:var(--muted); max-width:540px; margin:0 auto 2rem; }
-
     .search-wrap { max-width:500px; margin:0 auto 1.5rem; position:relative; }
-    .search-input {
-      width:100%; padding:12px 20px 12px 44px; border:1px solid var(--border); border-radius:12px;
-      background:var(--card); color:var(--text); font-size:0.95rem; outline:none; transition:0.2s;
-    }
+    .search-input { width:100%; padding:12px 20px 12px 44px; border:1px solid var(--border); border-radius:12px; background:var(--card); color:var(--text); font-size:0.95rem; outline:none; transition:0.2s; }
     .search-input:focus { border-color:var(--accent); box-shadow:0 0 0 4px rgba(236,72,153,0.1); }
     .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); }
-
-    .filters {
-      display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem;
-      margin-bottom:clamp(2rem,4vw,3.5rem); padding:0 clamp(1rem,5vw,3rem);
-    }
-    .filter-btn {
-      padding:0.45rem 1.1rem; border-radius:999px; border:1px solid var(--border);
-      background:transparent; color:var(--muted); font-family:var(--fbody); font-size:0.85rem;
-      font-weight:500; cursor:pointer; transition:0.2s;
-    }
+    .filters { display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem; margin-bottom:clamp(2rem,4vw,3.5rem); padding:0 clamp(1rem,5vw,3rem); }
+    .filter-btn { padding:0.45rem 1.1rem; border-radius:999px; border:1px solid var(--border); background:transparent; color:var(--muted); font-family:var(--fbody); font-size:0.85rem; font-weight:500; cursor:pointer; transition:0.2s; }
     .filter-btn:hover { border-color:var(--accent); color:var(--text); }
     .filter-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
-
     .grid-wrap { padding:0 clamp(1rem,5vw,3rem) clamp(3rem,6vw,5rem); max-width:1300px; margin-inline:auto; }
     .articles-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:1.5rem; }
-
-    .card {
-      background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
-      padding:1.6rem; display:flex; flex-direction:column; gap:0.85rem;
-      transition:border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor:pointer;
-      animation:fadeUp 0.4s ease both;
-    }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:1.6rem; display:flex; flex-direction:column; gap:0.85rem; transition:border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor:pointer; animation:fadeUp 0.4s ease both; }
     @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
     .card:hover { border-color:var(--accent); transform:translateY(-4px); box-shadow:0 16px 40px rgba(236,72,153,0.12); }
     .card-category { font-family:var(--fmono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent2); }
     .card h2 { font-family:var(--fhead); font-size:1.05rem; font-weight:700; line-height:1.3; color:var(--text); }
     .card p { font-size:0.875rem; color:var(--muted); line-height:1.6; flex:1; }
-    .card-meta {
-      display:flex; align-items:center; justify-content:space-between; font-size:0.78rem;
-      color:var(--muted); padding-top:0.6rem; border-top:1px solid var(--border);
-    }
-    .card-arrow {
-      display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px;
-      border-radius:50%; background:var(--tag-bg); border:1px solid var(--border); color:var(--accent);
-      font-size:0.8rem; transition:0.2s;
-    }
+    .card-meta { display:flex; align-items:center; justify-content:space-between; font-size:0.78rem; color:var(--muted); padding-top:0.6rem; border-top:1px solid var(--border); }
+    .card-arrow { display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--tag-bg); border:1px solid var(--border); color:var(--accent); font-size:0.8rem; transition:0.2s; }
     .card:hover .card-arrow { background:var(--accent); border-color:var(--accent); color:#fff; }
     .card[hidden] { display:none; }
     .badge-new { background:var(--green); color:#fff; font-size:0.65rem; padding:2px 8px; border-radius:999px; margin-left:6px; }
-
     .cta-banner { max-width:1300px; margin:0 auto clamp(2rem,4vw,3rem); padding:0 clamp(1rem,5vw,3rem); }
-    .cta-inner {
-      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem;
-      background:linear-gradient(135deg, rgba(236,72,153,0.12), rgba(167,139,250,0.08));
-      border:1px solid rgba(236,72,153,0.3); border-radius:var(--radius); padding:1.75rem 2rem;
-    }
+    .cta-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; background:linear-gradient(135deg, rgba(236,72,153,0.12), rgba(167,139,250,0.08)); border:1px solid rgba(236,72,153,0.3); border-radius:var(--radius); padding:1.75rem 2rem; }
     .cta-text h3 { font-family:var(--fhead); font-size:1.15rem; font-weight:700; margin-bottom:0.3rem; }
     .cta-text p { font-size:0.875rem; color:var(--muted); }
-    .cta-btn {
-      padding:0.65rem 1.5rem; background:var(--accent); color:#fff; border-radius:8px;
-      font-weight:600; font-size:0.9rem; cursor:pointer; white-space:nowrap; transition:0.2s;
-    }
+    .cta-btn { padding:0.65rem 1.5rem; background:var(--accent); color:#fff; border-radius:8px; font-weight:600; font-size:0.9rem; cursor:pointer; white-space:nowrap; transition:0.2s; }
     .cta-btn:hover { opacity:0.88; transform:translateY(-1px); }
-
-    footer {
-      border-top:1px solid var(--border); padding:2rem clamp(1rem,5vw,3rem);
-      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
-    }
+    footer { border-top:1px solid var(--border); padding:2rem clamp(1rem,5vw,3rem); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
     footer .logo { font-family:var(--fhead); font-weight:800; font-size:1rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
     footer p { font-size:0.8rem; color:var(--muted); }
-
-    @media (max-width:640px) {
-      .nav-links { display:none; }
-      .articles-grid { grid-template-columns:1fr; }
-      .cta-inner { flex-direction:column; text-align:center; }
-    }
+    @media (max-width:640px) { .nav-links { display:none; } .articles-grid { grid-template-columns:1fr; } .cta-inner { flex-direction:column; text-align:center; } }
   </style>
 
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
@@ -202,63 +124,54 @@
         <p>Discover mathematical quantization algorithms that optimize file size without sacrificing sharpness.</p>
         <div class="card-meta"><span>📖 8 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="image" onclick="location.href='../blog/bg-remover-guide.html'">
         <span class="card-category">Background Removal</span>
         <h2>Best Free Background Remover Online</h2>
         <p>Deep dive into foreground extraction models and real‑time canvas edge detection tools.</p>
         <div class="card-meta"><span>📖 9 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="image" onclick="location.href='../blog/jpg-vs-png.html'">
         <span class="card-category">Formats</span>
         <h2>JPG vs PNG Explained</h2>
         <p>Learn when to use lossy JPEG DCT or lossless PNG alpha channels for your web assets.</p>
         <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="pdf" onclick="location.href='../blog/images-to-pdf.html'">
         <span class="card-category">Document Conversion</span>
         <h2>Convert Images to PDF Easily</h2>
         <p>Multi‑image streams compressed into scalable PDF documents while maintaining DPI properties.</p>
         <div class="card-meta"><span>📖 8 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="image" onclick="location.href='../blog/whatsapp-resize.html'">
         <span class="card-category">Resizing</span>
         <h2>Resize Images for WhatsApp</h2>
         <p>Control aspect‑ratios and optimize native dimension grids for messaging apps.</p>
         <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="design" onclick="location.href='../blog/social-media-sizes.html'">
         <span class="card-category">Social Media</span>
         <h2>Best Image Sizes for Social Media</h2>
         <p>Complete dimension lookup for Facebook, Instagram, LinkedIn, YouTube, and more.</p>
         <div class="card-meta"><span>📖 10 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="image" onclick="location.href='../blog/mobile-bg-removal.html'">
         <span class="card-category">Mobile Processing</span>
         <h2>Remove Background on Mobile</h2>
         <p>Browser canvas pipelines for mobile background removal without heavy apps.</p>
         <div class="card-meta"><span>📖 8 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="image" onclick="location.href='../blog/website-compression.html'">
         <span class="card-category">Web Performance</span>
         <h2>Compress Images for Websites</h2>
         <p>Boost Core Web Vitals by optimizing LCP with next‑gen image formats.</p>
         <div class="card-meta"><span>📖 9 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="image" onclick="location.href='../blog/blur-faces-guide.html'">
         <span class="card-category">Privacy</span>
         <h2>How to Blur Faces in Photos</h2>
         <p>Protect facial metadata using Gaussian kernels directly in your browser.</p>
         <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
       <article class="card" data-category="image" onclick="location.href='../blog/photo-editing-tools.html'">
         <span class="card-category">Editing</span>
         <h2>Best Online Photo Editing Tools</h2>
@@ -266,85 +179,74 @@
         <div class="card-meta"><span>📖 9 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- ========== 12 NEW TOOL CARDS (Blog Article Links) ========== -->
-      <article class="card" data-category="design" onclick="location.href='./favicon-guide.html'">
+      <!-- ========== 12 NEW TOOL CARDS ========== -->
+      <article class="card" data-category="design" onclick="location.href='../favicon-generator.html'">
         <span class="card-category">Icon Generation<span class="badge-new">NEW</span></span>
         <h2>Favicon Generator – Create Multi‑Size Icons</h2>
         <p>Convert any image into standard .ico files with multiple resolutions for websites and apps.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="gis" onclick="location.href='./geoforge-guide.html'">
+      <article class="card" data-category="gis" onclick="location.href='../geoforge.html'">
         <span class="card-category">GIS Mapping<span class="badge-new">NEW</span></span>
         <h2>GeoForge – Create Shapefiles Online</h2>
         <p>Draw points, lines & polygons on live maps. Export as Shapefile ZIP, GeoJSON, KML – ArcGIS & QGIS ready.</p>
         <div class="card-meta"><span>📖 12 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="pdf" onclick="location.href='./merge-pdf-guide.html'">
+      <article class="card" data-category="pdf" onclick="location.href='../merge-pdf.html'">
         <span class="card-category">PDF Merging<span class="badge-new">NEW</span></span>
         <h2>Merge PDF – Combine Multiple Documents</h2>
         <p>Combine PDFs into a single file in any order. Fast, free, and entirely browser‑based.</p>
         <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="ai" onclick="location.href='./ocr-guide.html'">
+      <article class="card" data-category="ai" onclick="location.href='../ocr.html'">
         <span class="card-category">AI & OCR<span class="badge-new">NEW</span></span>
         <h2>OCR Scanner – Extract Text from Images</h2>
         <p>Extract text from any image with 100+ languages using Tesseract.js – fully client‑side.</p>
         <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="design" onclick="location.href='./palette-guide.html'">
+      <article class="card" data-category="design" onclick="location.href='../palette-generator.html'">
         <span class="card-category">Color Tools<span class="badge-new">NEW</span></span>
         <h2>Palette Generator – Create Beautiful Color Schemes</h2>
         <p>Generate complementary, analogous, triadic palettes. Extract colors from images.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="utility" onclick="location.href='./password-guide.html'">
+      <article class="card" data-category="utility" onclick="location.href='../password-generator.html'">
         <span class="card-category">Security<span class="badge-new">NEW</span></span>
         <h2>Password Generator – Strong Random Passwords</h2>
         <p>Cryptographically secure passwords with passphrase mode, batch generation, and entropy meter.</p>
         <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="pdf" onclick="location.href='./pdf-annotator-guide.html'">
+      <article class="card" data-category="pdf" onclick="location.href='../pdf-annotator.html'">
         <span class="card-category">PDF Editing<span class="badge-new">NEW</span></span>
         <h2>PDF Annotator – Draw, Sign & Highlight</h2>
         <p>Add text, draw, highlight, and sign PDFs directly in your browser. No software needed.</p>
         <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="utility" onclick="location.href='./qr-guide.html'">
+      <article class="card" data-category="utility" onclick="location.href='../qr-generator.html'">
         <span class="card-category">QR Codes<span class="badge-new">NEW</span></span>
         <h2>QR Code Generator – Custom Styled Codes</h2>
         <p>Generate trackable vector QR codes with logos, gradients, and batch export.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="design" onclick="location.href='./screenshot-editor-guide.html'">
+      <article class="card" data-category="design" onclick="location.href='../screenshot-editor.html'">
         <span class="card-category">Mockups<span class="badge-new">NEW</span></span>
         <h2>Screenshot Editor – Beautiful Device Frames</h2>
         <p>Wrap screenshots in device frames, gradients, and custom backgrounds. Export as PNG/JPEG.</p>
         <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="pdf" onclick="location.href='./split-pdf-guide.html'">
+      <article class="card" data-category="pdf" onclick="location.href='../split-pdf.html'">
         <span class="card-category">PDF Splitting<span class="badge-new">NEW</span></span>
         <h2>Split PDF – Extract Pages Instantly</h2>
         <p>Split PDFs by page range or extract every page as a separate file. 100% client‑side.</p>
         <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="design" onclick="location.href='./thumbnail-guide.html'">
+      <article class="card" data-category="design" onclick="location.href='../thumbnail-maker.html'">
         <span class="card-category">Thumbnails<span class="badge-new">NEW</span></span>
         <h2>Thumbnail Maker – YouTube & Social Cards</h2>
         <p>Design streaming thumbnails with text, shapes, and images. Export in multiple formats.</p>
         <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
       </article>
-
-      <article class="card" data-category="utility" onclick="location.href='./unit-converter-guide.html'">
+      <article class="card" data-category="utility" onclick="location.href='../unit-converter.html'">
         <span class="card-category">Calculators<span class="badge-new">NEW</span></span>
         <h2>Unit Converter – Length, Weight, Digital & More</h2>
         <p>Convert between hundreds of units with live rate display and history saving.</p>
