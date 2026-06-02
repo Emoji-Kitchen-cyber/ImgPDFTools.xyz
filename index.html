@@ -1,31 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="google-site-verification" content="S_xtKI5JCRkkoHtqpOZ35xBeybTS056a9DXNtNMAUZ0" />
   <title id="siteTitle">PixelPress — Free Online Image & Document Toolkit</title>
   <meta name="description" content="Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more. All processing happens in your browser – private and fast." />
-<meta name="Description" content="Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more.">
   <link rel="canonical" href="https://pixelpress-smoky.vercel.app/" />
+
   <meta http-equiv="Content-Security-Policy" 
         content="default-src 'self'; 
                  script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net cdnjs.com www.googletagmanager.com www.google-analytics.com;
@@ -35,9 +17,10 @@
                  connect-src 'self' https:;
                  frame-src 'none';
                  object-src 'none';" />
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-        onerror="this.onerror=null;this.href='https://unpkg.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css'" />
+
+  <!-- ✅ FIX 1: Non-blocking Font Awesome (was render-blocking) -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
   <!-- ========== FAVICONS FOR ALL DEVICES ========== -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
@@ -56,11 +39,19 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#ec4899">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PixelPress">
   <!-- ========== END FAVICONS ========== -->
 
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+  <!-- ✅ FIX 2: Non-blocking Google Fonts with preconnect (was render-blocking @import) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
 
+  <style>
     :root {
       --bg: #f5f5f7;
       --surface: rgba(255, 255, 255, 0.75);
@@ -219,7 +210,8 @@
     .tool-card:hover .tool-icon-wrapper { background: var(--accent); color: #ffffff; border-color: var(--accent); }
     
     .tool-info-pane { flex: 1; }
-    .tool-info-pane h2 { font-size: 16.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -0.2px; text-transform: uppercase; }
+    /* ✅ FIX 3: Accessibility — h2 inside tool cards (screen readers) */
+    .tool-info-pane h3 { font-size: 16.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -0.2px; text-transform: uppercase; }
     .tool-info-pane p { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
     .tool-info-pane p strong { color: var(--text); font-weight: 600; }
 
@@ -232,12 +224,17 @@
   </style>
 
   <script>
+    // ✅ FIX 4: Apply theme BEFORE paint to avoid flash
+    (function() {
+      var t = localStorage.getItem('pixelpress-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+
     // CDN Fallback Loader
     window.cdnFallback = function(primaryUrl, backupUrl, callback) {
       var script = document.createElement('script');
       script.src = primaryUrl;
       script.onerror = function() {
-        console.warn('Primary CDN failed for', primaryUrl, '- loading backup');
         var fallback = document.createElement('script');
         fallback.src = backupUrl;
         fallback.onload = callback || function(){};
@@ -308,35 +305,37 @@
     }
   </script>
 
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
+  <!-- ✅ FIX 5: async+defer for Google Analytics -->
+  <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-3P7QPQKV3K');
+    gtag('config', 'G-3P7QPQKV3K', { 'send_page_view': true });
   </script>
 </head>
 <body>
   <div class="sidebar-overlay" id="menuOverlay" onclick="toggleMenu(false)"></div>
-  <aside class="sidebar" id="sideMenu">
+  <!-- ✅ FIX 6: aria-label on sidebar for accessibility -->
+  <aside class="sidebar" id="sideMenu" aria-label="Main navigation menu">
     <div class="sidebar-header">
       <div class="nav-logo">PIXEL<span>PRESS</span></div>
-      <button class="sidebar-close" onclick="toggleMenu(false)">✕</button>
+      <button class="sidebar-close" onclick="toggleMenu(false)" aria-label="Close menu">✕</button>
     </div>
     <div class="sidebar-links" id="sidebarLinks"></div>
   </aside>
 
-  <nav>
+  <nav aria-label="Site navigation">
     <div class="nav-left">
-      <button class="menu-trigger" onclick="toggleMenu(true)"><i class="fa-solid fa-bars"></i></button>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <button class="menu-trigger" onclick="toggleMenu(true)" aria-label="Open menu" aria-expanded="false" id="menuTriggerBtn"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+      <a href="./index.html" class="nav-logo" aria-label="PixelPress Home">PIXEL<span>PRESS</span></a>
     </div>
     <div class="nav-actions">
       <div class="lang-pill-container">
-        <span class="lang-p-label" id="langText">English</span>
-        <button class="switch-p-btn active" id="langToggleBtn" onclick="toggleLanguage()"></button>
+        <span class="lang-p-label" id="langText" aria-live="polite">English</span>
+        <button class="switch-p-btn active" id="langToggleBtn" onclick="toggleLanguage()" aria-label="Toggle language"></button>
       </div>
-      <button class="control-btn" id="themeToggle" title="Toggle System Theme">🌓</button>
+      <button class="control-btn" id="themeToggle" aria-label="Toggle dark/light theme">🌓</button>
     </div>
   </nav>
 
@@ -346,13 +345,13 @@
       <p id="heroDesc">Your online photo editor is here and forever free!</p>
     </section>
     <div class="search-container">
-      <span class="search-icon">🔍</span>
-      <input type="text" class="search-bar" id="toolSearch" placeholder="Search operational tools or utilities..." autocomplete="off">
-      <span class="search-kbd">⌘ K</span>
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input type="search" class="search-bar" id="toolSearch" placeholder="Search operational tools or utilities..." autocomplete="off" aria-label="Search tools">
+      <span class="search-kbd" aria-hidden="true">⌘ K</span>
     </div>
-    <div class="filter-row" id="filterContainer"></div>
-    <section class="tools-grid" id="toolsList"></section>
-    <div id="noResults">No operational utility suite detected matching query parameter.</div>
+    <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
+    <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
+    <div id="noResults" role="status" aria-live="polite">No operational utility suite detected matching query parameter.</div>
   </div>
 
   <footer>
@@ -392,7 +391,7 @@
           { href: "./favicon-generator.html", icon: "fa-icons", text: "Favicon Generator", section: "image", cat: "create convert", emoji: "🎯", title: "Favicon Generator", desc: "Convert raw assets into standard multi-size .ico targets.", isUtilityCard: true },
           { href: "./pdf-to-jpg.html", icon: "fa-file-pdf", text: "PDF to JPG", section: "doc", cat: "convert doc", emoji: "📄", title: "PDF to JPG", desc: "Extract all pages from a <strong>PDF</strong> file or convert PDF pages into high-quality <strong>JPG</strong> images instantly.", isUtilityCard: true },
           { href: "./jpg-to-pdf.html", icon: "fa-file-image", text: "JPG to PDF", section: "doc", cat: "convert doc", emoji: "🖼️", title: "JPG to PDF", desc: "Convert your <strong>JPG</strong>, <strong>PNG</strong>, or <strong>WEBP</strong> images into a single compact <strong>PDF</strong> document easily.", isUtilityCard: true },
-          { href: "./split-pdf.html", icon: "fa-scissors", text: "Split PDF", section: "doc", cat: "doc", emoji: "✂️", title: "Split PDF", desc: "Extract specific page ranges or split every single page of your <strong>PDF</strong> document into separate separate files seamlessly.", isUtilityCard: true },
+          { href: "./split-pdf.html", icon: "fa-scissors", text: "Split PDF", section: "doc", cat: "doc", emoji: "✂️", title: "Split PDF", desc: "Extract specific page ranges or split every single page of your <strong>PDF</strong> document into separate files seamlessly.", isUtilityCard: true },
           { href: "./merge-pdf.html", icon: "fa-object-group", text: "Merge PDF", section: "doc", cat: "doc", emoji: "🗂️", title: "Merge PDF", desc: "Combine multiple <strong>PDF</strong> documents into a single consolidated file in whatever order you want.", isUtilityCard: true },
           { href: "./compress-pdf.html", icon: "fa-compress", text: "Compress PDF", section: "doc", cat: "optimize doc", emoji: "📉", title: "Compress PDF", desc: "Shrink the file size of your <strong>PDF</strong> document dynamically while maximizing internal asset rendering profiles.", isUtilityCard: true },
           { href: "./pdf-annotator.html", icon: "fa-pen-ruler", text: "PDF Annotator & Editor", section: "doc", cat: "edit doc", emoji: "🖊️", title: "PDF Annotator", desc: "Add text, draw, highlight, sign PDFs directly in your browser.", isUtilityCard: true },
@@ -497,14 +496,16 @@
         btn.className = `filter-pill ${i === 0 ? 'active' : ''}`;
         btn.innerText = f.text;
         btn.setAttribute('data-target', f.id);
+        btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
         btn.onclick = function() { filterCategory(f.id, this); };
         filterBox.appendChild(btn);
       });
       const toolsGrid = document.getElementById('toolsList');
       toolsGrid.innerHTML = '';
       const gridItems = data.toolsRegistry.filter(item => item.isUtilityCard);
+      // ✅ FIX 7: h2 → h3 for correct heading hierarchy (page h1 exists already)
       gridItems.forEach(t => {
-        toolsGrid.innerHTML += `<a href="${t.href}" class="tool-link" data-category="${t.cat}"><div class="tool-card"><div class="tool-icon-wrapper">${t.emoji}</div><div class="tool-info-pane"><h2>${t.title}</h2><p>${t.desc}</p></div></div></a>`;
+        toolsGrid.innerHTML += `<a href="${t.href}" class="tool-link" data-category="${t.cat}"><div class="tool-card"><div class="tool-icon-wrapper" aria-hidden="true">${t.emoji}</div><div class="tool-info-pane"><h3>${t.title}</h3><p>${t.desc}</p></div></div></a>`;
       });
       const fLinks = document.getElementById('footerLinks');
       fLinks.innerHTML = '';
@@ -512,24 +513,24 @@
       const sidebarBox = document.getElementById('sidebarLinks');
       sidebarBox.innerHTML = '';
       const homeLink = data.toolsRegistry.find(item => item.section === 'home');
-      if (homeLink) sidebarBox.innerHTML += `<a href="${homeLink.href}"><i class="fa-solid ${homeLink.icon}"></i> ${homeLink.text}</a>`;
+      if (homeLink) sidebarBox.innerHTML += `<a href="${homeLink.href}"><i class="fa-solid ${homeLink.icon}" aria-hidden="true"></i> ${homeLink.text}</a>`;
       sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.image}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'image') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}"></i> ${item.text}</a>`; });
+      data.toolsRegistry.forEach(item => { if (item.section === 'image') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
       sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.doc}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'doc') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}"></i> ${item.text}</a>`; });
+      data.toolsRegistry.forEach(item => { if (item.section === 'doc') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
       sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.utility}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'utility') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}"></i> ${item.text}</a>`; });
+      data.toolsRegistry.forEach(item => { if (item.section === 'utility') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
       sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.gis}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'gis') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}"></i> ${item.text}</a>`; });
+      data.toolsRegistry.forEach(item => { if (item.section === 'gis') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
       sidebarBox.innerHTML += `<div style="height:1px;background:var(--border);margin:10px 0;"></div><div class="menu-section-title">${data.sidebarTitles.info}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'info') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}"></i> ${item.text}</a>`; });
+      data.toolsRegistry.forEach(item => { if (item.section === 'info') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
       evaluateLiveSearchFilters();
     }
 
     function toggleLanguage() {
       const toggleBtn = document.getElementById('langToggleBtn');
-      if (currentLang === 'en') { currentLang = 'ar'; document.body.classList.add('rtl'); toggleBtn.classList.remove('active'); }
-      else { currentLang = 'en'; document.body.classList.remove('rtl'); toggleBtn.classList.add('active'); }
+      if (currentLang === 'en') { currentLang = 'ar'; document.body.classList.add('rtl'); toggleBtn.classList.remove('active'); document.documentElement.lang = 'ar'; }
+      else { currentLang = 'en'; document.body.classList.remove('rtl'); toggleBtn.classList.add('active'); document.documentElement.lang = 'en'; }
       renderUI();
     }
 
@@ -541,7 +542,7 @@
       let aggregateMatchCount = 0;
       const links = document.querySelectorAll('.tool-link');
       links.forEach(link => {
-        const title = link.querySelector('h2').textContent.toLowerCase();
+        const title = link.querySelector('h3').textContent.toLowerCase();
         const description = link.querySelector('p').textContent.toLowerCase();
         const categories = link.getAttribute('data-category').split(' ');
         const queryMatch = title.includes(query) || description.includes(query);
@@ -554,8 +555,9 @@
 
     function filterCategory(category, element) {
       const buttons = document.querySelectorAll('.filter-pill');
-      buttons.forEach(btn => btn.classList.remove('active'));
+      buttons.forEach(btn => { btn.classList.remove('active'); btn.setAttribute('aria-pressed', 'false'); });
       element.classList.add('active');
+      element.setAttribute('aria-pressed', 'true');
       evaluateLiveSearchFilters();
     }
 
@@ -564,13 +566,12 @@
     function toggleMenu(show) {
       const menu = document.getElementById('sideMenu');
       const overlay = document.getElementById('menuOverlay');
-      if (show) { menu.classList.add('open'); overlay.classList.add('show'); }
-      else { menu.classList.remove('open'); overlay.classList.remove('show'); }
+      const trigger = document.getElementById('menuTriggerBtn');
+      if (show) { menu.classList.add('open'); overlay.classList.add('show'); trigger.setAttribute('aria-expanded', 'true'); }
+      else { menu.classList.remove('open'); overlay.classList.remove('show'); trigger.setAttribute('aria-expanded', 'false'); }
     }
 
     const themeToggle = document.getElementById('themeToggle');
-    const getSystemThemeSetting = () => localStorage.getItem('pixelpress-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', getSystemThemeSetting());
     themeToggle.addEventListener('click', () => {
       const currentSetting = document.documentElement.getAttribute('data-theme');
       const targetSetting = currentSetting === 'dark' ? 'light' : 'dark';
@@ -580,6 +581,7 @@
 
     window.addEventListener('keydown', e => {
       if((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); searchInput.focus(); }
+      if(e.key === 'Escape') { toggleMenu(false); }
     });
 
     renderUI();
@@ -606,5 +608,16 @@
       }
     })();
   </script>
+
+  <!-- ✅ FIX 8: Service Worker registration for PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .then(function(reg) { console.log('[PWA] SW registered:', reg.scope); })
+          .catch(function(err) { console.warn('[PWA] SW registration failed:', err); });
+      });
+    }
+  </script>
 </body>
-</html> 
+</html>
