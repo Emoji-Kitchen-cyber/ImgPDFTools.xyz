@@ -32,4 +32,47 @@
     .section p{color:var(--muted);line-height:1.9;margin-bottom:1rem}
     .section ul,.section ol{padding-left:24px;color:var(--muted);line-height:1.9;margin-bottom:1rem}
     .table-wrap{overflow-x:auto;margin:1rem 0}
-    table{width:100%;border-collapse:collapse;font-size:.9
+    table{width:100%;border-collapse:collapse;font-size:.9rem}
+    th,td{padding:10px 14px;border:1px solid var(--border);text-align:left}
+    th{background:var(--card);color:var(--accent);font-weight:600}
+    td{color:var(--muted)}
+    .code{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;font-family:var(--fmono);font-size:.85rem;color:var(--accent2);overflow-x:auto;margin:1rem 0}
+    .cta{background:linear-gradient(135deg,rgba(236,72,153,.12),rgba(167,139,250,.08));border:1px solid var(--accent);border-radius:var(--radius);padding:2.5rem;text-align:center;margin:3rem 0}
+    .cta h3{font-family:var(--fhead);font-size:1.3rem;margin-bottom:.5rem}
+    .cta p{color:var(--muted);margin-bottom:1.5rem}
+    .btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-weight:600;font-size:1rem;transition:.2s;text-decoration:none}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,.3)}
+    .faq{margin:3rem 0}
+    .faq h2{font-family:var(--fhead);margin-bottom:1rem}
+    .faq-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
+    .faq-q{width:100%;padding:16px 20px;background:var(--card);border:none;text-align:left;font-weight:600;font-size:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
+    .faq-a{max-height:0;overflow:hidden;transition:.3s;color:var(--muted);line-height:1.8;padding:0 20px}
+    .faq-item.open .faq-a{max-height:500px;padding:0 20px 20px}
+    footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border);font-size:.85rem;margin-top:3rem}
+    @media(max-width:600px){.main{padding:1rem 14px}.hero h1{font-size:1.6rem}}
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+  <nav><a href="../index.html" class="nav-logo">PIXELPRESS</a><a href="./index.html" style="color:var(--muted);font-size:.9rem">← Blog</a></nav>
+  <main class="main">
+    <div class="hero"><div class="badge">QR CODES</div><h1>QR Code Generator — Create Custom Styled, Trackable QR Codes</h1><div class="meta">📅 June 2026 &nbsp;|&nbsp; ⏱ 8 Min Read &nbsp;|&nbsp; ✍️ Muhammad Jahangir</div></div>
+    <nav class="toc"><h3>📋 Table of Contents</h3><ol><li><a href="#s1">What is a QR Code?</a></li><li><a href="#s2">Types of QR Content</a></li><li><a href="#s3">Customization Options</a></li><li><a href="#s4">Error Correction Levels</a></li><li><a href="#s5">Best Practices</a></li><li><a href="#faq">Frequently Asked Questions</a></li></ol></nav>
+    <div class="section" id="s1"><h2>1. What is a QR Code?</h2><p>A <strong>QR (Quick Response) code</strong> is a two‑dimensional barcode that can store URLs, text, WiFi credentials, contact information (vCard), email addresses, and SMS messages. Scanned by any smartphone camera, QR codes bridge the physical and digital worlds instantly.</p></div>
+    <div class="section" id="s2"><h2>2. Types of QR Content</h2><div class="table-wrap"><table><tr><th>Type</th><th>Example</th><th>Use Case</th></tr><tr><td>URL</td><td>https://example.com</td><td>Website links, menus, portfolios</td></tr><tr><td>WiFi</td><td>WIFI:S:MyWiFi;T:WPA;P:pass123;;</td><td>Guest WiFi sharing</td></tr><tr><td>vCard</td><td>BEGIN:VCARD...END:VCARD</td><td>Digital business cards</td></tr><tr><td>Email</td><td>MATMSG:TO:...SUB:...BODY:...;;</td><td>Pre‑filled email drafts</td></tr><tr><td>SMS</td><td>SMSTO:+1234567890:Hello</td><td>Pre‑written text messages</td></tr><tr><td>Image</td><td>Data URL</td><td>Small embedded images</td></tr></table></div></div>
+    <div class="section" id="s3"><h2>3. Customization Options</h2><ul><li><strong>Dot Style:</strong> Square, Dots, Rounded, Classy, Extra‑rounded</li><li><strong>Corner Style:</strong> Square, Dot, Extra‑rounded</li><li><strong>Gradient Colors:</strong> Two‑color linear gradient</li><li><strong>Logo Overlay:</strong> Add your brand logo in the center</li><li><strong>Background Color:</strong> Match your brand palette</li><li><strong>Quiet Zone:</strong> Adjust margin for better scanning</li><li><strong>Batch Generation:</strong> Generate multiple QR codes at once</li></ul></div>
+    <div class="section" id="s4"><h2>4. Error Correction Levels</h2><div class="table-wrap"><table><tr><th>Level</th><th>Recovery</th><th>Best For</th></tr><tr><td>L (Low)</td><td>7%</td><td>Clean environments, maximum data density</td></tr><tr><td>M (Medium)</td><td>15%</td><td>General use (recommended)</td></tr><tr><td>Q (Quartile)</td><td>25%</td><td>Industrial, slightly dirty environments</td></tr><tr><td>H (High)</td><td>30%</td><td>Logos, outdoor signage, damaged surfaces</td></tr></table></div></div>
+    <div class="section" id="s5"><h2>5. Best Practices</h2><ul><li><strong>Test before printing</strong> — Scan with multiple devices</li><li><strong>Use high contrast</strong> — Dark QR on light background</li><li><strong>Keep quiet zone</strong> — Minimum 4‑module white border</li><li><strong>Don't scale too small</strong> — Minimum 2×2 cm for print</li><li><strong>Use H correction</strong> when adding logos</li></ul></div>
+    <div class="cta"><h3>📱 Generate Your QR Code Now</h3><p>Custom styled, logo‑ready, batch export — free & instant.</p><a href="../qr-generator.html" class="btn">Launch QR Code Generator <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a></div>
+    <div class="faq" id="faq"><h2>❓ Frequently Asked Questions</h2>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I add a logo to my QR code? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes! Upload any image as a logo overlay. Use H error correction for best results.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">How much data can a QR code hold? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Up to 2,953 bytes (byte mode) or 4,296 alphanumeric characters at version 40.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the tool free? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes — 100% free, unlimited generation, no watermarks.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I download as SVG? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes — PNG, SVG, and JPEG export options are available.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Are my QR codes tracked? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">No — all generation is client‑side. No data is stored or tracked.</div></div>
+    </div>
+  </main>
+  <footer>© 2026 PixelPress. All rights reserved. <a href="../privacy-policy.html" style="color:var(--accent);margin-left:1rem">Privacy</a></footer>
+  <script>window.addEventListener('scroll',()=>{const s=document.body.scrollTop||document.documentElement.scrollTop;const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progressBar').style.width=(h>0?(s/h)*100:0)+'%'});document.addEventListener('DOMContentLoaded',()=>{document.documentElement.setAttribute('data-theme',localStorage.getItem('pixelpress-theme')||'dark')});</script>
+</body>
+</html>
