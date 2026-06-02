@@ -1,613 +1,432 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
-
-<script>
-  window.dataLayer = window.dataLayer || [];
-
-  function gtag(){
-    dataLayer.push(arguments);
-  }
-
-  gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
-</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PixelPress Intelligence Blog – Optimization & Image Processing</title>
-  <meta name="description" content="Master file systems processing, background manipulation metrics, high performance image resizing techniques and lossless optimization paths with verified guides." />
+  <title>PixelPress Blog – Image & Document Tools Knowledge Base</title>
+  <meta name="description" content="Master image processing, PDF manipulation, OCR scanning, GIS mapping, and more with PixelPress professional guides and tutorials." />
   <link rel="canonical" href="https://pixelpress-smoky.vercel.app/blog" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="PixelPress Intelligence Blog Hub" />
-  <meta property="og:description" content="Professional image processing strategies and optimization guidelines." />
+  <meta property="og:title" content="PixelPress Blog – Professional Tools Knowledge Base" />
+  <meta property="og:description" content="Expert guides on image optimization, PDF editing, GIS mapping, OCR, and more." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pixelpress-smoky.vercel.app/blog" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
-    /* ──────────────────────────────────────────────
-       TOKENS
-    ────────────────────────────────────────────── */
-    :root {
-      --bg:        #0a0a0f;
-      --surface:   #111118;
-      --card:      #16161f;
-      --border:    #22222e;
-      --accent:    #5b6cf9;
-      --accent2:   #a78bfa;
-      --text:      #e8e8f0;
-      --muted:     #6b6b80;
-      --tag-bg:    #1e1e2e;
-      --radius:    14px;
-      --font-head: 'Syne', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-    }
-
-    /* ──────────────────────────────────────────────
-       RESET + BASE
-    ────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      font-size: 16px;
-      line-height: 1.6;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    a { color: inherit; text-decoration: none; }
-
-    /* ──────────────────────────────────────────────
-       GOOGLE FONTS (self-contained CDN)
-    ────────────────────────────────────────────── */
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root {
+      --bg: #0a0a0f; --surface: #111118; --card: #16161f; --border: #22222e;
+      --accent: #ec4899; --accent2: #a78bfa; --text: #e8e8f0; --muted: #6b6b80;
+      --tag-bg: #1e1e2e; --radius: 14px; --green: #10b981;
+      --fhead: 'Syne', sans-serif; --fbody: 'DM Sans', sans-serif; --fmono: 'JetBrains Mono', monospace;
+    }
+    [data-theme="light"] {
+      --bg: #f5f5f7; --surface: #ffffff; --card: #ffffff; --border: rgba(0,0,0,0.06);
+      --text: #1d1d1f; --muted: #6e6e73; --tag-bg: #f0f0f5;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background:var(--bg); color:var(--text); font-family:var(--fbody);
+      min-height:100vh; -webkit-font-smoothing:antialiased; transition:0.3s;
+    }
+    a { color:inherit; text-decoration:none; }
 
-    /* ──────────────────────────────────────────────
-       NOISE OVERLAY
-    ────────────────────────────────────────────── */
+    /* Noise overlay */
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.025;
-      pointer-events: none;
-      z-index: 0;
+      content:''; position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity:0.02; pointer-events:none; z-index:0;
     }
 
-    /* ──────────────────────────────────────────────
-       NAV
-    ────────────────────────────────────────────── */
+    /* NAV */
     nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 clamp(1rem, 5vw, 3rem);
-      height: 64px;
-      background: rgba(10,10,15,0.85);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
+      position:sticky; top:0; z-index:100; display:flex; align-items:center;
+      justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px;
+      background:rgba(10,10,15,0.85); backdrop-filter:blur(16px); border-bottom:1px solid var(--border);
     }
-
     .nav-logo {
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1.15rem;
-      letter-spacing: 0.05em;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-family:var(--fhead); font-weight:800; font-size:1.15rem; letter-spacing:0.05em;
+      background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
+    .nav-links { display:flex; gap:2rem; list-style:none; }
+    .nav-links a { font-size:0.875rem; font-weight:500; color:var(--muted); transition:0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--text); }
+    .theme-toggle { background:var(--card); border:1px solid var(--border); width:38px; height:38px; border-radius:50%; cursor:pointer; color:var(--text); display:flex; align-items:center; justify-content:center; }
 
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--muted);
-      transition: color 0.2s;
-    }
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--text); }
-
-    /* ──────────────────────────────────────────────
-       HERO
-    ────────────────────────────────────────────── */
+    /* HERO */
     .hero {
-      position: relative;
-      overflow: hidden;
-      padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem) clamp(2rem, 5vw, 4rem);
-      text-align: center;
+      position:relative; overflow:hidden; padding:clamp(3rem,8vw,6rem) clamp(1rem,5vw,3rem) clamp(2rem,5vw,4rem); text-align:center;
     }
-
-    /* radial glow behind hero */
     .hero::after {
-      content: '';
-      position: absolute;
-      top: -120px; left: 50%;
-      transform: translateX(-50%);
-      width: 600px; height: 400px;
-      background: radial-gradient(ellipse at center, rgba(91,108,249,0.18) 0%, transparent 70%);
-      pointer-events: none;
+      content:''; position:absolute; top:-120px; left:50%; transform:translateX(-50%);
+      width:600px; height:400px; background:radial-gradient(ellipse at center, rgba(236,72,153,0.18) 0%, transparent 70%); pointer-events:none;
     }
-
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.3rem 0.85rem;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--accent2);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 1.25rem;
+      display:inline-flex; align-items:center; gap:0.4rem; padding:0.3rem 0.85rem;
+      background:var(--tag-bg); border:1px solid var(--border); border-radius:999px;
+      font-family:var(--fmono); font-size:0.72rem; color:var(--accent2); letter-spacing:0.08em;
+      text-transform:uppercase; margin-bottom:1.25rem;
     }
-
-    .hero-badge span { display: inline-block; width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.4; transform: scale(0.8); }
-    }
-
+    .hero-badge span { display:inline-block; width:6px; height:6px; background:var(--accent2); border-radius:50%; animation:pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
     .hero h1 {
-      font-family: var(--font-head);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      max-width: 720px;
-      margin-inline: auto;
+      font-family:var(--fhead); font-size:clamp(2rem,5vw,3.5rem); font-weight:800;
+      line-height:1.1; letter-spacing:-0.02em; margin-bottom:1rem; max-width:720px; margin-inline:auto;
     }
-
     .hero h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, var(--accent) 20%, var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-style:normal; background:linear-gradient(135deg,var(--accent) 20%,var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
+    .hero p { font-size:1.05rem; color:var(--muted); max-width:540px; margin:0 auto 2rem; }
 
-    .hero p {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 540px;
-      margin: 0 auto 2rem;
+    /* SEARCH */
+    .search-wrap { max-width:500px; margin:0 auto 1.5rem; position:relative; }
+    .search-input {
+      width:100%; padding:12px 20px 12px 44px; border:1px solid var(--border); border-radius:12px;
+      background:var(--card); color:var(--text); font-size:0.95rem; outline:none; transition:0.2s;
     }
+    .search-input:focus { border-color:var(--accent); box-shadow:0 0 0 4px rgba(236,72,153,0.1); }
+    .search-icon { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); }
 
-    /* ──────────────────────────────────────────────
-       FILTER TABS
-    ────────────────────────────────────────────── */
+    /* FILTERS */
     .filters {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: clamp(2rem, 4vw, 3.5rem);
-      padding: 0 clamp(1rem, 5vw, 3rem);
+      display:flex; flex-wrap:wrap; justify-content:center; gap:0.5rem;
+      margin-bottom:clamp(2rem,4vw,3.5rem); padding:0 clamp(1rem,5vw,3rem);
     }
-
     .filter-btn {
-      padding: 0.45rem 1.1rem;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--muted);
-      font-family: var(--font-body);
-      font-size: 0.85rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
+      padding:0.45rem 1.1rem; border-radius:999px; border:1px solid var(--border);
+      background:transparent; color:var(--muted); font-family:var(--fbody); font-size:0.85rem;
+      font-weight:500; cursor:pointer; transition:0.2s;
     }
+    .filter-btn:hover { border-color:var(--accent); color:var(--text); }
+    .filter-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
 
-    .filter-btn:hover {
-      border-color: var(--accent);
-      color: var(--text);
-    }
+    /* GRID */
+    .grid-wrap { padding:0 clamp(1rem,5vw,3rem) clamp(3rem,6vw,5rem); max-width:1300px; margin-inline:auto; }
+    .articles-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(320px,1fr)); gap:1.5rem; }
 
-    .filter-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    /* ──────────────────────────────────────────────
-       GRID
-    ────────────────────────────────────────────── */
-    .grid-wrap {
-      padding: 0 clamp(1rem, 5vw, 3rem) clamp(3rem, 6vw, 5rem);
-      max-width: 1200px;
-      margin-inline: auto;
-    }
-
-    .articles-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-
-    /* ──────────────────────────────────────────────
-       CARD
-    ────────────────────────────────────────────── */
+    /* CARD */
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1.6rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-      transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
-      cursor: pointer;
-      animation: fadeUp 0.4s ease both;
+      background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+      padding:1.6rem; display:flex; flex-direction:column; gap:0.85rem;
+      transition:border-color 0.25s, transform 0.25s, box-shadow 0.25s; cursor:pointer;
+      animation:fadeUp 0.4s ease both;
     }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card:hover {
-      border-color: var(--accent);
-      transform: translateY(-4px);
-      box-shadow: 0 16px 40px rgba(91,108,249,0.12);
-    }
-
-    .card-category {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent2);
-    }
-
-    .card h2 {
-      font-family: var(--font-head);
-      font-size: 1.05rem;
-      font-weight: 700;
-      line-height: 1.3;
-      color: var(--text);
-    }
-
-    .card p {
-      font-size: 0.875rem;
-      color: var(--muted);
-      line-height: 1.6;
-      flex: 1;
-    }
-
+    @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+    .card:hover { border-color:var(--accent); transform:translateY(-4px); box-shadow:0 16px 40px rgba(236,72,153,0.12); }
+    .card-category { font-family:var(--fmono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent2); }
+    .card h2 { font-family:var(--fhead); font-size:1.05rem; font-weight:700; line-height:1.3; color:var(--text); }
+    .card p { font-size:0.875rem; color:var(--muted); line-height:1.6; flex:1; }
     .card-meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: var(--muted);
-      padding-top: 0.6rem;
-      border-top: 1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between; font-size:0.78rem;
+      color:var(--muted); padding-top:0.6rem; border-top:1px solid var(--border);
     }
-
-    .card-meta .read-time {
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
     .card-arrow {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 28px; height: 28px;
-      border-radius: 50%;
-      background: var(--tag-bg);
-      border: 1px solid var(--border);
-      color: var(--accent);
-      font-size: 0.8rem;
-      transition: background 0.2s, border-color 0.2s;
+      display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px;
+      border-radius:50%; background:var(--tag-bg); border:1px solid var(--border); color:var(--accent);
+      font-size:0.8rem; transition:0.2s;
     }
+    .card:hover .card-arrow { background:var(--accent); border-color:var(--accent); color:#fff; }
+    .card[hidden] { display:none; }
+    .badge-new { background:var(--green); color:#fff; font-size:0.65rem; padding:2px 8px; border-radius:999px; margin-left:6px; }
 
-    .card:hover .card-arrow {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
-    }
-
-    /* Hidden cards */
-    .card[hidden] { display: none; }
-
-    /* ──────────────────────────────────────────────
-       CTA BANNER
-    ────────────────────────────────────────────── */
-    .cta-banner {
-      max-width: 1200px;
-      margin: 0 auto clamp(2rem, 4vw, 3rem);
-      padding: 0 clamp(1rem, 5vw, 3rem);
-    }
-
+    /* CTA */
+    .cta-banner { max-width:1300px; margin:0 auto clamp(2rem,4vw,3rem); padding:0 clamp(1rem,5vw,3rem); }
     .cta-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1.5rem;
-      background: linear-gradient(135deg, rgba(91,108,249,0.12), rgba(167,139,250,0.08));
-      border: 1px solid rgba(91,108,249,0.3);
-      border-radius: var(--radius);
-      padding: 1.75rem 2rem;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem;
+      background:linear-gradient(135deg, rgba(236,72,153,0.12), rgba(167,139,250,0.08));
+      border:1px solid rgba(236,72,153,0.3); border-radius:var(--radius); padding:1.75rem 2rem;
     }
-
-    .cta-text h3 {
-      font-family: var(--font-head);
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-
-    .cta-text p { font-size: 0.875rem; color: var(--muted); }
-
+    .cta-text h3 { font-family:var(--fhead); font-size:1.15rem; font-weight:700; margin-bottom:0.3rem; }
+    .cta-text p { font-size:0.875rem; color:var(--muted); }
     .cta-btn {
-      padding: 0.65rem 1.5rem;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: opacity 0.2s, transform 0.2s;
+      padding:0.65rem 1.5rem; background:var(--accent); color:#fff; border-radius:8px;
+      font-weight:600; font-size:0.9rem; cursor:pointer; white-space:nowrap; transition:0.2s;
     }
-    .cta-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .cta-btn:hover { opacity:0.88; transform:translateY(-1px); }
 
-    /* ──────────────────────────────────────────────
-       FOOTER
-    ────────────────────────────────────────────── */
+    /* FOOTER */
     footer {
-      border-top: 1px solid var(--border);
-      padding: 2rem clamp(1rem, 5vw, 3rem);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
+      border-top:1px solid var(--border); padding:2rem clamp(1rem,5vw,3rem);
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;
     }
+    footer .logo { font-family:var(--fhead); font-weight:800; font-size:1rem; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    footer p { font-size:0.8rem; color:var(--muted); }
 
-    footer .logo {
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: 1rem;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    footer p { font-size: 0.8rem; color: var(--muted); }
-
-    /* ──────────────────────────────────────────────
-       RESPONSIVE
-    ────────────────────────────────────────────── */
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .articles-grid { grid-template-columns: 1fr; }
-      .cta-inner { flex-direction: column; text-align: center; }
+    @media (max-width:640px) {
+      .nav-links { display:none; }
+      .articles-grid { grid-template-columns:1fr; }
+      .cta-inner { flex-direction:column; text-align:center; }
     }
   </style>
-</head>
 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date()); gtag('config', 'G-3P7QPQKV3K');
+  </script>
+</head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="../index.html" class="nav-logo">PIXELPRESS</a>
     <ul class="nav-links">
       <li><a href="../index.html">Home</a></li>
       <li><a href="index.html" class="active">Blog</a></li>
       <li><a href="../compress.html">Compress</a></li>
+      <li><a href="../geoforge.html">GeoForge</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" title="Toggle Theme">🌓</button>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-badge"><span></span> Knowledge Base</div>
     <h1>PixelPress <em>Graphic</em><br>Knowledge Base</h1>
-    <p>Discover professional guides on asset optimization, design standards, format adjustments, and performance enhancement pipelines.</p>
+    <p>Professional guides on image optimization, PDF editing, GIS mapping, OCR scanning, and more.</p>
+    <div class="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="blogSearch" placeholder="Search articles..." />
+    </div>
   </section>
 
-  <!-- FILTER TABS -->
   <div class="filters">
-    <button class="filter-btn active" data-filter="all">All Content</button>
-    <button class="filter-btn" data-filter="compression">Compression</button>
-    <button class="filter-btn" data-filter="background">Background</button>
-    <button class="filter-btn" data-filter="formats">Formats</button>
-    <button class="filter-btn" data-filter="conversion">Conversion</button>
-    <button class="filter-btn" data-filter="social">Social Assets</button>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="image">Image Tools</button>
+    <button class="filter-btn" data-filter="pdf">PDF Tools</button>
+    <button class="filter-btn" data-filter="utility">Utilities</button>
+    <button class="filter-btn" data-filter="gis">GIS & Maps</button>
+    <button class="filter-btn" data-filter="ai">AI & OCR</button>
+    <button class="filter-btn" data-filter="design">Design</button>
   </div>
 
-  <!-- GRID -->
   <main class="grid-wrap">
     <div class="articles-grid" id="articlesGrid">
 
-      <!-- Card 1 -->
-      <article class="card" data-category="compression" onclick="location.href='../blog/compress-guide.html'">
-        <span class="card-category">Image Compression Framework</span>
+      <!-- ========== EXISTING CARDS (unchanged) ========== -->
+      <article class="card" data-category="image" onclick="location.href='../blog/compress-guide.html'">
+        <span class="card-category">Image Compression</span>
         <h2>How to Compress Images Without Losing Quality</h2>
-        <p>Discover how mathematical quantization algorithms can optimize file footprints without sacrificing structural sharpness or color profiles.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 8 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Discover mathematical quantization algorithms that optimize file size without sacrificing sharpness.</p>
+        <div class="card-meta"><span>📖 8 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 2 -->
-      <article class="card" data-category="background" onclick="location.href='../blog/bg-remover-guide.html'">
-        <span class="card-category">Background Extraction System</span>
+      <article class="card" data-category="image" onclick="location.href='../blog/bg-remover-guide.html'">
+        <span class="card-category">Background Removal</span>
         <h2>Best Free Background Remover Online</h2>
-        <p>An objective deep dive evaluating foreground extraction models, alpha channel isolation techniques, and real-time canvas edge detection tools.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 9 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Deep dive into foreground extraction models and real‑time canvas edge detection tools.</p>
+        <div class="card-meta"><span>📖 9 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 3 -->
-      <article class="card" data-category="formats" onclick="location.href='../blog/jpg-vs-png.html'">
-        <span class="card-category">Formats Assessment Matrix</span>
+      <article class="card" data-category="image" onclick="location.href='../blog/jpg-vs-png.html'">
+        <span class="card-category">Formats</span>
         <h2>JPG vs PNG Explained</h2>
-        <p>Break down file formats mathematically. Learn when to use lossy JPEG block DCT or lossless deflate-mapped PNG alpha channels for web assets.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 7 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Learn when to use lossy JPEG DCT or lossless PNG alpha channels for your web assets.</p>
+        <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 4 -->
-      <article class="card" data-category="conversion" onclick="location.href='../blog/images-to-pdf.html'">
-        <span class="card-category">Document Compilation Architecture</span>
+      <article class="card" data-category="pdf" onclick="location.href='../blog/images-to-pdf.html'">
+        <span class="card-category">Document Conversion</span>
         <h2>Convert Images to PDF Easily</h2>
-        <p>Discover how multi-image streams can compress seamlessly into scalable PDF documents while maintaining print-ready DPI properties.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 8 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Multi‑image streams compressed into scalable PDF documents while maintaining DPI properties.</p>
+        <div class="card-meta"><span>📖 8 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 5 -->
-      <article class="card" data-category="social" onclick="location.href='../blog/whatsapp-resize.html'">
-        <span class="card-category">Resizing Systems Engine</span>
+      <article class="card" data-category="image" onclick="location.href='../blog/whatsapp-resize.html'">
+        <span class="card-category">Resizing</span>
         <h2>Resize Images for WhatsApp</h2>
-        <p>Prevent heavy application resizing algorithms from compressing your images. Learn to control aspect-ratios and optimize native dimension matrix grids.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 6 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Control aspect‑ratios and optimize native dimension grids for messaging apps.</p>
+        <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 6 -->
-      <article class="card" data-category="social" onclick="location.href='../blog/social-media-sizes.html'">
-        <span class="card-category">Social Optimization Layouts</span>
+      <article class="card" data-category="design" onclick="location.href='../blog/social-media-sizes.html'">
+        <span class="card-category">Social Media</span>
         <h2>Best Image Sizes for Social Media</h2>
-        <p>An absolute engineering specification lookup sheet for Facebook, Instagram, LinkedIn, and YouTube layout dimensions.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 10 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Complete dimension lookup for Facebook, Instagram, LinkedIn, YouTube, and more.</p>
+        <div class="card-meta"><span>📖 10 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 7 -->
-      <article class="card" data-category="background" onclick="location.href='../blog/mobile-bg-removal.html'">
-        <span class="card-category">Mobile Image Extraction Pipeline</span>
+      <article class="card" data-category="image" onclick="location.href='../blog/mobile-bg-removal.html'">
+        <span class="card-category">Mobile Processing</span>
         <h2>Remove Background on Mobile</h2>
-        <p>Isolate objects directly using browser canvas pipelines in mobile devices, bypassing heavy app resource consumption footprints.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 8 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Browser canvas pipelines for mobile background removal without heavy apps.</p>
+        <div class="card-meta"><span>📖 8 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 8 -->
-      <article class="card" data-category="compression" onclick="location.href='../blog/website-compression.html'">
-        <span class="card-category">Core Web Vitals Optimization</span>
+      <article class="card" data-category="image" onclick="location.href='../blog/website-compression.html'">
+        <span class="card-category">Web Performance</span>
         <h2>Compress Images for Websites</h2>
-        <p>Boost your site speed, optimize Largest Contentful Paint (LCP) times, and scale edge servers via next-gen processing pipelines.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 9 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Boost Core Web Vitals by optimizing LCP with next‑gen image formats.</p>
+        <div class="card-meta"><span>📖 9 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 9 -->
-      <article class="card" data-category="formats" onclick="location.href='../blog/blur-faces-guide.html'">
-        <span class="card-category">Anonymization Kernels Logic</span>
+      <article class="card" data-category="image" onclick="location.href='../blog/blur-faces-guide.html'">
+        <span class="card-category">Privacy</span>
         <h2>How to Blur Faces in Photos</h2>
-        <p>Learn how canvas box blurs and Gaussian neighborhood kernels protect facial metadata security directly inside local browsers.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 7 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Protect facial metadata using Gaussian kernels directly in your browser.</p>
+        <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-      <!-- Card 10 -->
-      <article class="card" data-category="formats" onclick="location.href='../blog/photo-editing-tools.html'">
-        <span class="card-category">Web Canvas Filter Utilities</span>
+      <article class="card" data-category="image" onclick="location.href='../blog/photo-editing-tools.html'">
+        <span class="card-category">Editing</span>
         <h2>Best Online Photo Editing Tools</h2>
-        <p>An engineering assessment of web matrix color filters, canvas transformation operations, and asset compilation frameworks.</p>
-        <div class="card-meta">
-          <span class="read-time">📖 9 Min Read · May 2026</span>
-          <span class="card-arrow">→</span>
-        </div>
+        <p>Engineering assessment of web canvas filters and transformation operations.</p>
+        <div class="card-meta"><span>📖 9 Min Read</span><span class="card-arrow">→</span></div>
       </article>
 
-    </div><!-- /grid -->
+      <!-- ========== NEW TOOL CARDS ========== -->
+      <article class="card" data-category="design" onclick="location.href='../favicon-generator.html'">
+        <span class="card-category">Icon Generation<span class="badge-new">NEW</span></span>
+        <h2>Favicon Generator – Create Multi‑Size Icons</h2>
+        <p>Convert any image into standard .ico files with multiple resolutions for websites and apps.</p>
+        <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="gis" onclick="location.href='../geoforge.html'">
+        <span class="card-category">GIS Mapping<span class="badge-new">NEW</span></span>
+        <h2>GeoForge – Create Shapefiles Online</h2>
+        <p>Draw points, lines & polygons on live maps. Export as Shapefile ZIP, GeoJSON, KML – ArcGIS & QGIS ready.</p>
+        <div class="card-meta"><span>📖 12 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="pdf" onclick="location.href='../merge-pdf.html'">
+        <span class="card-category">PDF Merging<span class="badge-new">NEW</span></span>
+        <h2>Merge PDF – Combine Multiple Documents</h2>
+        <p>Combine PDFs into a single file in any order. Fast, free, and entirely browser‑based.</p>
+        <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="ai" onclick="location.href='../ocr.html'">
+        <span class="card-category">AI & OCR<span class="badge-new">NEW</span></span>
+        <h2>OCR Scanner – Extract Text from Images</h2>
+        <p>Extract text from any image with 100+ languages using Tesseract.js – fully client‑side.</p>
+        <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="design" onclick="location.href='../palette-generator.html'">
+        <span class="card-category">Color Tools<span class="badge-new">NEW</span></span>
+        <h2>Palette Generator – Create Beautiful Color Schemes</h2>
+        <p>Generate complementary, analogous, triadic palettes. Extract colors from images.</p>
+        <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="utility" onclick="location.href='../password-generator.html'">
+        <span class="card-category">Security<span class="badge-new">NEW</span></span>
+        <h2>Password Generator – Strong Random Passwords</h2>
+        <p>Cryptographically secure passwords with passphrase mode, batch generation, and entropy meter.</p>
+        <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="pdf" onclick="location.href='../pdf-annotator.html'">
+        <span class="card-category">PDF Editing<span class="badge-new">NEW</span></span>
+        <h2>PDF Annotator – Draw, Sign & Highlight</h2>
+        <p>Add text, draw, highlight, and sign PDFs directly in your browser. No software needed.</p>
+        <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="utility" onclick="location.href='../qr-generator.html'">
+        <span class="card-category">QR Codes<span class="badge-new">NEW</span></span>
+        <h2>QR Code Generator – Custom Styled Codes</h2>
+        <p>Generate trackable vector QR codes with logos, gradients, and batch export.</p>
+        <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="design" onclick="location.href='../screenshot-editor.html'">
+        <span class="card-category">Mockups<span class="badge-new">NEW</span></span>
+        <h2>Screenshot Editor – Beautiful Device Frames</h2>
+        <p>Wrap screenshots in device frames, gradients, and custom backgrounds. Export as PNG/JPEG.</p>
+        <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="pdf" onclick="location.href='../split-pdf.html'">
+        <span class="card-category">PDF Splitting<span class="badge-new">NEW</span></span>
+        <h2>Split PDF – Extract Pages Instantly</h2>
+        <p>Split PDFs by page range or extract every page as a separate file. 100% client‑side.</p>
+        <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="design" onclick="location.href='../thumbnail-maker.html'">
+        <span class="card-category">Thumbnails<span class="badge-new">NEW</span></span>
+        <h2>Thumbnail Maker – YouTube & Social Cards</h2>
+        <p>Design streaming thumbnails with text, shapes, and images. Export in multiple formats.</p>
+        <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+      <article class="card" data-category="utility" onclick="location.href='../unit-converter.html'">
+        <span class="card-category">Calculators<span class="badge-new">NEW</span></span>
+        <h2>Unit Converter – Length, Weight, Digital & More</h2>
+        <p>Convert between hundreds of units with live rate display and history saving.</p>
+        <div class="card-meta"><span>📖 3 Min Read</span><span class="card-arrow">→</span></div>
+      </article>
+
+    </div>
   </main>
 
-  <!-- CTA BANNER -->
   <div class="cta-banner">
     <div class="cta-inner">
       <div class="cta-text">
-        <h3>Need Instant Compression?</h3>
-        <p>Reduce file dimensions up to 90% mathematically without altering pixel clarity structures natively.</p>
+        <h3>Explore All 30+ Free Tools</h3>
+        <p>Compress, resize, edit, convert, and create — all in your browser, no sign‑up required.</p>
       </div>
-      <a href="../compress.html" class="cta-btn">Launch Compressor →</a>
+      <a href="../index.html" class="cta-btn">Launch Toolkit →</a>
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer>
     <span class="logo">PIXELPRESS</span>
-    <p>© 2026 PixelPress Lab. Client-side image processing, optimized for speed & privacy.</p>
+    <p>© 2026 PixelPress Lab. Client‑side tools for speed, privacy & creativity.</p>
   </footer>
 
-  <!-- FILTER SCRIPT -->
   <script>
-    const btns  = document.querySelectorAll('.filter-btn');
+    // Theme toggle
+    (function() {
+      const saved = localStorage.getItem('pixelpress-theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', saved);
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme');
+        const next = cur === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('pixelpress-theme', next);
+      });
+    })();
+
+    // Filter + Search
+    const btns = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.card');
+    const searchInput = document.getElementById('blogSearch');
+
+    function applyFilters() {
+      const activeFilter = document.querySelector('.filter-btn.active')?.dataset.filter || 'all';
+      const query = searchInput?.value.toLowerCase().trim() || '';
+
+      cards.forEach(card => {
+        const cat = card.dataset.category;
+        const title = card.querySelector('h2')?.textContent.toLowerCase() || '';
+        const excerpt = card.querySelector('p')?.textContent.toLowerCase() || '';
+
+        const matchCat = activeFilter === 'all' || cat === activeFilter;
+        const matchSearch = !query || title.includes(query) || excerpt.includes(query);
+
+        if (matchCat && matchSearch) {
+          card.removeAttribute('hidden');
+          card.style.animation = 'none';
+          requestAnimationFrame(() => { card.style.animation = ''; });
+        } else {
+          card.setAttribute('hidden', '');
+        }
+      });
+    }
 
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
-        // active state
         btns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
-        const filter = btn.dataset.filter;
-
-        cards.forEach((card, i) => {
-          const match = filter === 'all' || card.dataset.category === filter;
-          if (match) {
-            card.removeAttribute('hidden');
-            // stagger re-appear
-            card.style.animationDelay = `${i * 0.05}s`;
-            card.style.animation = 'none';
-            requestAnimationFrame(() => {
-              card.style.animation = '';
-            });
-          } else {
-            card.setAttribute('hidden', '');
-          }
-        });
+        applyFilters();
       });
     });
-  </script>
 
+    searchInput?.addEventListener('input', applyFilters);
+  </script>
 </body>
 </html>
