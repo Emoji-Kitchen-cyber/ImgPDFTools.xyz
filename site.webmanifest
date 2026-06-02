@@ -2,6 +2,7 @@
   "name": "PixelPress — Free Online Image & Document Toolkit",
   "short_name": "PixelPress",
   "description": "Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more. All processing happens in your browser – private and fast.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -19,5 +20,21 @@
     { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "/apple-icon-180x180.png", "sizes": "180x180", "type": "image/png" },
     { "src": "/apple-icon-180x180.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "PixelPress Mobile"
+    },
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "PixelPress Desktop"
+    }
   ]
 }
