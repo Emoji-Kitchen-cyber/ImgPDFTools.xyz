@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoForge GIS Guide — PixelPress Blog</title>
+  <meta name="description" content="Complete guide to creating Shapefiles, GeoJSON, and KML maps online using GeoForge Studio. Draw points, lines, polygons and export for ArcGIS & QGIS.">
+  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/blog/geoforge-guide.html">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+    :root{--bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#22222e;--accent:#ec4899;--accent2:#a78bfa;--text:#e8e8f0;--muted:#6b6b80;--radius:14px;--fhead:'Syne',sans-serif;--fbody:'DM Sans',sans-serif;--fmono:'JetBrains Mono',monospace}
+    [data-theme="light"]{--bg:#f5f5f7;--surface:#fff;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;line-height:1.7;transition:0.3s}
+    a{color:inherit;text-decoration:none}
+    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:rgba(10,10,15,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+    .nav-logo{font-family:var(--fhead);font-weight:800;font-size:1.15rem;letter-spacing:.05em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .progress-bar{position:fixed;top:64px;left:0;height:3px;background:var(--accent);z-index:101;transition:width .1s}
+    .main{max-width:860px;margin:0 auto;padding:2rem 20px 4rem}
+    .hero{text-align:center;padding:2rem 0}
+    .badge{display:inline-block;padding:4px 14px;background:rgba(236,72,153,.1);border:1px solid var(--accent);border-radius:999px;font-size:.75rem;color:var(--accent);text-transform:uppercase;margin-bottom:1rem}
+    .hero h1{font-family:var(--fhead);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;line-height:1.3;margin-bottom:.8rem}
+    .meta{color:var(--muted);font-size:.85rem}
+    .toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:2rem 0;position:sticky;top:80px}
+    .toc h3{font-family:var(--fhead);margin-bottom:.8rem}
+    .toc ol{padding-left:20px;color:var(--muted)}
+    .toc li{margin-bottom:4px}
+    .toc a{color:var(--accent);font-weight:500}
+    .section{margin:2.5rem 0}
+    .section h2{font-family:var(--fhead);font-size:1.5rem;font-weight:700;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+    .section p{color:var(--muted);line-height:1.9;margin-bottom:1rem}
+    .section ul,.section ol{padding-left:24px;color:var(--muted);line-height:1.9;margin-bottom:1rem}
+    .code{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;font-family:var(--fmono);font-size:.85rem;color:var(--accent2);overflow-x:auto;margin:1rem 0}
+    .cta{background:linear-gradient(135deg,rgba(236,72,153,.12),rgba(167,139,250,.08));border:1px solid var(--accent);border-radius:var(--radius);padding:2.5rem;text-align:center;margin:3rem 0}
+    .cta h3{font-family:var(--fhead);font-size:1.3rem;margin-bottom:.5rem}
+    .cta p{color:var(--muted);margin-bottom:1.5rem}
+    .btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-weight:600;font-size:1rem;transition:.2s;text-decoration:none}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,.3)}
+    .faq{margin:3rem 0}
+    .faq h2{font-family:var(--fhead);margin-bottom:1rem}
+    .faq-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
+    .faq-q{width:100%;padding:16px 20px;background:var(--card);border:none;text-align:left;font-weight:600;font-size:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
+    .faq-a{max-height:0;overflow:hidden;transition:.3s;color:var(--muted);line-height:1.8;padding:0 20px}
+    .faq-item.open .faq-a{max-height:400px;padding:0 20px 20px}
+    footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border);font-size:.85rem;margin-top:3rem}
+    @media(max-width:600px){.main{padding:1rem 14px}.hero h1{font-size:1.6rem}}
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+  <nav><a href="../index.html" class="nav-logo">PIXELPRESS</a><a href="./index.html" style="color:var(--muted);font-size:.9rem">← Blog</a></nav>
+  <main class="main">
+    <div class="hero"><div class="badge">GIS & MAPPING</div><h1>How to Create Shapefiles Online — The Ultimate GeoForge Guide</h1><div class="meta">📅 June 2026 &nbsp;|&nbsp; ⏱ 10 Min Read &nbsp;|&nbsp; ✍️ Muhammad Jahangir</div></div>
+    <nav class="toc"><h3>📋 Table of Contents</h3><ol><li><a href="#s1">What is GeoForge?</a></li><li><a href="#s2">Drawing Features on the Map</a></li><li><a href="#s3">Export Formats Explained</a></li><li><a href="#s4">Importing Existing GIS Data</a></li><li><a href="#s5">Real‑World Use Cases</a></li><li><a href="#faq">Frequently Asked Questions</a></li></ol></nav>
+    <div class="section" id="s1"><h2>1. What is GeoForge?</h2><p>GeoForge is a free, browser‑based GIS studio that lets you draw points, lines, and polygons on an interactive map. You can export your work as Shapefile ZIP, GeoJSON, KML, CSV, or DXF — fully compatible with ArcGIS, QGIS, and Google Earth. No software installation required.</p></div>
+    <div class="section" id="s2"><h2>2. Drawing Features on the Map</h2><p>Select a drawing tool (Point, Line, Polygon, Rectangle, or Circle) from the toolbar, then click on the map to place vertices. Double‑click to finish. You can add attributes like name, category, and description to each feature. Real‑time measurement shows distance or area as you draw.</p></div>
+    <div class="section" id="s3"><h2>3. Export Formats Explained</h2><ul><li><strong>Shapefile ZIP</strong> – .shp, .dbf, .prj bundled for ArcGIS & QGIS</li><li><strong>GeoJSON</strong> – Web mapping standard</li><li><strong>KML</strong> – Google Earth compatible</li><li><strong>CSV</strong> – Spreadsheet with coordinates</li><li><strong>DXF</strong> – AutoCAD compatible</li><li><strong>TopoJSON</strong> – Compact topology format</li></ul></div>
+    <div class="section" id="s4"><h2>4. Importing Existing GIS Data</h2><p>Already have GeoJSON, KML, or CSV files? Upload them directly into GeoForge — all features will appear on the map instantly. You can then edit attributes, modify geometries, and re‑export in any format you need.</p></div>
+    <div class="section" id="s5"><h2>5. Real‑World Use Cases</h2><ul><li>Urban planners mapping proposed roads and infrastructure</li><li>Environmental scientists marking forest boundaries and conservation areas</li><li>Real estate developers plotting land parcels</li><li>Students creating geography project maps</li><li>NGO field workers documenting community resources</li><li>Surveyors creating quick field sketches</li></ul></div>
+    <div class="cta"><h3>🌍 Start Mapping Today</h3><p>Create professional GIS data right in your browser — no ArcGIS license needed.</p><a href="../geoforge.html" class="btn">Launch GeoForge Studio <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a></div>
+    <div class="faq" id="faq"><h2>❓ Frequently Asked Questions</h2>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is GeoForge really free? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes! 100% free, no account needed, no feature limits, no watermarks.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I open GeoForge exports in QGIS? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Absolutely. The Shapefile ZIP and GeoJSON exports are directly compatible with QGIS, ArcGIS, and other GIS software.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What CRS does GeoForge use? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">WGS84 (EPSG:4326) — the standard for web mapping and GPS data.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I edit existing features? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes! Use the Edit mode to modify vertices of any feature you've drawn.</div></div>
+      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does it work offline? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">The basemap tiles require internet, but once loaded, drawing and exporting work entirely offline.</div></div>
+    </div>
+  </main>
+  <footer>© 2026 PixelPress. All rights reserved. <a href="../privacy-policy.html" style="color:var(--accent);margin-left:1rem">Privacy</a></footer>
+  <script>
+    window.addEventListener('scroll',()=>{const s=document.body.scrollTop||document.documentElement.scrollTop;const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progressBar').style.width=(h>0?(s/h)*100:0)+'%'});
+    document.addEventListener('DOMContentLoaded',()=>{document.documentElement.setAttribute('data-theme',localStorage.getItem('pixelpress-theme')||'dark')});
+  </script>
+</body>
+</html>
