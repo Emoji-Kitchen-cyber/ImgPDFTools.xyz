@@ -4,31 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Blog Writer – PixelPress</title>
-  <meta name="description" content="Generate blog posts, product descriptions, and SEO content using Cloudflare AI.">
+  <meta name="description" content="Generate blog posts using Cloudflare AI.">
   <link rel="canonical" href="https://pixelpress.pages.dev/ai-blog-writer.html">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
-    :root{--bg:#f5f5f7;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73;--accent:#ec4899;--accent2:#a78bfa;--r:16px}
+    :root{--bg:#f5f5f7;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73;--accent:#ec4899;--r:16px}
     [data-theme="dark"]{--bg:#09090e;--card:#15151e;--border:rgba(255,255,255,0.08);--text:#e8e8f0;--muted:#86868b}
     *{margin:0;padding:0;box-sizing:border-box}
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;transition:0.3s}
-    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;height:64px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
     [data-theme="dark"] nav{background:rgba(21,21,30,0.7)}
     .nav-left{display:flex;align-items:center;gap:1rem}
-    .back-btn{background:var(--card);border:1px solid var(--border);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;cursor:pointer;text-decoration:none;transition:0.2s}
+    .back-btn{background:var(--card);border:1px solid var(--border);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;cursor:pointer;text-decoration:none}
     .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;text-transform:uppercase;text-decoration:none;color:inherit}
-    .nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .nav-logo span{background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .main{flex:1;max-width:800px;margin:0 auto;width:100%;padding:2rem 16px 4rem}
-    h1{font-family:'Syne',sans-serif;font-size:2rem;margin-bottom:1.5rem;text-align:center}
+    h1{font-family:'Syne',sans-serif;font-size:2rem;text-align:center;margin-bottom:1.5rem}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
     .input-group{margin-bottom:1rem}
     .input-group label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
     .input-group textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:0.95rem;outline:none;font-family:inherit;resize:vertical;min-height:100px}
-    .input-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(236,72,153,0.1)}
-    .btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem;transition:0.2s;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,0.3)}
-    .btn:disabled{opacity:0.5;pointer-events:none}
+    .input-group textarea:focus{border-color:var(--accent)}
+    .btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem;background:linear-gradient(135deg,var(--accent),#a78bfa);color:white}
+    .btn:disabled{opacity:0.5}
     .result{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;min-height:200px;white-space:pre-wrap;line-height:1.8}
     .result:empty::before{content:'AI-generated content will appear here...';color:var(--muted)}
     footer{text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);margin-top:auto}
@@ -42,8 +41,8 @@
   <div class="main">
     <h1>🤖 AI Blog Writer</h1>
     <div class="card">
-      <div class="input-group"><label>What should I write about?</label><textarea id="prompt" placeholder="e.g., Write a blog post about image compression techniques..."></textarea></div>
-      <button class="btn" id="generateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Content</button>
+      <div class="input-group"><label>What should I write about?</label><textarea id="prompt" placeholder="e.g., Write a blog post about image compression..."></textarea></div>
+      <button class="btn" id="generateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate</button>
     </div>
     <div class="card">
       <h3 style="font-family:'Syne',sans-serif;margin-bottom:1rem;">📝 Result</h3>
@@ -72,39 +71,20 @@
         copyBtn.style.display='none';
 
         try{
-          const res=await fetch('/api/ai-write',{
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({prompt})
-          });
+          const res=await fetch('/api/ai-write',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+          const data=await res.json();
           
-          // Fix: Get raw text first, then parse safely
-          const rawText = await res.text();
-          
-          if(!res.ok){
-            throw new Error(rawText || 'API error');
+          if(data.text && data.text.startsWith('Error:')){
+            throw new Error(data.text);
           }
           
-          // Try to parse as JSON
-          let data;
-          try{
-            data = JSON.parse(rawText);
-          } catch(e){
-            // If not JSON, use raw text directly
-            result.textContent = rawText;
-            copyBtn.style.display='flex';
-            return;
-          }
-          
-          // Use parsed data
-          result.textContent = data.text || data.response || rawText;
+          result.textContent=data.text||'No content generated';
           copyBtn.style.display='flex';
-          
         } catch(e){
-          result.textContent = '❌ Error: ' + e.message;
+          result.textContent='❌ ' + e.message;
         } finally{
           btn.disabled=false;
-          btn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> Generate Content';
+          btn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> Generate';
         }
       });
 
