@@ -4,33 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Blog Writer – PixelPress</title>
-  <meta name="description" content="Generate blog posts using Cloudflare AI. Fast, free, private.">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
-    :root{--bg:#f5f5f7;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73;--accent:#ec4899;--accent2:#a78bfa;--r:16px;--fhead:'Syne',sans-serif;--fbody:'DM Sans',sans-serif}
+    :root{--bg:#f5f5f7;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73;--accent:#ec4899;--accent2:#a78bfa;--r:16px}
     [data-theme="dark"]{--bg:#09090e;--card:#15151e;--border:rgba(255,255,255,0.08);--text:#e8e8f0;--muted:#86868b}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;transition:0.3s}
+    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;transition:0.3s}
     nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 20px;height:64px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
     [data-theme="dark"] nav{background:rgba(21,21,30,0.7)}
     .nav-left{display:flex;align-items:center;gap:1rem}
     .back-btn{background:var(--card);border:1px solid var(--border);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;cursor:pointer;text-decoration:none;transition:0.2s}
     .back-btn:hover{border-color:var(--accent);transform:scale(1.05)}
-    .nav-logo{font-family:var(--fhead);font-weight:800;font-size:1.25rem;text-transform:uppercase;text-decoration:none;color:inherit}
+    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;text-transform:uppercase;text-decoration:none;color:inherit}
     .nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .main{flex:1;max-width:800px;margin:0 auto;width:100%;padding:2rem 16px 4rem}
-    h1{font-family:var(--fhead);font-size:2rem;text-align:center;margin-bottom:0.5rem}
-    .subtitle{text-align:center;color:var(--muted);margin-bottom:2rem;font-size:0.9rem}
+    .main{flex:1;max-width:700px;margin:0 auto;width:100%;padding:2rem 16px 4rem}
+    h1{font-family:'Syne',sans-serif;font-size:2rem;text-align:center;margin-bottom:1.5rem}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
-    .input-group{margin-bottom:1rem}
-    .input-group label{display:block;font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px;letter-spacing:0.05em}
-    .input-group textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:0.95rem;outline:none;font-family:inherit;resize:vertical;min-height:120px}
-    .input-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(236,72,153,0.1)}
-    .btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem;transition:0.2s;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;display:flex;align-items:center;justify-content:center;gap:8px}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,0.3)}
-    .btn:disabled{opacity:0.5;pointer-events:none}
-    .result{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;min-height:200px;white-space:pre-wrap;line-height:1.8;font-size:0.95rem}
+    textarea{width:100%;min-height:120px;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:1rem;resize:vertical;font-family:inherit;margin-bottom:1rem}
+    .btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;border:none;border-radius:10px;font-weight:600;font-size:1rem;cursor:pointer}
+    .btn:disabled{opacity:0.5}
+    .result{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;min-height:200px;white-space:pre-wrap;line-height:1.8}
     .result:empty::before{content:'Generated content will appear here...';color:var(--muted)}
     footer{text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);margin-top:auto}
   </style>
@@ -42,18 +36,13 @@
   </nav>
   <div class="main">
     <h1>🤖 AI Blog Writer</h1>
-    <p class="subtitle">Powered by Cloudflare AI — 100% free & private</p>
     <div class="card">
-      <div class="input-group">
-        <label>Your Prompt</label>
-        <textarea id="prompt" placeholder="e.g., Write a blog post about healthy eating habits..."></textarea>
-      </div>
+      <textarea id="prompt" placeholder="e.g., Write a blog post about healthy eating..."></textarea>
       <button class="btn" id="generateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Content</button>
     </div>
     <div class="card">
-      <h3 style="font-family:var(--fhead);margin-bottom:1rem;">📝 Generated Content</h3>
+      <h3 style="font-family:'Syne',sans-serif;margin-bottom:1rem;">📝 Generated Content</h3>
       <div class="result" id="result"></div>
-      <button class="btn" id="copyBtn" style="margin-top:1rem;display:none;"><i class="fa-solid fa-copy"></i> Copy to Clipboard</button>
     </div>
   </div>
   <footer>© 2026 PixelPress – Powered by Cloudflare AI</footer>
@@ -64,45 +53,23 @@
       document.getElementById('themeToggle').addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('pixelpress-theme',n)});
       syncTheme();
 
-      const btn=document.getElementById('generateBtn');
-      const result=document.getElementById('result');
-      const copyBtn=document.getElementById('copyBtn');
-
-      btn.addEventListener('click',async()=>{
+      document.getElementById('generateBtn').addEventListener('click',async()=>{
         const prompt=document.getElementById('prompt').value.trim();
         if(!prompt) return alert('Please enter a prompt');
 
+        const btn=document.getElementById('generateBtn');
         btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
-        result.textContent=''; copyBtn.style.display='none';
+        document.getElementById('result').textContent='';
 
         try{
           const res=await fetch('/api/ai-write',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
-          
-          // CRITICAL FIX: Use .text() first, then try JSON
-          const rawText = await res.text();
-          let text = rawText;
-          
-          try {
-            const parsed = JSON.parse(rawText);
-            text = parsed.text || parsed.response || rawText;
-          } catch(e) {
-            // Not JSON - use raw text as is
-          }
-          
-          result.textContent = text || 'No content generated';
-          copyBtn.style.display='flex';
+          const data=await res.json();
+          document.getElementById('result').textContent=data.text||'No response';
         }catch(e){
-          result.textContent='❌ Error: '+e.message;
+          document.getElementById('result').textContent='❌ Error: '+e.message;
         }finally{
           btn.disabled=false; btn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> Generate Content';
         }
-      });
-
-      copyBtn.addEventListener('click',()=>{
-        navigator.clipboard.writeText(result.textContent).then(()=>{
-          copyBtn.innerHTML='<i class="fa-solid fa-check"></i> Copied!';
-          setTimeout(()=>copyBtn.innerHTML='<i class="fa-solid fa-copy"></i> Copy to Clipboard',2000);
-        });
       });
     })();
   </script>
