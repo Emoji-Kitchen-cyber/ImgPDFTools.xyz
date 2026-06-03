@@ -6,11 +6,17 @@ export async function onRequestPost(context) {
       return new Response(JSON.stringify({ text: 'Error: No prompt provided' }));
     }
 
-    const answer = await context.env.AI.run('@cf/meta/llama-2-7b-chat-int8', {
-      messages: [{ role: 'user', content: prompt }]
+    // Use the most reliable, available model
+    const answer = await context.env.AI.run('@cf/meta/llama-3-8b-instruct', {
+      prompt: prompt,
+      max_tokens: 512
     });
 
-    return new Response(JSON.stringify({ text: answer }));
+    // Response is always a string from this model
+    const text = typeof answer === 'string' ? answer : (answer.response || JSON.stringify(answer));
+
+    return new Response(JSON.stringify({ text: text }));
+
   } catch (err) {
     return new Response(JSON.stringify({ text: 'Error: ' + err.message }));
   }
