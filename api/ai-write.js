@@ -1,10 +1,12 @@
 /**
- * Cloudflare Pages Function: /api/ai-write
- * Handles POST requests to generate blog/SEO content via Cloudflare AI.
- *
- * FIX: llama-3-8b-instruct requires "messages" array format, NOT "prompt".
- *       Also logs raw result to debug any future format changes.
+ * Cloudflare Pages Function: functions/api/ai-write.js
+ * 
+ * SETUP REQUIRED:
+ * 1. This file must be at: functions/api/ai-write.js  (inside /functions folder)
+ * 2. In Cloudflare Dashboard → Pages → Settings → Functions → AI Bindings
+ *    Add binding: Variable name = AI
  */
+
 export async function onRequestPost(context) {
   const corsHeaders = {
     'Content-Type': 'application/json',
@@ -14,69 +16,74 @@ export async function onRequestPost(context) {
   };
 
   try {
-    // Parse request body
+    // Check AI binding exists
+    if (!context.env.AI) {
+      return new Response(
+        JSON.stringify({ text: 'Error: AI binding not configured. Go to Cloudflare Dashboard → Pages → Settings → Functions → AI Bindings → Add binding with variable name "AI".' }),
+        { status: 500, headers: corsHeaders }
+      );
+    }
+
+    // Parse body
     let prompt;
     try {
       const body = await context.request.json();
       prompt = body.prompt;
-    } catch (parseError) {
+    } catch (e) {
       return new Response(
-        JSON.stringify({ text: 'Error: Invalid JSON in request body' }),
+        JSON.stringify({ text: 'Error: Invalid request body.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    // Validate prompt
-    if (!prompt || typeof prompt !== 'string' || prompt.trim() === '') {
+    if (!prompt || !prompt.trim()) {
       return new Response(
-        JSON.stringify({ text: 'Error: No prompt provided' }),
+        JSON.stringify({ text: 'Error: No prompt provided.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    // Call Cloudflare AI using MESSAGES format (required for llama-3-8b-instruct)
-    const result = await context.env.AI.run(
+    // Call Cloudflare AI — messages format (required for llama-3)
+    const aiResponse = await context.env.AI.run(
       '@cf/meta/llama-3-8b-instruct',
       {
         messages: [
           {
             role: 'system',
-            content: 'You are a professional blog writer and SEO content expert. Write clear, engaging, well-structured content based on the user\'s request. Use proper paragraphs and formatting.',
+            content: 'You are a professional blog writer and SEO content expert. Write clear, engaging, well-structured content. Use proper paragraphs.'
           },
           {
             role: 'user',
-            content: prompt.trim(),
-          },
+            content: prompt.trim()
+          }
         ],
         max_tokens: 1024,
       }
     );
 
-    // Debug: log the raw result shape so we can see exactly what CF returns
-    console.log('[ai-write] raw result type:', typeof result);
-    console.log('[ai-write] raw result:', JSON.stringify(result));
+    // Log raw response for debugging (visible in CF Pages dashboard logs)
+    console.log('[ai-write] raw response:', JSON.stringify(aiResponse));
 
-    // Extract text — CF llama chat returns { response: "..." }
+    // Extract text — CF returns { response: "..." } for chat models
     let text = '';
-
-    if (typeof result === 'string') {
-      text = result;
-    } else if (result && typeof result.response === 'string') {
-      text = result.response;
-    } else if (result && typeof result.text === 'string') {
-      text = result.text;
-    } else if (result && result.choices && result.choices[0]) {
-      // OpenAI-compatible shape fallback
-      text = result.choices[0].message?.content || result.choices[0].text || '';
-    } else if (result !== null && result !== undefined) {
-      text = JSON.stringify(result);
+    if (typeof aiResponse === 'string') {
+      text = aiResponse;
+    } else if (aiResponse?.response) {
+      text = aiResponse.response;
+    } else if (aiResponse?.text) {
+      text = aiResponse.text;
+    } else if (aiResponse?.choices?.[0]?.message?.content) {
+      text = aiResponse.choices[0].message.content;
+    } else if (aiResponse?.choices?.[0]?.text) {
+      text = aiResponse.choices[0].text;
+    } else {
+      // Fallback: return raw so we can debug
+      text = JSON.stringify(aiResponse);
     }
 
     text = text.trim();
-
     if (!text) {
-      // Last resort: return the raw stringified result so frontend can show something
-      text = '[Debug] Raw AI result: ' + JSON.stringify(result);
+      text = 'Error: AI returned empty response. Raw: ' + JSON.stringify(aiResponse);
     }
 
     return new Response(
@@ -84,18 +91,15 @@ export async function onRequestPost(context) {
       { status: 200, headers: corsHeaders }
     );
 
-  } catch (error) {
-    console.error('[ai-write] error:', error);
+  } catch (err) {
+    console.error('[ai-write] error:', err);
     return new Response(
-      JSON.stringify({ text: 'Error: ' + (error.message || 'Internal server error') }),
+      JSON.stringify({ text: 'Error: ' + (err.message || 'Unknown server error') }),
       { status: 500, headers: corsHeaders }
     );
   }
 }
 
-/**
- * Handle CORS preflight OPTIONS requests
- */
 export async function onRequestOptions() {
   return new Response(null, {
     status: 204,
