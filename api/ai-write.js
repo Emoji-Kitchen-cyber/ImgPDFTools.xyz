@@ -1,6 +1,9 @@
 /**
  * Cloudflare Pages Function: /api/ai-write
  * Handles POST requests to generate blog/SEO content via Cloudflare AI.
+ *
+ * FIX: llama-3-8b-instruct requires "messages" array format, NOT "prompt".
+ *       Also logs raw result to debug any future format changes.
  */
 export async function onRequestPost(context) {
   const corsHeaders = {
@@ -31,20 +34,50 @@ export async function onRequestPost(context) {
       );
     }
 
-    // Call Cloudflare AI
+    // Call Cloudflare AI using MESSAGES format (required for llama-3-8b-instruct)
     const result = await context.env.AI.run(
       '@cf/meta/llama-3-8b-instruct',
       {
-        prompt: prompt.trim(),
-        max_tokens: 512,
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a professional blog writer and SEO content expert. Write clear, engaging, well-structured content based on the user\'s request. Use proper paragraphs and formatting.',
+          },
+          {
+            role: 'user',
+            content: prompt.trim(),
+          },
+        ],
+        max_tokens: 1024,
       }
     );
 
-    // The AI response may be a string or an object — handle both
-    const text =
-      typeof result === 'string'
-        ? result
-        : result.response || result.text || JSON.stringify(result);
+    // Debug: log the raw result shape so we can see exactly what CF returns
+    console.log('[ai-write] raw result type:', typeof result);
+    console.log('[ai-write] raw result:', JSON.stringify(result));
+
+    // Extract text — CF llama chat returns { response: "..." }
+    let text = '';
+
+    if (typeof result === 'string') {
+      text = result;
+    } else if (result && typeof result.response === 'string') {
+      text = result.response;
+    } else if (result && typeof result.text === 'string') {
+      text = result.text;
+    } else if (result && result.choices && result.choices[0]) {
+      // OpenAI-compatible shape fallback
+      text = result.choices[0].message?.content || result.choices[0].text || '';
+    } else if (result !== null && result !== undefined) {
+      text = JSON.stringify(result);
+    }
+
+    text = text.trim();
+
+    if (!text) {
+      // Last resort: return the raw stringified result so frontend can show something
+      text = '[Debug] Raw AI result: ' + JSON.stringify(result);
+    }
 
     return new Response(
       JSON.stringify({ text }),
@@ -52,6 +85,7 @@ export async function onRequestPost(context) {
     );
 
   } catch (error) {
+    console.error('[ai-write] error:', error);
     return new Response(
       JSON.stringify({ text: 'Error: ' + (error.message || 'Internal server error') }),
       { status: 500, headers: corsHeaders }
