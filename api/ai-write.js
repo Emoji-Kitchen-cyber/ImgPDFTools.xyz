@@ -1,24 +1,40 @@
 export async function onRequestPost(context) {
   try {
-    const body = await context.request.json();
-    const prompt = body.prompt;
+    const { prompt } = await context.request.json();
 
     if (!prompt) {
-      return new Response(JSON.stringify({ text: 'Error: No prompt' }), {
+      return new Response(JSON.stringify({ text: 'Error: No prompt provided' }), {
         headers: { 'Content-Type': 'application/json' }
       });
     }
 
-    // Official Cloudflare AI binding usage
-    const answer = await context.env.AI.run('@cf/meta/llama-3.3-70b-instruct-fp8-fast', {
-      messages: [
-        { role: 'user', content: prompt }
-      ]
-    });
+    const response = await fetch(
+      `https://api.cloudflare.com/client/v4/accounts/${context.env.ACCOUNT_ID}/ai/run/@cf/meta/llama-3.3-70b-instruct-fp8-fast`,
+      {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${context.env.API_TOKEN}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          messages: [
+            { role: 'user', content: prompt }
+          ]
+        })
+      }
+    );
 
-    return new Response(JSON.stringify({ text: answer.response }), {
-      headers: { 'Content-Type': 'application/json' }
-    });
+    const data = await response.json();
+
+    if (data.success && data.result) {
+      return new Response(JSON.stringify({ text: data.result.response }), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } else {
+      return new Response(JSON.stringify({ text: 'Error: ' + (data.errors?.[0]?.message || 'Unknown error') }), {
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
 
   } catch (err) {
     return new Response(JSON.stringify({ text: 'Error: ' + err.message }), {
