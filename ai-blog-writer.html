@@ -1,100 +1,488 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Blog Writer – PixelPress</title>
-  <meta name="description" content="Generate blog posts using Cloudflare AI.">
-  <link rel="canonical" href="https://pixelpress.pages.dev/ai-blog-writer.html">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Blog Writer — PixelPress</title>
+  <meta name="description" content="Generate blog posts, descriptions & SEO content with AI. Fast, free, and private." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
-    :root{--bg:#f5f5f7;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73;--accent:#ec4899;--r:16px}
-    [data-theme="dark"]{--bg:#09090e;--card:#15151e;--border:rgba(255,255,255,0.08);--text:#e8e8f0;--muted:#86868b}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;transition:0.3s}
-    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;height:64px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-    [data-theme="dark"] nav{background:rgba(21,21,30,0.7)}
-    .nav-left{display:flex;align-items:center;gap:1rem}
-    .back-btn{background:var(--card);border:1px solid var(--border);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;cursor:pointer;text-decoration:none}
-    .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;text-transform:uppercase;text-decoration:none;color:inherit}
-    .nav-logo span{background:linear-gradient(135deg,var(--accent),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .main{flex:1;max-width:800px;margin:0 auto;width:100%;padding:2rem 16px 4rem}
-    h1{font-family:'Syne',sans-serif;font-size:2rem;text-align:center;margin-bottom:1.5rem}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
-    .input-group{margin-bottom:1rem}
-    .input-group label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
-    .input-group textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:0.95rem;outline:none;font-family:inherit;resize:vertical;min-height:100px}
-    .input-group textarea:focus{border-color:var(--accent)}
-    .btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem;background:linear-gradient(135deg,var(--accent),#a78bfa);color:white}
-    .btn:disabled{opacity:0.5}
-    .result{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;min-height:200px;white-space:pre-wrap;line-height:1.8}
-    .result:empty::before{content:'AI-generated content will appear here...';color:var(--muted)}
-    footer{text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);margin-top:auto}
+    :root {
+      --bg: #f5f5f7;
+      --surface: rgba(255,255,255,0.78);
+      --card: #ffffff;
+      --border: rgba(0,0,0,0.07);
+      --text: #1d1d1f;
+      --muted: #6e6e73;
+      --accent: #ec4899;
+      --accent2: #a78bfa;
+      --glow: rgba(236,72,153,0.12);
+      --glow2: rgba(167,139,250,0.12);
+      --r: 16px;
+      --fhead: 'Syne', sans-serif;
+      --fbody: 'DM Sans', sans-serif;
+    }
+    [data-theme="dark"] {
+      --bg: #09090e;
+      --surface: rgba(18,18,28,0.82);
+      --card: #13131e;
+      --border: rgba(255,255,255,0.08);
+      --text: #e8e8f0;
+      --muted: #86868b;
+      --glow: rgba(236,72,153,0.2);
+      --glow2: rgba(167,139,250,0.15);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--fbody);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      transition: background 0.35s ease, color 0.35s ease;
+    }
+
+    /* BACKGROUND MESH */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 60% 40% at 15% 20%, rgba(236,72,153,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 85% 75%, rgba(167,139,250,0.07) 0%, transparent 70%);
+    }
+    [data-theme="dark"] body::before {
+      background:
+        radial-gradient(ellipse 60% 40% at 15% 20%, rgba(236,72,153,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 85% 75%, rgba(167,139,250,0.1) 0%, transparent 70%);
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 clamp(1rem, 5vw, 2.5rem); height: 64px;
+      background: var(--surface);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .back-btn {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--fbody); font-size: 14px; font-weight: 600;
+      color: var(--muted);
+      background: var(--card); border: 1px solid var(--border);
+      padding: 7px 14px; border-radius: 99px;
+      cursor: pointer; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, transform 0.2s;
+    }
+    .back-btn:hover { color: var(--accent); border-color: var(--accent); transform: translateX(-2px); }
+    .back-btn i { font-size: 13px; }
+    .nav-logo {
+      font-family: var(--fhead); font-weight: 800; font-size: 1.1rem;
+      letter-spacing: -0.5px; text-transform: uppercase; text-decoration: none; color: var(--text);
+    }
+    .nav-logo span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .theme-btn {
+      background: var(--card); border: 1px solid var(--border);
+      width: 38px; height: 38px; border-radius: 50%;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; transition: transform 0.2s, border-color 0.2s;
+    }
+    .theme-btn:hover { transform: scale(1.08); border-color: var(--accent); }
+
+    /* MAIN */
+    main {
+      flex: 1; position: relative; z-index: 1;
+      max-width: 800px; width: 100%;
+      margin: 0 auto;
+      padding: clamp(2rem, 5vw, 3.5rem) 20px clamp(3rem, 8vw, 5rem);
+    }
+
+    /* HERO */
+    .hero { text-align: center; margin-bottom: 2.5rem; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, rgba(236,72,153,0.1), rgba(167,139,250,0.1));
+      border: 1px solid rgba(236,72,153,0.2);
+      padding: 6px 16px; border-radius: 99px;
+      font-size: 12.5px; font-weight: 600; color: var(--accent);
+      letter-spacing: 0.5px; text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-family: var(--fhead); font-size: clamp(2rem, 5vw, 3rem); font-weight: 800;
+      line-height: 1.15; letter-spacing: -0.03em;
+      margin-bottom: 0.9rem;
+    }
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .hero p { font-size: 15.5px; color: var(--muted); line-height: 1.6; max-width: 520px; margin: 0 auto; }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(1.5rem, 4vw, 2rem);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.03);
+      margin-bottom: 20px;
+    }
+
+    /* PROMPT AREA */
+    .prompt-label {
+      font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--muted); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .prompt-label i { color: var(--accent); }
+
+    textarea {
+      width: 100%; min-height: 130px;
+      font-family: var(--fbody); font-size: 15px; line-height: 1.6;
+      color: var(--text); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 12px;
+      padding: 14px 16px; resize: vertical; outline: none;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    textarea::placeholder { color: var(--muted); }
+    textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
+
+    /* QUICK PROMPTS */
+    .quick-label {
+      font-size: 12px; font-weight: 600; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.6px;
+      margin: 14px 0 8px;
+    }
+    .quick-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      font-family: var(--fbody); font-size: 13px; font-weight: 500;
+      color: var(--muted); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 99px;
+      padding: 6px 14px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip:hover { color: var(--accent); border-color: var(--accent); background: var(--glow); }
+
+    /* GENERATE BUTTON */
+    .btn-generate {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; margin-top: 18px;
+      font-family: var(--fhead); font-size: 15px; font-weight: 700;
+      letter-spacing: 0.3px; text-transform: uppercase;
+      color: #fff; cursor: pointer; border: none; outline: none;
+      background: linear-gradient(135deg, #ec4899 0%, #a78bfa 100%);
+      padding: 15px 28px; border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(236,72,153,0.3);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .btn-generate::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+    }
+    .btn-generate:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(236,72,153,0.4); }
+    .btn-generate:active:not(:disabled) { transform: translateY(0); }
+    .btn-generate:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    /* RESULT CARD */
+    .result-card {
+      display: none;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.03);
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .result-card.visible { display: block; }
+
+    .result-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(135deg, rgba(236,72,153,0.04), rgba(167,139,250,0.04));
+    }
+    .result-label {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--accent);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .result-label i { font-size: 13px; }
+
+    .btn-copy {
+      display: flex; align-items: center; gap: 7px;
+      font-family: var(--fbody); font-size: 13px; font-weight: 600;
+      color: var(--text); background: var(--bg);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 6px 13px; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-copy:hover { color: var(--accent); border-color: var(--accent); }
+    .btn-copy.copied { color: #22c55e; border-color: #22c55e; }
+
+    .result-body {
+      padding: 22px 24px;
+      font-size: 15px; line-height: 1.75; color: var(--text);
+      white-space: pre-wrap; word-break: break-word;
+      max-height: 520px; overflow-y: auto;
+    }
+    .result-body::-webkit-scrollbar { width: 5px; }
+    .result-body::-webkit-scrollbar-track { background: transparent; }
+    .result-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+
+    /* LOADING */
+    .loading-dots {
+      display: flex; align-items: center; gap: 8px;
+      padding: 32px; justify-content: center;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); opacity: 0.4;
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    .dot:nth-child(2) { animation-delay: 0.2s; background: linear-gradient(135deg, var(--accent), var(--accent2)); opacity: 0.6; }
+    .dot:nth-child(3) { animation-delay: 0.4s; background: var(--accent2); }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(0.85); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    /* ERROR */
+    .error-banner {
+      display: none;
+      background: rgba(239,68,68,0.07);
+      border: 1px solid rgba(239,68,68,0.25);
+      border-radius: 12px; padding: 13px 16px; margin-top: 16px;
+      font-size: 14px; color: #ef4444;
+      display: none; align-items: center; gap: 10px;
+    }
+    .error-banner.visible { display: flex; }
+
+    /* FOOTER */
+    footer {
+      position: relative; z-index: 1;
+      text-align: center; padding: 28px 20px;
+      font-size: 13px; color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 500px) {
+      .quick-chips .chip { font-size: 12px; padding: 5px 11px; }
+    }
   </style>
-</head>
-<body>
-  <nav>
-    <div class="nav-left"><a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a><a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a></div>
-    <button id="themeToggle" class="back-btn">🌓</button>
-  </nav>
-  <div class="main">
-    <h1>🤖 AI Blog Writer</h1>
-    <div class="card">
-      <div class="input-group"><label>What should I write about?</label><textarea id="prompt" placeholder="e.g., Write a blog post about image compression..."></textarea></div>
-      <button class="btn" id="generateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate</button>
-    </div>
-    <div class="card">
-      <h3 style="font-family:'Syne',sans-serif;margin-bottom:1rem;">📝 Result</h3>
-      <div class="result" id="resultBox"></div>
-      <button class="btn" id="copyBtn" style="margin-top:1rem;display:none;"><i class="fa-solid fa-copy"></i> Copy</button>
-    </div>
-  </div>
-  <footer>© 2026 PixelPress – Powered by Cloudflare AI</footer>
 
   <script>
-    (function(){
-      function syncTheme(){const s=localStorage.getItem('pixelpress-theme');document.documentElement.setAttribute('data-theme',s||'light')}
-      document.getElementById('themeToggle').addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('pixelpress-theme',n)});
-      syncTheme();
-
-      const btn=document.getElementById('generateBtn');
-      const result=document.getElementById('resultBox');
-      const copyBtn=document.getElementById('copyBtn');
-
-      btn.addEventListener('click',async()=>{
-        const prompt=document.getElementById('prompt').value.trim();
-        if(!prompt) return alert('Please enter a topic');
-        
-        btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
-        result.textContent='';
-        copyBtn.style.display='none';
-
-        try{
-          const res=await fetch('/api/ai-write',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
-          const data=await res.json();
-          
-          if(data.text && data.text.startsWith('Error:')){
-            throw new Error(data.text);
-          }
-          
-          result.textContent=data.text||'No content generated';
-          copyBtn.style.display='flex';
-        } catch(e){
-          result.textContent='❌ ' + e.message;
-        } finally{
-          btn.disabled=false;
-          btn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> Generate';
-        }
-      });
-
-      copyBtn.addEventListener('click',()=>{
-        navigator.clipboard.writeText(result.textContent).then(()=>{
-          copyBtn.innerHTML='<i class="fa-solid fa-check"></i> Copied!';
-          setTimeout(()=>copyBtn.innerHTML='<i class="fa-solid fa-copy"></i> Copy',2000);
-        });
-      });
+    (function() {
+      var t = localStorage.getItem('pixelpress-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
     })();
+  </script>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="back-btn" aria-label="Back to home">
+        <i class="fa-solid fa-arrow-left"></i> Back
+      </a>
+      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Toggle dark/light theme">🌓</button>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-badge"><i class="fa-solid fa-robot"></i> AI-Powered</div>
+      <h1>🤖 <span class="gradient-text">AI Blog Writer</span></h1>
+      <p>Generate blog posts, product descriptions & SEO content instantly. Powered by Cloudflare AI — fast, free, and private.</p>
+    </div>
+
+    <div class="card">
+      <div class="prompt-label">
+        <i class="fa-solid fa-pen-fancy"></i> Your Prompt
+      </div>
+      <textarea
+        id="promptInput"
+        placeholder="e.g. Write a 500-word blog post about the benefits of cold showers for productivity..."
+        aria-label="Blog writing prompt"
+      ></textarea>
+
+      <div class="quick-label">Quick Starters</div>
+      <div class="quick-chips" id="quickChips"></div>
+
+      <button class="btn-generate" id="generateBtn" onclick="handleGenerate()">
+        <i class="fa-solid fa-wand-magic-sparkles" id="btnIcon"></i>
+        <span id="btnText">Generate Content</span>
+      </button>
+
+      <div class="error-banner" id="errorBanner">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="errorMsg">Something went wrong. Please try again.</span>
+      </div>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-header">
+        <div class="result-label"><i class="fa-solid fa-sparkles"></i> Generated Content</div>
+        <button class="btn-copy" id="copyBtn" onclick="handleCopy()">
+          <i class="fa-regular fa-copy"></i> <span id="copyText">Copy</span>
+        </button>
+      </div>
+      <div class="result-body" id="resultBody">
+        <div class="loading-dots" id="loadingDots">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 PixelPress — All Rights Reserved</footer>
+
+  <script>
+    // Theme toggle
+    document.getElementById('themeBtn').addEventListener('click', function() {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('pixelpress-theme', next);
+    });
+
+    // Quick starter prompts
+    var quickPrompts = [
+      "Write a 500-word blog post about benefits of meditation",
+      "SEO product description for wireless noise-cancelling headphones",
+      "Top 10 tips for learning to code in 2025",
+      "Blog intro: Future of remote work",
+      "Email newsletter about healthy meal prep",
+      "Review: Why TypeScript is worth learning"
+    ];
+    var chips = document.getElementById('quickChips');
+    quickPrompts.forEach(function(p) {
+      var btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.textContent = p;
+      btn.onclick = function() {
+        document.getElementById('promptInput').value = p;
+        document.getElementById('promptInput').focus();
+      };
+      chips.appendChild(btn);
+    });
+
+    var generatedText = '';
+
+    async function handleGenerate() {
+      var prompt = document.getElementById('promptInput').value.trim();
+      if (!prompt) {
+        document.getElementById('promptInput').focus();
+        return;
+      }
+
+      // UI: loading state
+      var btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      document.getElementById('btnIcon').className = 'fa-solid fa-spinner fa-spin';
+      document.getElementById('btnText').textContent = 'Generating…';
+
+      // Hide error
+      var errorBanner = document.getElementById('errorBanner');
+      errorBanner.classList.remove('visible');
+      errorBanner.style.display = 'none';
+
+      // Show result card with loading dots
+      var resultCard = document.getElementById('resultCard');
+      var resultBody = document.getElementById('resultBody');
+      resultCard.classList.add('visible');
+      resultBody.innerHTML = '<div class="loading-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+
+      generatedText = '';
+
+      try {
+        var response = await fetch('/api/ai-write', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: prompt })
+        });
+
+        // CRITICAL: always use .text() first
+        var rawText = await response.text();
+
+        var result = '';
+        try {
+          var parsed = JSON.parse(rawText);
+          result = parsed.text || parsed.response || rawText;
+        } catch (parseErr) {
+          // JSON.parse failed — use raw text directly
+          result = rawText;
+        }
+
+        if (!result || result.trim() === '') {
+          result = '(No content returned. Please try again.)';
+        }
+
+        generatedText = result;
+        resultBody.textContent = result;
+
+      } catch (err) {
+        // Network or fetch error
+        resultCard.classList.remove('visible');
+        errorBanner.style.display = 'flex';
+        errorBanner.classList.add('visible');
+        document.getElementById('errorMsg').textContent = 'Error: ' + (err.message || 'Could not reach the server. Please try again.');
+      }
+
+      // Restore button
+      btn.disabled = false;
+      document.getElementById('btnIcon').className = 'fa-solid fa-wand-magic-sparkles';
+      document.getElementById('btnText').textContent = 'Generate Content';
+    }
+
+    async function handleCopy() {
+      if (!generatedText) return;
+      try {
+        await navigator.clipboard.writeText(generatedText);
+        var copyBtn = document.getElementById('copyBtn');
+        var copyText = document.getElementById('copyText');
+        copyBtn.classList.add('copied');
+        copyText.textContent = '✓ Copied!';
+        setTimeout(function() {
+          copyBtn.classList.remove('copied');
+          copyText.textContent = 'Copy';
+        }, 2200);
+      } catch (e) {
+        // Fallback for older browsers
+        var ta = document.createElement('textarea');
+        ta.value = generatedText;
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+      }
+    }
+
+    // Allow Ctrl+Enter to generate
+    document.getElementById('promptInput').addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') handleGenerate();
+    });
   </script>
 </body>
 </html>
