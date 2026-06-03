@@ -18,7 +18,6 @@
                  frame-src 'none';
                  object-src 'none';" />
 
-  <!-- ✅ FIX 1: Non-blocking Font Awesome (was render-blocking) -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
@@ -45,7 +44,6 @@
   <meta name="apple-mobile-web-app-title" content="PixelPress">
   <!-- ========== END FAVICONS ========== -->
 
-  <!-- ✅ FIX 2: Non-blocking Google Fonts with preconnect (was render-blocking @import) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -89,7 +87,6 @@
     body.rtl { direction: rtl; }
     a { color: inherit; text-decoration: none; }
 
-    /* ── PREMIUM STICKY GLASS NAVBAR ── */
     nav {
       position: sticky; top: 0; z-index: 200; display: flex; align-items: center;
       justify-content: space-between; padding: 0 clamp(1rem, 5vw, 3rem); height: 64px;
@@ -210,7 +207,6 @@
     .tool-card:hover .tool-icon-wrapper { background: var(--accent); color: #ffffff; border-color: var(--accent); }
     
     .tool-info-pane { flex: 1; }
-    /* ✅ FIX 3: Accessibility — h2 inside tool cards (screen readers) */
     .tool-info-pane h3 { font-size: 16.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -0.2px; text-transform: uppercase; }
     .tool-info-pane p { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
     .tool-info-pane p strong { color: var(--text); font-weight: 600; }
@@ -224,13 +220,11 @@
   </style>
 
   <script>
-    // ✅ FIX 4: Apply theme BEFORE paint to avoid flash
     (function() {
       var t = localStorage.getItem('pixelpress-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', t);
     })();
 
-    // CDN Fallback Loader
     window.cdnFallback = function(primaryUrl, backupUrl, callback) {
       var script = document.createElement('script');
       script.src = primaryUrl;
@@ -244,7 +238,6 @@
       document.head.appendChild(script);
     };
 
-    // Global error logger
     window.onerror = function(message, source, lineno, colno, error) {
       var errors = [];
       try { errors = JSON.parse(localStorage.getItem('pixelpress_errors') || '[]'); } catch(e) {}
@@ -305,7 +298,6 @@
     }
   </script>
 
-  <!-- ✅ FIX 5: async+defer for Google Analytics -->
   <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -316,7 +308,6 @@
 </head>
 <body>
   <div class="sidebar-overlay" id="menuOverlay" onclick="toggleMenu(false)"></div>
-  <!-- ✅ FIX 6: aria-label on sidebar for accessibility -->
   <aside class="sidebar" id="sideMenu" aria-label="Main navigation menu">
     <div class="sidebar-header">
       <div class="nav-logo">PIXEL<span>PRESS</span></div>
@@ -404,6 +395,8 @@
           { href: "./unit-converter.html", icon: "fa-calculator", text: "Unit Converter", section: "utility", cat: "utility", emoji: "📏", title: "Unit Converter", desc: "High performance responsive digital metrics calculator.", isUtilityCard: true },
           { href: "./dxf-dwg-converter.html", icon: "fa-drafting-compass", text: "CAD Converter", section: "utility", cat: "utility convert", emoji: "📐", title: "CAD Converter", desc: "DXF & DWG structural CAD metadata utility.", isUtilityCard: true },
           { href: "./ocr.html", icon: "fa-file-text", text: "Image to Text (OCR)", section: "utility", cat: "utility ai", emoji: "📝", title: "OCR Scanner", desc: "Extract text from images with 100+ languages. Free, fast, client‑side.", isUtilityCard: true },
+          { href: "./ai-blog-writer.html", icon: "fa-pen-fancy", text: "AI Blog Writer", section: "utility", cat: "utility ai", emoji: "🤖", title: "AI Blog Writer", desc: "Generate blog posts, descriptions & SEO content with <strong>Cloudflare AI</strong>. Fast, free, private.", isUtilityCard: true },
+          { href: "./ai-image-generator.html", icon: "fa-image", text: "AI Image Generator", section: "utility", cat: "utility ai", emoji: "🎨", title: "AI Image Generator", desc: "Create images from text using <strong>Stable Diffusion</strong>. Perfect for thumbnails & graphics.", isUtilityCard: true },
           { href: "./geoforge.html", icon: "fa-map-location-dot", text: "GeoForge — Shapefile Studio", section: "gis", cat: "gis create utility convert", emoji: "🌍", title: "GeoForge Shapefile Studio", desc: "Draw <strong>Points, Lines & Polygons</strong> on a live map. Export as <strong>Shapefile ZIP</strong>, GeoJSON, KML, or CSV — ArcGIS & QGIS compatible. Free & browser-only.<span class='tool-badge-new'>NEW</span>", isUtilityCard: true },
           { href: "./about.html", icon: "fa-circle-info", text: "About Us", section: "info", isUtilityCard: false },
           { href: "./contact.html", icon: "fa-envelope", text: "Contact", section: "info", isUtilityCard: false },
@@ -461,6 +454,8 @@
           { href: "./unit-converter.html", icon: "fa-calculator", text: "محول الوحدات", section: "utility", cat: "utility", emoji: "📏", title: "محول الوحدات", desc: "حاسبة مقاييس رقمية متجاوبة وعالية الأداء.", isUtilityCard: true },
           { href: "./dxf-dwg-converter.html", icon: "fa-drafting-compass", text: "محول CAD", section: "utility", cat: "utility convert", emoji: "📐", title: "محول CAD", desc: "أداة البيانات الوصفية الهيكلية لملفات DXF و DWG.", isUtilityCard: true },
           { href: "./ocr.html", icon: "fa-file-text", text: "استخراج النص من الصور", section: "utility", cat: "utility ai", emoji: "📝", title: "OCR Scanner", desc: "استخرج النص من الصور بأكثر من 100 لغة. مجاني وسريع.", isUtilityCard: true },
+          { href: "./ai-blog-writer.html", icon: "fa-pen-fancy", text: "كاتب المدونات الذكي", section: "utility", cat: "utility ai", emoji: "🤖", title: "AI Blog Writer", desc: "أنشئ منشورات ووصفات ومحتوى SEO باستخدام <strong>ذكاء Cloudflare</strong>.", isUtilityCard: true },
+          { href: "./ai-image-generator.html", icon: "fa-image", text: "مولد الصور الذكي", section: "utility", cat: "utility ai", emoji: "🎨", title: "AI Image Generator", desc: "أنشئ صوراً من النص باستخدام <strong>Stable Diffusion</strong>. مثالي للصور المصغرة.", isUtilityCard: true },
           { href: "./geoforge.html", icon: "fa-map-location-dot", text: "GeoForge — استوديو الخرائط", section: "gis", cat: "gis create utility convert", emoji: "🌍", title: "GeoForge — استوديو الخرائط", desc: "ارسم <strong>نقاطاً وخطوطاً ومضلعات</strong> على خريطة تفاعلية. صدّر كـ <strong>Shapefile ZIP</strong> أو GeoJSON أو KML — متوافق مع ArcGIS وQGIS. مجاني بالكامل.<span class='tool-badge-new'>جديد</span>", isUtilityCard: true },
           { href: "./about.html", icon: "fa-circle-info", text: "من نحن", section: "info", isUtilityCard: false },
           { href: "./contact.html", icon: "fa-envelope", text: "اتصل بنا", section: "info", isUtilityCard: false },
@@ -503,7 +498,6 @@
       const toolsGrid = document.getElementById('toolsList');
       toolsGrid.innerHTML = '';
       const gridItems = data.toolsRegistry.filter(item => item.isUtilityCard);
-      // ✅ FIX 7: h2 → h3 for correct heading hierarchy (page h1 exists already)
       gridItems.forEach(t => {
         toolsGrid.innerHTML += `<a href="${t.href}" class="tool-link" data-category="${t.cat}"><div class="tool-card"><div class="tool-icon-wrapper" aria-hidden="true">${t.emoji}</div><div class="tool-info-pane"><h3>${t.title}</h3><p>${t.desc}</p></div></div></a>`;
       });
@@ -609,7 +603,6 @@
     })();
   </script>
 
-  <!-- ✅ FIX 8: Service Worker registration for PWA -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
