@@ -1,6 +1,21 @@
 export async function onRequestPost(context) {
   try {
-    const { prompt } = await context.request.json();
+    const body = await context.request.text();
+    
+    if (!body) {
+      return new Response(JSON.stringify({ error: 'No data provided' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+
+    let prompt;
+    try {
+      const parsed = JSON.parse(body);
+      prompt = parsed.prompt;
+    } catch (e) {
+      prompt = body;
+    }
 
     if (!prompt) {
       return new Response(JSON.stringify({ error: 'No prompt provided' }), {
@@ -9,37 +24,41 @@ export async function onRequestPost(context) {
       });
     }
 
+    // Call Cloudflare AI
     const aiResponse = await context.env.AI.run('@cf/meta/llama-3-8b-instruct', {
-      messages: [
-        { role: 'system', content: 'You are a professional content writer. Write detailed, well-structured, engaging content. Use markdown formatting with headings, bullet points, and paragraphs.' },
-        { role: 'user', content: prompt }
-      ],
+      prompt: prompt,
       max_tokens: 1024,
       temperature: 0.7
     });
 
-    // AI response can be in different formats — handle all cases
+    // Extract text from response
     let text = '';
     if (typeof aiResponse === 'string') {
       text = aiResponse;
-    } else if (aiResponse.response) {
+    } else if (aiResponse && aiResponse.response) {
       text = aiResponse.response;
-    } else if (aiResponse.choices && aiResponse.choices[0]) {
-      text = aiResponse.choices[0].message?.content || aiResponse.choices[0].text || '';
-    } else if (aiResponse.content) {
-      text = aiResponse.content;
+    } else if (aiResponse && aiResponse.result) {
+      text = aiResponse.result;
+    } else if (aiResponse && aiResponse.text) {
+      text = aiResponse.text;
     } else {
       text = JSON.stringify(aiResponse);
     }
 
-    return new Response(JSON.stringify({ text: text }), {
+    // Send response
+    const responseData = JSON.stringify({ text: text });
+    
+    return new Response(responseData, {
       status: 200,
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      }
     });
 
   } catch (error) {
-    console.error('AI Write Error:', error);
-    return new Response(JSON.stringify({ error: error.message || 'Generation failed' }), {
+    console.error('AI Error:', error.message);
+    return new Response(JSON.stringify({ error: 'Generation failed: ' + error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
