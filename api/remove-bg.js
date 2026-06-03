@@ -1,4 +1,3 @@
-// Cloudflare Pages Function — Background Removal via Cloudflare AI
 export async function onRequestPost(context) {
   try {
     const { image } = await context.request.json();
@@ -10,16 +9,23 @@ export async function onRequestPost(context) {
       });
     }
 
-    // Call Cloudflare AI — @cf/black-forest-labs/flux-1-schnell for background removal
-    const aiResponse = await context.env.AI.run('@cf/black-forest-labs/flux-1-schnell', {
-      prompt: 'Remove background from this image, make background transparent, keep only the main subject',
-      image: image,
-      num_steps: 4,
-      guidance_scale: 1.0,
-      output_format: 'png'
-    });
+    // Use @cf/runwayml/stable-diffusion-v1-5-inpainting for background removal
+    const aiResponse = await context.env.AI.run(
+      '@cf/runwayml/stable-diffusion-v1-5-inpainting',
+      {
+        prompt: 'transparent background, no background, isolated object',
+        image: image,
+        mask: image, // Using same image as mask for full removal
+        num_steps: 20,
+        guidance_scale: 7.5,
+        strength: 1.0
+      }
+    );
 
-    return new Response(JSON.stringify({ image: aiResponse.image }), {
+    // Return the processed image as base64
+    const base64Image = aiResponse.image || aiResponse;
+
+    return new Response(JSON.stringify({ image: base64Image }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
