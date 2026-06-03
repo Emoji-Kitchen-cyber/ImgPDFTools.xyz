@@ -45,7 +45,7 @@ export async function onRequestPost(context) {
 
     // Call Cloudflare AI — messages format (required for llama-3)
     const aiResponse = await context.env.AI.run(
-      '@cf/meta/llama-3-8b-instruct',
+      '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
       {
         messages: [
           {
