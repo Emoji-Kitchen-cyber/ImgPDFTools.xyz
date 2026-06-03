@@ -4,40 +4,33 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Blog Writer – PixelPress</title>
-  <meta name="description" content="Generate blog posts, product descriptions, and SEO content using Cloudflare AI. Free, fast, and private.">
+  <meta name="description" content="Generate blog posts, product descriptions, and SEO content using Cloudflare AI.">
   <link rel="canonical" href="https://pixelpress.pages.dev/ai-blog-writer.html">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-    :root{--bg:#f5f5f7;--surface:rgba(255,255,255,0.75);--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73;--accent:#ec4899;--accent2:#a78bfa;--glow:rgba(236,72,153,0.1);--r:16px}
-    [data-theme="dark"]{--bg:#09090e;--surface:rgba(21,21,30,0.7);--card:#15151e;--border:rgba(255,255,255,0.08);--text:#e8e8f0;--muted:#86868b;--glow:rgba(236,72,153,0.25)}
+    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
+    :root{--bg:#f5f5f7;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73;--accent:#ec4899;--accent2:#a78bfa;--r:16px}
+    [data-theme="dark"]{--bg:#09090e;--card:#15151e;--border:rgba(255,255,255,0.08);--text:#e8e8f0;--muted:#86868b}
     *{margin:0;padding:0;box-sizing:border-box}
     body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;display:flex;flex-direction:column;transition:0.3s}
-    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:rgba(255,255,255,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+    [data-theme="dark"] nav{background:rgba(21,21,30,0.7)}
     .nav-left{display:flex;align-items:center;gap:1rem}
     .back-btn{background:var(--card);border:1px solid var(--border);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;cursor:pointer;text-decoration:none;transition:0.2s}
-    .back-btn:hover{border-color:var(--accent);transform:scale(1.05)}
     .nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;text-transform:uppercase;text-decoration:none;color:inherit}
     .nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
     .main{flex:1;max-width:800px;margin:0 auto;width:100%;padding:2rem 16px 4rem}
-    .hero{text-align:center;margin-bottom:2rem}
-    .hero h1{font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,2.5rem);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    h1{font-family:'Syne',sans-serif;font-size:2rem;margin-bottom:1.5rem;text-align:center}
     .card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1.5rem}
     .input-group{margin-bottom:1rem}
     .input-group label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
-    .input-group input,.input-group textarea,.input-group select{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:0.95rem;outline:none;font-family:inherit;resize:vertical}
-    .input-group textarea{min-height:100px}
-    .input-group input:focus,.input-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
-    .btn{padding:12px 24px;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-size:0.95rem;transition:0.2s;display:inline-flex;align-items:center;gap:8px;width:100%;justify-content:center}
-    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
-    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px var(--glow)}
+    .input-group textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text);font-size:0.95rem;outline:none;font-family:inherit;resize:vertical;min-height:100px}
+    .input-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(236,72,153,0.1)}
+    .btn{width:100%;padding:14px;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem;transition:0.2s;background:linear-gradient(135deg,var(--accent),var(--accent2));color:white}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,0.3)}
     .btn:disabled{opacity:0.5;pointer-events:none}
-    .result-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;min-height:200px;white-space:pre-wrap;line-height:1.8;font-size:0.95rem}
-    .result-box:empty::before{content:'Your AI-generated content will appear here...';color:var(--muted)}
-    .spinner{display:none;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin-right:8px}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .btn.loading .spinner{display:inline-block}
-    .btn.loading .btn-text{display:none}
+    .result{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;min-height:200px;white-space:pre-wrap;line-height:1.8}
+    .result:empty::before{content:'AI-generated content will appear here...';color:var(--muted)}
     footer{text-align:center;padding:2rem;color:var(--muted);font-size:0.85rem;border-top:1px solid var(--border);margin-top:auto}
   </style>
 </head>
@@ -47,53 +40,80 @@
     <button id="themeToggle" class="back-btn">🌓</button>
   </nav>
   <div class="main">
-    <div class="hero"><h1>🤖 AI Blog Writer</h1><p style="color:var(--muted);margin-top:0.5rem;">Generate blog posts, descriptions & SEO content instantly</p></div>
+    <h1>🤖 AI Blog Writer</h1>
     <div class="card">
-      <div class="input-group"><label>Topic / Title</label><input type="text" id="topic" placeholder="e.g., How to Compress Images Without Losing Quality"></div>
-      <div class="input-group"><label>Content Type</label><select id="contentType"><option value="blog">Blog Post (500 words)</option><option value="description">Product Description</option><option value="seo">SEO Meta Description</option><option value="social">Social Media Caption</option><option value="email">Email Newsletter</option></select></div>
-      <div class="input-group"><label>Additional Instructions (optional)</label><textarea id="instructions" placeholder="e.g., Include bullet points, use simple language, add a call-to-action..."></textarea></div>
-      <button class="btn btn-primary" id="generateBtn"><span class="btn-text"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Content</span><span class="spinner"></span></button>
+      <div class="input-group"><label>What should I write about?</label><textarea id="prompt" placeholder="e.g., Write a blog post about image compression techniques..."></textarea></div>
+      <button class="btn" id="generateBtn"><i class="fa-solid fa-wand-magic-sparkles"></i> Generate Content</button>
     </div>
-    <div class="card"><h3 style="font-family:'Syne',sans-serif;margin-bottom:1rem;">📝 Generated Content</h3><div class="result-box" id="resultBox"></div><button class="btn btn-primary" id="copyBtn" style="margin-top:1rem;display:none;"><i class="fa-solid fa-copy"></i> Copy to Clipboard</button></div>
+    <div class="card">
+      <h3 style="font-family:'Syne',sans-serif;margin-bottom:1rem;">📝 Result</h3>
+      <div class="result" id="resultBox"></div>
+      <button class="btn" id="copyBtn" style="margin-top:1rem;display:none;"><i class="fa-solid fa-copy"></i> Copy</button>
+    </div>
   </div>
   <footer>© 2026 PixelPress – Powered by Cloudflare AI</footer>
+
   <script>
     (function(){
-      function syncTheme(){const s=localStorage.getItem('pixelpress-theme');document.documentElement.setAttribute('data-theme',s||(window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))}
+      function syncTheme(){const s=localStorage.getItem('pixelpress-theme');document.documentElement.setAttribute('data-theme',s||'light')}
       document.getElementById('themeToggle').addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);localStorage.setItem('pixelpress-theme',n)});
       syncTheme();
 
-      const generateBtn=document.getElementById('generateBtn');
-      const resultBox=document.getElementById('resultBox');
+      const btn=document.getElementById('generateBtn');
+      const result=document.getElementById('resultBox');
       const copyBtn=document.getElementById('copyBtn');
 
-      generateBtn.addEventListener('click',async()=>{
-        const topic=document.getElementById('topic').value.trim();
-        if(!topic) return alert('Please enter a topic');
-        generateBtn.classList.add('loading');generateBtn.disabled=true;
-        resultBox.textContent='';
+      btn.addEventListener('click',async()=>{
+        const prompt=document.getElementById('prompt').value.trim();
+        if(!prompt) return alert('Please enter a topic');
+        
+        btn.disabled=true; btn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Generating...';
+        result.textContent='';
         copyBtn.style.display='none';
 
-        const type=document.getElementById('contentType').value;
-        const instructions=document.getElementById('instructions').value.trim();
-        
-        let prompt='';
-        if(type==='blog') prompt=`Write a detailed, well-structured blog post about "${topic}". Include an introduction, 3-4 main sections with headings, and a conclusion. Write approximately 500 words in a professional yet engaging tone.${instructions?' Additional instructions: '+instructions:''}`;
-        else if(type==='description') prompt=`Write a compelling product description for "${topic}". Highlight key features and benefits. Keep it between 150-200 words.${instructions?' Additional instructions: '+instructions:''}`;
-        else if(type==='seo') prompt=`Write an SEO-optimized meta description (150-160 characters) for a page about "${topic}". Include the primary keyword naturally.${instructions?' Additional instructions: '+instructions:''}`;
-        else if(type==='social') prompt=`Write an engaging social media caption for a post about "${topic}". Include relevant hashtags. Keep it under 200 words.${instructions?' Additional instructions: '+instructions:''}`;
-        else if(type==='email') prompt=`Write a professional email newsletter about "${topic}". Include a subject line, greeting, body, and call-to-action. Keep it warm and engaging.${instructions?' Additional instructions: '+instructions:''}`;
-
         try{
-          const res=await fetch('/api/ai-write',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
-          if(!res.ok){const e=await res.json();throw new Error(e.error||'Generation failed')}
-          const data=await res.json();
-          resultBox.textContent=data.text;
+          const res=await fetch('/api/ai-write',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({prompt})
+          });
+          
+          // Fix: Get raw text first, then parse safely
+          const rawText = await res.text();
+          
+          if(!res.ok){
+            throw new Error(rawText || 'API error');
+          }
+          
+          // Try to parse as JSON
+          let data;
+          try{
+            data = JSON.parse(rawText);
+          } catch(e){
+            // If not JSON, use raw text directly
+            result.textContent = rawText;
+            copyBtn.style.display='flex';
+            return;
+          }
+          
+          // Use parsed data
+          result.textContent = data.text || data.response || rawText;
           copyBtn.style.display='flex';
-        }catch(e){resultBox.textContent='❌ Error: '+e.message}finally{generateBtn.classList.remove('loading');generateBtn.disabled=false}
+          
+        } catch(e){
+          result.textContent = '❌ Error: ' + e.message;
+        } finally{
+          btn.disabled=false;
+          btn.innerHTML='<i class="fa-solid fa-wand-magic-sparkles"></i> Generate Content';
+        }
       });
 
-      copyBtn.addEventListener('click',()=>{navigator.clipboard.writeText(resultBox.textContent).then(()=>{copyBtn.innerHTML='<i class="fa-solid fa-check"></i> Copied!';setTimeout(()=>copyBtn.innerHTML='<i class="fa-solid fa-copy"></i> Copy to Clipboard',2000)})});
+      copyBtn.addEventListener('click',()=>{
+        navigator.clipboard.writeText(result.textContent).then(()=>{
+          copyBtn.innerHTML='<i class="fa-solid fa-check"></i> Copied!';
+          setTimeout(()=>copyBtn.innerHTML='<i class="fa-solid fa-copy"></i> Copy',2000);
+        });
+      });
     })();
   </script>
 </body>
