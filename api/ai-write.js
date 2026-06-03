@@ -1,112 +1,67 @@
-/**
- * Cloudflare Pages Function: functions/api/ai-write.js
- * 
- * SETUP REQUIRED:
- * 1. This file must be at: functions/api/ai-write.js  (inside /functions folder)
- * 2. In Cloudflare Dashboard → Pages → Settings → Functions → AI Bindings
- *    Add binding: Variable name = AI
- */
-
 export async function onRequestPost(context) {
   const corsHeaders = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    'Access-Control-Allow-Origin': '*'
   };
 
   try {
-    // Check AI binding exists
+    // 1. AI binding check
     if (!context.env.AI) {
       return new Response(
-        JSON.stringify({ text: 'Error: AI binding not configured. Go to Cloudflare Dashboard → Pages → Settings → Functions → AI Bindings → Add binding with variable name "AI".' }),
+        JSON.stringify({ text: 'Error: AI binding not found. Add binding in Cloudflare Dashboard → Settings → Functions → AI Bindings.' }),
         { status: 500, headers: corsHeaders }
       );
     }
 
-    // Parse body
+    // 2. Parse request body safely
     let prompt;
     try {
-      const body = await context.request.json();
-      prompt = body.prompt;
+      const body = await context.request.text();
+      if (!body) throw new Error('Empty body');
+      const parsed = JSON.parse(body);
+      prompt = parsed.prompt?.trim();
     } catch (e) {
       return new Response(
-        JSON.stringify({ text: 'Error: Invalid request body.' }),
+        JSON.stringify({ text: 'Error: Invalid request. Please provide a prompt.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    if (!prompt || !prompt.trim()) {
+    if (!prompt) {
       return new Response(
-        JSON.stringify({ text: 'Error: No prompt provided.' }),
+        JSON.stringify({ text: 'Error: Prompt is empty.' }),
         { status: 400, headers: corsHeaders }
       );
     }
 
-    // Call Cloudflare AI — messages format (required for llama-3)
-    const aiResponse = await context.env.AI.run(
+    // 3. Call AI - this returns response object
+    const aiResult = await context.env.AI.run(
       '@cf/meta/llama-3.3-70b-instruct-fp8-fast',
       {
         messages: [
-          {
-            role: 'system',
-            content: 'You are a professional blog writer and SEO content expert. Write clear, engaging, well-structured content. Use proper paragraphs.'
-          },
-          {
-            role: 'user',
-            content: prompt.trim()
-          }
+          { role: 'system', content: 'You are a professional writer. Write engaging content.' },
+          { role: 'user', content: prompt }
         ],
-        max_tokens: 1024,
+        max_tokens: 800
       }
     );
 
-    // Log raw response for debugging (visible in CF Pages dashboard logs)
-    console.log('[ai-write] raw response:', JSON.stringify(aiResponse));
-
-    // Extract text — CF returns { response: "..." } for chat models
+    // 4. Extract text - the result is an object like {response: "text"}
     let text = '';
-    if (typeof aiResponse === 'string') {
-      text = aiResponse;
-    } else if (aiResponse?.response) {
-      text = aiResponse.response;
-    } else if (aiResponse?.text) {
-      text = aiResponse.text;
-    } else if (aiResponse?.choices?.[0]?.message?.content) {
-      text = aiResponse.choices[0].message.content;
-    } else if (aiResponse?.choices?.[0]?.text) {
-      text = aiResponse.choices[0].text;
+    if (aiResult && aiResult.response) {
+      text = aiResult.response;
+    } else if (typeof aiResult === 'string') {
+      text = aiResult;
     } else {
-      // Fallback: return raw so we can debug
-      text = JSON.stringify(aiResponse);
+      text = JSON.stringify(aiResult);
     }
 
-    text = text.trim();
-    if (!text) {
-      text = 'Error: AI returned empty response. Raw: ' + JSON.stringify(aiResponse);
-    }
-
-    return new Response(
-      JSON.stringify({ text }),
-      { status: 200, headers: corsHeaders }
-    );
+    // 5. Return plain JSON
+    const responseJson = JSON.stringify({ text: text });
+    return new Response(responseJson, { status: 200, headers: corsHeaders });
 
   } catch (err) {
-    console.error('[ai-write] error:', err);
-    return new Response(
-      JSON.stringify({ text: 'Error: ' + (err.message || 'Unknown server error') }),
-      { status: 500, headers: corsHeaders }
-    );
+    const errorJson = JSON.stringify({ text: 'Error: ' + (err.message || 'Unknown error') });
+    return new Response(errorJson, { status: 500, headers: corsHeaders });
   }
-}
-
-export async function onRequestOptions() {
-  return new Response(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-    },
-  });
 }
