@@ -8,90 +8,37 @@
   <meta name="description" content="Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more. All processing happens in your browser – private and fast." />
   <link rel="canonical" href="https://pixelpress.pages.dev/" />
 
-  <!-- ========== DNS PREFETCH & PRECONNECT (Early Connections) ========== -->
-  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- ========== FONT PRELOADS (Direct .woff2 files - HIGH PRIORITY) ========== -->
-  <!-- Font Awesome 6.4.0 - Solid (Most Used: fa-bars, fa-house, etc.) -->
-  <link rel="preload" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2" 
-        as="font" 
-        type="font/woff2" 
-        crossorigin="anonymous"
-        fetchpriority="high">
-  
-  <!-- Font Awesome 6.4.0 - Regular (Used in some icons) -->
-  <link rel="preload" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2" 
-        as="font" 
-        type="font/woff2" 
-        crossorigin="anonymous">
-  
-  <!-- Font Awesome 6.4.0 - Brands (Social media icons) -->
-  <link rel="preload" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2" 
-        as="font" 
-        type="font/woff2" 
-        crossorigin="anonymous">
-
-  <!-- ========== CONTENT SECURITY POLICY ========== -->
   <meta http-equiv="Content-Security-Policy" 
         content="default-src 'self'; 
                  script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net cdnjs.com www.googletagmanager.com www.google-analytics.com;
                  style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com unpkg.com;
-                 font-src 'self' data: fonts.gstatic.com cdnjs.cloudflare.com;
+                 font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
                  img-src 'self' data: blob: https:;
                  connect-src 'self' https:;
                  frame-src 'none';
                  object-src 'none';" />
 
-  <!-- ========== CRITICAL INLINE CSS (Font-Display Fix + Core Styles) ========== -->
-  <style>
-    /* ===== FONT-DISPLAY OVERRIDE (THE 30ms FIX) ===== */
-    /* Font Awesome Solid - 900 weight */
-    @font-face {
-      font-family: 'Font Awesome 6 Free';
-      font-style: normal;
-      font-weight: 900;
-      font-display: swap;
-      src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2') format('woff2'),
-           url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.ttf') format('truetype');
-    }
-    
-    /* Font Awesome Regular - 400 weight */
-    @font-face {
-      font-family: 'Font Awesome 6 Free';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2') format('woff2'),
-           url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.ttf') format('truetype');
-    }
-    
-    /* Font Awesome Brands - 400 weight */
-    @font-face {
-      font-family: 'Font Awesome 6 Brands';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.woff2') format('woff2'),
-           url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-brands-400.ttf') format('truetype');
-    }
-    
-    /* Font Metric Overrides - Prevent Layout Shift (CLS) */
-    .fa-solid, .fas, 
-    .fa-regular, .far, 
-    .fa-brands, .fab, 
-    .fa, [class^="fa-"], [class*=" fa-"] {
-      font-family: 'Font Awesome 6 Free', 'Font Awesome 6 Brands', sans-serif;
-    }
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
-    /* ===== CORE CSS VARIABLES & STYLES ===== */
+  <!-- ========== FAVICONS ========== -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#ec4899">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PixelPress">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+
+  <style>
     :root {
       --bg: #f5f5f7; --surface: rgba(255, 255, 255, 0.75); --card: #ffffff;
       --border: rgba(0, 0, 0, 0.06); --text: #1d1d1f; --muted: #6e6e73;
@@ -156,50 +103,14 @@
     footer { text-align: center; margin-top: 60px; padding: 35px 20px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--border); background: var(--card); }
     .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; }
     .footer-links a { color: var(--muted); font-weight: 500; }
-    
-    /* Hidden utility for search/filter functionality */
-    .tool-link.hidden { display: none !important; }
   </style>
 
-  <!-- ========== FONT AWESOME CSS (Async Load - Won't Override Our font-display) ========== -->
-  <link rel="stylesheet" 
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
-        media="print" 
-        onload="this.media='all'; this.onload=null;"
-        crossorigin="anonymous">
-  <noscript>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
-  </noscript>
-
-  <!-- ========== GOOGLE FONTS (Async Load with display=swap) ========== -->
-  <link rel="stylesheet" 
-        href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" 
-        media="print" 
-        onload="this.media='all'; this.onload=null;">
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-  </noscript>
-
-  <!-- ========== FAVICONS ========== -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#ec4899">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="PixelPress">
-
-  <!-- ========== THEME INITIALIZATION ========== -->
   <script>
     (function() { document.documentElement.setAttribute('data-theme', localStorage.getItem('pixelpress-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); })();
     window.onerror = function(msg, src, line) { var e = JSON.parse(localStorage.getItem('pixelpress_errors') || '[]'); e.push({ msg, src, line, time: new Date().toISOString() }); if (e.length > 30) e.shift(); localStorage.setItem('pixelpress_errors', JSON.stringify(e)); return false; };
     setInterval(function() { Object.keys(localStorage).forEach(function(k) { try { var d = JSON.parse(localStorage.getItem(k)); if (d && d.expiry && Date.now() > d.expiry) localStorage.removeItem(k); } catch(e) {} }); }, 604800000);
   </script>
 
-  <!-- ========== GOOGLE ANALYTICS ========== -->
   <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
