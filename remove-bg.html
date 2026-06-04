@@ -545,6 +545,7 @@
           }
         } catch (e) {
           item.status = 'fail';
+          item.error = e.message || 'Unknown error';
           console.error(e);
         }
 
@@ -579,10 +580,14 @@
       const badge = document.getElementById('badge-' + item.id); if (!badge) return;
       badge.className = 'card-badge';
       switch (item.status) {
-        case 'queue': badge.classList.add('badge-queue'); badge.textContent = 'Queue'; break;
-        case 'processing': badge.classList.add('badge-processing'); badge.textContent = 'Processing…'; break;
-        case 'done': badge.classList.add('badge-done'); badge.textContent = '✓ Done'; break;
-        case 'fail': badge.classList.add('badge-fail'); badge.textContent = 'Failed'; break;
+        case 'queue': badge.classList.add('badge-queue'); badge.textContent = 'Queue'; badge.title = ''; break;
+        case 'processing': badge.classList.add('badge-processing'); badge.textContent = 'Processing…'; badge.title = ''; break;
+        case 'done': badge.classList.add('badge-done'); badge.textContent = '✓ Done'; badge.title = ''; break;
+        case 'fail':
+          badge.classList.add('badge-fail');
+          badge.textContent = '✕ Failed';
+          badge.title = item.error || 'Processing failed';
+          break;
       }
     }
 
@@ -657,34 +662,65 @@
     });
 
     // ─── Edge Fill Algorithm (Fast Mode) ────────────────────────
+    const MAX_DIM = 2048;
+
+    function resizeToMax(img) {
+      let W = img.naturalWidth, H = img.naturalHeight;
+      if (W <= MAX_DIM && H <= MAX_DIM) {
+        const c = document.createElement('canvas');
+        c.width = W; c.height = H;
+        c.getContext('2d').drawImage(img, 0, 0);
+        return c;
+      }
+      const scale = Math.min(MAX_DIM / W, MAX_DIM / H);
+      W = Math.floor(W * scale); H = Math.floor(H * scale);
+      const c = document.createElement('canvas');
+      c.width = W; c.height = H;
+      c.getContext('2d').drawImage(img, 0, 0, W, H);
+      return c;
+    }
+
     function processWithEdgeFill(imageUrl, opts) {
       return new Promise((resolve, reject) => {
-        const img = new Image(); img.crossOrigin = 'anonymous';
+        const img = new Image();
         img.onload = () => {
           try {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+            const canvas = resizeToMax(img);
+            const W = canvas.width, H = canvas.height;
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
-            ctx.drawImage(img, 0, 0);
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const imageData = ctx.getImageData(0, 0, W, H);
             const { tol, fea, bgm, bgc, bgImage } = opts;
-            const W = canvas.width, H = canvas.height; const d = imageData.data;
+            const d = imageData.data;
+
+            // Sample corners + edges for background color
             const samples = [[0,0],[W-1,0],[0,H-1],[W-1,H-1],[Math.floor(W/2),0],[Math.floor(W/2),H-1],[0,Math.floor(H/2)],[W-1,Math.floor(H/2)]];
             let r=0,g=0,b=0;
             samples.forEach(([x,y]) => { const i=(y*W+x)*4; r+=d[i]; g+=d[i+1]; b+=d[i+2]; });
             const bgR=r/samples.length, bgG=g/samples.length, bgB=b/samples.length;
-            const mask = new Uint8Array(W*H); const queue = [];
-            function enq(x,y) {
+
+            // Use Int32Array as a typed circular queue — much more memory-efficient than Array.push
+            const mask = new Uint8Array(W*H);
+            const qBuf = new Int32Array(W * H * 2);
+            let qHead = 0, qTail = 0;
+
+            function enq(x, y) {
               if (x<0||x>=W||y<0||y>=H) return;
               const idx=y*W+x; if (mask[idx]!==0) return;
-              const pi=idx*4; const dr=d[pi]-bgR, dg=d[pi+1]-bgG, db=d[pi+2]-bgB;
-              if (Math.sqrt(dr*dr+dg*dg+db*db)<=tol) { mask[idx]=1; queue.push(x,y); } else { mask[idx]=2; }
+              const pi=idx*4;
+              const dr=d[pi]-bgR, dg=d[pi+1]-bgG, db=d[pi+2]-bgB;
+              if (Math.sqrt(dr*dr+dg*dg+db*db)<=tol) {
+                mask[idx]=1; qBuf[qTail++]=x; qBuf[qTail++]=y;
+              } else { mask[idx]=2; }
             }
+
             for (let x=0;x<W;x++) { enq(x,0); enq(x,H-1); }
             for (let y=1;y<H-1;y++) { enq(0,y); enq(W-1,y); }
-            let qi=0;
-            while (qi<queue.length) { const cx=queue[qi++], cy=queue[qi++]; enq(cx-1,cy); enq(cx+1,cy); enq(cx,cy-1); enq(cx,cy+1); }
+            while (qHead < qTail) {
+              const cx=qBuf[qHead++], cy=qBuf[qHead++];
+              enq(cx-1,cy); enq(cx+1,cy); enq(cx,cy-1); enq(cx,cy+1);
+            }
             for (let i=0;i<mask.length;i++) { if (mask[i]===0) mask[i]=2; }
+
             if (fea>0) {
               const tmp=new Uint8Array(W*H);
               for (let pass=0;pass<fea;pass++) {
@@ -696,12 +732,17 @@
                 mask.set(tmp);
               }
             }
+
+            const mimeType = 'image/' + (opts.fmt==='jpg' ? 'jpeg' : opts.fmt);
             applyBackground(canvas, ctx, imageData, mask, bgm, bgc, bgImage, () => {
-              canvas.toBlob(blob => { if (blob) resolve(blob); else reject(new Error('Export failed')); }, 'image/'+(opts.fmt==='jpg'?'jpeg':opts.fmt));
+              canvas.toBlob(blob => {
+                if (blob) resolve(blob); else reject(new Error('Canvas export failed — try PNG format'));
+              }, mimeType, 0.92);
             });
           } catch(e) { reject(e); }
         };
-        img.onerror = reject; img.src = imageUrl;
+        img.onerror = () => reject(new Error('Image load failed'));
+        img.src = imageUrl;
       });
     }
 
