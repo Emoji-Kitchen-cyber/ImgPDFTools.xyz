@@ -6,7 +6,7 @@
   <meta name="google-site-verification" content="S_xtKI5JCRkkoHtqpOZ35xBeybTS056a9DXNtNMAUZ0" />
   <title id="siteTitle">PixelPress — Free Online Image & Document Toolkit</title>
   <meta name="description" content="Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more. All processing happens in your browser – private and fast." />
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/" />
+  <link rel="canonical" href="https://pixelpress.pages.dev/" />
 
   <meta http-equiv="Content-Security-Policy" 
         content="default-src 'self'; 
@@ -21,28 +21,17 @@
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
-  <!-- ========== FAVICONS FOR ALL DEVICES ========== -->
+  <!-- ========== FAVICONS ========== -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
   <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
-  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#ec4899">
-  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="PixelPress">
-  <!-- ========== END FAVICONS ========== -->
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,423 +40,208 @@
 
   <style>
     :root {
-      --bg: #f5f5f7;
-      --surface: rgba(255, 255, 255, 0.75);
-      --card: #ffffff;
-      --border: rgba(0, 0, 0, 0.06);
-      --text: #1d1d1f;
-      --muted: #6e6e73;
-      --accent: #ec4899;
-      --accent2: #a78bfa;
-      --glow: rgba(236, 72, 153, 0.1);
-      --r: 16px;
-      --fhead: 'Syne', sans-serif;
-      --fbody: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      --fmono: 'JetBrains Mono', monospace;
+      --bg: #f5f5f7; --surface: rgba(255, 255, 255, 0.75); --card: #ffffff;
+      --border: rgba(0, 0, 0, 0.06); --text: #1d1d1f; --muted: #6e6e73;
+      --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236, 72, 153, 0.1); --r: 16px;
+      --fhead: 'Syne', sans-serif; --fbody: system-ui, -apple-system, sans-serif; --fmono: 'JetBrains Mono', monospace;
     }
-
     [data-theme="dark"] {
-      --bg: #09090e;
-      --surface: rgba(21, 21, 30, 0.7);
-      --card: #15151e;
-      --border: rgba(255, 255, 255, 0.08);
-      --text: #e8e8f0;
-      --muted: #86868b;
-      --glow: rgba(236, 72, 153, 0.25);
+      --bg: #09090e; --surface: rgba(21, 21, 30, 0.7); --card: #15151e;
+      --border: rgba(255, 255, 255, 0.08); --text: #e8e8f0; --muted: #86868b; --glow: rgba(236, 72, 153, 0.25);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: var(--bg); color: var(--text); font-family: var(--fbody);
-      min-height: 100vh; -webkit-font-smoothing: antialiased;
-      display: flex; flex-direction: column; 
-      transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s ease, direction 0.3s ease;
-    }
-    
+    body { background: var(--bg); color: var(--text); font-family: var(--fbody); min-height: 100vh; display: flex; flex-direction: column; transition: 0.3s; }
     body.rtl { direction: rtl; }
     a { color: inherit; text-decoration: none; }
-
-    nav {
-      position: sticky; top: 0; z-index: 200; display: flex; align-items: center;
-      justify-content: space-between; padding: 0 clamp(1rem, 5vw, 3rem); height: 64px;
-      background: var(--surface); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
+    nav { position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 5vw, 3rem); height: 64px; background: var(--surface); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
     .nav-left { display: flex; align-items: center; gap: 1.2rem; }
-    .menu-trigger { background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; transition: color 0.2s; }
+    .menu-trigger { background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
     .menu-trigger:hover { color: var(--accent); }
-    
-    .nav-logo {
-      font-family: var(--fhead); font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; text-transform: uppercase;
-    }
-    .nav-logo span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    
+    .nav-logo { font-family: var(--fhead); font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; text-transform: uppercase; }
+    .nav-logo span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .nav-actions { display: flex; align-items: center; gap: 1rem; }
-    
-    .control-btn {
-      background: var(--card); border: 1px solid var(--border); width: 38px; height: 38px;
-      border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
-      color: var(--text); font-size: 1.1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: transform 0.2s, border-color 0.2s;
-    }
+    .control-btn { background: var(--card); border: 1px solid var(--border); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 1.1rem; transition: 0.2s; }
     .control-btn:hover { transform: scale(1.05); border-color: var(--accent); }
-
     .lang-pill-container { display: flex; align-items: center; gap: 8px; }
     .lang-p-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
     @media (max-width: 600px) { .lang-p-label { display: none; } }
-
-    .switch-p-btn {
-      position: relative; width: 50px; height: 26px; background-color: #cbd5e1;
-      border-radius: 20px; cursor: pointer; border: 1px solid var(--border); outline: none; transition: background 0.3s;
-    }
+    .switch-p-btn { position: relative; width: 50px; height: 26px; background-color: #cbd5e1; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); }
     [data-theme="dark"] .switch-p-btn { background-color: #2d2d3d; }
-    .switch-p-btn::before {
-      content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%;
-      background-color: white; top: 2px; left: 2px; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-    }
+    .switch-p-btn::before { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; background-color: white; top: 2px; left: 2px; transition: 0.3s; }
     .switch-p-btn.active { background-color: var(--accent); }
     .switch-p-btn.active::before { transform: translateX(24px); }
-    body.rtl .switch-p-btn::before { left: auto; right: 2px; }
-    body.rtl .switch-p-btn.active::before { transform: translateX(-24px); }
-
-    .sidebar-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.15); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 299; display: none; }
+    .sidebar-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.15); backdrop-filter: blur(4px); z-index: 299; display: none; }
     .sidebar-overlay.show { display: block; }
-
-    .sidebar {
-      position: fixed; top: 0; left: -290px; width: 290px; height: 100%;
-      background: var(--card); border-right: 1px solid var(--border);
-      z-index: 300; padding: 25px 20px; display: flex; flex-direction: column;
-      overflow-y: auto; transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1), right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    body.rtl .sidebar { left: auto; right: -290px; border-right: none; border-left: 1px solid var(--border); }
-    .sidebar.open { left: 0; box-shadow: 20px 0 40px rgba(0,0,0,0.03); }
-    body.rtl .sidebar.open { right: 0; left: auto; box-shadow: -20px 0 40px rgba(0,0,0,0.03); }
-
+    .sidebar { position: fixed; top: 0; left: -290px; width: 290px; height: 100%; background: var(--card); border-right: 1px solid var(--border); z-index: 300; padding: 25px 20px; overflow-y: auto; transition: 0.4s; }
+    .sidebar.open { left: 0; }
     .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
-    .sidebar-close { background: var(--bg); border: none; color: var(--muted); font-size: 0.9rem; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-    .sidebar-close:hover { background: #fee2e2; color: #ef4444; }
-    
+    .sidebar-close { background: var(--bg); border: none; color: var(--muted); cursor: pointer; width: 32px; height: 32px; border-radius: 50%; }
     .sidebar-links { display: flex; flex-direction: column; gap: 4px; }
-    .sidebar-links a { padding: 10px 14px; border-radius: 10px; font-size: 14.5px; color: var(--text); display: flex; align-items: center; gap: 12px; font-weight: 500; transition: all 0.2s; }
-    .sidebar-links a i { width: 20px; font-size: 15px; color: var(--muted); text-align: center; }
-    .sidebar-links a:hover, .sidebar-links a.active { background: var(--bg); color: var(--accent); }
-    .sidebar-links a:hover i, .sidebar-links a.active i { color: var(--accent); }
+    .sidebar-links a { padding: 10px 14px; border-radius: 10px; font-size: 14.5px; color: var(--text); display: flex; align-items: center; gap: 12px; font-weight: 500; }
+    .sidebar-links a:hover { background: var(--bg); color: var(--accent); }
     .menu-section-title { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding: 16px 14px 6px; }
-
     .hero { text-align: center; padding: clamp(2.5rem, 6vw, 4.5rem) 1rem 2rem; }
-    .hero h1 { font-family: var(--fhead); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 800; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--text); }
+    .hero h1 { font-family: var(--fhead); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 800; line-height: 1.2; }
     .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 15.5px; color: var(--muted); max-width: 580px; margin: 0 auto; line-height: 1.5; }
-
+    .hero p { font-size: 15.5px; color: var(--muted); max-width: 580px; margin: 0 auto; }
     .main { max-width: 1140px; margin: 0 auto; width: 100%; padding: 0 20px 5rem; flex: 1; }
-
     .search-container { max-width: 580px; margin: 0 auto 2.5rem; position: relative; }
-    .search-bar {
-      width: 100%; padding: 14px 20px 14px 45px; font-family: inherit; font-size: 15.5px;
-      background: var(--card); border: 1px solid var(--border); border-radius: 14px; color: var(--text);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01); outline: none; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    body.rtl .search-bar { padding: 14px 45px 14px 20px; }
+    .search-bar { width: 100%; padding: 14px 20px 14px 45px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; color: var(--text); font-size: 15.5px; outline: none; }
     .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
-    .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 15px; pointer-events: none; }
-    body.rtl .search-icon { left: auto; right: 16px; }
-    .search-kbd { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-family: var(--fmono); font-size: 11px; color: var(--muted); background: var(--bg); padding: 2px 6px; border-radius: 6px; border: 1px solid var(--border); pointer-events: none; }
-    body.rtl .search-kbd { right: auto; left: 16px; }
-
+    .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); }
     .filter-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 2.5rem; flex-wrap: wrap; }
-    .filter-pill {
-      background: var(--card); border: 1px solid var(--border); color: var(--muted);
-      padding: 8px 20px; border-radius: 99px; font-size: 14px; font-weight: 600;
-      cursor: pointer; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .filter-pill:hover { border-color: var(--accent); color: var(--text); }
-    .filter-pill.active { background: var(--text); color: var(--bg); border-color: var(--text); }
-
+    .filter-pill { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 8px 20px; border-radius: 99px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .filter-pill.active { background: var(--text); color: var(--bg); }
     .tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    @media (max-width: 850px) { .tools-grid { grid-template-columns: 1fr; gap: 15px; } }
-    
-    .tool-link { text-decoration: none; color: inherit; display: block; }
-    .tool-link.hidden { display: none; }
-
-    .tool-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-      padding: 24px; display: flex; align-items: flex-start; gap: 18px; height: 100%;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01); transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+    @media (max-width: 850px) { .tools-grid { grid-template-columns: 1fr; } }
+    .tool-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; display: flex; align-items: flex-start; gap: 18px; transition: 0.25s; }
     .tool-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 12px 24px -4px var(--glow); }
-    
-    .tool-icon-wrapper {
-      font-size: 24px; background: var(--bg); padding: 12px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center; min-width: 54px; height: 54px;
-      border: 1px solid var(--border); transition: all 0.25s; color: var(--accent);
-    }
-    .tool-card:hover .tool-icon-wrapper { background: var(--accent); color: #ffffff; border-color: var(--accent); }
-    
-    .tool-info-pane { flex: 1; }
-    .tool-info-pane h3 { font-size: 16.5px; font-weight: 700; color: var(--text); margin-bottom: 6px; letter-spacing: -0.2px; text-transform: uppercase; }
-    .tool-info-pane p { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
-    .tool-info-pane p strong { color: var(--text); font-weight: 600; }
-
-    #noResults { text-align: center; color: var(--muted); padding: 4rem 0; width: 100%; display: none; font-size: 15px; }
-
+    .tool-icon-wrapper { font-size: 24px; background: var(--bg); padding: 12px; border-radius: 14px; min-width: 54px; height: 54px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border); color: var(--accent); }
+    .tool-info-pane h3 { font-size: 16.5px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
+    .tool-info-pane p { font-size: 13.5px; color: var(--muted); }
+    #noResults { text-align: center; color: var(--muted); padding: 4rem 0; display: none; }
     footer { text-align: center; margin-top: 60px; padding: 35px 20px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--border); background: var(--card); }
     .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; }
     .footer-links a { color: var(--muted); font-weight: 500; }
-    .footer-links a:hover { color: var(--accent); text-decoration: underline; }
   </style>
 
   <script>
-    (function() {
-      var t = localStorage.getItem('pixelpress-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-      document.documentElement.setAttribute('data-theme', t);
-    })();
-
-    window.cdnFallback = function(primaryUrl, backupUrl, callback) {
-      var script = document.createElement('script');
-      script.src = primaryUrl;
-      script.onerror = function() {
-        var fallback = document.createElement('script');
-        fallback.src = backupUrl;
-        fallback.onload = callback || function(){};
-        document.head.appendChild(fallback);
-      };
-      script.onload = callback || function(){};
-      document.head.appendChild(script);
-    };
-
-    window.onerror = function(message, source, lineno, colno, error) {
-      var errors = [];
-      try { errors = JSON.parse(localStorage.getItem('pixelpress_errors') || '[]'); } catch(e) {}
-      errors.push({ message: message, source: source || 'unknown', line: lineno, time: new Date().toISOString(), userAgent: navigator.userAgent.substring(0, 100) });
-      if (errors.length > 30) errors.shift();
-      try { localStorage.setItem('pixelpress_errors', JSON.stringify(errors)); } catch(e) {}
-      return false;
-    };
-
-    window.storeWithExpiry = function(key, value, days) {
-      days = days || 30;
-      var item = { value: value, expiry: Date.now() + (days * 86400000) };
-      try { localStorage.setItem(key, JSON.stringify(item)); } catch(e) { clearOldStorage(key, item); }
-    };
-
-    function clearOldStorage(key, item) {
-      var keys = Object.keys(localStorage);
-      for (var i = 0; i < keys.length; i++) {
-        try {
-          var data = JSON.parse(localStorage.getItem(keys[i]));
-          if (data && data.expiry && Date.now() > data.expiry) { localStorage.removeItem(keys[i]); }
-        } catch(e) {}
-      }
-      try { localStorage.setItem(key, JSON.stringify(item)); } catch(e) {}
-    }
-
-    window.getWithExpiry = function(key) {
-      var item = localStorage.getItem(key);
-      if (!item) return null;
-      try {
-        var parsed = JSON.parse(item);
-        if (Date.now() > parsed.expiry) { localStorage.removeItem(key); return null; }
-        return parsed.value;
-      } catch(e) { return null; }
-    };
-
-    setInterval(function() {
-      var keys = Object.keys(localStorage);
-      for (var i = 0; i < keys.length; i++) {
-        try {
-          var data = JSON.parse(localStorage.getItem(keys[i]));
-          if (data && data.expiry && Date.now() > data.expiry) { localStorage.removeItem(keys[i]); }
-        } catch(e) {}
-      }
-    }, 604800000);
-
-    if ('PerformanceObserver' in window) {
-      try {
-        var lcpObserver = new PerformanceObserver(function(list) {
-          var entries = list.getEntries();
-          if (entries.length > 0) {
-            var lcp = entries[entries.length - 1];
-            if (lcp.startTime > 2500) { console.warn('LCP warning:', Math.round(lcp.startTime) + 'ms'); }
-          }
-        });
-        lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true });
-      } catch(e) {}
-    }
+    (function() { document.documentElement.setAttribute('data-theme', localStorage.getItem('pixelpress-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); })();
+    window.onerror = function(msg, src, line) { var e = JSON.parse(localStorage.getItem('pixelpress_errors') || '[]'); e.push({ msg, src, line, time: new Date().toISOString() }); if (e.length > 30) e.shift(); localStorage.setItem('pixelpress_errors', JSON.stringify(e)); return false; };
+    setInterval(function() { Object.keys(localStorage).forEach(function(k) { try { var d = JSON.parse(localStorage.getItem(k)); if (d && d.expiry && Date.now() > d.expiry) localStorage.removeItem(k); } catch(e) {} }); }, 604800000);
   </script>
 
   <script async defer src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-3P7QPQKV3K', { 'send_page_view': true });
+    gtag('js', new Date()); gtag('config', 'G-3P7QPQKV3K');
   </script>
 </head>
 <body>
   <div class="sidebar-overlay" id="menuOverlay" onclick="toggleMenu(false)"></div>
-  <aside class="sidebar" id="sideMenu" aria-label="Main navigation menu">
-    <div class="sidebar-header">
-      <div class="nav-logo">PIXEL<span>PRESS</span></div>
-      <button class="sidebar-close" onclick="toggleMenu(false)" aria-label="Close menu">✕</button>
-    </div>
+  <aside class="sidebar" id="sideMenu">
+    <div class="sidebar-header"><div class="nav-logo">PIXEL<span>PRESS</span></div><button class="sidebar-close" onclick="toggleMenu(false)">✕</button></div>
     <div class="sidebar-links" id="sidebarLinks"></div>
   </aside>
 
-  <nav aria-label="Site navigation">
+  <nav>
     <div class="nav-left">
-      <button class="menu-trigger" onclick="toggleMenu(true)" aria-label="Open menu" aria-expanded="false" id="menuTriggerBtn"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
-      <a href="./index.html" class="nav-logo" aria-label="PixelPress Home">PIXEL<span>PRESS</span></a>
+      <button class="menu-trigger" onclick="toggleMenu(true)"><i class="fa-solid fa-bars"></i></button>
+      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
     </div>
     <div class="nav-actions">
-      <div class="lang-pill-container">
-        <span class="lang-p-label" id="langText" aria-live="polite">English</span>
-        <button class="switch-p-btn active" id="langToggleBtn" onclick="toggleLanguage()" aria-label="Toggle language"></button>
-      </div>
-      <button class="control-btn" id="themeToggle" aria-label="Toggle dark/light theme">🌓</button>
+      <div class="lang-pill-container"><span class="lang-p-label" id="langText">English</span><button class="switch-p-btn active" id="langToggleBtn" onclick="toggleLanguage()"></button></div>
+      <button class="control-btn" id="themeToggle">🌓</button>
     </div>
   </nav>
 
   <div class="main">
-    <section class="hero">
-      <h1 id="heroTitle">Every tool you could want to<br><span>edit images in bulk</span></h1>
-      <p id="heroDesc">Your online photo editor is here and forever free!</p>
-    </section>
-    <div class="search-container">
-      <span class="search-icon" aria-hidden="true">🔍</span>
-      <input type="search" class="search-bar" id="toolSearch" placeholder="Search operational tools or utilities..." autocomplete="off" aria-label="Search tools">
-      <span class="search-kbd" aria-hidden="true">⌘ K</span>
-    </div>
-    <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
-    <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
-    <div id="noResults" role="status" aria-live="polite">No operational utility suite detected matching query parameter.</div>
+    <section class="hero"><h1 id="heroTitle">Every tool you could want to<br><span>edit images in bulk</span></h1><p id="heroDesc">Your online photo editor is here and forever free!</p></section>
+    <div class="search-container"><span class="search-icon">🔍</span><input type="search" class="search-bar" id="toolSearch" placeholder="Search tools..." autocomplete="off"></div>
+    <div class="filter-row" id="filterContainer"></div>
+    <section class="tools-grid" id="toolsList"></section>
+    <div id="noResults">No results found.</div>
   </div>
 
-  <footer>
-    <div class="footer-links" id="footerLinks"></div>
-    <p id="footerCopyright">© 2026 PixelPress — All Rights Reserved</p>
-  </footer>
+  <footer><div class="footer-links" id="footerLinks"></div><p id="footerCopyright">© 2026 PixelPress — All Rights Reserved</p></footer>
 
   <script>
     const languageData = {
       en: {
-        title: "PixelPress — Free Online Image & Document Toolkit",
-        labelText: "English",
-        heroTitle: "Every tool you could want to<br><span>edit images in bulk</span>",
-        heroDesc: "Your online photo editor is here and forever free!",
-        copyright: "© 2026 PixelPress — All Rights Reserved",
-        searchPlaceholder: "Search operational tools or utilities...",
-        noResultsText: "No operational utility suite detected matching query parameter.",
-        filters: [
-          { id: 'all', text: 'All' }, { id: 'optimize', text: 'Optimize' }, { id: 'create', text: 'Create' },
-          { id: 'edit', text: 'Edit' }, { id: 'convert', text: 'Convert' }, { id: 'security', text: 'Security' },
-          { id: 'doc', text: 'Documents' }, { id: 'utility', text: 'Utilities' }, { id: 'gis', text: '🗺️ GIS & Maps' }
-        ],
-        sidebarTitles: { image: "Image Utilities", doc: "Document Utilities", utility: "Developer & Core Utilities", gis: "GIS & Mapping", info: "Info & Pages" },
+        title: "PixelPress — Free Online Image & Document Toolkit", labelText: "English",
+        heroTitle: "Every tool you could want to<br><span>edit images in bulk</span>", heroDesc: "Your online photo editor is here and forever free!",
+        copyright: "© 2026 PixelPress — All Rights Reserved", searchPlaceholder: "Search tools...", noResultsText: "No results found.",
+        filters: [{id:'all',text:'All'},{id:'optimize',text:'Optimize'},{id:'create',text:'Create'},{id:'edit',text:'Edit'},{id:'convert',text:'Convert'},{id:'security',text:'Security'},{id:'doc',text:'Documents'},{id:'utility',text:'Utilities'}],
+        sidebarTitles: { image:"Image Utilities", doc:"Document Utilities", utility:"Developer & Core Utilities", info:"Info & Pages" },
         toolsRegistry: [
-          { href: "./index.html", icon: "fa-house", text: "Home", section: "home", isUtilityCard: false },
-          { href: "./compress.html", icon: "fa-box", text: "Compress Image", section: "image", cat: "optimize", emoji: "📦", title: "Compress IMAGE", desc: "Compress <strong>JPG</strong>, <strong>PNG</strong>, and <strong>WEBP</strong> while saving space and maintaining quality.", isUtilityCard: true },
-          { href: "./resize.html", icon: "fa-arrows-maximize", text: "Resize Image", section: "image", cat: "edit", emoji: "📐", title: "Resize IMAGE", desc: "Define your dimensions, by percent or pixel, and resize your <strong>JPG</strong>, <strong>PNG</strong>, and <strong>WEBP</strong> images.", isUtilityCard: true },
-          { href: "./photo-editor.html", icon: "fa-wand-magic-sparkles", text: "Photo Editor", section: "image", cat: "edit create", emoji: "✨", title: "Photo Editor", desc: "Edit photos directly in your browser with fine-tuned filters, brightness, contrast, rotations, and instant download.", isUtilityCard: true },
-          { href: "./convert.html", icon: "fa-rotate", text: "Convert Format", section: "image", cat: "convert", emoji: "🔄", title: "Convert IMAGE", desc: "Transform your images into formats like <strong>JPG</strong>, <strong>PNG</strong>, or <strong>WEBP</strong> seamlessly in batches.", isUtilityCard: true },
-          { href: "./watermark.html", icon: "fa-droplet", text: "Watermark Image", section: "image", cat: "security create", emoji: "💧", title: "Watermark IMAGE", desc: "Protect your visual assets. Stamp an image or text over your images with custom transparency and positions.", isUtilityCard: true },
-          { href: "./remove-bg.html", icon: "fa-user-ghost", text: "Remove Background", section: "image", cat: "edit create", emoji: "🫥", title: "Remove Background", desc: "AI-powered background remover. Get transparent PNGs, replace backgrounds, or batch process – all in your browser.", isUtilityCard: true },
-          { href: "./meme-generator.html", icon: "fa-face-laugh-squint", text: "Meme Generator", section: "image", cat: "create", emoji: "😂", title: "Meme Generator", desc: "Create memes with templates, custom images, draggable text, stickers and more. Export as JPG, PNG, or WEBP.", isUtilityCard: true },
-          { href: "./crop.html", icon: "fa-scissors", text: "Advanced Crop", section: "image", cat: "edit", emoji: "✂️", title: "Advanced Crop", desc: "Precise cropping tool with fixed aspect ratios and social media presets.", isUtilityCard: true },
-          { href: "./blur-face.html", icon: "fa-user-shield", text: "Blur Face", section: "image", cat: "security edit", emoji: "👤", title: "Blur Face", desc: "Automatically detect and blur faces for privacy using AI.", isUtilityCard: true },
-          { href: "./thumbnail-maker.html", icon: "fa-image", text: "Thumbnail Maker", section: "image", cat: "create", emoji: "🖼️", title: "Thumbnail Maker", desc: "Generate custom streaming & social cards instantly.", isUtilityCard: true },
-          { href: "./screenshot-editor.html", icon: "fa-desktop", text: "Screenshot Editor", section: "image", cat: "edit create", emoji: "💻", title: "Screenshot Editor", desc: "Wrap captures in beautiful device frames and gradients.", isUtilityCard: true },
-          { href: "./favicon-generator.html", icon: "fa-icons", text: "Favicon Generator", section: "image", cat: "create convert", emoji: "🎯", title: "Favicon Generator", desc: "Convert raw assets into standard multi-size .ico targets.", isUtilityCard: true },
-          { href: "./pdf-to-jpg.html", icon: "fa-file-pdf", text: "PDF to JPG", section: "doc", cat: "convert doc", emoji: "📄", title: "PDF to JPG", desc: "Extract all pages from a <strong>PDF</strong> file or convert PDF pages into high-quality <strong>JPG</strong> images instantly.", isUtilityCard: true },
-          { href: "./jpg-to-pdf.html", icon: "fa-file-image", text: "JPG to PDF", section: "doc", cat: "convert doc", emoji: "🖼️", title: "JPG to PDF", desc: "Convert your <strong>JPG</strong>, <strong>PNG</strong>, or <strong>WEBP</strong> images into a single compact <strong>PDF</strong> document easily.", isUtilityCard: true },
-          { href: "./split-pdf.html", icon: "fa-scissors", text: "Split PDF", section: "doc", cat: "doc", emoji: "✂️", title: "Split PDF", desc: "Extract specific page ranges or split every single page of your <strong>PDF</strong> document into separate files seamlessly.", isUtilityCard: true },
-          { href: "./merge-pdf.html", icon: "fa-object-group", text: "Merge PDF", section: "doc", cat: "doc", emoji: "🗂️", title: "Merge PDF", desc: "Combine multiple <strong>PDF</strong> documents into a single consolidated file in whatever order you want.", isUtilityCard: true },
-          { href: "./compress-pdf.html", icon: "fa-compress", text: "Compress PDF", section: "doc", cat: "optimize doc", emoji: "📉", title: "Compress PDF", desc: "Shrink the file size of your <strong>PDF</strong> document dynamically while maximizing internal asset rendering profiles.", isUtilityCard: true },
-          { href: "./pdf-annotator.html", icon: "fa-pen-ruler", text: "PDF Annotator & Editor", section: "doc", cat: "edit doc", emoji: "🖊️", title: "PDF Annotator", desc: "Add text, draw, highlight, sign PDFs directly in your browser.", isUtilityCard: true },
-          { href: "./qr-generator.html", icon: "fa-qrcode", text: "QR Code Generator", section: "utility", cat: "create utility", emoji: "📱", title: "QR Code Generator", desc: "Generate custom trackable high-quality vector <strong>QR codes</strong> instantly for URLs, plain texts, or configurations.", isUtilityCard: true },
-          { href: "./password-generator.html", icon: "fa-key", text: "Password Generator", section: "utility", cat: "security utility", emoji: "🔑", title: "Password Generator", desc: "Create cryptographically secure random passwords instantly using client-side entropy controls.", isUtilityCard: true },
-          { href: "./json-formatter.html", icon: "fa-code", text: "JSON Formatter", section: "utility", cat: "utility", emoji: "💻", title: "JSON Formatter & Validator", desc: "Parse, format, prettify, and validate unminified structural <strong>JSON arrays</strong> with real-time lint logs.", isUtilityCard: true },
-          { href: "./url-shortener.html", icon: "fa-link", text: "URL Shortener", section: "utility", cat: "utility", emoji: "🔗", title: "URL Shortener", desc: "Minify extremely lengthy URLs into accessible localized structural redirect strings cleanly.", isUtilityCard: true },
-          { href: "./color-picker.html", icon: "fa-eye-dropper", text: "Color Picker", section: "utility", cat: "utility edit", emoji: "🎨", title: "Color Picker", desc: "Advanced color inspection, extraction, and HEX copying.", isUtilityCard: true },
-          { href: "./palette-generator.html", icon: "fa-palette", text: "Palette Generator", section: "utility", cat: "utility create", emoji: "🌈", title: "Palette Generator", desc: "Algorithmic aesthetic color scheme generator.", isUtilityCard: true },
-          { href: "./unit-converter.html", icon: "fa-calculator", text: "Unit Converter", section: "utility", cat: "utility", emoji: "📏", title: "Unit Converter", desc: "High performance responsive digital metrics calculator.", isUtilityCard: true },
-          { href: "./dxf-dwg-converter.html", icon: "fa-drafting-compass", text: "CAD Converter", section: "utility", cat: "utility convert", emoji: "📐", title: "CAD Converter", desc: "DXF & DWG structural CAD metadata utility.", isUtilityCard: true },
-          { href: "./ocr.html", icon: "fa-file-text", text: "Image to Text (OCR)", section: "utility", cat: "utility ai", emoji: "📝", title: "OCR Scanner", desc: "Extract text from images with 100+ languages. Free, fast, client‑side.", isUtilityCard: true },
-          { href: "./ai-blog-writer.html", icon: "fa-pen-fancy", text: "AI Blog Writer", section: "utility", cat: "utility ai", emoji: "🤖", title: "AI Blog Writer", desc: "Generate blog posts, descriptions & SEO content with <strong>Cloudflare AI</strong>. Fast, free, private.", isUtilityCard: true },
-          { href: "./ai-image-generator.html", icon: "fa-image", text: "AI Image Generator", section: "utility", cat: "utility ai", emoji: "🎨", title: "AI Image Generator", desc: "Create images from text using <strong>Stable Diffusion</strong>. Perfect for thumbnails & graphics.", isUtilityCard: true },
-          { href: "./geoforge.html", icon: "fa-map-location-dot", text: "GeoForge — Shapefile Studio", section: "gis", cat: "gis create utility convert", emoji: "🌍", title: "GeoForge Shapefile Studio", desc: "Draw <strong>Points, Lines & Polygons</strong> on a live map. Export as <strong>Shapefile ZIP</strong>, GeoJSON, KML, or CSV — ArcGIS & QGIS compatible. Free & browser-only.<span class='tool-badge-new'>NEW</span>", isUtilityCard: true },
-          { href: "./about.html", icon: "fa-circle-info", text: "About Us", section: "info", isUtilityCard: false },
-          { href: "./contact.html", icon: "fa-envelope", text: "Contact", section: "info", isUtilityCard: false },
-          { href: "./faq.html", icon: "fa-circle-question", text: "FAQ", section: "info", isUtilityCard: false },
-          { href: "./blog/", icon: "fa-pen-to-square", text: "Blog", section: "info", isUtilityCard: false },
-          { href: "./privacy-policy.html", icon: "fa-shadow", text: "Privacy Policy", section: "info", isUtilityCard: false },
-          { href: "./terms.html", icon: "fa-file-contract", text: "Terms of Service", section: "info", isUtilityCard: false },
-          { href: "./disclaimer.html", icon: "fa-triangle-exclamation", text: "Disclaimer", section: "info", isUtilityCard: false }
+          { href:"./index.html", icon:"fa-house", text:"Home", section:"home", isUtilityCard:false },
+          { href:"./compress.html", icon:"fa-box", text:"Compress Image", section:"image", cat:"optimize", emoji:"📦", title:"Compress IMAGE", desc:"Compress JPG, PNG, and WEBP while saving space.", isUtilityCard:true },
+          { href:"./resize.html", icon:"fa-arrows-maximize", text:"Resize Image", section:"image", cat:"edit", emoji:"📐", title:"Resize IMAGE", desc:"Define dimensions by percent or pixel.", isUtilityCard:true },
+          { href:"./photo-editor.html", icon:"fa-wand-magic-sparkles", text:"Photo Editor", section:"image", cat:"edit create", emoji:"✨", title:"Photo Editor", desc:"Edit photos with filters, brightness, contrast.", isUtilityCard:true },
+          { href:"./convert.html", icon:"fa-rotate", text:"Convert Format", section:"image", cat:"convert", emoji:"🔄", title:"Convert IMAGE", desc:"Transform images into JPG, PNG, or WEBP.", isUtilityCard:true },
+          { href:"./watermark.html", icon:"fa-droplet", text:"Watermark Image", section:"image", cat:"security create", emoji:"💧", title:"Watermark IMAGE", desc:"Stamp text or image over your photos.", isUtilityCard:true },
+          { href:"./remove-bg.html", icon:"fa-user-ghost", text:"Remove Background", section:"image", cat:"edit create", emoji:"🫥", title:"Remove Background", desc:"AI-powered background remover.", isUtilityCard:true },
+          { href:"./meme-generator.html", icon:"fa-face-laugh-squint", text:"Meme Generator", section:"image", cat:"create", emoji:"😂", title:"Meme Generator", desc:"Create memes with templates and text.", isUtilityCard:true },
+          { href:"./crop.html", icon:"fa-scissors", text:"Advanced Crop", section:"image", cat:"edit", emoji:"✂️", title:"Advanced Crop", desc:"Precise cropping with aspect ratios.", isUtilityCard:true },
+          { href:"./blur-face.html", icon:"fa-user-shield", text:"Blur Face", section:"image", cat:"security edit", emoji:"👤", title:"Blur Face", desc:"Auto-detect and blur faces for privacy.", isUtilityCard:true },
+          { href:"./thumbnail-maker.html", icon:"fa-image", text:"Thumbnail Maker", section:"image", cat:"create", emoji:"🖼️", title:"Thumbnail Maker", desc:"Generate streaming & social cards.", isUtilityCard:true },
+          { href:"./screenshot-editor.html", icon:"fa-desktop", text:"Screenshot Editor", section:"image", cat:"edit create", emoji:"💻", title:"Screenshot Editor", desc:"Wrap captures in device frames.", isUtilityCard:true },
+          { href:"./favicon-generator.html", icon:"fa-icons", text:"Favicon Generator", section:"image", cat:"create convert", emoji:"🎯", title:"Favicon Generator", desc:"Convert assets into multi-size .ico files.", isUtilityCard:true },
+          { href:"./pdf-to-jpg.html", icon:"fa-file-pdf", text:"PDF to JPG", section:"doc", cat:"convert doc", emoji:"📄", title:"PDF to JPG", desc:"Extract pages from PDF as JPG images.", isUtilityCard:true },
+          { href:"./jpg-to-pdf.html", icon:"fa-file-image", text:"JPG to PDF", section:"doc", cat:"convert doc", emoji:"🖼️", title:"JPG to PDF", desc:"Convert images into a single PDF document.", isUtilityCard:true },
+          { href:"./split-pdf.html", icon:"fa-scissors", text:"Split PDF", section:"doc", cat:"doc", emoji:"✂️", title:"Split PDF", desc:"Extract page ranges or split every page.", isUtilityCard:true },
+          { href:"./merge-pdf.html", icon:"fa-object-group", text:"Merge PDF", section:"doc", cat:"doc", emoji:"🗂️", title:"Merge PDF", desc:"Combine multiple PDFs into one file.", isUtilityCard:true },
+          { href:"./compress-pdf.html", icon:"fa-compress", text:"Compress PDF", section:"doc", cat:"optimize doc", emoji:"📉", title:"Compress PDF", desc:"Shrink PDF file size dynamically.", isUtilityCard:true },
+          { href:"./pdf-annotator.html", icon:"fa-pen-ruler", text:"PDF Annotator", section:"doc", cat:"edit doc", emoji:"🖊️", title:"PDF Annotator", desc:"Add text, draw, highlight, sign PDFs.", isUtilityCard:true },
+          { href:"./qr-generator.html", icon:"fa-qrcode", text:"QR Code Generator", section:"utility", cat:"create utility", emoji:"📱", title:"QR Code Generator", desc:"Generate custom vector QR codes instantly.", isUtilityCard:true },
+          { href:"./password-generator.html", icon:"fa-key", text:"Password Generator", section:"utility", cat:"security utility", emoji:"🔑", title:"Password Generator", desc:"Create cryptographically secure passwords.", isUtilityCard:true },
+          { href:"./json-formatter.html", icon:"fa-code", text:"JSON Formatter", section:"utility", cat:"utility", emoji:"💻", title:"JSON Formatter", desc:"Parse, format, and validate JSON data.", isUtilityCard:true },
+          { href:"./url-shortener.html", icon:"fa-link", text:"URL Shortener", section:"utility", cat:"utility", emoji:"🔗", title:"URL Shortener", desc:"Minify lengthy URLs into short links.", isUtilityCard:true },
+          { href:"./color-picker.html", icon:"fa-eye-dropper", text:"Color Picker", section:"utility", cat:"utility edit", emoji:"🎨", title:"Color Picker", desc:"Advanced color inspection and HEX copying.", isUtilityCard:true },
+          { href:"./palette-generator.html", icon:"fa-palette", text:"Palette Generator", section:"utility", cat:"utility create", emoji:"🌈", title:"Palette Generator", desc:"Algorithmic color scheme generator.", isUtilityCard:true },
+          { href:"./unit-converter.html", icon:"fa-calculator", text:"Unit Converter", section:"utility", cat:"utility", emoji:"📏", title:"Unit Converter", desc:"High performance digital metrics calculator.", isUtilityCard:true },
+          { href:"./dxf-dwg-converter.html", icon:"fa-drafting-compass", text:"CAD Converter", section:"utility", cat:"utility convert", emoji:"📐", title:"CAD Converter", desc:"DXF & DWG structural CAD utility.", isUtilityCard:true },
+          { href:"./ocr.html", icon:"fa-file-text", text:"OCR Scanner", section:"utility", cat:"utility ai", emoji:"📝", title:"OCR Scanner", desc:"Extract text from images with 100+ languages.", isUtilityCard:true },
+          { href:"./about.html", icon:"fa-circle-info", text:"About Us", section:"info", isUtilityCard:false },
+          { href:"./contact.html", icon:"fa-envelope", text:"Contact", section:"info", isUtilityCard:false },
+          { href:"./faq.html", icon:"fa-circle-question", text:"FAQ", section:"info", isUtilityCard:false },
+          { href:"./blog/", icon:"fa-pen-to-square", text:"Blog", section:"info", isUtilityCard:false },
+          { href:"./privacy-policy.html", icon:"fa-shadow", text:"Privacy Policy", section:"info", isUtilityCard:false },
+          { href:"./terms.html", icon:"fa-file-contract", text:"Terms of Service", section:"info", isUtilityCard:false },
+          { href:"./disclaimer.html", icon:"fa-triangle-exclamation", text:"Disclaimer", section:"info", isUtilityCard:false }
         ],
         footer: [
-          { href: "./about.html", text: "About" }, { href: "./contact.html", text: "Contact" }, { href: "./faq.html", text: "FAQ" },
-          { href: "./blog/", text: "Blog" }, { href: "./privacy-policy.html", text: "Privacy" }, { href: "./terms.html", text: "Terms" }, { href: "./disclaimer.html", text: "Disclaimer" }
+          { href:"./about.html", text:"About" }, { href:"./contact.html", text:"Contact" }, { href:"./faq.html", text:"FAQ" },
+          { href:"./blog/", text:"Blog" }, { href:"./privacy-policy.html", text:"Privacy" }, { href:"./terms.html", text:"Terms" }, { href:"./disclaimer.html", text:"Disclaimer" }
         ]
       },
       ar: {
-        title: "PixelPress — أدوات مجانية تعديل الصور وملفات PDF",
-        labelText: "العربية",
-        heroTitle: "كل الأدوات التي تحتاجها<br>لتعديل <span>الصور دفعة واحدة</span>",
-        heroDesc: "محرر الصور الخاص بك عبر الإنترنت هنا ومجاني إلى الأبد!",
-        copyright: "© 2026 PixelPress — جميع الحقوق محفوظة",
-        searchPlaceholder: "البحث عن الأدوات أو الخدمات المتاحة...",
-        noResultsText: "لم يتم العثور على أي أداة تطابق معايير الاستعلام المدخلة.",
-        filters: [
-          { id: 'all', text: 'الكل' }, { id: 'optimize', text: 'تحسين الكفاءة' }, { id: 'create', text: 'إنشاء' },
-          { id: 'edit', text: 'تعديل' }, { id: 'convert', text: 'تحويل الصيغ' }, { id: 'security', text: 'الأمان والحماية' },
-          { id: 'doc', text: 'المستندات' }, { id: 'utility', text: 'أدوات ذكية' }, { id: 'gis', text: '🗺️ خرائط GIS' }
-        ],
-        sidebarTitles: { image: "أدوات الصور", doc: "أدوات المستندات", utility: "أدوات المطورين والخدمات العامة", gis: "أدوات GIS والخرائط", info: "المعلومات والصفحات" },
+        title: "PixelPress — أدوات مجانية تعديل الصور وملفات PDF", labelText: "العربية",
+        heroTitle: "كل الأدوات التي تحتاجها<br>لتعديل <span>الصور دفعة واحدة</span>", heroDesc: "محرر الصور الخاص بك عبر الإنترنت هنا ومجاني إلى الأبد!",
+        copyright: "© 2026 PixelPress — جميع الحقوق محفوظة", searchPlaceholder: "البحث عن الأدوات...", noResultsText: "لم يتم العثور على نتائج.",
+        filters: [{id:'all',text:'الكل'},{id:'optimize',text:'تحسين'},{id:'create',text:'إنشاء'},{id:'edit',text:'تعديل'},{id:'convert',text:'تحويل'},{id:'security',text:'أمان'},{id:'doc',text:'مستندات'},{id:'utility',text:'أدوات'}],
+        sidebarTitles: { image:"أدوات الصور", doc:"أدوات المستندات", utility:"أدوات المطورين", info:"معلومات" },
         toolsRegistry: [
-          { href: "./index.html", icon: "fa-house", text: "الرئيسية", section: "home", isUtilityCard: false },
-          { href: "./compress.html", icon: "fa-box", text: "ضغط الصور", section: "image", cat: "optimize", emoji: "📦", title: "ضغط الصور IMAGE", desc: "قم بضغط ملفات <strong>JPG</strong> و <strong>PNG</strong> و <strong>WEBP</strong> لتوفير المساحة مع الحفاظ على الجودة العالية.", isUtilityCard: true },
-          { href: "./resize.html", icon: "fa-arrows-maximize", text: "تغيير الحجم", section: "image", cat: "edit", emoji: "📐", title: "تغيير حجم الصورة", desc: "حدد أبعادك، بالنسبة المئوية أو البكسل، وقم بتغيير حجم صور <strong>JPG</strong> و <strong>PNG</strong> و <strong>WEBP</strong>.", isUtilityCard: true },
-          { href: "./photo-editor.html", icon: "fa-wand-magic-sparkles", text: "محرر الصور", section: "image", cat: "edit create", emoji: "✨", title: "محرر الصور المتكامل", desc: "قم بتعديل الصور مباشرة في متصفحك باستخدام مرشحات دقيقة والتحكم في السطوع والتباين والتدوير والتحميل الفوري.", isUtilityCard: true },
-          { href: "./convert.html", icon: "fa-rotate", text: "تحويل الصيغة", section: "image", cat: "convert", emoji: "🔄", title: "تحويل صيغ الصور", desc: "قم بتحويل صورك إلى صيغ متعددة مثل <strong>JPG</strong> أو <strong>PNG</strong> أو <strong>WEBP</strong> بسلاسة وبشكل جماعي دفعة واحدة.", isUtilityCard: true },
-          { href: "./watermark.html", icon: "fa-droplet", text: "إضافة علامة مائية", section: "image", cat: "security create", emoji: "💧", title: "إضافة علامة مائية", desc: "احمِ أصولك المرئية وحقوقك. اطبع صورة أو نصًا فوق صورك بشفافية ومواضع مخصصة بالكامل.", isUtilityCard: true },
-          { href: "./remove-bg.html", icon: "fa-user-ghost", text: "إزالة الخلفية", section: "image", cat: "edit create", emoji: "🫥", title: "إزالة خلفية الصور", desc: "مزيل الخلفية بالذكاء الاصطناعي لتوفير صور PNG شفافة، أو معالجة جماعية مخصصة بالكامل داخل متصفحك.", isUtilityCard: true },
-          { href: "./meme-generator.html", icon: "fa-face-laugh-squint", text: "صانع الميمز", section: "image", cat: "create", emoji: "😂", title: "صانع صور الميمز", desc: "أنشئ صور ميمز مضحكة باستخدام قوالب مخصصة، ونصوص قابلة للسحب، وملصقات تصدير سريعة.", isUtilityCard: true },
-          { href: "./crop.html", icon: "fa-scissors", text: "قص الصور احترافي", section: "image", cat: "edit", emoji: "✂️", title: "قص الصور احترافي", desc: "أداة قص دقيقة للغاية مع نسب أبعاد ثابتة وإعدادات مسبقة مخصصة لوسائل التواصل الاجتماعي.", isUtilityCard: true },
-          { href: "./blur-face.html", icon: "fa-user-shield", text: "تغبيش الوجوه", section: "image", cat: "security edit", emoji: "👤", title: "تغبيش وطمس الوجوه", desc: "اكتشف الوجوه تلقائيًا وقم بتغبيشها لحماية الخصوصية والأمان باستخدام تقنيات الذكاء الاصطناعي المتطورة.", isUtilityCard: true },
-          { href: "./thumbnail-maker.html", icon: "fa-image", text: "صانع الصور المصغرة", section: "image", cat: "create", emoji: "🖼️", title: "صانع الصور المصغرة", desc: "قم بإنشاء بطاقات بث ووسائط اجتماعية مخصصة على الفور.", isUtilityCard: true },
-          { href: "./screenshot-editor.html", icon: "fa-desktop", text: "محرر لقطات الشاشة", section: "image", cat: "edit create", emoji: "💻", title: "محرر لقطات الشاشة", desc: "ضع لقطات الشاشة في إطارات أجهزة جميلة وتدرجات لونية.", isUtilityCard: true },
-          { href: "./favicon-generator.html", icon: "fa-icons", text: "مولد الأيقونات", section: "image", cat: "create convert", emoji: "🎯", title: "مولد الأيقونات", desc: "تحويل الأصول الخام إلى ملفات .ico قياسية متعددة الأحجام.", isUtilityCard: true },
-          { href: "./pdf-to-jpg.html", icon: "fa-file-pdf", text: "تحويل من PDF إلى JPG", section: "doc", cat: "convert doc", emoji: "📄", title: "تحويل من PDF إلى JPG", desc: "قم باستخراج جميع الصفحات من ملف <strong>PDF</strong> أو تحويل صفحات PDF إلى صور <strong>JPG</strong> عالية الجودة على الفور.", isUtilityCard: true },
-          { href: "./jpg-to-pdf.html", icon: "fa-file-image", text: "تحويل من JPG إلى PDF", section: "doc", cat: "convert doc", emoji: "🖼️", title: "تحويل من JPG إلى PDF", desc: "قم بتحويل صور <strong>JPG</strong> أو <strong>PNG</strong> أو <strong>WEBP</strong> إلى مستند <strong>PDF</strong> واحد مدمج ومنظم بكل سهولة.", isUtilityCard: true },
-          { href: "./split-pdf.html", icon: "fa-scissors", text: "تقسيم ملف PDF", section: "doc", cat: "doc", emoji: "✂️", title: "تقسيم ملفات PDF", desc: "استخراج نطاقات صفحات معينة أو تقسيم كل صفحة من صفحات مستند PDF الخاص بك بسلاسة.", isUtilityCard: true },
-          { href: "./merge-pdf.html", icon: "fa-object-group", text: "دمج ملفات PDF", section: "doc", cat: "doc", emoji: "🗂️", title: "دمج ملفات PDF", desc: "دمج مستندات PDF متعددة في ملف واحد موحد بالترتيب الذي تريده بكل سهولة.", isUtilityCard: true },
-          { href: "./compress-pdf.html", icon: "fa-compress", text: "ضغط ملف PDF", section: "doc", cat: "optimize doc", emoji: "📉", title: "تقليل حجم PDF", desc: "تقليل حجم ملف مستند PDF الخاص بك ديناميكيًا مع الحفاظ على جودة الأصول الداخلية.", isUtilityCard: true },
-          { href: "./pdf-annotator.html", icon: "fa-pen-ruler", text: "محرر PDF وملاحظات", section: "doc", cat: "edit doc", emoji: "🖊️", title: "محرر PDF", desc: "أضف نصًا ورسومات وتوقيعات وملاحظات على ملفات PDF.", isUtilityCard: true },
-          { href: "./qr-generator.html", icon: "fa-qrcode", text: "مولد الرموز QR", section: "utility", cat: "create utility", emoji: "📱", title: "إنشاء رموز QR مخصصة", desc: "قم بإنشاء رموز استجابة سريعة QR عالية الجودة ومخصصة فورًا للروابط أو النصوص.", isUtilityCard: true },
-          { href: "./password-generator.html", icon: "fa-key", text: "مولد كلمات المرور", section: "utility", cat: "security utility", emoji: "🔑", title: "إنشاء كلمات مرور آمنة", desc: "أنشئ كلمات مرور عشوائية قوية ومحمية تشفيرًا بشكل فوري وبشكل محلي بالكامل.", isUtilityCard: true },
-          { href: "./json-formatter.html", icon: "fa-code", text: "منسق ومعالج JSON", section: "utility", cat: "utility", emoji: "💻", title: "تنسيق والتحقق من JSON", desc: "قم بتحليل وتنسيق والتحقق من صحة مصفوفات وملفات JSON البرمجية مع رصد الأخطاء فورًا.", isUtilityCard: true },
-          { href: "./url-shortener.html", icon: "fa-link", text: "مختصر الروابط", section: "utility", cat: "utility", emoji: "🔗", title: "اختصار الروابط الطويلة", desc: "قم بتقصير الروابط الطويلة جدًا والمربكة إلى سلاسل توجيه محلية مبسطة ونظيفة.", isUtilityCard: true },
-          { href: "./color-picker.html", icon: "fa-eye-dropper", text: "منتقي الألوان", section: "utility", cat: "utility edit", emoji: "🎨", title: "منتقي الألوان", desc: "فحص متقدم للألوان واستخراجها ونسخ رموز HEX.", isUtilityCard: true },
-          { href: "./palette-generator.html", icon: "fa-palette", text: "مولد لوحة الألوان", section: "utility", cat: "utility create", emoji: "🌈", title: "مولد لوحة الألوان", desc: "مولد خوارزمي لأنظمة الألوان الجمالية.", isUtilityCard: true },
-          { href: "./unit-converter.html", icon: "fa-calculator", text: "محول الوحدات", section: "utility", cat: "utility", emoji: "📏", title: "محول الوحدات", desc: "حاسبة مقاييس رقمية متجاوبة وعالية الأداء.", isUtilityCard: true },
-          { href: "./dxf-dwg-converter.html", icon: "fa-drafting-compass", text: "محول CAD", section: "utility", cat: "utility convert", emoji: "📐", title: "محول CAD", desc: "أداة البيانات الوصفية الهيكلية لملفات DXF و DWG.", isUtilityCard: true },
-          { href: "./ocr.html", icon: "fa-file-text", text: "استخراج النص من الصور", section: "utility", cat: "utility ai", emoji: "📝", title: "OCR Scanner", desc: "استخرج النص من الصور بأكثر من 100 لغة. مجاني وسريع.", isUtilityCard: true },
-          { href: "./ai-blog-writer.html", icon: "fa-pen-fancy", text: "كاتب المدونات الذكي", section: "utility", cat: "utility ai", emoji: "🤖", title: "AI Blog Writer", desc: "أنشئ منشورات ووصفات ومحتوى SEO باستخدام <strong>ذكاء Cloudflare</strong>.", isUtilityCard: true },
-          { href: "./ai-image-generator.html", icon: "fa-image", text: "مولد الصور الذكي", section: "utility", cat: "utility ai", emoji: "🎨", title: "AI Image Generator", desc: "أنشئ صوراً من النص باستخدام <strong>Stable Diffusion</strong>. مثالي للصور المصغرة.", isUtilityCard: true },
-          { href: "./geoforge.html", icon: "fa-map-location-dot", text: "GeoForge — استوديو الخرائط", section: "gis", cat: "gis create utility convert", emoji: "🌍", title: "GeoForge — استوديو الخرائط", desc: "ارسم <strong>نقاطاً وخطوطاً ومضلعات</strong> على خريطة تفاعلية. صدّر كـ <strong>Shapefile ZIP</strong> أو GeoJSON أو KML — متوافق مع ArcGIS وQGIS. مجاني بالكامل.<span class='tool-badge-new'>جديد</span>", isUtilityCard: true },
-          { href: "./about.html", icon: "fa-circle-info", text: "من نحن", section: "info", isUtilityCard: false },
-          { href: "./contact.html", icon: "fa-envelope", text: "اتصل بنا", section: "info", isUtilityCard: false },
-          { href: "./faq.html", icon: "fa-circle-question", text: "الأسئلة الشائعة", section: "info", isUtilityCard: false },
-          { href: "./blog/", icon: "fa-pen-to-square", text: "المدونة", section: "info", isUtilityCard: false },
-          { href: "./privacy-policy.html", icon: "fa-shadow", text: "سياسة الخصوصية", section: "info", isUtilityCard: false },
-          { href: "./terms.html", icon: "fa-file-contract", text: "شروط الخدمة", section: "info", isUtilityCard: false },
-          { href: "./disclaimer.html", icon: "fa-triangle-exclamation", text: "إخلاء المسؤولية", section: "info", isUtilityCard: false }
+          { href:"./index.html", icon:"fa-house", text:"الرئيسية", section:"home", isUtilityCard:false },
+          { href:"./compress.html", icon:"fa-box", text:"ضغط الصور", section:"image", cat:"optimize", emoji:"📦", title:"ضغط الصور", desc:"ضغط JPG و PNG و WEBP.", isUtilityCard:true },
+          { href:"./resize.html", icon:"fa-arrows-maximize", text:"تغيير الحجم", section:"image", cat:"edit", emoji:"📐", title:"تغيير الحجم", desc:"تحديد الأبعاد بالبكسل أو النسبة.", isUtilityCard:true },
+          { href:"./photo-editor.html", icon:"fa-wand-magic-sparkles", text:"محرر الصور", section:"image", cat:"edit create", emoji:"✨", title:"محرر الصور", desc:"تعديل الصور بالفلاتر والسطوع.", isUtilityCard:true },
+          { href:"./convert.html", icon:"fa-rotate", text:"تحويل الصيغة", section:"image", cat:"convert", emoji:"🔄", title:"تحويل الصيغة", desc:"تحويل الصور إلى JPG أو PNG أو WEBP.", isUtilityCard:true },
+          { href:"./watermark.html", icon:"fa-droplet", text:"علامة مائية", section:"image", cat:"security create", emoji:"💧", title:"علامة مائية", desc:"ختم نص أو صورة على صورك.", isUtilityCard:true },
+          { href:"./remove-bg.html", icon:"fa-user-ghost", text:"إزالة الخلفية", section:"image", cat:"edit create", emoji:"🫥", title:"إزالة الخلفية", desc:"مزيل خلفية بالذكاء الاصطناعي.", isUtilityCard:true },
+          { href:"./meme-generator.html", icon:"fa-face-laugh-squint", text:"صانع الميمز", section:"image", cat:"create", emoji:"😂", title:"صانع الميمز", desc:"إنشاء ميمز مع قوالب ونصوص.", isUtilityCard:true },
+          { href:"./crop.html", icon:"fa-scissors", text:"قص الصور", section:"image", cat:"edit", emoji:"✂️", title:"قص الصور", desc:"قص دقيق مع نسب أبعاد.", isUtilityCard:true },
+          { href:"./blur-face.html", icon:"fa-user-shield", text:"تغبيش الوجوه", section:"image", cat:"security edit", emoji:"👤", title:"تغبيش الوجوه", desc:"اكتشاف وتغبيش الوجوه تلقائياً.", isUtilityCard:true },
+          { href:"./thumbnail-maker.html", icon:"fa-image", text:"صانع الصور المصغرة", section:"image", cat:"create", emoji:"🖼️", title:"صانع الصور المصغرة", desc:"بطاقات بث ووسائط اجتماعية.", isUtilityCard:true },
+          { href:"./screenshot-editor.html", icon:"fa-desktop", text:"محرر لقطات الشاشة", section:"image", cat:"edit create", emoji:"💻", title:"محرر لقطات الشاشة", desc:"إطارات أجهزة وتدرجات لونية.", isUtilityCard:true },
+          { href:"./favicon-generator.html", icon:"fa-icons", text:"مولد الأيقونات", section:"image", cat:"create convert", emoji:"🎯", title:"مولد الأيقونات", desc:"تحويل الأصول إلى ملفات .ico.", isUtilityCard:true },
+          { href:"./pdf-to-jpg.html", icon:"fa-file-pdf", text:"PDF إلى JPG", section:"doc", cat:"convert doc", emoji:"📄", title:"PDF إلى JPG", desc:"استخراج صفحات PDF كصور JPG.", isUtilityCard:true },
+          { href:"./jpg-to-pdf.html", icon:"fa-file-image", text:"JPG إلى PDF", section:"doc", cat:"convert doc", emoji:"🖼️", title:"JPG إلى PDF", desc:"تحويل الصور إلى مستند PDF واحد.", isUtilityCard:true },
+          { href:"./split-pdf.html", icon:"fa-scissors", text:"تقسيم PDF", section:"doc", cat:"doc", emoji:"✂️", title:"تقسيم PDF", desc:"استخراج نطاقات الصفحات.", isUtilityCard:true },
+          { href:"./merge-pdf.html", icon:"fa-object-group", text:"دمج PDF", section:"doc", cat:"doc", emoji:"🗂️", title:"دمج PDF", desc:"دمج عدة PDFs في ملف واحد.", isUtilityCard:true },
+          { href:"./compress-pdf.html", icon:"fa-compress", text:"ضغط PDF", section:"doc", cat:"optimize doc", emoji:"📉", title:"ضغط PDF", desc:"تقليل حجم ملف PDF.", isUtilityCard:true },
+          { href:"./pdf-annotator.html", icon:"fa-pen-ruler", text:"محرر PDF", section:"doc", cat:"edit doc", emoji:"🖊️", title:"محرر PDF", desc:"أضف نصاً ورسومات وتوقيعات.", isUtilityCard:true },
+          { href:"./qr-generator.html", icon:"fa-qrcode", text:"مولد QR", section:"utility", cat:"create utility", emoji:"📱", title:"مولد QR", desc:"إنشاء رموز QR مخصصة.", isUtilityCard:true },
+          { href:"./password-generator.html", icon:"fa-key", text:"مولد كلمات المرور", section:"utility", cat:"security utility", emoji:"🔑", title:"مولد كلمات المرور", desc:"كلمات مرور آمنة تشفيراً.", isUtilityCard:true },
+          { href:"./json-formatter.html", icon:"fa-code", text:"منسق JSON", section:"utility", cat:"utility", emoji:"💻", title:"منسق JSON", desc:"تحليل وتنسيق JSON.", isUtilityCard:true },
+          { href:"./url-shortener.html", icon:"fa-link", text:"مختصر الروابط", section:"utility", cat:"utility", emoji:"🔗", title:"مختصر الروابط", desc:"تقصير الروابط الطويلة.", isUtilityCard:true },
+          { href:"./color-picker.html", icon:"fa-eye-dropper", text:"منتقي الألوان", section:"utility", cat:"utility edit", emoji:"🎨", title:"منتقي الألوان", desc:"فحص متقدم للألوان.", isUtilityCard:true },
+          { href:"./palette-generator.html", icon:"fa-palette", text:"مولد لوحة الألوان", section:"utility", cat:"utility create", emoji:"🌈", title:"مولد لوحة الألوان", desc:"مولد أنظمة الألوان.", isUtilityCard:true },
+          { href:"./unit-converter.html", icon:"fa-calculator", text:"محول الوحدات", section:"utility", cat:"utility", emoji:"📏", title:"محول الوحدات", desc:"حاسبة مقاييس رقمية.", isUtilityCard:true },
+          { href:"./dxf-dwg-converter.html", icon:"fa-drafting-compass", text:"محول CAD", section:"utility", cat:"utility convert", emoji:"📐", title:"محول CAD", desc:"أداة DXF و DWG.", isUtilityCard:true },
+          { href:"./ocr.html", icon:"fa-file-text", text:"OCR", section:"utility", cat:"utility ai", emoji:"📝", title:"OCR Scanner", desc:"استخراج النص من الصور.", isUtilityCard:true },
+          { href:"./about.html", icon:"fa-circle-info", text:"من نحن", section:"info", isUtilityCard:false },
+          { href:"./contact.html", icon:"fa-envelope", text:"اتصل بنا", section:"info", isUtilityCard:false },
+          { href:"./faq.html", icon:"fa-circle-question", text:"الأسئلة الشائعة", section:"info", isUtilityCard:false },
+          { href:"./blog/", icon:"fa-pen-to-square", text:"المدونة", section:"info", isUtilityCard:false },
+          { href:"./privacy-policy.html", icon:"fa-shadow", text:"الخصوصية", section:"info", isUtilityCard:false },
+          { href:"./terms.html", icon:"fa-file-contract", text:"الشروط", section:"info", isUtilityCard:false },
+          { href:"./disclaimer.html", icon:"fa-triangle-exclamation", text:"إخلاء المسؤولية", section:"info", isUtilityCard:false }
         ],
         footer: [
-          { href: "./about.html", text: "من نحن" }, { href: "./contact.html", text: "اتصل بنا" }, { href: "./faq.html", text: "الأسئلة الشائعة" },
-          { href: "./blog/", text: "المدونة" }, { href: "./privacy-policy.html", text: "الخصوصية" }, { href: "./terms.html", text: "الشروط" }, { href: "./disclaimer.html", text: "إخلاء المسؤولية" }
+          { href:"./about.html", text:"من نحن" }, { href:"./contact.html", text:"اتصل بنا" }, { href:"./faq.html", text:"الأسئلة الشائعة" },
+          { href:"./blog/", text:"المدونة" }, { href:"./privacy-policy.html", text:"الخصوصية" }, { href:"./terms.html", text:"الشروط" }, { href:"./disclaimer.html", text:"إخلاء المسؤولية" }
         ]
       }
     };
@@ -482,8 +256,8 @@
       document.getElementById('heroDesc').innerText = data.heroDesc;
       document.getElementById('footerCopyright').innerText = data.copyright;
       document.getElementById('noResults').innerText = data.noResultsText;
-      const searchBox = document.getElementById('toolSearch');
-      searchBox.placeholder = data.searchPlaceholder;
+      document.getElementById('toolSearch').placeholder = data.searchPlaceholder;
+      
       const filterBox = document.getElementById('filterContainer');
       filterBox.innerHTML = '';
       data.filters.forEach((f, i) => {
@@ -491,40 +265,42 @@
         btn.className = `filter-pill ${i === 0 ? 'active' : ''}`;
         btn.innerText = f.text;
         btn.setAttribute('data-target', f.id);
-        btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
         btn.onclick = function() { filterCategory(f.id, this); };
         filterBox.appendChild(btn);
       });
+
       const toolsGrid = document.getElementById('toolsList');
       toolsGrid.innerHTML = '';
-      const gridItems = data.toolsRegistry.filter(item => item.isUtilityCard);
-      gridItems.forEach(t => {
-        toolsGrid.innerHTML += `<a href="${t.href}" class="tool-link" data-category="${t.cat}"><div class="tool-card"><div class="tool-icon-wrapper" aria-hidden="true">${t.emoji}</div><div class="tool-info-pane"><h3>${t.title}</h3><p>${t.desc}</p></div></div></a>`;
+      data.toolsRegistry.filter(item => item.isUtilityCard).forEach(t => {
+        toolsGrid.innerHTML += `<a href="${t.href}" class="tool-link" data-category="${t.cat}"><div class="tool-card"><div class="tool-icon-wrapper">${t.emoji}</div><div class="tool-info-pane"><h3>${t.title}</h3><p>${t.desc}</p></div></div></a>`;
       });
+
       const fLinks = document.getElementById('footerLinks');
-      fLinks.innerHTML = '';
-      data.footer.forEach(item => { fLinks.innerHTML += `<a href="${item.href}">${item.text}</a>`; });
+      fLinks.innerHTML = data.footer.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+
       const sidebarBox = document.getElementById('sidebarLinks');
       sidebarBox.innerHTML = '';
       const homeLink = data.toolsRegistry.find(item => item.section === 'home');
-      if (homeLink) sidebarBox.innerHTML += `<a href="${homeLink.href}"><i class="fa-solid ${homeLink.icon}" aria-hidden="true"></i> ${homeLink.text}</a>`;
-      sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.image}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'image') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
-      sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.doc}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'doc') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
-      sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.utility}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'utility') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
-      sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles.gis}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'gis') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
+      if (homeLink) sidebarBox.innerHTML += `<a href="${homeLink.href}"><i class="fa-solid ${homeLink.icon}"></i> ${homeLink.text}</a>`;
+      ['image','doc','utility'].forEach(sec => {
+        sidebarBox.innerHTML += `<div class="menu-section-title">${data.sidebarTitles[sec]}</div>`;
+        data.toolsRegistry.filter(item => item.section === sec).forEach(item => {
+          sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}"></i> ${item.text}</a>`;
+        });
+      });
       sidebarBox.innerHTML += `<div style="height:1px;background:var(--border);margin:10px 0;"></div><div class="menu-section-title">${data.sidebarTitles.info}</div>`;
-      data.toolsRegistry.forEach(item => { if (item.section === 'info') sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}" aria-hidden="true"></i> ${item.text}</a>`; });
+      data.toolsRegistry.filter(item => item.section === 'info').forEach(item => {
+        sidebarBox.innerHTML += `<a href="${item.href}"><i class="fa-solid ${item.icon}"></i> ${item.text}</a>`;
+      });
       evaluateLiveSearchFilters();
     }
 
     function toggleLanguage() {
-      const toggleBtn = document.getElementById('langToggleBtn');
-      if (currentLang === 'en') { currentLang = 'ar'; document.body.classList.add('rtl'); toggleBtn.classList.remove('active'); document.documentElement.lang = 'ar'; }
-      else { currentLang = 'en'; document.body.classList.remove('rtl'); toggleBtn.classList.add('active'); document.documentElement.lang = 'en'; }
+      const btn = document.getElementById('langToggleBtn');
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      document.body.classList.toggle('rtl', currentLang === 'ar');
+      btn.classList.toggle('active', currentLang === 'en');
+      document.documentElement.lang = currentLang;
       renderUI();
     }
 
@@ -533,23 +309,20 @@
       const query = searchInput.value.toLowerCase().trim();
       const activePill = document.querySelector('.filter-pill.active');
       const targetCategory = activePill ? activePill.getAttribute('data-target') : 'all';
-      let aggregateMatchCount = 0;
-      const links = document.querySelectorAll('.tool-link');
-      links.forEach(link => {
+      let count = 0;
+      document.querySelectorAll('.tool-link').forEach(link => {
         const title = link.querySelector('h3').textContent.toLowerCase();
-        const description = link.querySelector('p').textContent.toLowerCase();
-        const categories = link.getAttribute('data-category').split(' ');
-        const queryMatch = title.includes(query) || description.includes(query);
-        const categoryMatch = targetCategory === 'all' || categories.includes(targetCategory);
-        if(queryMatch && categoryMatch) { link.classList.remove('hidden'); aggregateMatchCount++; }
-        else { link.classList.add('hidden'); }
+        const desc = link.querySelector('p').textContent.toLowerCase();
+        const cats = link.getAttribute('data-category').split(' ');
+        const match = (title.includes(query) || desc.includes(query)) && (targetCategory === 'all' || cats.includes(targetCategory));
+        link.classList.toggle('hidden', !match);
+        if (match) count++;
       });
-      document.getElementById('noResults').style.display = aggregateMatchCount === 0 ? 'block' : 'none';
+      document.getElementById('noResults').style.display = count === 0 ? 'block' : 'none';
     }
 
     function filterCategory(category, element) {
-      const buttons = document.querySelectorAll('.filter-pill');
-      buttons.forEach(btn => { btn.classList.remove('active'); btn.setAttribute('aria-pressed', 'false'); });
+      document.querySelectorAll('.filter-pill').forEach(btn => { btn.classList.remove('active'); btn.setAttribute('aria-pressed', 'false'); });
       element.classList.add('active');
       element.setAttribute('aria-pressed', 'true');
       evaluateLiveSearchFilters();
@@ -558,24 +331,18 @@
     searchInput.addEventListener('input', evaluateLiveSearchFilters);
 
     function toggleMenu(show) {
-      const menu = document.getElementById('sideMenu');
-      const overlay = document.getElementById('menuOverlay');
-      const trigger = document.getElementById('menuTriggerBtn');
-      if (show) { menu.classList.add('open'); overlay.classList.add('show'); trigger.setAttribute('aria-expanded', 'true'); }
-      else { menu.classList.remove('open'); overlay.classList.remove('show'); trigger.setAttribute('aria-expanded', 'false'); }
+      document.getElementById('sideMenu').classList.toggle('open', show);
+      document.getElementById('menuOverlay').classList.toggle('show', show);
     }
 
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      const currentSetting = document.documentElement.getAttribute('data-theme');
-      const targetSetting = currentSetting === 'dark' ? 'light' : 'dark';
-      document.documentElement.setAttribute('data-theme', targetSetting);
-      localStorage.setItem('pixelpress-theme', targetSetting);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('pixelpress-theme', next);
     });
 
     window.addEventListener('keydown', e => {
-      if((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); searchInput.focus(); }
-      if(e.key === 'Escape') { toggleMenu(false); }
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); searchInput.focus(); }
     });
 
     renderUI();
@@ -590,27 +357,17 @@
         if (stored) {
           const entry = JSON.parse(stored);
           if (entry.expiry && Date.now() > entry.expiry) {
-            document.body.innerHTML = '<div style="text-align:center;padding:4rem;font-family:system-ui;"><h2>⏰ Link Expired</h2><p>This shortened URL has expired.</p><a href="./index.html" style="color:#ec4899;">Go Home</a></div>';
+            document.body.innerHTML = '<div style="text-align:center;padding:4rem;"><h2>Link Expired</h2><a href="./index.html">Go Home</a></div>';
           } else {
             entry.clicks = (entry.clicks || 0) + 1;
             localStorage.setItem(`redirect_${shortId}`, JSON.stringify(entry));
             window.location.replace(entry.long);
           }
         } else {
-          document.body.innerHTML = '<div style="text-align:center;padding:4rem;font-family:system-ui;"><h2>🔗 URL Not Found</h2><p>The shortened link does not exist.</p><a href="./index.html" style="color:#ec4899;">Go Home</a></div>';
+          document.body.innerHTML = '<div style="text-align:center;padding:4rem;"><h2>URL Not Found</h2><a href="./index.html">Go Home</a></div>';
         }
       }
     })();
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-          .then(function(reg) { console.log('[PWA] SW registered:', reg.scope); })
-          .catch(function(err) { console.warn('[PWA] SW registration failed:', err); });
-      });
-    }
   </script>
 </body>
 </html>
