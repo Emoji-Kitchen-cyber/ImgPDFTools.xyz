@@ -286,7 +286,7 @@
       const ready = await loadAIModel();
       if (!ready) throw new Error('AI model not loaded.');
 
-      // Step 1: Load image with browser Image API (blob URLs work here)
+      // Step 1: Load image with browser Image API
       const img = await new Promise((resolve, reject) => {
         const el = new Image();
         el.onload = () => resolve(el);
@@ -294,25 +294,24 @@
         el.src = imageUrl;
       });
 
-      // Step 2: Draw to canvas — convert blob URL → data URL for RawImage
-      const srcCanvas = document.createElement('canvas');
-      srcCanvas.width = img.naturalWidth;
-      srcCanvas.height = img.naturalHeight;
+      // Step 2: Resize to max 1024px before AI (model internally resizes anyway,
+      // and smaller = faster + avoids data URL memory crash on mobile)
+      const srcCanvas = resizeToMax(img, 1024);
       const srcCtx = srcCanvas.getContext('2d');
-      srcCtx.drawImage(img, 0, 0);
       const dataURL = srcCanvas.toDataURL('image/png');
 
-      // Step 3: Run through Transformers.js (data URL is safe for RawImage)
+      // Step 3: Run through Transformers.js
       const rawImg = await RawImage.fromURL(dataURL);
       const { pixel_values } = await aiProcessor(rawImg);
       const { output } = await aiModel({ input: pixel_values });
 
-      // Step 4: Convert output tensor → alpha mask
-      // output[0] shape: [1, 1, H', W'] — squeeze to [1, H', W'] for RawImage
-      const maskTensor = output[0].squeeze(0).mul(255).clamp(0, 255).round().to('uint8');
-      const mask = await RawImage.fromTensor(maskTensor).resize(img.naturalWidth, img.naturalHeight);
+      // Step 4: Convert mask — use output[0] directly (shape [1,1,H',W'])
+      // Do NOT squeeze — RawImage.fromTensor handles [1,1,H,W]
+      const mask = await RawImage.fromTensor(
+        output[0].mul(255).to('uint8')
+      ).resize(srcCanvas.width, srcCanvas.height);
 
-      // Step 5: Apply alpha mask to original pixels
+      // Step 5: Apply alpha mask to pixels
       const imgData = srcCtx.getImageData(0, 0, srcCanvas.width, srcCanvas.height);
       for (let i = 0; i < mask.data.length; i++) {
         imgData.data[4 * i + 3] = mask.data[i];
@@ -664,19 +663,20 @@
     // ─── Edge Fill Algorithm (Fast Mode) ────────────────────────
     const MAX_DIM = 2048;
 
-    function resizeToMax(img) {
-      let W = img.naturalWidth, H = img.naturalHeight;
-      if (W <= MAX_DIM && H <= MAX_DIM) {
-        const c = document.createElement('canvas');
+    function resizeToMax(img, maxDim) {
+      if (!maxDim) maxDim = MAX_DIM;
+      let W = img.naturalWidth || img.width;
+      let H = img.naturalHeight || img.height;
+      const c = document.createElement('canvas');
+      if (W <= maxDim && H <= maxDim) {
         c.width = W; c.height = H;
         c.getContext('2d').drawImage(img, 0, 0);
         return c;
       }
-      const scale = Math.min(MAX_DIM / W, MAX_DIM / H);
-      W = Math.floor(W * scale); H = Math.floor(H * scale);
-      const c = document.createElement('canvas');
-      c.width = W; c.height = H;
-      c.getContext('2d').drawImage(img, 0, 0, W, H);
+      const scale = Math.min(maxDim / W, maxDim / H);
+      c.width = Math.floor(W * scale);
+      c.height = Math.floor(H * scale);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
       return c;
     }
 
