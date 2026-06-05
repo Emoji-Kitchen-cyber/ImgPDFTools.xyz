@@ -17,7 +17,7 @@
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Naskh+Arabic:wght@400;500&family=Noto+Sans+Hebrew:wght@400;500&display=swap');
 :root {
   --bg:#f5f5f7; --surface:rgba(255,255,255,0.85); --card:#ffffff;
   --border:rgba(0,0,0,0.07); --text:#1d1d1f; --muted:#6e6e73;
@@ -130,8 +130,20 @@ nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-co
 
 /* TEXTAREA */
 .text-area-wrap{position:relative;flex:1;}
-textarea{width:100%;height:260px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:.82rem;resize:vertical;line-height:1.6;}
+textarea{width:100%;height:260px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:12px;font-family:'JetBrains Mono',monospace;font-size:.82rem;resize:vertical;line-height:1.8;}
 textarea:focus{outline:none;border-color:var(--accent);}
+/* Script-based font modes */
+textarea.rtl-mode{direction:rtl;text-align:right;font-family:'Noto Naskh Arabic','Noto Sans Hebrew',system-ui,sans-serif;font-size:.96rem;line-height:2.1;}
+textarea.cjk-mode{font-family:'Noto Sans SC','Noto Sans JP','Noto Sans KR',system-ui,sans-serif;font-size:.9rem;line-height:1.9;}
+textarea.indic-mode{font-family:system-ui,'Noto Sans Devanagari','Noto Sans Bengali','Noto Sans Tamil','Noto Sans Telugu',sans-serif;font-size:.93rem;line-height:2;}
+textarea.cyrillic-mode{font-family:system-ui,'Noto Sans',sans-serif;font-size:.87rem;line-height:1.75;}
+textarea.thai-mode{font-family:system-ui,'Noto Sans Thai',sans-serif;font-size:.95rem;line-height:2.2;}
+textarea.georgian-mode{font-family:system-ui,'Noto Sans Georgian',sans-serif;font-size:.9rem;line-height:1.9;}
+/* RTL lang indicator */
+.rtl-badge{display:none;background:rgba(236,72,153,.1);color:var(--accent);border:1px solid rgba(236,72,153,.25);border-radius:6px;padding:3px 10px;font-size:.73rem;font-weight:600;}
+.rtl-badge.show{display:inline-flex;align-items:center;gap:5px;}
+.script-badge{display:none;background:rgba(167,139,250,.1);color:var(--accent2);border:1px solid rgba(167,139,250,.25);border-radius:6px;padding:3px 10px;font-size:.73rem;font-weight:600;margin-left:4px;}
+.script-badge.show{display:inline-flex;align-items:center;gap:5px;}
 
 /* FIND BAR */
 .find-bar{display:none;gap:6px;align-items:center;background:var(--bg);border:1px solid var(--accent);border-radius:8px;padding:6px 10px;}
@@ -364,6 +376,10 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.8rem;borde
           <button class="clean-btn" id="closeFindBtn">✕</button>
         </div>
         <!-- Textarea -->
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:4px;min-height:22px;">
+          <span class="rtl-badge" id="rtlBadge">🔤 RTL (Right-to-Left)</span>
+          <span class="script-badge" id="scriptBadge"></span>
+        </div>
         <div class="text-area-wrap">
           <textarea id="outputText" placeholder="Extracted text will appear here…&#10;&#10;Tips:&#10;• Upload a clear, well-lit image for best results&#10;• Use 'Enhance Image' buttons to improve accuracy&#10;• Select a region on the image to scan only that area"></textarea>
         </div>
@@ -408,6 +424,59 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.8rem;borde
 <script>
 (function() {
 'use strict';
+
+// ─── LANGUAGE SCRIPT HANDLING ─────────────────────────────────
+const RTL_LANGS     = new Set(['ara','urd','fas','heb','syr','div','pus','uig','yid','snd']);
+const CJK_LANGS     = new Set(['chi_sim','chi_tra','jpn','kor']);
+const INDIC_LANGS   = new Set(['hin','nep','ben','pan','guj','tam','tel','mal','sin','kan','mar','san','ori','asm']);
+const CYRILLIC_LANGS= new Set(['rus','ukr','bul','srp','bel','mkd','kaz','kir','mon','tgk','tat','uzb','uzb_cyrl','aze_cyrl']);
+const THAI_LANGS    = new Set(['tha','lao','khm','mya','bod']);
+const GEORGIAN_LANGS= new Set(['kat','kat_old','hye','amh','tir']);
+
+const SCRIPT_LABELS = {
+  cjk:      '🈯 CJK Script',
+  indic:    '🔡 Indic Script',
+  cyrillic: '🔡 Cyrillic Script',
+  thai:     '🔡 Thai/SE-Asian',
+  georgian: '🔡 Georgian/Armenian',
+};
+
+function applyRTL(lang) { applyLangStyles(lang); } // backward compat
+
+function applyLangStyles(lang) {
+  const ta     = document.getElementById('outputText');
+  const rtlBdg = document.getElementById('rtlBadge');
+  const scrBdg = document.getElementById('scriptBadge');
+
+  // Reset all modes
+  ta.classList.remove('rtl-mode','cjk-mode','indic-mode','cyrillic-mode','thai-mode','georgian-mode');
+  rtlBdg.classList.remove('show');
+  scrBdg.classList.remove('show');
+
+  if (RTL_LANGS.has(lang)) {
+    ta.classList.add('rtl-mode');
+    rtlBdg.classList.add('show');
+  } else if (CJK_LANGS.has(lang)) {
+    ta.classList.add('cjk-mode');
+    scrBdg.textContent = SCRIPT_LABELS.cjk; scrBdg.classList.add('show');
+  } else if (INDIC_LANGS.has(lang)) {
+    ta.classList.add('indic-mode');
+    scrBdg.textContent = SCRIPT_LABELS.indic; scrBdg.classList.add('show');
+  } else if (CYRILLIC_LANGS.has(lang)) {
+    ta.classList.add('cyrillic-mode');
+    scrBdg.textContent = SCRIPT_LABELS.cyrillic; scrBdg.classList.add('show');
+  } else if (THAI_LANGS.has(lang)) {
+    ta.classList.add('thai-mode');
+    scrBdg.textContent = SCRIPT_LABELS.thai; scrBdg.classList.add('show');
+  } else if (GEORGIAN_LANGS.has(lang)) {
+    ta.classList.add('georgian-mode');
+    scrBdg.textContent = SCRIPT_LABELS.georgian; scrBdg.classList.add('show');
+  }
+  // Latin/default: keep JetBrains Mono — already set in base textarea style
+}
+
+// Auto-apply when language is changed
+document.getElementById('langSelect').addEventListener('change', e => applyLangStyles(e.target.value));
 
 // ─── THEME ────────────────────────────────────────────────────
 function syncTheme() {
@@ -734,6 +803,7 @@ extractBtn.addEventListener('click', async () => {
 
     const text = langSelect.value === 'auto' ? (data.text || '(Language detection mode — switch to a specific language for full text)') : data.text;
     outputText.value = text.trim();
+    applyRTL(langSelect.value);
     disableResultBtns(false);
     updateStats(data);
     addHistory(text, langSelect.value, currentDataUrl);
@@ -876,7 +946,12 @@ function timeSince(ts) {
 }
 window.histLoad = i => {
   const h = JSON.parse(localStorage.getItem('pp-ocr-hist')||'[]');
-  if (h[i]) { outputText.value = h[i].text; disableResultBtns(false); if (h[i].lang) langSelect.value = h[i].lang; window.scrollTo({top:workspace?.offsetTop-80||0, behavior:'smooth'}); }
+  if (h[i]) {
+    outputText.value = h[i].text;
+    disableResultBtns(false);
+    if (h[i].lang) { langSelect.value = h[i].lang; applyRTL(h[i].lang); }
+    window.scrollTo({top:workspace?.offsetTop-80||0, behavior:'smooth'});
+  }
 };
 window.histDel = i => {
   const h = JSON.parse(localStorage.getItem('pp-ocr-hist')||'[]');
