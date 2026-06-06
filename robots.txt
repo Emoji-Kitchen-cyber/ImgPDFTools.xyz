@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pixelpress-cyy.pages.dev/sitemap.xml
