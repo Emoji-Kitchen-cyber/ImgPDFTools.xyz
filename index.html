@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
 
+<!-- ✅ Fixed: Google Analytics script must load before gtag() calls -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-3P7QPQKV3K');
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -222,13 +223,7 @@
   <p id="footerCopyright">© 2026 PixelPress — All Rights Reserved</p>
 </footer>
 
-<!-- ✅ Social Bar Ad + Popunder Ad – placed at the end of body -->
-<!-- Social Bar Ad -->
-<script src="https://pl29662999.effectivecpmnetwork.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js"></script>
-
-<!-- Popunder Ad -->
-<script src="https://pl29662997.effectivecpmnetwork.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
-
+<!-- ✅ Main application logic loads FIRST – ensures tools and UI are never delayed by ads -->
 <script>
 const languageData = {
   en: {
@@ -522,5 +517,13 @@ if ('serviceWorker' in navigator) {
 
 renderUI();
 </script>
+
+<!-- ✅ Ad scripts are now loaded AFTER the main application – they never block UI or tool functionality -->
+<!-- Social Bar Ad (async) -->
+<script async src="https://pl29662999.effectivecpmnetwork.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js"></script>
+
+<!-- Popunder Ad (async) -->
+<script async src="https://pl29662997.effectivecpmnetwork.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
+
 </body>
 </html>
