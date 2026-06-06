@@ -1,6 +1,5 @@
-const CACHE_NAME = 'pixelpress-cache-v3'; // Incremented to v3 to completely destroy the v1/v2 loop
+const CACHE_NAME = 'pixelpress-cache-v4';
 
-// Assets to cache for offline availability
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
@@ -11,55 +10,49 @@ const ASSETS_TO_CACHE = [
   '/terms.html',
   '/disclaimer.html',
   '/blog/index.html',
-  '/site.webmanifest'
+  '/site.webmanifest',
   '/offline.html'
 ];
 
-// Install Event - Cache initial core files and force activation
+// Install: cache core assets, skip waiting immediately
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('[Service Worker] Pre-caching core assets');
-      return cache.addAll(ASSETS_TO_CACHE);
+      return cache.addAll(ASSETS_TO_CACHE.map(url => new Request(url, { cache: 'reload' })));
     }).then(() => self.skipWaiting())
   );
 });
 
-// Activate Event - Deletes the old cache immediately and claims control
+// Activate: delete ALL old caches, claim clients immediately
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('[Service Worker] Deleting old cache storage:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    }).then(() => self.clients.claim()) // Forces immediate control without reload
+    caches.keys().then(keys =>
+      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
 });
 
-// Fetch Event - Network First with automatic cache fallback
+// Fetch: Network-first, cache fallback, offline page as last resort
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
+  if (!event.request.url.startsWith(self.location.origin)) return;
+
+  // Skip chrome-extension and non-http requests
+  if (!event.request.url.startsWith('http')) return;
 
   event.respondWith(
     fetch(event.request)
-      .then(networkResponse => {
-        // If network is online, clone response into cache
-        if (networkResponse.status === 200) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, responseToCache);
-          });
+      .then(networkRes => {
+        if (networkRes && networkRes.status === 200) {
+          const clone = networkRes.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         }
-        return networkResponse;
+        return networkRes;
       })
-      .catch(() => {
-        // If offline or network fails, fall back to cache
-        return caches.match(event.request);
-      })
+      .catch(() =>
+        caches.match(event.request).then(cached =>
+          cached || caches.match('/offline.html')
+        )
+      )
   );
 });
