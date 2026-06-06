@@ -1,16 +1,7 @@
 /sitemap.xml
   Content-Type: application/xml; charset=UTF-8
-  X-Robots-Tag: noindex
   Cache-Control: public, max-age=3600
 
 /robots.txt
   Content-Type: text/plain; charset=UTF-8
   Cache-Control: public, max-age=3600
-
-/*.html
-  X-Content-Type-Options: nosniff
-  X-Frame-Options: DENY
-  Referrer-Policy: strict-origin-when-cross-origin
-
-/
-  Cache-Control: public, max-age=0, must-revalidate
