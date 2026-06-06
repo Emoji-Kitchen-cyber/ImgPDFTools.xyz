@@ -86,7 +86,7 @@ nav{
   background:var(--card);border:1px solid var(--border);
   border-radius:var(--r);overflow:hidden;
   display:flex;align-items:center;justify-content:center;
-  min-height:320px;position:relative;
+  min-height:240px;position:relative;
   background-image:repeating-conic-gradient(var(--panel) 0% 25%,transparent 0% 50%);
   background-size:20px 20px;
 }
@@ -596,13 +596,20 @@ canvas.width=S.canvasW; canvas.height=S.canvasH;
 /* Scale canvas display to fit container */
 function fitDisplay(){
   const wrap=document.getElementById('canvasWrap');
-  const maxW=wrap.clientWidth-2;
+  if(!wrap) return;
+  // Use offsetWidth for reliable cross-browser measurement
+  const maxW=Math.max(wrap.offsetWidth-4, 100);
   const ratio=canvas.height/canvas.width;
   const dispW=Math.min(maxW, canvas.width);
   canvas.style.width=dispW+'px';
-  canvas.style.height=(dispW*ratio)+'px';
+  canvas.style.height=Math.round(dispW*ratio)+'px';
 }
-window.addEventListener('resize',fitDisplay);
+// Debounced resize — prevents janky redraws on mobile
+let _rfTO=null;
+window.addEventListener('resize',()=>{
+  clearTimeout(_rfTO);
+  _rfTO=setTimeout(fitDisplay,80);
+});
 
 /* ===== GRADIENT PRESETS ===== */
 const GRADS=[
@@ -699,10 +706,10 @@ function drawBG(){
 function drawFrame(){
   if(!S.screenshot) return;
   const W=canvas.width, H=canvas.height;
-  const pad=S.pad;
+  const pad=Math.min(S.pad, Math.floor(Math.min(W,H)*0.35)); // guard: pad never > 35% of canvas
   const scl=S.scale/100;
-  const availW=(W-pad*2)*scl;
-  const availH=(H-pad*2)*scl;
+  const availW=Math.max((W-pad*2)*scl, 10);
+  const availH=Math.max((H-pad*2)*scl, 10);
   const offX=(W-availW)/2;
   const offY=(H-availH)/2;
 
@@ -710,18 +717,22 @@ function drawFrame(){
   const sh=S.shadow;
   const r=S.radius;
 
-  // Draw screenshot (with flip)
+  // Draw screenshot — aspect ratio preserved, centered in frame
   function drawSS(x,y,w,h,cr){
     ctx.save();
-    // Clip to rounded rect
-    roundedClip(x,y,w,h,cr);
-    // Handle flips
+    roundedClip(x,y,w,h,Math.max(0,cr));
+    const iw=S.screenshot.naturalWidth||S.screenshot.width||1;
+    const ih=S.screenshot.naturalHeight||S.screenshot.height||1;
+    // Cover: fill the frame, crop edges if needed
+    const scale=Math.max(w/iw, h/ih);
+    const dw=iw*scale, dh=ih*scale;
+    const dx=x+(w-dw)/2, dy=y+(h-dh)/2;
     if(S.flipH||S.flipV){
       ctx.translate(x+w/2,y+h/2);
       ctx.scale(S.flipH?-1:1, S.flipV?-1:1);
       ctx.translate(-(x+w/2),-(y+h/2));
     }
-    ctx.drawImage(S.screenshot,x,y,w,h);
+    ctx.drawImage(S.screenshot,dx,dy,dw,dh);
     ctx.restore();
   }
 
@@ -1131,13 +1142,15 @@ document.getElementById('shadowAlpha').oninput=function(){
 document.getElementById('canvasWSlider').oninput=function(){
   S.canvasW=+this.value;
   document.getElementById('canvasWLbl').textContent=this.value;
-  canvas.width=S.canvasW;
+  canvas.width=S.canvasW;   // resets context — must redraw immediately
+  noiseCanvas=null;         // rebuild noise at new size
   draw(); fitDisplay();
 };
 document.getElementById('canvasHSlider').oninput=function(){
   S.canvasH=+this.value;
   document.getElementById('canvasHLbl').textContent=this.value;
   canvas.height=S.canvasH;
+  noiseCanvas=null;
   draw(); fitDisplay();
 };
 
@@ -1266,25 +1279,26 @@ function doExport(){
   const sc=exportScale;
   const fmt=exportFmt;
   const mime=fmt==='jpeg'?'image/jpeg':fmt==='webp'?'image/webp':'image/png';
+  // Quality: PNG is lossless (quality param ignored), JPEG/WebP use 0.95
+  const q=(fmt==='png')?1:0.95;
 
   if(sc===1){
-    // Direct export
-    const url=canvas.toDataURL(mime,0.93);
+    const url=canvas.toDataURL(mime,q);
     downloadURL(url,`pixelpress-mockup.${fmt}`);
     return;
   }
 
-  // Scale up using offscreen canvas
+  // Scale: draw main canvas onto larger offscreen canvas
+  // NOTE: do NOT ctx.scale() before drawImage — that causes blank output
   const oc=document.createElement('canvas');
-  oc.width=canvas.width*sc;
-  oc.height=canvas.height*sc;
+  oc.width=Math.round(canvas.width*sc);
+  oc.height=Math.round(canvas.height*sc);
   const octx=oc.getContext('2d');
-  octx.scale(sc,sc);
-  // Redraw on offscreen
-  const tmpCtx=ctx;
-  // We copy: just drawImage of main canvas scaled
-  octx.drawImage(canvas,0,0);
-  const url=oc.toDataURL(mime,0.93);
+  // Draw the already-rendered main canvas scaled up — pixel-perfect
+  octx.imageSmoothingEnabled=true;
+  octx.imageSmoothingQuality='high';
+  octx.drawImage(canvas,0,0,oc.width,oc.height);
+  const url=oc.toDataURL(mime,q);
   downloadURL(url,`pixelpress-mockup-${sc}x.${fmt}`);
 }
 
