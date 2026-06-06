@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 
-<!-- ✅ FIX 1: Single gtag (removed duplicate) + async only -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -18,29 +17,26 @@
 <meta name="description" content="Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more. All processing happens in your browser – private and fast." />
 <link rel="canonical" href="https://pixelpress-cyy.pages.dev/" />
 
-<!-- ✅ FIX 2: CSP kept exactly as original -->
+<!-- ✅ Updated CSP: Added ad domains for Adsterra -->
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self';
-               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net cdnjs.com www.googletagmanager.com www.google-analytics.com;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net cdnjs.com www.googletagmanager.com www.google-analytics.com pl29662997.effectivecpmnetwork.com pl29662998.effectivecpmnetwork.com pl29662999.effectivecpmnetwork.com;
                style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com unpkg.com;
                font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
                img-src 'self' data: blob: https:;
-               connect-src 'self' https:;
+               connect-src 'self' https: pl29662997.effectivecpmnetwork.com pl29662998.effectivecpmnetwork.com pl29662999.effectivecpmnetwork.com;
                frame-src 'none';
                object-src 'none';" />
 
-<!-- ✅ FIX 3: font-display=swap added → fixes "Font display" warning (saves 30ms) -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
 
-<!-- ✅ FIX 4: Font Awesome — defer load, non-blocking -->
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
 
-<!-- FAVICONS (unchanged) -->
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -53,7 +49,6 @@
 <meta name="apple-mobile-web-app-title" content="PixelPress" />
 
 <style>
-  /* ✅ FIX 5: Added font-display:swap in @font-face fallback for system fonts */
   :root {
     --bg: #f5f5f7; --surface: rgba(255, 255, 255, 0.75); --card: #ffffff;
     --border: rgba(0, 0, 0, 0.06); --text: #1d1d1f; --muted: #6e6e73;
@@ -72,7 +67,6 @@
   body.rtl { direction: rtl; }
   a { color: inherit; text-decoration: none; }
 
-  /* NAV */
   nav { position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 5vw, 3rem); height: 64px; background: var(--surface); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
   .nav-left { display: flex; align-items: center; gap: 1.2rem; }
   .menu-trigger { background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; }
@@ -83,7 +77,6 @@
   .control-btn { background: var(--card); border: 1px solid var(--border); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 1.1rem; transition: 0.2s; }
   .control-btn:hover { transform: scale(1.05); border-color: var(--accent); }
 
-  /* Language toggle */
   .lang-pill-container { display: flex; align-items: center; gap: 8px; }
   .lang-p-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
   @media (max-width: 600px) { .lang-p-label { display: none; } }
@@ -93,7 +86,6 @@
   .switch-p-btn.active { background-color: var(--accent); }
   .switch-p-btn.active::before { transform: translateX(24px); }
 
-  /* Sidebar */
   .sidebar-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.15); backdrop-filter: blur(4px); z-index: 299; display: none; }
   .sidebar-overlay.show { display: block; }
   .sidebar { position: fixed; top: 0; left: -290px; width: 290px; height: 100%; background: var(--card); border-right: 1px solid var(--border); z-index: 300; padding: 25px 20px; overflow-y: auto; transition: left 0.4s; }
@@ -105,27 +97,22 @@
   .sidebar-links a:hover { background: var(--bg); color: var(--accent); }
   .menu-section-title { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding: 16px 14px 6px; }
 
-  /* Hero */
   .hero { text-align: center; padding: clamp(2.5rem, 6vw, 4.5rem) 1rem 2rem; }
   .hero h1 { font-family: var(--fhead); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 800; line-height: 1.2; }
   .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero p { font-size: 15.5px; color: var(--muted); max-width: 580px; margin: 0.8rem auto 0; }
 
-  /* Main */
   .main { max-width: 1140px; margin: 0 auto; width: 100%; padding: 0 20px 5rem; flex: 1; }
 
-  /* Search */
   .search-container { max-width: 580px; margin: 0 auto 2.5rem; position: relative; }
   .search-bar { width: 100%; padding: 14px 20px 14px 45px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; color: var(--text); font-size: 15.5px; outline: none; font-family: var(--fbody); transition: border-color 0.2s, box-shadow 0.2s; }
   .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
   .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
 
-  /* Filters */
   .filter-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 2.5rem; flex-wrap: wrap; }
   .filter-pill { background: var(--card); border: 1px solid var(--border); color: var(--muted); padding: 8px 20px; border-radius: 99px; font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s; font-family: var(--fbody); }
   .filter-pill.active { background: var(--text); color: var(--bg); }
 
-  /* Tools grid */
   .tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   @media (max-width: 850px) { .tools-grid { grid-template-columns: 1fr; } }
   .tool-link { display: block; }
@@ -138,14 +125,22 @@
 
   #noResults { text-align: center; color: var(--muted); padding: 4rem 0; display: none; }
 
-  /* Footer */
+  /* Native banner container styling */
+  .ad-native-container {
+    max-width: 1140px;
+    margin: 1rem auto 2rem;
+    text-align: center;
+    background: transparent;
+    border-radius: var(--r);
+    overflow: hidden;
+  }
+
   footer { text-align: center; margin-top: 60px; padding: 35px 20px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--border); background: var(--card); }
   .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; }
   .footer-links a { color: var(--muted); font-weight: 500; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
 </style>
 
-<!-- ✅ FIX 6: Theme applied immediately (no FOUC), error logger, cache cleanup — unchanged logic -->
 <script>
   (function() {
     document.documentElement.setAttribute('data-theme',
@@ -162,7 +157,6 @@
     return false;
   };
 
-  // Cleanup expired localStorage items weekly
   setInterval(function() {
     Object.keys(localStorage).forEach(function(k) {
       try {
@@ -213,6 +207,12 @@
 
   <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
 
+  <!-- ✅ Native Banner Ad: placed between filter and tools grid, centered -->
+  <div class="ad-native-container">
+    <script async="async" data-cfasync="false" src="https://pl29662998.effectivecpmnetwork.com/4c9e9ce3491deea5c781237d59d3fbf0/invoke.js"></script>
+    <div id="container-4c9e9ce3491deea5c781237d59d3fbf0"></div>
+  </div>
+
   <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
   <div id="noResults" role="status" aria-live="polite">No results found.</div>
 </div>
@@ -221,6 +221,13 @@
   <div class="footer-links" id="footerLinks"></div>
   <p id="footerCopyright">© 2026 PixelPress — All Rights Reserved</p>
 </footer>
+
+<!-- ✅ Social Bar Ad + Popunder Ad – placed at the end of body -->
+<!-- Social Bar Ad -->
+<script src="https://pl29662999.effectivecpmnetwork.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js"></script>
+
+<!-- Popunder Ad -->
+<script src="https://pl29662997.effectivecpmnetwork.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
 
 <script>
 const languageData = {
@@ -355,7 +362,6 @@ function renderUI() {
   const searchInput = document.getElementById('toolSearch');
   searchInput.placeholder = data.searchPlaceholder;
 
-  // Filters
   const filterBox = document.getElementById('filterContainer');
   filterBox.innerHTML = '';
   data.filters.forEach((f, i) => {
@@ -368,7 +374,6 @@ function renderUI() {
     filterBox.appendChild(btn);
   });
 
-  // Tools grid
   const toolsGrid = document.getElementById('toolsList');
   toolsGrid.innerHTML = '';
   data.toolsRegistry.filter(t => t.isUtilityCard).forEach(t => {
@@ -380,11 +385,9 @@ function renderUI() {
     toolsGrid.appendChild(a);
   });
 
-  // Footer
   const fLinks = document.getElementById('footerLinks');
   fLinks.innerHTML = data.footer.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
 
-  // Sidebar
   const sidebarBox = document.getElementById('sidebarLinks');
   sidebarBox.innerHTML = '';
   const homeLink = data.toolsRegistry.find(t => t.section === 'home');
@@ -474,14 +477,12 @@ function toggleMenu(show) {
   }
 }
 
-// Theme toggle
 document.getElementById('themeToggle').addEventListener('click', () => {
   const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('pixelpress-theme', next);
 });
 
-// Search keyboard shortcut
 document.addEventListener('keydown', e => {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
@@ -491,7 +492,6 @@ document.addEventListener('keydown', e => {
 
 document.getElementById('toolSearch').addEventListener('input', evaluateLiveSearchFilters);
 
-// URL Shortener redirect handler (unchanged)
 (function() {
   const hash = window.location.hash;
   if (hash.startsWith('#/s/')) {
@@ -512,7 +512,6 @@ document.getElementById('toolSearch').addEventListener('input', evaluateLiveSear
   }
 })();
 
-// ✅ FIX 7: Register Service Worker properly
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/sw.js').catch(function(err) {
