@@ -1,213 +1,212 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/compress.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/resize.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/photo-editor.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/convert.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/watermark.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/remove-bg.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/meme-generator.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/crop.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/blur-face.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/thumbnail-maker.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/screenshot-editor.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/favicon-generator.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/pdf-to-jpg.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/jpg-to-pdf.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/split-pdf.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/merge-pdf.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/compress-pdf.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/pdf-annotator.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/qr-generator.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/password-generator.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/json-formatter.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/url-shortener.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/color-picker.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/palette-generator.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/unit-converter.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/dxf-dwg-converter.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/ocr.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/about.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/contact.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.4</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/faq.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/blog/</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/privacy-policy.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/terms.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://pixelpress-cyy.pages.dev/disclaimer.html</loc>
-    <lastmod>2026-06-06</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1.0</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/compress.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/resize.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/photo-editor.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/convert.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/watermark.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/remove-bg.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/meme-generator.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/crop.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/blur-face.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/thumbnail-maker.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/screenshot-editor.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/favicon-generator.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/pdf-to-jpg.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/jpg-to-pdf.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/split-pdf.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/merge-pdf.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/compress-pdf.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/pdf-annotator.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/qr-generator.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/password-generator.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/json-formatter.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/url-shortener.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/color-picker.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/palette-generator.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/unit-converter.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/dxf-dwg-converter.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/ocr.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/about.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/contact.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.4</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/faq.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/blog/</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.6</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/privacy-policy.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.3</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/terms.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.3</priority>
+</url>
+<url>
+<loc>https://pixelpress-cyy.pages.dev/disclaimer.html</loc>
+<lastmod>2026-06-06</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.3</priority>
+</url>
 </urlset>
