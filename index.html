@@ -282,27 +282,7 @@
 
   <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
 
-  <!--
-    ✅ AD PLACEMENT STRATEGY:
-    
-    KEPT (2 best earners):
-    1. Social Bar   → Sticky bottom bar = max impressions, non-intrusive UX
-    2. Popunder     → High CPM, fires once on first click, doesn't block content
-    
-    REMOVED:
-    3. Native Banner → Was placed inside filter/grid area causing layout shift (CLS).
-                       Replaced with properly contained, CLS-safe slot below.
-    
-    WHY this position is optimal for Native Banner:
-    - After search/filter = user attention peak (they're deciding what to use)
-    - Before tool grid = high viewability (100% above fold on most screens)  
-    - min-height reserves space → zero layout shift → better Core Web Vitals
-    - Centered, full-width container matches modern ad placements (Google, Mediavine style)
-  -->
-  <div class="ad-slot-native" id="adNativeSlot" aria-hidden="true">
-    <script async="async" data-cfasync="false" src="//pl29662998.effectivecpmnetwork.com/4c9e9ce3491deea5c781237d59d3fbf0/invoke.js"></script>
-    <div id="container-4c9e9ce3491deea5c781237d59d3fbf0"></div>
-  </div>
+  <!-- Native banner removed -->
 
   <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
   <div id="noResults" role="status" aria-live="polite">No results found.</div>
