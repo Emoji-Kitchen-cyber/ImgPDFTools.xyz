@@ -10,8 +10,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
 
 <!-- ===== AD SLOT 1: High-CPM Background Script (Popunder/Push) ===== -->
-<!-- Passive earning – no layout impact, runs in background -->
-<script src="https://pl29662997.effectivecpmnetwork.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
+<!-- اب یہ 3 سیکنڈ بعد لوڈ ہوگا تاکہ صفحہ پہلے ظاہر ہو، فل اسکرین اوورلے نہ آئے -->
+<script>
+  setTimeout(function(){
+    var s = document.createElement('script');
+    s.src = 'https://pl29662997.effectivecpmnetwork.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js';
+    document.head.appendChild(s);
+  }, 3000);
+</script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Inter:wght@400;700;900&family=Oswald:wght@400;700&family=Bebas+Neue&family=Playfair+Display:wght@700&family=Space+Grotesk:wght@400;700&display=swap');
@@ -27,7 +33,6 @@
   --lp:260px; --rp:272px; --nh:52px;
   --fh:'Syne',sans-serif; --fb:'DM Sans',sans-serif;
   --s1:0 1px 4px rgba(0,0,0,0.08); --s2:0 4px 16px rgba(0,0,0,0.1); --s3:0 12px 40px rgba(0,0,0,0.14);
-  /* Ad bar height variable — used to offset body padding */
   --adbar-h: 60px;
 }
 [data-theme=dark]{
@@ -46,7 +51,6 @@ button,select,input,textarea{font-family:var(--fb);}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
 
 /* ===== AD SLOT 2: Fixed Bottom Bar (Display Banner) ===== */
-/* Responsive, full width, unobtrusive – works on all screen sizes */
 .ad-bar{
   position:fixed;
   bottom:0;
@@ -63,7 +67,6 @@ button,select,input,textarea{font-family:var(--fb);}
   box-shadow:0 -2px 10px rgba(0,0,0,0.08);
   overflow:hidden;
 }
-/* Ad label — small, honest, non-intrusive */
 .ad-bar::before{
   content:'AD';
   position:absolute;
@@ -76,7 +79,6 @@ button,select,input,textarea{font-family:var(--fb);}
   opacity:.55;
   pointer-events:none;
 }
-/* Ad close button */
 .ad-bar-close{
   position:absolute;
   top:4px;
@@ -97,7 +99,6 @@ button,select,input,textarea{font-family:var(--fb);}
 }
 .ad-bar-close:hover{background:var(--glow);color:var(--accent);border-color:var(--accent);}
 
-/* Ad inner — centers the ad unit */
 .ad-bar-inner{
   display:flex;
   align-items:center;
@@ -113,15 +114,12 @@ button,select,input,textarea{font-family:var(--fb);}
   width:100%;
 }
 
-/* When ad bar is shown, push content up */
 body.ad-visible{padding-bottom:var(--adbar-h);}
-/* On mobile, ad bar sits above mobile action bar (56px) */
 @media(max-width:600px){
   .ad-bar{bottom:56px;}
   body.ad-visible{padding-bottom:calc(var(--adbar-h) + 56px);}
   body{padding-bottom:56px;}
 }
-/* On desktop, workspace fills the rest */
 @media(min-width:601px){
   body.ad-visible .workspace{height:calc(100vh - var(--nh) - var(--adbar-h));}
 }
@@ -282,13 +280,12 @@ body.ad-visible{padding-bottom:var(--adbar-h);}
 .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--text);color:var(--bg);padding:9px 18px;border-radius:28px;font-size:.79rem;font-weight:600;z-index:9999;transition:.28s;pointer-events:none;white-space:nowrap;max-width:92vw;text-align:center;}
 .toast.on{transform:translateX(-50%) translateY(0);}
 
-/* Mobile bottom bar — raised above ad bar */
+/* Mobile bottom bar – raised above ad bar */
 .mob-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--border);z-index:200;padding:6px 8px;gap:5px;flex-wrap:wrap;justify-content:center;}
 .mob-bar .nav-btn{font-size:.68rem;padding:5px 8px;}
 @media(max-width:600px){
   .carea{padding:12px;align-items:flex-start;justify-content:flex-start;}
   body{padding-bottom:56px;}
-  /* Ad bar sits above mobile bar */
   .mob-bar{bottom:var(--adbar-h);}
 }
 </style>
@@ -501,7 +498,7 @@ body.ad-visible{padding-bottom:var(--adbar-h);}
 </div>
 
 <!-- ===== AD SLOT 2: Display Banner – Fixed Bottom Bar ===== -->
-<!-- Best earning: visible, responsive, above the fold – works on all screen sizes -->
+<!-- Always visible, non-intrusive, responsive -->
 <div class="ad-bar" id="adBar">
   <button class="ad-bar-close" id="adClose" title="Close ad">✕</button>
   <div class="ad-bar-inner">
