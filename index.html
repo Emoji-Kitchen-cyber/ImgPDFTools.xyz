@@ -16,7 +16,6 @@
 <title id="siteTitle">PixelPress — Free Online Image & Document Toolkit</title>
 <meta name="description" content="Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more. All processing happens in your browser – private and fast." />
 <link rel="canonical" href="https://pixelpress-cyy.pages.dev/" />
-
 <meta property="og:title" content="PixelPress — Free Online Image & Document Toolkit" />
 <meta property="og:description" content="Free online image tools. All processing happens in your browser – private and fast." />
 <meta property="og:url" content="https://pixelpress-cyy.pages.dev/" />
@@ -24,22 +23,20 @@
 
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self';
-               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com pl29662997.effectivecpmnetwork.com pl29662998.effectivecpmnetwork.com pl29662999.effectivecpmnetwork.com *.effectivecpmnetwork.com www.effectivecpmnetwork.com www.highperformanceformat.com paviliongiddy.com *.paviliongiddy.com;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com paviliongiddy.com *.paviliongiddy.com;
                style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com;
                font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
                img-src 'self' data: blob: https:;
-               connect-src 'self' https: paviliongiddy.com *.paviliongiddy.com www.google-analytics.com www.highperformanceformat.com;
+               connect-src 'self' https: paviliongiddy.com *.paviliongiddy.com www.google-analytics.com;
                frame-src https: paviliongiddy.com *.paviliongiddy.com;
                object-src 'none';" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
-
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'" />
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" /></noscript>
-
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
 
@@ -55,322 +52,319 @@
 <meta name="apple-mobile-web-app-title" content="PixelPress" />
 
 <style>
-  /* ── DESIGN TOKENS ── */
-  :root {
-    --bg: #f5f5f7; --surface: rgba(255,255,255,0.82); --card: #ffffff;
-    --border: rgba(0,0,0,0.07); --text: #1d1d1f; --muted: #6e6e73;
-    --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236,72,153,0.12); --r: 16px;
-    --fhead: 'Syne', sans-serif;
-    --fbody: 'DM Sans', system-ui, -apple-system, sans-serif;
-    --fmono: 'JetBrains Mono', monospace;
-    /* Ad column width — used in layout calculations */
-    --ad-col-w: 200px;
-  }
-  [data-theme="dark"] {
-    --bg: #09090e; --surface: rgba(21,21,30,0.75); --card: #15151e;
-    --border: rgba(255,255,255,0.09); --text: #e8e8f0; --muted: #86868b;
-    --glow: rgba(236,72,153,0.28);
-  }
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    background: var(--bg); color: var(--text); font-family: var(--fbody);
-    min-height: 100vh; display: flex; flex-direction: column;
-    transition: background 0.3s, color 0.3s;
-    -webkit-font-smoothing: antialiased;
-  }
-  body.rtl { direction: rtl; }
-  a { color: inherit; text-decoration: none; }
+/* ══════════════════════════════════════════════
+   DESIGN TOKENS
+   ══════════════════════════════════════════════ */
+:root {
+  --bg:#f5f5f7; --surface:rgba(255,255,255,0.82); --card:#ffffff;
+  --border:rgba(0,0,0,0.07); --text:#1d1d1f; --muted:#6e6e73;
+  --accent:#ec4899; --accent2:#a78bfa; --glow:rgba(236,72,153,0.12); --r:16px;
+  --fhead:'Syne',sans-serif; --fbody:'DM Sans',system-ui,-apple-system,sans-serif;
+  --fmono:'JetBrains Mono',monospace;
+  /* Desktop sidebar ad width */
+  --ad-col-w: 220px;
+}
+[data-theme="dark"] {
+  --bg:#09090e; --surface:rgba(21,21,30,0.75); --card:#15151e;
+  --border:rgba(255,255,255,0.09); --text:#e8e8f0; --muted:#86868b;
+  --glow:rgba(236,72,153,0.28);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--fbody);
+  min-height:100vh;display:flex;flex-direction:column;
+  transition:background 0.3s,color 0.3s;-webkit-font-smoothing:antialiased;
+}
+body.rtl{direction:rtl;}
+a{color:inherit;text-decoration:none;}
 
-  /* ── NAV ── */
-  nav {
-    position: sticky; top: 0; z-index: 200;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 clamp(1rem, 5vw, 3rem); height: 64px;
-    background: var(--surface); backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid var(--border);
-  }
-  .nav-left { display: flex; align-items: center; gap: 1.2rem; }
-  .menu-trigger { background: none; border: none; color: var(--text); font-size: 1.3rem; cursor: pointer; padding: 4px; border-radius: 8px; }
-  .menu-trigger:hover { color: var(--accent); }
-  .nav-logo { font-family: var(--fhead); font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; text-transform: uppercase; }
-  .nav-logo span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .nav-actions { display: flex; align-items: center; gap: 1rem; }
-  .control-btn {
-    background: var(--card); border: 1px solid var(--border);
-    width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text); font-size: 1.1rem; transition: transform 0.2s, border-color 0.2s;
-  }
-  .control-btn:hover { transform: scale(1.08); border-color: var(--accent); }
+/* ── NAV ── */
+nav{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(1rem,5vw,3rem);height:64px;
+  background:var(--surface);backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid var(--border);
+}
+.nav-left{display:flex;align-items:center;gap:1.2rem;}
+.menu-trigger{background:none;border:none;color:var(--text);font-size:1.3rem;cursor:pointer;padding:4px;border-radius:8px;}
+.menu-trigger:hover{color:var(--accent);}
+.nav-logo{font-family:var(--fhead);font-weight:800;font-size:1.2rem;letter-spacing:-0.5px;text-transform:uppercase;}
+.nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-actions{display:flex;align-items:center;gap:1rem;}
+.control-btn{
+  background:var(--card);border:1px solid var(--border);
+  width:38px;height:38px;border-radius:50%;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--text);font-size:1.1rem;transition:transform 0.2s,border-color 0.2s;
+}
+.control-btn:hover{transform:scale(1.08);border-color:var(--accent);}
+.lang-pill-container{display:flex;align-items:center;gap:8px;}
+.lang-p-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;}
+@media(max-width:600px){.lang-p-label{display:none;}}
+.switch-p-btn{position:relative;width:50px;height:26px;background-color:#cbd5e1;border-radius:20px;cursor:pointer;border:1px solid var(--border);transition:background-color 0.3s;}
+[data-theme="dark"] .switch-p-btn{background-color:#2d2d3d;}
+.switch-p-btn::before{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background-color:white;top:2px;left:2px;transition:transform 0.3s;}
+.switch-p-btn.active{background-color:var(--accent);}
+.switch-p-btn.active::before{transform:translateX(24px);}
 
-  /* Lang toggle */
-  .lang-pill-container { display: flex; align-items: center; gap: 8px; }
-  .lang-p-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
-  @media (max-width: 600px) { .lang-p-label { display: none; } }
-  .switch-p-btn { position: relative; width: 50px; height: 26px; background-color: #cbd5e1; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); transition: background-color 0.3s; }
-  [data-theme="dark"] .switch-p-btn { background-color: #2d2d3d; }
-  .switch-p-btn::before { content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; background-color: white; top: 2px; left: 2px; transition: transform 0.3s; }
-  .switch-p-btn.active { background-color: var(--accent); }
-  .switch-p-btn.active::before { transform: translateX(24px); }
+/* ── NAV DRAWER ── */
+.sidebar-overlay{position:fixed;inset:0;background:rgba(15,23,42,0.18);backdrop-filter:blur(4px);z-index:299;display:none;}
+.sidebar-overlay.show{display:block;}
+.sidebar{position:fixed;top:0;left:-290px;width:290px;height:100%;background:var(--card);border-right:1px solid var(--border);z-index:300;padding:25px 20px;overflow-y:auto;transition:left 0.35s cubic-bezier(0.4,0,0.2,1);}
+.sidebar.open{left:0;}
+.sidebar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:15px;border-bottom:1px solid var(--border);}
+.sidebar-close{background:var(--bg);border:none;color:var(--muted);cursor:pointer;width:32px;height:32px;border-radius:50%;font-size:1rem;display:flex;align-items:center;justify-content:center;}
+.sidebar-close:hover{color:var(--accent);}
+.sidebar-links{display:flex;flex-direction:column;gap:4px;}
+.sidebar-links a{padding:10px 14px;border-radius:10px;font-size:14.5px;color:var(--text);display:flex;align-items:center;gap:12px;font-weight:500;transition:background 0.15s,color 0.15s;}
+.sidebar-links a:hover{background:var(--bg);color:var(--accent);}
+.menu-section-title{font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;padding:16px 14px 6px;}
 
-  /* ── SIDEBAR (NAV DRAWER) ── */
-  .sidebar-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.18); backdrop-filter: blur(4px); z-index: 299; display: none; }
-  .sidebar-overlay.show { display: block; }
-  .sidebar { position: fixed; top: 0; left: -290px; width: 290px; height: 100%; background: var(--card); border-right: 1px solid var(--border); z-index: 300; padding: 25px 20px; overflow-y: auto; transition: left 0.35s cubic-bezier(0.4,0,0.2,1); }
-  .sidebar.open { left: 0; }
-  .sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border); }
-  .sidebar-close { background: var(--bg); border: none; color: var(--muted); cursor: pointer; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; display: flex; align-items: center; justify-content: center; }
-  .sidebar-close:hover { color: var(--accent); }
-  .sidebar-links { display: flex; flex-direction: column; gap: 4px; }
-  .sidebar-links a { padding: 10px 14px; border-radius: 10px; font-size: 14.5px; color: var(--text); display: flex; align-items: center; gap: 12px; font-weight: 500; transition: background 0.15s, color 0.15s; }
-  .sidebar-links a:hover { background: var(--bg); color: var(--accent); }
-  .menu-section-title { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; padding: 16px 14px 6px; }
+/* ── HERO ── */
+.hero{text-align:center;padding:clamp(2.5rem,6vw,4.5rem) 1rem 2rem;}
+.hero h1{font-family:var(--fhead);font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:800;line-height:1.2;}
+.hero h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{font-size:15.5px;color:var(--muted);max-width:580px;margin:0.8rem auto 0;}
 
-  /* ── HERO ── */
-  .hero { text-align: center; padding: clamp(2.5rem, 6vw, 4.5rem) 1rem 2rem; }
-  .hero h1 { font-family: var(--fhead); font-size: clamp(1.8rem, 4.5vw, 3.2rem); font-weight: 800; line-height: 1.2; }
-  .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  .hero p { font-size: 15.5px; color: var(--muted); max-width: 580px; margin: 0.8rem auto 0; }
+/* ══════════════════════════════════════════════
+   PAGE LAYOUT
+   Full-width outer → centered inner flex row
+   [main-col content] [ad-col desktop only]
+   Reference: ilovepdf.com, smallpdf.com
+   ══════════════════════════════════════════════ */
+.page-outer{width:100%;flex:1;}
+.page-inner{
+  max-width:1400px;
+  margin:0 auto;
+  padding:0 16px 5rem;
+  display:flex;
+  align-items:flex-start;
+  gap:20px;
+}
+.main-col{
+  flex:1;
+  min-width:0;
+}
 
-  /* ── PAGE WRAPPER ── */
-  /* 
-    Outer wrapper stretches full width.
-    Inner .page-inner is the horizontal layout container:
-      [main content] [ad column — desktop only]
-    This is the ilovepdf / smallpdf pattern.
-  */
-  .page-outer { width: 100%; flex: 1; }
+/* ── SEARCH ── */
+.search-container{max-width:580px;margin:0 auto 2.5rem;position:relative;}
+.search-bar{
+  width:100%;padding:14px 20px 14px 45px;
+  background:var(--card);border:1px solid var(--border);border-radius:14px;
+  color:var(--text);font-size:15.5px;outline:none;font-family:var(--fbody);
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.search-bar:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow);}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;}
+body.rtl .search-bar{padding:14px 45px 14px 20px;}
+body.rtl .search-icon{left:auto;right:16px;}
 
-  .page-inner {
-    max-width: 1380px;
-    margin: 0 auto;
-    padding: 0 20px 5rem;
-    display: flex;
-    align-items: flex-start;
-    gap: 24px;
-  }
+/* ── FILTER PILLS ── */
+.filter-row{display:flex;justify-content:center;gap:8px;margin-bottom:2rem;flex-wrap:wrap;}
+.filter-pill{
+  background:var(--card);border:1px solid var(--border);color:var(--muted);
+  padding:8px 20px;border-radius:99px;font-size:14px;font-weight:600;
+  cursor:pointer;transition:background 0.2s,color 0.2s,border-color 0.2s;font-family:var(--fbody);
+}
+.filter-pill:hover{border-color:var(--accent);color:var(--accent);}
+.filter-pill.active{background:var(--text);color:var(--bg);border-color:var(--text);}
 
-  /* ── MAIN CONTENT COLUMN ── */
-  .main-col {
-    flex: 1;
-    min-width: 0; /* flex child shrink fix */
-    max-width: 1140px;
-  }
+/* ══════════════════════════════════════════════
+   AD SHARED STYLES
+   ══════════════════════════════════════════════ */
+.ad-wrap{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+}
+.ad-tag{
+  font-size:9px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--muted);opacity:0.55;
+  align-self:flex-start;padding:6px 10px 2px;
+  flex-shrink:0;
+}
+.ad-dismiss{
+  position:absolute;top:4px;right:4px;
+  width:20px;height:20px;
+  background:var(--bg);border:1px solid var(--border);
+  border-radius:50%;color:var(--muted);font-size:8px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:color 0.2s,border-color 0.2s;z-index:5;
+  box-shadow:0 1px 4px rgba(0,0,0,0.08);
+}
+.ad-dismiss:hover{color:var(--accent);border-color:var(--accent);}
+/* Fade-in */
+.ad-hidden{opacity:0;transition:opacity 0.5s ease;}
+.ad-visible{opacity:1;}
 
-  /* ── SEARCH ── */
-  .search-container { max-width: 580px; margin: 0 auto 2.5rem; position: relative; }
-  .search-bar {
-    width: 100%; padding: 14px 20px 14px 45px;
-    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-    color: var(--text); font-size: 15.5px; outline: none; font-family: var(--fbody);
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-  .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
-  .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-  body.rtl .search-bar { padding: 14px 45px 14px 20px; }
-  body.rtl .search-icon { left: auto; right: 16px; }
+/* ══════════════════════════════════════════════
+   AD ZONES — per device
 
-  /* ── FILTER PILLS ── */
-  .filter-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 2rem; flex-wrap: wrap; }
-  .filter-pill {
-    background: var(--card); border: 1px solid var(--border); color: var(--muted);
-    padding: 8px 20px; border-radius: 99px; font-size: 14px; font-weight: 600;
-    cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s;
-    font-family: var(--fbody);
-  }
-  .filter-pill:hover { border-color: var(--accent); color: var(--accent); }
-  .filter-pill.active { background: var(--text); color: var(--bg); border-color: var(--text); }
+   MOBILE   (<480px) : 320×50 sticky bottom bar
+   MOBILE-L (480-767px): 320×50 sticky bottom bar
+   TABLET   (768-1139px): 468×60 inline below hero
+                        + 300×250 inline after filters
+   DESKTOP  (≥1140px): 728×90 inline below hero
+                      + 160×600 sticky sidebar right
+   ══════════════════════════════════════════════ */
 
-  /* ── TABLET INLINE AD (728–1139px) ── */
-  /*
-    On tablet: banner shows inline between filter pills and tools grid.
-    Centered, 160×300 rotated to landscape 300×160 would be awkward,
-    so we show it as a centered card with natural dimensions.
-    Hidden on mobile (<768px) and desktop (≥1140px — handled by ad column).
-  */
-  .ad-tablet-inline {
-    display: none; /* shown via media query */
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 2rem;
-  }
-  .ad-tablet-inner-wrap {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-    padding: 10px 14px 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    position: relative;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  .ad-label-small {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    opacity: 0.6;
-    align-self: flex-start;
-  }
-  .ad-tablet-slot {
-    width: 160px;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 8px;
-    background: var(--bg);
-  }
-  /* Show inline ad only on tablet range */
-  @media (min-width: 768px) and (max-width: 1139px) {
-    .ad-tablet-inline { display: flex; }
-  }
+/* --- MOBILE STICKY BOTTOM (320×50) --- */
+/* Shows on <768px, fixed to bottom above social bar */
+.ad-mobile-bottom{
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:190;
+  width:320px;
+  padding:0;
+  border-radius:10px 10px 0 0;
+  box-shadow:0 -2px 16px rgba(0,0,0,0.08);
+}
+.ad-mobile-bottom .ad-slot{width:320px;height:50px;overflow:hidden;}
+@media(max-width:767px){
+  .ad-mobile-bottom{display:flex;flex-direction:column;}
+  /* Give page bottom padding so content not hidden behind ad */
+  body{padding-bottom:60px;}
+}
 
-  /* ── TOOLS GRID ── */
-  .tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-  @media (max-width: 850px) { .tools-grid { grid-template-columns: 1fr; } }
-  .tool-link { display: block; }
-  .tool-link.hidden { display: none; }
-  .tool-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-    padding: 24px; display: flex; align-items: flex-start; gap: 18px;
-    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s; height: 100%;
-  }
-  .tool-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 12px 24px -4px var(--glow); }
-  .tool-icon-wrapper {
-    font-size: 24px; background: var(--bg); padding: 12px; border-radius: 14px;
-    min-width: 54px; height: 54px; display: flex; align-items: center; justify-content: center;
-    border: 1px solid var(--border); flex-shrink: 0;
-  }
-  .tool-info-pane h3 { font-size: 16.5px; font-weight: 700; margin-bottom: 6px; text-transform: uppercase; }
-  .tool-info-pane p { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+/* --- TABLET HERO BANNER (468×60) --- */
+/* Shows only on 768-1139px, inline below hero section */
+.ad-tablet-hero{
+  display:none;
+  justify-content:center;
+  margin-bottom:1.5rem;
+}
+.ad-tablet-hero .ad-wrap{padding-bottom:8px;}
+.ad-tablet-hero .ad-slot{width:468px;height:60px;overflow:hidden;max-width:100%;}
+@media(min-width:768px) and (max-width:1139px){
+  .ad-tablet-hero{display:flex;}
+}
 
-  #noResults { text-align: center; color: var(--muted); padding: 4rem 0; display: none; }
+/* --- TABLET MEDIUM RECTANGLE (300×250) --- */
+/* Shows only on 768-1139px, between filters and grid */
+.ad-tablet-rect{
+  display:none;
+  justify-content:center;
+  margin-bottom:2rem;
+}
+.ad-tablet-rect .ad-wrap{padding-bottom:10px;}
+.ad-tablet-rect .ad-slot{width:300px;height:250px;overflow:hidden;}
+@media(min-width:768px) and (max-width:1139px){
+  .ad-tablet-rect{display:flex;}
+}
 
-  /* ── DESKTOP AD COLUMN (≥1140px) ── */
-  /*
-    Sticky right column — stays in viewport while user scrolls tools.
-    ilovepdf / smallpdf exact pattern.
-    Contains the 160×300 banner in a polished card.
-    Hidden on mobile and tablet.
-  */
-  .ad-desktop-col {
-    display: none; /* shown via media query */
-    flex-shrink: 0;
-    width: var(--ad-col-w);
-    /* Sticky: stays while content scrolls */
-    position: sticky;
-    top: 88px; /* nav height 64px + 24px gap */
-    align-self: flex-start;
-  }
-  .ad-desktop-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 12px 12px 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    position: relative;
-    overflow: visible;
-  }
-  .ad-desktop-label {
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    opacity: 0.55;
-    align-self: flex-start;
-  }
-  .ad-desktop-slot {
-    width: 160px;
-    height: 300px;
-    overflow: hidden;
-    border-radius: 10px;
-    background: var(--bg);
-  }
-  /* Dismiss button for desktop column */
-  .ad-col-close {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    width: 22px;
-    height: 22px;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    color: var(--muted);
-    font-size: 9px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s, border-color 0.2s, transform 0.2s;
-    z-index: 10;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  }
-  .ad-col-close:hover { color: var(--accent); border-color: var(--accent); transform: scale(1.1); }
+/* --- DESKTOP LEADERBOARD (728×90) --- */
+/* Shows only on ≥1140px, inline below hero */
+.ad-desktop-leader{
+  display:none;
+  justify-content:center;
+  margin-bottom:1.5rem;
+}
+.ad-desktop-leader .ad-wrap{padding-bottom:10px;width:auto;}
+.ad-desktop-leader .ad-slot{width:728px;height:90px;overflow:hidden;}
+@media(min-width:1140px){
+  .ad-desktop-leader{display:flex;}
+}
 
-  /* Show desktop column only on large screens */
-  @media (min-width: 1140px) {
-    .ad-desktop-col { display: block; }
-  }
+/* --- DESKTOP SIDEBAR (160×600) --- */
+/* Shows only on ≥1140px, sticky right column */
+.ad-desktop-col{
+  display:none;
+  flex-shrink:0;
+  width:var(--ad-col-w);
+  position:sticky;
+  top:84px;
+  align-self:flex-start;
+}
+.ad-desktop-col .ad-wrap{
+  padding:10px 10px 12px;
+  border-radius:18px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.06);
+  gap:6px;
+}
+.ad-desktop-col .ad-slot{
+  width:160px;height:600px;overflow:hidden;border-radius:10px;
+  background:var(--bg);
+}
+@media(min-width:1140px){
+  .ad-desktop-col{display:block;}
+}
+/* RTL: sidebar goes left */
+body.rtl .page-inner{flex-direction:row-reverse;}
 
-  /* RTL: column goes to left */
-  body.rtl .page-inner { flex-direction: row-reverse; }
+/* ── TOOLS GRID ── */
+.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media(max-width:850px){.tools-grid{grid-template-columns:1fr;}}
+.tool-link{display:block;}
+.tool-link.hidden{display:none;}
+.tool-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:24px;display:flex;align-items:flex-start;gap:18px;
+  transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;height:100%;
+}
+.tool-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 24px -4px var(--glow);}
+.tool-icon-wrapper{
+  font-size:24px;background:var(--bg);padding:12px;border-radius:14px;
+  min-width:54px;height:54px;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);flex-shrink:0;
+}
+.tool-info-pane h3{font-size:16.5px;font-weight:700;margin-bottom:6px;text-transform:uppercase;}
+.tool-info-pane p{font-size:13.5px;color:var(--muted);line-height:1.5;}
+#noResults{text-align:center;color:var(--muted);padding:4rem 0;display:none;}
 
-  /* ── FOOTER ── */
-  footer { text-align: center; margin-top: 0; padding: 35px 20px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--border); background: var(--card); }
-  .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; }
-  .footer-links a { color: var(--muted); font-weight: 500; transition: color 0.2s; }
-  .footer-links a:hover { color: var(--accent); }
-
-  /* ── AD TRANSITIONS ── */
-  .ad-desktop-col, .ad-tablet-inline {
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-  .ad-desktop-col.ad-visible, .ad-tablet-inline.ad-visible {
-    opacity: 1;
-  }
+/* ── FOOTER ── */
+footer{text-align:center;padding:35px 20px;font-size:13.5px;color:var(--muted);border-top:1px solid var(--border);background:var(--card);}
+.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;margin-bottom:12px;}
+.footer-links a{color:var(--muted);font-weight:500;transition:color 0.2s;}
+.footer-links a:hover{color:var(--accent);}
 </style>
 
 <!-- Theme init: no flash -->
 <script>
-  (function() {
-    document.documentElement.setAttribute('data-theme',
-      localStorage.getItem('pixelpress-theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    );
-  })();
-  window.onerror = function(msg, src, line) {
-    try {
-      var e = JSON.parse(localStorage.getItem('pixelpress_errors') || '[]');
-      e.push({ msg, src, line, time: new Date().toISOString() });
-      if (e.length > 30) e.shift();
-      localStorage.setItem('pixelpress_errors', JSON.stringify(e));
-    } catch(_) {}
-    return false;
-  };
-  setInterval(function() {
-    Object.keys(localStorage).forEach(function(k) {
-      try {
-        var d = JSON.parse(localStorage.getItem(k));
-        if (d && d.expiry && Date.now() > d.expiry) localStorage.removeItem(k);
-      } catch(_) {}
-    });
-  }, 604800000);
+(function(){
+  document.documentElement.setAttribute('data-theme',
+    localStorage.getItem('pixelpress-theme')||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')
+  );
+})();
+window.onerror=function(msg,src,line){
+  try{var e=JSON.parse(localStorage.getItem('pixelpress_errors')||'[]');
+  e.push({msg,src,line,time:new Date().toISOString()});
+  if(e.length>30)e.shift();
+  localStorage.setItem('pixelpress_errors',JSON.stringify(e));}catch(_){}
+  return false;
+};
+setInterval(function(){
+  Object.keys(localStorage).forEach(function(k){
+    try{var d=JSON.parse(localStorage.getItem(k));
+    if(d&&d.expiry&&Date.now()>d.expiry)localStorage.removeItem(k);}catch(_){}
+  });
+},604800000);
 </script>
 </head>
 
 <body>
+
+<!-- ══════════════════════════════════════════════
+     MOBILE STICKY BOTTOM AD (320×50)
+     Fixed to bottom, shown on <768px only
+     Rendered in DOM early, JS injects script after load
+     ══════════════════════════════════════════════ -->
+<div class="ad-mobile-bottom ad-hidden" id="adMobileBottom">
+  <span class="ad-tag">Ad</span>
+  <button class="ad-dismiss" id="adMobileClose" aria-label="Close ad">✕</button>
+  <div class="ad-slot" id="adMobileSlot"></div>
+</div>
 
 <!-- NAV DRAWER -->
 <div class="sidebar-overlay" id="menuOverlay" onclick="toggleMenu(false)"></div>
@@ -405,15 +399,33 @@
   <p id="heroDesc">Your online photo editor is here and forever free!</p>
 </section>
 
-<!-- PAGE OUTER: full width wrapper -->
+<!-- ══════════════════════════════════════════════
+     TABLET HERO BANNER (468×60) — 768-1139px only
+     ══════════════════════════════════════════════ -->
+<div class="ad-tablet-hero" id="adTabletHero">
+  <div class="ad-wrap ad-hidden" id="adTabletHeroWrap">
+    <span class="ad-tag">Ad</span>
+    <button class="ad-dismiss" id="adTabletHeroClose" aria-label="Close ad">✕</button>
+    <div class="ad-slot" id="adTabletHeroSlot"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     DESKTOP LEADERBOARD (728×90) — ≥1140px only
+     ══════════════════════════════════════════════ -->
+<div class="ad-desktop-leader" id="adDesktopLeader">
+  <div class="ad-wrap ad-hidden" id="adDesktopLeaderWrap">
+    <span class="ad-tag">Ad</span>
+    <button class="ad-dismiss" id="adDesktopLeaderClose" aria-label="Close ad">✕</button>
+    <div class="ad-slot" id="adDesktopLeaderSlot"></div>
+  </div>
+</div>
+
+<!-- PAGE OUTER -->
 <div class="page-outer">
-  <!--
-    PAGE INNER: flex row
-    [.main-col — all content] [.ad-desktop-col — desktop only]
-  -->
   <div class="page-inner">
 
-    <!-- ══ MAIN CONTENT COLUMN ══ -->
+    <!-- MAIN CONTENT -->
     <div class="main-col">
 
       <!-- Search -->
@@ -425,16 +437,15 @@
       <!-- Filter pills -->
       <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
 
-      <!--
-        TABLET INLINE AD (768px – 1139px)
-        Sits between filters and tools grid.
-        Natural content flow, not floating/fixed.
-        Hidden on mobile and desktop (desktop uses column).
-      -->
-      <div class="ad-tablet-inline" id="adTabletInline" role="complementary" aria-label="Advertisement">
-        <div class="ad-tablet-inner-wrap">
-          <span class="ad-label-small">Ad</span>
-          <div class="ad-tablet-slot" id="adTabletSlot"></div>
+      <!-- ══════════════════════════════════════════════
+           TABLET MEDIUM RECTANGLE (300×250) — 768-1139px
+           Between filters and tools grid
+           ══════════════════════════════════════════════ -->
+      <div class="ad-tablet-rect" id="adTabletRect">
+        <div class="ad-wrap ad-hidden" id="adTabletRectWrap">
+          <span class="ad-tag">Ad</span>
+          <button class="ad-dismiss" id="adTabletRectClose" aria-label="Close ad">✕</button>
+          <div class="ad-slot" id="adTabletRectSlot"></div>
         </div>
       </div>
 
@@ -444,16 +455,15 @@
 
     </div><!-- /.main-col -->
 
-    <!-- ══ DESKTOP AD COLUMN (≥1140px) ══
-         Sticky sidebar — shown only on large screens.
-         Banner 160×300 inside a polished card.
-         Position: sticky keeps it visible while scrolling.
-    ══ -->
+    <!-- ══════════════════════════════════════════════
+         DESKTOP SIDEBAR (160×600) — ≥1140px only
+         Sticky right column
+         ══════════════════════════════════════════════ -->
     <aside class="ad-desktop-col" id="adDesktopCol" role="complementary" aria-label="Advertisement">
-      <div class="ad-desktop-card" id="adDesktopCard">
-        <button class="ad-col-close" id="adColClose" aria-label="Close advertisement">✕</button>
-        <span class="ad-desktop-label">Ad</span>
-        <div class="ad-desktop-slot" id="adDesktopSlot"></div>
+      <div class="ad-wrap ad-hidden" id="adDesktopColWrap">
+        <span class="ad-tag">Ad</span>
+        <button class="ad-dismiss" id="adDesktopColClose" aria-label="Close ad">✕</button>
+        <div class="ad-slot" id="adDesktopColSlot"></div>
       </div>
     </aside>
 
@@ -472,456 +482,419 @@
 <script>
 const languageData = {
   en: {
-    title: "PixelPress — Free Online Image & Document Toolkit",
-    labelText: "English",
-    heroTitle: "Every tool you could want to<br><span>edit images in bulk</span>",
-    heroDesc: "Your online photo editor is here and forever free!",
-    copyright: "© 2026 PixelPress — All Rights Reserved",
-    searchPlaceholder: "Search tools...",
-    noResultsText: "No results found.",
-    filters: [
+    title:"PixelPress — Free Online Image & Document Toolkit",
+    labelText:"English",
+    heroTitle:"Every tool you could want to<br><span>edit images in bulk</span>",
+    heroDesc:"Your online photo editor is here and forever free!",
+    copyright:"© 2026 PixelPress — All Rights Reserved",
+    searchPlaceholder:"Search tools...",
+    noResultsText:"No results found.",
+    filters:[
       {id:'all',text:'All'},{id:'optimize',text:'Optimize'},{id:'create',text:'Create'},
       {id:'edit',text:'Edit'},{id:'convert',text:'Convert'},{id:'security',text:'Security'},
       {id:'doc',text:'Documents'},{id:'utility',text:'Utilities'}
     ],
-    sidebarTitles: { image:"Image Utilities", doc:"Document Utilities", utility:"Developer & Core Utilities", info:"Info & Pages" },
-    toolsRegistry: [
-      { href:"./index.html",             icon:"fa-house",               text:"Home",               section:"home",    isUtilityCard:false },
-      { href:"./compress.html",          icon:"fa-box",                 text:"Compress Image",     section:"image",   cat:"optimize",        emoji:"📦", title:"Compress IMAGE",         desc:"Compress JPG, PNG, and WEBP while saving space.",       isUtilityCard:true },
-      { href:"./resize.html",            icon:"fa-arrows-maximize",     text:"Resize Image",       section:"image",   cat:"edit",            emoji:"📐", title:"Resize IMAGE",           desc:"Define dimensions by percent or pixel.",                isUtilityCard:true },
-      { href:"./photo-editor.html",      icon:"fa-wand-magic-sparkles", text:"Photo Editor",       section:"image",   cat:"edit create",     emoji:"✨", title:"Photo Editor",           desc:"Edit photos with filters, brightness, contrast.",       isUtilityCard:true },
-      { href:"./convert.html",           icon:"fa-rotate",              text:"Convert Format",     section:"image",   cat:"convert",         emoji:"🔄", title:"Convert IMAGE",          desc:"Transform images into JPG, PNG, or WEBP.",             isUtilityCard:true },
-      { href:"./watermark.html",         icon:"fa-droplet",             text:"Watermark Image",    section:"image",   cat:"security create", emoji:"💧", title:"Watermark IMAGE",        desc:"Stamp text or image over your photos.",                isUtilityCard:true },
-      { href:"./remove-bg.html",         icon:"fa-user-ghost",          text:"Remove Background",  section:"image",   cat:"edit create",     emoji:"🫥", title:"Remove Background",      desc:"AI-powered background remover.",                       isUtilityCard:true },
-      { href:"./meme-generator.html",    icon:"fa-face-laugh-squint",   text:"Meme Generator",     section:"image",   cat:"create",          emoji:"😂", title:"Meme Generator",         desc:"Create memes with templates and text.",                isUtilityCard:true },
-      { href:"./crop.html",              icon:"fa-scissors",            text:"Advanced Crop",      section:"image",   cat:"edit",            emoji:"✂️", title:"Advanced Crop",          desc:"Precise cropping with aspect ratios.",                 isUtilityCard:true },
-      { href:"./blur-face.html",         icon:"fa-user-shield",         text:"Blur Face",          section:"image",   cat:"security edit",   emoji:"👤", title:"Blur Face",              desc:"Auto-detect and blur faces for privacy.",              isUtilityCard:true },
-      { href:"./thumbnail-maker.html",   icon:"fa-image",               text:"Thumbnail Maker",    section:"image",   cat:"create",          emoji:"🖼️", title:"Thumbnail Maker",        desc:"Generate streaming & social cards.",                   isUtilityCard:true },
-      { href:"./screenshot-editor.html", icon:"fa-desktop",             text:"Screenshot Editor",  section:"image",   cat:"edit create",     emoji:"💻", title:"Screenshot Editor",      desc:"Wrap captures in device frames.",                      isUtilityCard:true },
-      { href:"./favicon-generator.html", icon:"fa-icons",               text:"Favicon Generator",  section:"image",   cat:"create convert",  emoji:"🎯", title:"Favicon Generator",      desc:"Convert assets into multi-size .ico files.",          isUtilityCard:true },
-      { href:"./pdf-to-jpg.html",        icon:"fa-file-pdf",            text:"PDF to JPG",         section:"doc",     cat:"convert doc",     emoji:"📄", title:"PDF to JPG",             desc:"Extract pages from PDF as JPG images.",               isUtilityCard:true },
-      { href:"./jpg-to-pdf.html",        icon:"fa-file-image",          text:"JPG to PDF",         section:"doc",     cat:"convert doc",     emoji:"🖼️", title:"JPG to PDF",             desc:"Convert images into a single PDF document.",          isUtilityCard:true },
-      { href:"./split-pdf.html",         icon:"fa-scissors",            text:"Split PDF",          section:"doc",     cat:"doc",             emoji:"✂️", title:"Split PDF",              desc:"Extract page ranges or split every page.",            isUtilityCard:true },
-      { href:"./merge-pdf.html",         icon:"fa-object-group",        text:"Merge PDF",          section:"doc",     cat:"doc",             emoji:"🗂️", title:"Merge PDF",              desc:"Combine multiple PDFs into one file.",                isUtilityCard:true },
-      { href:"./compress-pdf.html",      icon:"fa-compress",            text:"Compress PDF",       section:"doc",     cat:"optimize doc",    emoji:"📉", title:"Compress PDF",           desc:"Shrink PDF file size dynamically.",                   isUtilityCard:true },
-      { href:"./pdf-annotator.html",     icon:"fa-pen-ruler",           text:"PDF Annotator",      section:"doc",     cat:"edit doc",        emoji:"🖊️", title:"PDF Annotator",          desc:"Add text, draw, highlight, sign PDFs.",               isUtilityCard:true },
-      { href:"./qr-generator.html",      icon:"fa-qrcode",              text:"QR Code Generator",  section:"utility", cat:"create utility",  emoji:"📱", title:"QR Code Generator",      desc:"Generate custom vector QR codes instantly.",          isUtilityCard:true },
-      { href:"./password-generator.html",icon:"fa-key",                 text:"Password Generator", section:"utility", cat:"security utility",emoji:"🔑", title:"Password Generator",     desc:"Create cryptographically secure passwords.",          isUtilityCard:true },
-      { href:"./json-formatter.html",    icon:"fa-code",                text:"JSON Formatter",     section:"utility", cat:"utility",         emoji:"💻", title:"JSON Formatter",         desc:"Parse, format, and validate JSON data.",              isUtilityCard:true },
-      { href:"./url-shortener.html",     icon:"fa-link",                text:"URL Shortener",      section:"utility", cat:"utility",         emoji:"🔗", title:"URL Shortener",          desc:"Minify lengthy URLs into short links.",               isUtilityCard:true },
-      { href:"./color-picker.html",      icon:"fa-eye-dropper",         text:"Color Picker",       section:"utility", cat:"utility edit",    emoji:"🎨", title:"Color Picker",           desc:"Advanced color inspection and HEX copying.",          isUtilityCard:true },
-      { href:"./palette-generator.html", icon:"fa-palette",             text:"Palette Generator",  section:"utility", cat:"utility create",  emoji:"🌈", title:"Palette Generator",      desc:"Algorithmic color scheme generator.",                 isUtilityCard:true },
-      { href:"./unit-converter.html",    icon:"fa-calculator",          text:"Unit Converter",     section:"utility", cat:"utility",         emoji:"📏", title:"Unit Converter",         desc:"High performance digital metrics calculator.",        isUtilityCard:true },
-      { href:"./dxf-dwg-converter.html", icon:"fa-drafting-compass",    text:"CAD Converter",      section:"utility", cat:"utility convert", emoji:"📐", title:"CAD Converter",          desc:"DXF & DWG structural CAD utility.",                   isUtilityCard:true },
-      { href:"./ocr.html",               icon:"fa-file-lines",          text:"OCR Scanner",        section:"utility", cat:"utility",         emoji:"📝", title:"OCR Scanner",            desc:"Extract text from images with 100+ languages.",       isUtilityCard:true },
-      { href:"./about.html",             icon:"fa-circle-info",         text:"About Us",           section:"info",    isUtilityCard:false },
-      { href:"./contact.html",           icon:"fa-envelope",            text:"Contact",            section:"info",    isUtilityCard:false },
-      { href:"./faq.html",               icon:"fa-circle-question",     text:"FAQ",                section:"info",    isUtilityCard:false },
-      { href:"./blog/",                  icon:"fa-pen-to-square",       text:"Blog",               section:"info",    isUtilityCard:false },
-      { href:"./privacy-policy.html",    icon:"fa-shield-halved",       text:"Privacy Policy",     section:"info",    isUtilityCard:false },
-      { href:"./terms.html",             icon:"fa-file-contract",       text:"Terms of Service",   section:"info",    isUtilityCard:false },
-      { href:"./disclaimer.html",        icon:"fa-triangle-exclamation",text:"Disclaimer",         section:"info",    isUtilityCard:false }
+    sidebarTitles:{image:"Image Utilities",doc:"Document Utilities",utility:"Developer & Core Utilities",info:"Info & Pages"},
+    toolsRegistry:[
+      {href:"./index.html",icon:"fa-house",text:"Home",section:"home",isUtilityCard:false},
+      {href:"./compress.html",icon:"fa-box",text:"Compress Image",section:"image",cat:"optimize",emoji:"📦",title:"Compress IMAGE",desc:"Compress JPG, PNG, and WEBP while saving space.",isUtilityCard:true},
+      {href:"./resize.html",icon:"fa-arrows-maximize",text:"Resize Image",section:"image",cat:"edit",emoji:"📐",title:"Resize IMAGE",desc:"Define dimensions by percent or pixel.",isUtilityCard:true},
+      {href:"./photo-editor.html",icon:"fa-wand-magic-sparkles",text:"Photo Editor",section:"image",cat:"edit create",emoji:"✨",title:"Photo Editor",desc:"Edit photos with filters, brightness, contrast.",isUtilityCard:true},
+      {href:"./convert.html",icon:"fa-rotate",text:"Convert Format",section:"image",cat:"convert",emoji:"🔄",title:"Convert IMAGE",desc:"Transform images into JPG, PNG, or WEBP.",isUtilityCard:true},
+      {href:"./watermark.html",icon:"fa-droplet",text:"Watermark Image",section:"image",cat:"security create",emoji:"💧",title:"Watermark IMAGE",desc:"Stamp text or image over your photos.",isUtilityCard:true},
+      {href:"./remove-bg.html",icon:"fa-user-ghost",text:"Remove Background",section:"image",cat:"edit create",emoji:"🫥",title:"Remove Background",desc:"AI-powered background remover.",isUtilityCard:true},
+      {href:"./meme-generator.html",icon:"fa-face-laugh-squint",text:"Meme Generator",section:"image",cat:"create",emoji:"😂",title:"Meme Generator",desc:"Create memes with templates and text.",isUtilityCard:true},
+      {href:"./crop.html",icon:"fa-scissors",text:"Advanced Crop",section:"image",cat:"edit",emoji:"✂️",title:"Advanced Crop",desc:"Precise cropping with aspect ratios.",isUtilityCard:true},
+      {href:"./blur-face.html",icon:"fa-user-shield",text:"Blur Face",section:"image",cat:"security edit",emoji:"👤",title:"Blur Face",desc:"Auto-detect and blur faces for privacy.",isUtilityCard:true},
+      {href:"./thumbnail-maker.html",icon:"fa-image",text:"Thumbnail Maker",section:"image",cat:"create",emoji:"🖼️",title:"Thumbnail Maker",desc:"Generate streaming & social cards.",isUtilityCard:true},
+      {href:"./screenshot-editor.html",icon:"fa-desktop",text:"Screenshot Editor",section:"image",cat:"edit create",emoji:"💻",title:"Screenshot Editor",desc:"Wrap captures in device frames.",isUtilityCard:true},
+      {href:"./favicon-generator.html",icon:"fa-icons",text:"Favicon Generator",section:"image",cat:"create convert",emoji:"🎯",title:"Favicon Generator",desc:"Convert assets into multi-size .ico files.",isUtilityCard:true},
+      {href:"./pdf-to-jpg.html",icon:"fa-file-pdf",text:"PDF to JPG",section:"doc",cat:"convert doc",emoji:"📄",title:"PDF to JPG",desc:"Extract pages from PDF as JPG images.",isUtilityCard:true},
+      {href:"./jpg-to-pdf.html",icon:"fa-file-image",text:"JPG to PDF",section:"doc",cat:"convert doc",emoji:"🖼️",title:"JPG to PDF",desc:"Convert images into a single PDF document.",isUtilityCard:true},
+      {href:"./split-pdf.html",icon:"fa-scissors",text:"Split PDF",section:"doc",cat:"doc",emoji:"✂️",title:"Split PDF",desc:"Extract page ranges or split every page.",isUtilityCard:true},
+      {href:"./merge-pdf.html",icon:"fa-object-group",text:"Merge PDF",section:"doc",cat:"doc",emoji:"🗂️",title:"Merge PDF",desc:"Combine multiple PDFs into one file.",isUtilityCard:true},
+      {href:"./compress-pdf.html",icon:"fa-compress",text:"Compress PDF",section:"doc",cat:"optimize doc",emoji:"📉",title:"Compress PDF",desc:"Shrink PDF file size dynamically.",isUtilityCard:true},
+      {href:"./pdf-annotator.html",icon:"fa-pen-ruler",text:"PDF Annotator",section:"doc",cat:"edit doc",emoji:"🖊️",title:"PDF Annotator",desc:"Add text, draw, highlight, sign PDFs.",isUtilityCard:true},
+      {href:"./qr-generator.html",icon:"fa-qrcode",text:"QR Code Generator",section:"utility",cat:"create utility",emoji:"📱",title:"QR Code Generator",desc:"Generate custom vector QR codes instantly.",isUtilityCard:true},
+      {href:"./password-generator.html",icon:"fa-key",text:"Password Generator",section:"utility",cat:"security utility",emoji:"🔑",title:"Password Generator",desc:"Create cryptographically secure passwords.",isUtilityCard:true},
+      {href:"./json-formatter.html",icon:"fa-code",text:"JSON Formatter",section:"utility",cat:"utility",emoji:"💻",title:"JSON Formatter",desc:"Parse, format, and validate JSON data.",isUtilityCard:true},
+      {href:"./url-shortener.html",icon:"fa-link",text:"URL Shortener",section:"utility",cat:"utility",emoji:"🔗",title:"URL Shortener",desc:"Minify lengthy URLs into short links.",isUtilityCard:true},
+      {href:"./color-picker.html",icon:"fa-eye-dropper",text:"Color Picker",section:"utility",cat:"utility edit",emoji:"🎨",title:"Color Picker",desc:"Advanced color inspection and HEX copying.",isUtilityCard:true},
+      {href:"./palette-generator.html",icon:"fa-palette",text:"Palette Generator",section:"utility",cat:"utility create",emoji:"🌈",title:"Palette Generator",desc:"Algorithmic color scheme generator.",isUtilityCard:true},
+      {href:"./unit-converter.html",icon:"fa-calculator",text:"Unit Converter",section:"utility",cat:"utility",emoji:"📏",title:"Unit Converter",desc:"High performance digital metrics calculator.",isUtilityCard:true},
+      {href:"./dxf-dwg-converter.html",icon:"fa-drafting-compass",text:"CAD Converter",section:"utility",cat:"utility convert",emoji:"📐",title:"CAD Converter",desc:"DXF & DWG structural CAD utility.",isUtilityCard:true},
+      {href:"./ocr.html",icon:"fa-file-lines",text:"OCR Scanner",section:"utility",cat:"utility",emoji:"📝",title:"OCR Scanner",desc:"Extract text from images with 100+ languages.",isUtilityCard:true},
+      {href:"./about.html",icon:"fa-circle-info",text:"About Us",section:"info",isUtilityCard:false},
+      {href:"./contact.html",icon:"fa-envelope",text:"Contact",section:"info",isUtilityCard:false},
+      {href:"./faq.html",icon:"fa-circle-question",text:"FAQ",section:"info",isUtilityCard:false},
+      {href:"./blog/",icon:"fa-pen-to-square",text:"Blog",section:"info",isUtilityCard:false},
+      {href:"./privacy-policy.html",icon:"fa-shield-halved",text:"Privacy Policy",section:"info",isUtilityCard:false},
+      {href:"./terms.html",icon:"fa-file-contract",text:"Terms of Service",section:"info",isUtilityCard:false},
+      {href:"./disclaimer.html",icon:"fa-triangle-exclamation",text:"Disclaimer",section:"info",isUtilityCard:false}
     ],
-    footer: [
-      { href:"./about.html",          text:"About"      },
-      { href:"./contact.html",        text:"Contact"    },
-      { href:"./faq.html",            text:"FAQ"        },
-      { href:"./blog/",               text:"Blog"       },
-      { href:"./privacy-policy.html", text:"Privacy"    },
-      { href:"./terms.html",          text:"Terms"      },
-      { href:"./disclaimer.html",     text:"Disclaimer" }
+    footer:[
+      {href:"./about.html",text:"About"},{href:"./contact.html",text:"Contact"},
+      {href:"./faq.html",text:"FAQ"},{href:"./blog/",text:"Blog"},
+      {href:"./privacy-policy.html",text:"Privacy"},{href:"./terms.html",text:"Terms"},
+      {href:"./disclaimer.html",text:"Disclaimer"}
     ]
   },
   ar: {
-    title: "PixelPress — أدوات مجانية تعديل الصور وملفات PDF",
-    labelText: "العربية",
-    heroTitle: "كل الأدوات التي تحتاجها<br>لتعديل <span>الصور دفعة واحدة</span>",
-    heroDesc: "محرر الصور الخاص بك عبر الإنترنت هنا ومجاني إلى الأبد!",
-    copyright: "© 2026 PixelPress — جميع الحقوق محفوظة",
-    searchPlaceholder: "البحث عن الأدوات...",
-    noResultsText: "لم يتم العثور على نتائج.",
-    filters: [
+    title:"PixelPress — أدوات مجانية تعديل الصور وملفات PDF",
+    labelText:"العربية",
+    heroTitle:"كل الأدوات التي تحتاجها<br>لتعديل <span>الصور دفعة واحدة</span>",
+    heroDesc:"محرر الصور الخاص بك عبر الإنترنت هنا ومجاني إلى الأبد!",
+    copyright:"© 2026 PixelPress — جميع الحقوق محفوظة",
+    searchPlaceholder:"البحث عن الأدوات...",
+    noResultsText:"لم يتم العثور على نتائج.",
+    filters:[
       {id:'all',text:'الكل'},{id:'optimize',text:'تحسين'},{id:'create',text:'إنشاء'},
       {id:'edit',text:'تعديل'},{id:'convert',text:'تحويل'},{id:'security',text:'أمان'},
       {id:'doc',text:'مستندات'},{id:'utility',text:'أدوات'}
     ],
-    sidebarTitles: { image:"أدوات الصور", doc:"أدوات المستندات", utility:"أدوات المطورين", info:"معلومات" },
-    toolsRegistry: [
-      { href:"./index.html",             icon:"fa-house",               text:"الرئيسية",            section:"home",    isUtilityCard:false },
-      { href:"./compress.html",          icon:"fa-box",                 text:"ضغط الصور",           section:"image",   cat:"optimize",        emoji:"📦", title:"ضغط الصور",              desc:"ضغط JPG و PNG و WEBP.",                                 isUtilityCard:true },
-      { href:"./resize.html",            icon:"fa-arrows-maximize",     text:"تغيير الحجم",         section:"image",   cat:"edit",            emoji:"📐", title:"تغيير الحجم",            desc:"تحديد الأبعاد بالبكسل أو النسبة.",                     isUtilityCard:true },
-      { href:"./photo-editor.html",      icon:"fa-wand-magic-sparkles", text:"محرر الصور",          section:"image",   cat:"edit create",     emoji:"✨", title:"محرر الصور",             desc:"تعديل الصور بالفلاتر والسطوع.",                        isUtilityCard:true },
-      { href:"./convert.html",           icon:"fa-rotate",              text:"تحويل الصيغة",        section:"image",   cat:"convert",         emoji:"🔄", title:"تحويل الصيغة",           desc:"تحويل الصور إلى JPG أو PNG أو WEBP.",                  isUtilityCard:true },
-      { href:"./watermark.html",         icon:"fa-droplet",             text:"علامة مائية",         section:"image",   cat:"security create", emoji:"💧", title:"علامة مائية",            desc:"ختم نص أو صورة على صورك.",                            isUtilityCard:true },
-      { href:"./remove-bg.html",         icon:"fa-user-ghost",          text:"إزالة الخلفية",       section:"image",   cat:"edit create",     emoji:"🫥", title:"إزالة الخلفية",          desc:"مزيل خلفية بالذكاء الاصطناعي.",                        isUtilityCard:true },
-      { href:"./meme-generator.html",    icon:"fa-face-laugh-squint",   text:"صانع الميمز",         section:"image",   cat:"create",          emoji:"😂", title:"صانع الميمز",            desc:"إنشاء ميمز مع قوالب ونصوص.",                          isUtilityCard:true },
-      { href:"./crop.html",              icon:"fa-scissors",            text:"قص الصور",            section:"image",   cat:"edit",            emoji:"✂️", title:"قص الصور",               desc:"قص دقيق مع نسب أبعاد.",                                isUtilityCard:true },
-      { href:"./blur-face.html",         icon:"fa-user-shield",         text:"تغبيش الوجوه",        section:"image",   cat:"security edit",   emoji:"👤", title:"تغبيش الوجوه",           desc:"اكتشاف وتغبيش الوجوه تلقائياً.",                      isUtilityCard:true },
-      { href:"./thumbnail-maker.html",   icon:"fa-image",               text:"صانع الصور المصغرة",  section:"image",   cat:"create",          emoji:"🖼️", title:"صانع الصور المصغرة",     desc:"بطاقات بث ووسائط اجتماعية.",                          isUtilityCard:true },
-      { href:"./screenshot-editor.html", icon:"fa-desktop",             text:"محرر لقطات الشاشة",   section:"image",   cat:"edit create",     emoji:"💻", title:"محرر لقطات الشاشة",      desc:"إطارات أجهزة وتدرجات لونية.",                         isUtilityCard:true },
-      { href:"./favicon-generator.html", icon:"fa-icons",               text:"مولد الأيقونات",      section:"image",   cat:"create convert",  emoji:"🎯", title:"مولد الأيقونات",         desc:"تحويل الأصول إلى ملفات .ico.",                        isUtilityCard:true },
-      { href:"./pdf-to-jpg.html",        icon:"fa-file-pdf",            text:"PDF إلى JPG",         section:"doc",     cat:"convert doc",     emoji:"📄", title:"PDF إلى JPG",            desc:"استخراج صفحات PDF كصور JPG.",                         isUtilityCard:true },
-      { href:"./jpg-to-pdf.html",        icon:"fa-file-image",          text:"JPG إلى PDF",         section:"doc",     cat:"convert doc",     emoji:"🖼️", title:"JPG إلى PDF",            desc:"تحويل الصور إلى مستند PDF واحد.",                     isUtilityCard:true },
-      { href:"./split-pdf.html",         icon:"fa-scissors",            text:"تقسيم PDF",           section:"doc",     cat:"doc",             emoji:"✂️", title:"تقسيم PDF",              desc:"استخراج نطاقات الصفحات.",                             isUtilityCard:true },
-      { href:"./merge-pdf.html",         icon:"fa-object-group",        text:"دمج PDF",             section:"doc",     cat:"doc",             emoji:"🗂️", title:"دمج PDF",                desc:"دمج عدة PDFs في ملف واحد.",                           isUtilityCard:true },
-      { href:"./compress-pdf.html",      icon:"fa-compress",            text:"ضغط PDF",             section:"doc",     cat:"optimize doc",    emoji:"📉", title:"ضغط PDF",                desc:"تقليل حجم ملف PDF.",                                  isUtilityCard:true },
-      { href:"./pdf-annotator.html",     icon:"fa-pen-ruler",           text:"محرر PDF",            section:"doc",     cat:"edit doc",        emoji:"🖊️", title:"محرر PDF",               desc:"أضف نصاً ورسومات وتوقيعات.",                          isUtilityCard:true },
-      { href:"./qr-generator.html",      icon:"fa-qrcode",              text:"مولد QR",             section:"utility", cat:"create utility",  emoji:"📱", title:"مولد QR",                desc:"إنشاء رموز QR مخصصة.",                                isUtilityCard:true },
-      { href:"./password-generator.html",icon:"fa-key",                 text:"مولد كلمات المرور",   section:"utility", cat:"security utility",emoji:"🔑", title:"مولد كلمات المرور",      desc:"كلمات مرور آمنة تشفيراً.",                            isUtilityCard:true },
-      { href:"./json-formatter.html",    icon:"fa-code",                text:"منسق JSON",           section:"utility", cat:"utility",         emoji:"💻", title:"منسق JSON",              desc:"تحليل وتنسيق JSON.",                                  isUtilityCard:true },
-      { href:"./url-shortener.html",     icon:"fa-link",                text:"مختصر الروابط",       section:"utility", cat:"utility",         emoji:"🔗", title:"مختصر الروابط",          desc:"تقصير الروابط الطويلة.",                              isUtilityCard:true },
-      { href:"./color-picker.html",      icon:"fa-eye-dropper",         text:"منتقي الألوان",       section:"utility", cat:"utility edit",    emoji:"🎨", title:"منتقي الألوان",          desc:"فحص متقدم للألوان.",                                  isUtilityCard:true },
-      { href:"./palette-generator.html", icon:"fa-palette",             text:"مولد لوحة الألوان",   section:"utility", cat:"utility create",  emoji:"🌈", title:"مولد لوحة الألوان",      desc:"مولد أنظمة الألوان.",                                 isUtilityCard:true },
-      { href:"./unit-converter.html",    icon:"fa-calculator",          text:"محول الوحدات",        section:"utility", cat:"utility",         emoji:"📏", title:"محول الوحدات",           desc:"حاسبة مقاييس رقمية.",                                 isUtilityCard:true },
-      { href:"./dxf-dwg-converter.html", icon:"fa-drafting-compass",    text:"محول CAD",            section:"utility", cat:"utility convert", emoji:"📐", title:"محول CAD",               desc:"أداة DXF و DWG.",                                     isUtilityCard:true },
-      { href:"./ocr.html",               icon:"fa-file-lines",          text:"OCR",                 section:"utility", cat:"utility",         emoji:"📝", title:"OCR Scanner",            desc:"استخراج النص من الصور.",                              isUtilityCard:true },
-      { href:"./about.html",             icon:"fa-circle-info",         text:"من نحن",              section:"info",    isUtilityCard:false },
-      { href:"./contact.html",           icon:"fa-envelope",            text:"اتصل بنا",            section:"info",    isUtilityCard:false },
-      { href:"./faq.html",               icon:"fa-circle-question",     text:"الأسئلة الشائعة",     section:"info",    isUtilityCard:false },
-      { href:"./blog/",                  icon:"fa-pen-to-square",       text:"المدونة",             section:"info",    isUtilityCard:false },
-      { href:"./privacy-policy.html",    icon:"fa-shield-halved",       text:"الخصوصية",           section:"info",    isUtilityCard:false },
-      { href:"./terms.html",             icon:"fa-file-contract",       text:"الشروط",             section:"info",    isUtilityCard:false },
-      { href:"./disclaimer.html",        icon:"fa-triangle-exclamation",text:"إخلاء المسؤولية",    section:"info",    isUtilityCard:false }
+    sidebarTitles:{image:"أدوات الصور",doc:"أدوات المستندات",utility:"أدوات المطورين",info:"معلومات"},
+    toolsRegistry:[
+      {href:"./index.html",icon:"fa-house",text:"الرئيسية",section:"home",isUtilityCard:false},
+      {href:"./compress.html",icon:"fa-box",text:"ضغط الصور",section:"image",cat:"optimize",emoji:"📦",title:"ضغط الصور",desc:"ضغط JPG و PNG و WEBP.",isUtilityCard:true},
+      {href:"./resize.html",icon:"fa-arrows-maximize",text:"تغيير الحجم",section:"image",cat:"edit",emoji:"📐",title:"تغيير الحجم",desc:"تحديد الأبعاد بالبكسل أو النسبة.",isUtilityCard:true},
+      {href:"./photo-editor.html",icon:"fa-wand-magic-sparkles",text:"محرر الصور",section:"image",cat:"edit create",emoji:"✨",title:"محرر الصور",desc:"تعديل الصور بالفلاتر والسطوع.",isUtilityCard:true},
+      {href:"./convert.html",icon:"fa-rotate",text:"تحويل الصيغة",section:"image",cat:"convert",emoji:"🔄",title:"تحويل الصيغة",desc:"تحويل الصور إلى JPG أو PNG أو WEBP.",isUtilityCard:true},
+      {href:"./watermark.html",icon:"fa-droplet",text:"علامة مائية",section:"image",cat:"security create",emoji:"💧",title:"علامة مائية",desc:"ختم نص أو صورة على صورك.",isUtilityCard:true},
+      {href:"./remove-bg.html",icon:"fa-user-ghost",text:"إزالة الخلفية",section:"image",cat:"edit create",emoji:"🫥",title:"إزالة الخلفية",desc:"مزيل خلفية بالذكاء الاصطناعي.",isUtilityCard:true},
+      {href:"./meme-generator.html",icon:"fa-face-laugh-squint",text:"صانع الميمز",section:"image",cat:"create",emoji:"😂",title:"صانع الميمز",desc:"إنشاء ميمز مع قوالب ونصوص.",isUtilityCard:true},
+      {href:"./crop.html",icon:"fa-scissors",text:"قص الصور",section:"image",cat:"edit",emoji:"✂️",title:"قص الصور",desc:"قص دقيق مع نسب أبعاد.",isUtilityCard:true},
+      {href:"./blur-face.html",icon:"fa-user-shield",text:"تغبيش الوجوه",section:"image",cat:"security edit",emoji:"👤",title:"تغبيش الوجوه",desc:"اكتشاف وتغبيش الوجوه تلقائياً.",isUtilityCard:true},
+      {href:"./thumbnail-maker.html",icon:"fa-image",text:"صانع الصور المصغرة",section:"image",cat:"create",emoji:"🖼️",title:"صانع الصور المصغرة",desc:"بطاقات بث ووسائط اجتماعية.",isUtilityCard:true},
+      {href:"./screenshot-editor.html",icon:"fa-desktop",text:"محرر لقطات الشاشة",section:"image",cat:"edit create",emoji:"💻",title:"محرر لقطات الشاشة",desc:"إطارات أجهزة وتدرجات لونية.",isUtilityCard:true},
+      {href:"./favicon-generator.html",icon:"fa-icons",text:"مولد الأيقونات",section:"image",cat:"create convert",emoji:"🎯",title:"مولد الأيقونات",desc:"تحويل الأصول إلى ملفات .ico.",isUtilityCard:true},
+      {href:"./pdf-to-jpg.html",icon:"fa-file-pdf",text:"PDF إلى JPG",section:"doc",cat:"convert doc",emoji:"📄",title:"PDF إلى JPG",desc:"استخراج صفحات PDF كصور JPG.",isUtilityCard:true},
+      {href:"./jpg-to-pdf.html",icon:"fa-file-image",text:"JPG إلى PDF",section:"doc",cat:"convert doc",emoji:"🖼️",title:"JPG إلى PDF",desc:"تحويل الصور إلى مستند PDF واحد.",isUtilityCard:true},
+      {href:"./split-pdf.html",icon:"fa-scissors",text:"تقسيم PDF",section:"doc",cat:"doc",emoji:"✂️",title:"تقسيم PDF",desc:"استخراج نطاقات الصفحات.",isUtilityCard:true},
+      {href:"./merge-pdf.html",icon:"fa-object-group",text:"دمج PDF",section:"doc",cat:"doc",emoji:"🗂️",title:"دمج PDF",desc:"دمج عدة PDFs في ملف واحد.",isUtilityCard:true},
+      {href:"./compress-pdf.html",icon:"fa-compress",text:"ضغط PDF",section:"doc",cat:"optimize doc",emoji:"📉",title:"ضغط PDF",desc:"تقليل حجم ملف PDF.",isUtilityCard:true},
+      {href:"./pdf-annotator.html",icon:"fa-pen-ruler",text:"محرر PDF",section:"doc",cat:"edit doc",emoji:"🖊️",title:"محرر PDF",desc:"أضف نصاً ورسومات وتوقيعات.",isUtilityCard:true},
+      {href:"./qr-generator.html",icon:"fa-qrcode",text:"مولد QR",section:"utility",cat:"create utility",emoji:"📱",title:"مولد QR",desc:"إنشاء رموز QR مخصصة.",isUtilityCard:true},
+      {href:"./password-generator.html",icon:"fa-key",text:"مولد كلمات المرور",section:"utility",cat:"security utility",emoji:"🔑",title:"مولد كلمات المرور",desc:"كلمات مرور آمنة تشفيراً.",isUtilityCard:true},
+      {href:"./json-formatter.html",icon:"fa-code",text:"منسق JSON",section:"utility",cat:"utility",emoji:"💻",title:"منسق JSON",desc:"تحليل وتنسيق JSON.",isUtilityCard:true},
+      {href:"./url-shortener.html",icon:"fa-link",text:"مختصر الروابط",section:"utility",cat:"utility",emoji:"🔗",title:"مختصر الروابط",desc:"تقصير الروابط الطويلة.",isUtilityCard:true},
+      {href:"./color-picker.html",icon:"fa-eye-dropper",text:"منتقي الألوان",section:"utility",cat:"utility edit",emoji:"🎨",title:"منتقي الألوان",desc:"فحص متقدم للألوان.",isUtilityCard:true},
+      {href:"./palette-generator.html",icon:"fa-palette",text:"مولد لوحة الألوان",section:"utility",cat:"utility create",emoji:"🌈",title:"مولد لوحة الألوان",desc:"مولد أنظمة الألوان.",isUtilityCard:true},
+      {href:"./unit-converter.html",icon:"fa-calculator",text:"محول الوحدات",section:"utility",cat:"utility",emoji:"📏",title:"محول الوحدات",desc:"حاسبة مقاييس رقمية.",isUtilityCard:true},
+      {href:"./dxf-dwg-converter.html",icon:"fa-drafting-compass",text:"محول CAD",section:"utility",cat:"utility convert",emoji:"📐",title:"محول CAD",desc:"أداة DXF و DWG.",isUtilityCard:true},
+      {href:"./ocr.html",icon:"fa-file-lines",text:"OCR",section:"utility",cat:"utility",emoji:"📝",title:"OCR Scanner",desc:"استخراج النص من الصور.",isUtilityCard:true},
+      {href:"./about.html",icon:"fa-circle-info",text:"من نحن",section:"info",isUtilityCard:false},
+      {href:"./contact.html",icon:"fa-envelope",text:"اتصل بنا",section:"info",isUtilityCard:false},
+      {href:"./faq.html",icon:"fa-circle-question",text:"الأسئلة الشائعة",section:"info",isUtilityCard:false},
+      {href:"./blog/",icon:"fa-pen-to-square",text:"المدونة",section:"info",isUtilityCard:false},
+      {href:"./privacy-policy.html",icon:"fa-shield-halved",text:"الخصوصية",section:"info",isUtilityCard:false},
+      {href:"./terms.html",icon:"fa-file-contract",text:"الشروط",section:"info",isUtilityCard:false},
+      {href:"./disclaimer.html",icon:"fa-triangle-exclamation",text:"إخلاء المسؤولية",section:"info",isUtilityCard:false}
     ],
-    footer: [
-      { href:"./about.html",          text:"من نحن"          },
-      { href:"./contact.html",        text:"اتصل بنا"        },
-      { href:"./faq.html",            text:"الأسئلة الشائعة" },
-      { href:"./blog/",               text:"المدونة"         },
-      { href:"./privacy-policy.html", text:"الخصوصية"       },
-      { href:"./terms.html",          text:"الشروط"          },
-      { href:"./disclaimer.html",     text:"إخلاء المسؤولية" }
+    footer:[
+      {href:"./about.html",text:"من نحن"},{href:"./contact.html",text:"اتصل بنا"},
+      {href:"./faq.html",text:"الأسئلة الشائعة"},{href:"./blog/",text:"المدونة"},
+      {href:"./privacy-policy.html",text:"الخصوصية"},{href:"./terms.html",text:"الشروط"},
+      {href:"./disclaimer.html",text:"إخلاء المسؤولية"}
     ]
   }
 };
 
-let currentLang = 'en';
+let currentLang='en';
 
-function renderUI() {
-  const data = languageData[currentLang];
-  document.getElementById('siteTitle').textContent = data.title;
-  document.getElementById('langText').textContent = data.labelText;
-  document.getElementById('heroTitle').innerHTML = data.heroTitle;
-  document.getElementById('heroDesc').textContent = data.heroDesc;
-  document.getElementById('footerCopyright').textContent = data.copyright;
-  document.getElementById('noResults').textContent = data.noResultsText;
-  document.getElementById('toolSearch').placeholder = data.searchPlaceholder;
+function renderUI(){
+  const data=languageData[currentLang];
+  document.getElementById('siteTitle').textContent=data.title;
+  document.getElementById('langText').textContent=data.labelText;
+  document.getElementById('heroTitle').innerHTML=data.heroTitle;
+  document.getElementById('heroDesc').textContent=data.heroDesc;
+  document.getElementById('footerCopyright').textContent=data.copyright;
+  document.getElementById('noResults').textContent=data.noResultsText;
+  document.getElementById('toolSearch').placeholder=data.searchPlaceholder;
 
-  const filterBox = document.getElementById('filterContainer');
-  filterBox.innerHTML = '';
-  data.filters.forEach((f, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'filter-pill' + (i === 0 ? ' active' : '');
-    btn.textContent = f.text;
-    btn.setAttribute('data-target', f.id);
-    btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
-    btn.addEventListener('click', function() { filterCategory(f.id, this); });
+  const filterBox=document.getElementById('filterContainer');
+  filterBox.innerHTML='';
+  data.filters.forEach((f,i)=>{
+    const btn=document.createElement('button');
+    btn.className='filter-pill'+(i===0?' active':'');
+    btn.textContent=f.text;
+    btn.setAttribute('data-target',f.id);
+    btn.setAttribute('aria-pressed',i===0?'true':'false');
+    btn.addEventListener('click',function(){filterCategory(f.id,this);});
     filterBox.appendChild(btn);
   });
 
-  const toolsGrid = document.getElementById('toolsList');
-  toolsGrid.innerHTML = '';
-  const fragment = document.createDocumentFragment();
-  data.toolsRegistry.filter(t => t.isUtilityCard).forEach(t => {
-    const a = document.createElement('a');
-    a.href = t.href;
-    a.className = 'tool-link';
-    a.setAttribute('data-category', t.cat);
-    a.innerHTML =
-      `<div class="tool-card">` +
-        `<div class="tool-icon-wrapper" aria-hidden="true">${t.emoji}</div>` +
-        `<div class="tool-info-pane"><h3>${t.title}</h3><p>${t.desc}</p></div>` +
-      `</div>`;
+  const toolsGrid=document.getElementById('toolsList');
+  toolsGrid.innerHTML='';
+  const fragment=document.createDocumentFragment();
+  data.toolsRegistry.filter(t=>t.isUtilityCard).forEach(t=>{
+    const a=document.createElement('a');
+    a.href=t.href;
+    a.className='tool-link';
+    a.setAttribute('data-category',t.cat);
+    a.innerHTML=`<div class="tool-card"><div class="tool-icon-wrapper" aria-hidden="true">${t.emoji}</div><div class="tool-info-pane"><h3>${t.title}</h3><p>${t.desc}</p></div></div>`;
     fragment.appendChild(a);
   });
   toolsGrid.appendChild(fragment);
 
-  document.getElementById('footerLinks').innerHTML =
-    data.footer.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+  document.getElementById('footerLinks').innerHTML=
+    data.footer.map(item=>`<a href="${item.href}">${item.text}</a>`).join('');
 
-  const sidebarBox = document.getElementById('sidebarLinks');
-  sidebarBox.innerHTML = '';
-  const sf = document.createDocumentFragment();
-  const homeLink = data.toolsRegistry.find(t => t.section === 'home');
-  if (homeLink) {
-    const a = document.createElement('a');
-    a.href = homeLink.href;
-    a.innerHTML = `<i class="fa-solid ${homeLink.icon}" aria-hidden="true"></i> ${homeLink.text}`;
-    sf.appendChild(a);
-  }
-  ['image','doc','utility'].forEach(sec => {
-    const title = document.createElement('div');
-    title.className = 'menu-section-title';
-    title.textContent = data.sidebarTitles[sec];
-    sf.appendChild(title);
-    data.toolsRegistry.filter(t => t.section === sec).forEach(t => {
-      const a = document.createElement('a');
-      a.href = t.href;
-      a.innerHTML = `<i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.text}`;
-      sf.appendChild(a);
-    });
+  const sidebarBox=document.getElementById('sidebarLinks');
+  sidebarBox.innerHTML='';
+  const sf=document.createDocumentFragment();
+  const homeLink=data.toolsRegistry.find(t=>t.section==='home');
+  if(homeLink){const a=document.createElement('a');a.href=homeLink.href;a.innerHTML=`<i class="fa-solid ${homeLink.icon}" aria-hidden="true"></i> ${homeLink.text}`;sf.appendChild(a);}
+  ['image','doc','utility'].forEach(sec=>{
+    const title=document.createElement('div');title.className='menu-section-title';title.textContent=data.sidebarTitles[sec];sf.appendChild(title);
+    data.toolsRegistry.filter(t=>t.section===sec).forEach(t=>{const a=document.createElement('a');a.href=t.href;a.innerHTML=`<i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.text}`;sf.appendChild(a);});
   });
-  const hr = document.createElement('div');
-  hr.style.cssText = 'height:1px;background:var(--border);margin:10px 0;';
-  sf.appendChild(hr);
-  const infoTitle = document.createElement('div');
-  infoTitle.className = 'menu-section-title';
-  infoTitle.textContent = data.sidebarTitles.info;
-  sf.appendChild(infoTitle);
-  data.toolsRegistry.filter(t => t.section === 'info').forEach(t => {
-    const a = document.createElement('a');
-    a.href = t.href;
-    a.innerHTML = `<i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.text}`;
-    sf.appendChild(a);
-  });
+  const hr=document.createElement('div');hr.style.cssText='height:1px;background:var(--border);margin:10px 0;';sf.appendChild(hr);
+  const infoTitle=document.createElement('div');infoTitle.className='menu-section-title';infoTitle.textContent=data.sidebarTitles.info;sf.appendChild(infoTitle);
+  data.toolsRegistry.filter(t=>t.section==='info').forEach(t=>{const a=document.createElement('a');a.href=t.href;a.innerHTML=`<i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.text}`;sf.appendChild(a);});
   sidebarBox.appendChild(sf);
 
   evaluateLiveSearchFilters();
-  // Re-attach SmartLink after footer re-render
   attachSmartLink();
 }
 
-function toggleLanguage() {
-  currentLang = currentLang === 'en' ? 'ar' : 'en';
-  const isAr = currentLang === 'ar';
-  document.body.classList.toggle('rtl', isAr);
-  document.getElementById('langToggleBtn').classList.toggle('active', !isAr);
-  document.documentElement.lang = currentLang;
-  document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+function toggleLanguage(){
+  currentLang=currentLang==='en'?'ar':'en';
+  const isAr=currentLang==='ar';
+  document.body.classList.toggle('rtl',isAr);
+  document.getElementById('langToggleBtn').classList.toggle('active',!isAr);
+  document.documentElement.lang=currentLang;
+  document.documentElement.dir=isAr?'rtl':'ltr';
   renderUI();
 }
 
-function evaluateLiveSearchFilters() {
-  const query = document.getElementById('toolSearch').value.toLowerCase().trim();
-  const activePill = document.querySelector('.filter-pill.active');
-  const targetCat = activePill ? activePill.getAttribute('data-target') : 'all';
-  let count = 0;
-  document.querySelectorAll('.tool-link').forEach(link => {
-    const h3 = link.querySelector('h3').textContent.toLowerCase();
-    const p  = link.querySelector('p').textContent.toLowerCase();
-    const cats = (link.getAttribute('data-category') || '').split(' ');
-    const match = (h3.includes(query) || p.includes(query)) &&
-                  (targetCat === 'all' || cats.includes(targetCat));
-    link.classList.toggle('hidden', !match);
-    if (match) count++;
+function evaluateLiveSearchFilters(){
+  const query=document.getElementById('toolSearch').value.toLowerCase().trim();
+  const activePill=document.querySelector('.filter-pill.active');
+  const targetCat=activePill?activePill.getAttribute('data-target'):'all';
+  let count=0;
+  document.querySelectorAll('.tool-link').forEach(link=>{
+    const h3=link.querySelector('h3').textContent.toLowerCase();
+    const p=link.querySelector('p').textContent.toLowerCase();
+    const cats=(link.getAttribute('data-category')||'').split(' ');
+    const match=(h3.includes(query)||p.includes(query))&&(targetCat==='all'||cats.includes(targetCat));
+    link.classList.toggle('hidden',!match);
+    if(match)count++;
   });
-  document.getElementById('noResults').style.display = count === 0 ? 'block' : 'none';
+  document.getElementById('noResults').style.display=count===0?'block':'none';
 }
 
-function filterCategory(category, element) {
-  document.querySelectorAll('.filter-pill').forEach(btn => {
-    btn.classList.remove('active');
-    btn.setAttribute('aria-pressed', 'false');
-  });
-  element.classList.add('active');
-  element.setAttribute('aria-pressed', 'true');
+function filterCategory(category,element){
+  document.querySelectorAll('.filter-pill').forEach(btn=>{btn.classList.remove('active');btn.setAttribute('aria-pressed','false');});
+  element.classList.add('active');element.setAttribute('aria-pressed','true');
   evaluateLiveSearchFilters();
 }
 
-function toggleMenu(show) {
-  document.getElementById('sideMenu').classList.toggle('open', show);
-  document.getElementById('menuOverlay').classList.toggle('show', show);
-  const trigger = document.getElementById('menuTrigger');
-  if (trigger) trigger.setAttribute('aria-expanded', show ? 'true' : 'false');
-  if (show) {
-    const esc = function(e) {
-      if (e.key === 'Escape') { toggleMenu(false); document.removeEventListener('keydown', esc); }
-    };
-    document.addEventListener('keydown', esc);
-  }
+function toggleMenu(show){
+  document.getElementById('sideMenu').classList.toggle('open',show);
+  document.getElementById('menuOverlay').classList.toggle('show',show);
+  const trigger=document.getElementById('menuTrigger');
+  if(trigger)trigger.setAttribute('aria-expanded',show?'true':'false');
+  if(show){const esc=function(e){if(e.key==='Escape'){toggleMenu(false);document.removeEventListener('keydown',esc);}};document.addEventListener('keydown',esc);}
 }
 
-document.getElementById('themeToggle').addEventListener('click', () => {
-  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('pixelpress-theme', next);
+document.getElementById('themeToggle').addEventListener('click',()=>{
+  const next=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+  document.documentElement.setAttribute('data-theme',next);
+  localStorage.setItem('pixelpress-theme',next);
 });
 
-document.addEventListener('keydown', e => {
-  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-    e.preventDefault();
-    document.getElementById('toolSearch').focus();
-  }
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();document.getElementById('toolSearch').focus();}
 });
 
-document.getElementById('toolSearch').addEventListener('input', evaluateLiveSearchFilters);
+document.getElementById('toolSearch').addEventListener('input',evaluateLiveSearchFilters);
 
-(function() {
-  var hash = window.location.hash;
-  if (hash.startsWith('#/s/')) {
-    var shortId = hash.replace('#/s/', '').split('?')[0];
-    var stored  = localStorage.getItem('redirect_' + shortId);
-    if (stored) {
-      var entry = JSON.parse(stored);
-      if (entry.expiry && Date.now() > entry.expiry) {
-        document.body.innerHTML = '<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>Link Expired</h2><a href="./index.html">Go Home</a></div>';
-      } else {
-        entry.clicks = (entry.clicks || 0) + 1;
-        localStorage.setItem('redirect_' + shortId, JSON.stringify(entry));
-        window.location.replace(entry.long);
-      }
-    } else {
-      document.body.innerHTML = '<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>URL Not Found</h2><a href="./index.html">Go Home</a></div>';
-    }
+(function(){
+  var hash=window.location.hash;
+  if(hash.startsWith('#/s/')){
+    var shortId=hash.replace('#/s/','').split('?')[0];
+    var stored=localStorage.getItem('redirect_'+shortId);
+    if(stored){
+      var entry=JSON.parse(stored);
+      if(entry.expiry&&Date.now()>entry.expiry){document.body.innerHTML='<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>Link Expired</h2><a href="./index.html">Go Home</a></div>';}
+      else{entry.clicks=(entry.clicks||0)+1;localStorage.setItem('redirect_'+shortId,JSON.stringify(entry));window.location.replace(entry.long);}
+    }else{document.body.innerHTML='<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>URL Not Found</h2><a href="./index.html">Go Home</a></div>';}
   }
 })();
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').catch(function(err) {
-      console.warn('SW registration failed:', err);
-    });
-  });
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(err){console.warn('SW registration failed:',err);});});
 }
 
 renderUI();
 </script>
 
 <!-- ════════════════════════════════════════════
-     ADS — loaded LAST, fully async
+     ADS — ALL loaded LAST, fully async
      ════════════════════════════════════════════ -->
 
-<!-- AD 1: Social Bar — sticky bottom, passive -->
+<!-- AD 1: Social Bar -->
 <script src="https://paviliongiddy.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js"></script>
 
-<!-- AD 2: Popunder — first click, highest CPM -->
+<!-- AD 2: Popunder -->
 <script src="https://paviliongiddy.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
 
-<!-- AD 3: SmartLink — footer first-link intercept -->
+<!-- AD 3: SmartLink -->
 <script>
-var _smartFired = false;
-var SMART_URL = 'https://paviliongiddy.com/idjtny4v?key=5de8db78a5a2bb37dc9a1b6e53d36443';
-
-function attachSmartLink() {
-  var footerLinks = document.querySelectorAll('#footerLinks a');
-  if (!footerLinks.length) return;
-  // Intercept first footer link only
-  footerLinks[0].addEventListener('click', function() {
-    if (_smartFired) return;
-    _smartFired = true;
-    try { window.open(SMART_URL, '_blank', 'noopener,noreferrer'); } catch(e) {}
-  }, { passive: true, once: true });
+var _smartFired=false;
+var SMART_URL='https://paviliongiddy.com/idjtny4v?key=5de8db78a5a2bb37dc9a1b6e53d36443';
+function attachSmartLink(){
+  var footerLinks=document.querySelectorAll('#footerLinks a');
+  if(!footerLinks.length)return;
+  footerLinks[0].addEventListener('click',function(){
+    if(_smartFired)return;_smartFired=true;
+    try{window.open(SMART_URL,'_blank','noopener,noreferrer');}catch(e){}
+  },{passive:true,once:true});
 }
-// Called by renderUI() after each footer render
 </script>
 
 <!--
-  AD 4: Banner 160×300 — Responsive 3-tier strategy
-  ═══════════════════════════════════════════════════
-  MOBILE  (<768px) : NOT shown — social bar is enough,
-                     mobile screens too small for banner
-  TABLET  (768-1139px): Inline card between filters and
-                        tools grid — natural flow, no float
-  DESKTOP (≥1140px): Sticky right column — ilovepdf/smallpdf
-                      pattern, always visible while scrolling
+  AD 4-7: Responsive Banner System
+  ══════════════════════════════════════════════════════
+  DEVICE        BANNER          POSITION
+  ──────────────────────────────────────────────────────
+  Mobile        320×50          Fixed bottom bar
+  (<768px)
 
-  Injection: delayed 3s after window.load → no LCP impact
-  Dismiss:   localStorage, 24h memory
-  CLS:       zero — containers pre-sized in DOM
-  RTL:       automatically handled by flex row-reverse
+  Tablet        468×60          Inline below hero
+  (768-1139px)  300×250         Inline between filters+grid
+
+  Desktop       728×90          Inline below hero
+  (≥1140px)     160×600         Sticky right sidebar column
+  ══════════════════════════════════════════════════════
+  All: 3s delay after load → zero LCP impact
+       24h dismiss memory in localStorage
+       Fade-in animation
+       onerror → clean hide
 -->
 <script>
-(function() {
-  var DISMISSED_KEY = 'pp_banner_v2_dismissed';
-  var DELAY = 3000;
-  var adInjected = false;
+(function(){
+  var DK='pp_ads_v3';
+  var DELAY=3000;
+  var injected={};
 
-  function getViewport() {
-    return window.innerWidth || document.documentElement.clientWidth;
-  }
+  function vw(){return window.innerWidth||document.documentElement.clientWidth;}
 
-  function injectAdScript(container) {
-    if (adInjected) return;
-    adInjected = true;
-
-    var cfg = document.createElement('script');
-    cfg.text = "atOptions={'key':'b7c5eaa3a3a9baa9e897532025621887','format':'iframe','height':300,'width':160,'params':{}};";
-    container.appendChild(cfg);
-
-    var src = document.createElement('script');
-    src.src = 'https://paviliongiddy.com/b7c5eaa3a3a9baa9e897532025621887/invoke.js';
-    src.async = true;
-    src.onerror = function() {
-      // Hide whichever container is visible
-      var dc = document.getElementById('adDesktopCol');
-      var tc = document.getElementById('adTabletInline');
-      if (dc) dc.style.display = 'none';
-      if (tc) tc.style.display = 'none';
+  /* Helper: inject ad into a slot element */
+  function inject(slotId, key, height, width, src){
+    if(injected[slotId])return;
+    injected[slotId]=true;
+    var slot=document.getElementById(slotId);
+    if(!slot)return;
+    var cfg=document.createElement('script');
+    cfg.text="atOptions={'key':'"+key+"','format':'iframe','height':"+height+",'width':"+width+",'params':{}};";
+    slot.appendChild(cfg);
+    var s=document.createElement('script');
+    s.src='https://paviliongiddy.com/'+src+'/invoke.js';
+    s.async=true;
+    s.onerror=function(){
+      var p=slot.closest('.ad-mobile-bottom,.ad-tablet-hero,.ad-tablet-rect,.ad-desktop-leader,.ad-desktop-col');
+      if(p)p.style.display='none';
     };
-    container.appendChild(src);
+    slot.appendChild(s);
   }
 
-  function setupDismiss(closeBtn, colEl) {
-    closeBtn.addEventListener('click', function() {
-      colEl.style.opacity = '0';
-      colEl.style.pointerEvents = 'none';
-      setTimeout(function() { colEl.style.display = 'none'; }, 400);
-      localStorage.setItem(DISMISSED_KEY, Date.now().toString());
+  /* Helper: fade in a wrapper element */
+  function fadeIn(el){
+    if(!el)return;
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      el.classList.remove('ad-hidden');
+      el.classList.add('ad-visible');
+    });});
+  }
+
+  /* Helper: setup dismiss button */
+  function setupDismiss(btnId, containerEl, storageKey){
+    var btn=document.getElementById(btnId);
+    if(!btn||!containerEl)return;
+    btn.addEventListener('click',function(){
+      containerEl.style.opacity='0';
+      containerEl.style.pointerEvents='none';
+      setTimeout(function(){containerEl.style.display='none';},400);
+      var d=JSON.parse(localStorage.getItem(DK)||'{}');
+      d[storageKey]=Date.now();
+      localStorage.setItem(DK,JSON.stringify(d));
     });
   }
 
-  function initBanner() {
-    // Check 24h dismissal
-    var dismissedAt = parseInt(localStorage.getItem(DISMISSED_KEY) || '0', 10);
-    if (dismissedAt && (Date.now() - dismissedAt) < 86400000) return;
+  /* Helper: check if ad was dismissed <24h ago */
+  function wasDismissed(storageKey){
+    try{
+      var d=JSON.parse(localStorage.getItem(DK)||'{}');
+      return d[storageKey]&&(Date.now()-d[storageKey])<86400000;
+    }catch(e){return false;}
+  }
 
-    var vw = getViewport();
+  function initAds(){
+    var w=vw();
 
-    if (vw >= 1140) {
-      // ── DESKTOP: sticky right column ──
-      var col = document.getElementById('adDesktopCol');
-      var slot = document.getElementById('adDesktopSlot');
-      var closeBtn = document.getElementById('adColClose');
-      if (!col || !slot || !closeBtn) return;
-
-      injectAdScript(slot);
-      setupDismiss(closeBtn, col);
-
-      // Fade in
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          col.classList.add('ad-visible');
-        });
-      });
-
-    } else if (vw >= 768) {
-      // ── TABLET: inline between filters and grid ──
-      var tab = document.getElementById('adTabletInline');
-      var tabSlot = document.getElementById('adTabletSlot');
-      if (!tab || !tabSlot) return;
-
-      injectAdScript(tabSlot);
-
-      requestAnimationFrame(function() {
-        requestAnimationFrame(function() {
-          tab.classList.add('ad-visible');
-        });
-      });
-
+    /* ── MOBILE (<768px): 320×50 fixed bottom ── */
+    if(w<768){
+      if(!wasDismissed('mob')){
+        var mob=document.getElementById('adMobileBottom');
+        if(mob){
+          inject('adMobileSlot','e38b52a60ad311de99bed655307c86a8',50,320,'e38b52a60ad311de99bed655307c86a8');
+          fadeIn(mob);
+          setupDismiss('adMobileClose',mob,'mob');
+        }
+      }
     }
-    // Mobile (<768px): no banner — social bar covers monetization
+
+    /* ── TABLET (768-1139px): 468×60 + 300×250 ── */
+    else if(w<1140){
+      /* Hero banner 468×60 */
+      if(!wasDismissed('tab_hero')){
+        var thWrap=document.getElementById('adTabletHeroWrap');
+        inject('adTabletHeroSlot','75f7d51ae703b7d2ebc57e040d7ad6c5',60,468,'75f7d51ae703b7d2ebc57e040d7ad6c5');
+        fadeIn(thWrap);
+        setupDismiss('adTabletHeroClose',thWrap,'tab_hero');
+      }
+      /* Rectangle 300×250 between filters & grid */
+      if(!wasDismissed('tab_rect')){
+        var trWrap=document.getElementById('adTabletRectWrap');
+        inject('adTabletRectSlot','93a8bc2338daf962408f7f5ac06dc99e',250,300,'93a8bc2338daf962408f7f5ac06dc99e');
+        fadeIn(trWrap);
+        setupDismiss('adTabletRectClose',trWrap,'tab_rect');
+      }
+    }
+
+    /* ── DESKTOP (≥1140px): 728×90 + 160×600 ── */
+    else{
+      /* Leaderboard 728×90 below hero */
+      if(!wasDismissed('dsk_lead')){
+        var dlWrap=document.getElementById('adDesktopLeaderWrap');
+        inject('adDesktopLeaderSlot','0b683192646e1d9ea7327ce3080d991c',90,728,'0b683192646e1d9ea7327ce3080d991c');
+        fadeIn(dlWrap);
+        setupDismiss('adDesktopLeaderClose',dlWrap,'dsk_lead');
+      }
+      /* Skyscraper 160×600 sticky sidebar */
+      if(!wasDismissed('dsk_sky')){
+        var dcWrap=document.getElementById('adDesktopColWrap');
+        inject('adDesktopColSlot','2fd4066fa8904c930baa995dca2d041a',600,160,'2fd4066fa8904c930baa995dca2d041a');
+        fadeIn(dcWrap);
+        setupDismiss('adDesktopColClose',dcWrap,'dsk_sky');
+      }
+    }
   }
 
-  // Delay after window load so LCP is not blocked
-  if (document.readyState === 'complete') {
-    setTimeout(initBanner, DELAY);
-  } else {
-    window.addEventListener('load', function() {
-      setTimeout(initBanner, DELAY);
-    });
+  /* Fire after load + delay → no LCP penalty */
+  if(document.readyState==='complete'){
+    setTimeout(initAds,DELAY);
+  }else{
+    window.addEventListener('load',function(){setTimeout(initAds,DELAY);});
   }
 
-  // Handle resize: if user rotates tablet to desktop, re-evaluate
-  // (only fires once, after ad injection is not repeated)
-  var resizeTimer;
-  window.addEventListener('resize', function() {
-    if (adInjected) return; // already injected, don't re-run
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(function() {
-      var dismissedAt = parseInt(localStorage.getItem(DISMISSED_KEY) || '0', 10);
-      if (dismissedAt && (Date.now() - dismissedAt) < 86400000) return;
-      initBanner();
-    }, 400);
+  /* One-time resize handler: catches tablet→desktop rotation BEFORE first inject */
+  var resizeOnce=false;
+  window.addEventListener('resize',function(){
+    if(resizeOnce||Object.keys(injected).length)return;
+    resizeOnce=true;
+    setTimeout(initAds,400);
   });
 })();
 </script>
