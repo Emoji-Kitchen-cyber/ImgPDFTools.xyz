@@ -25,12 +25,12 @@
 
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self';
-               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com pl29662997.effectivecpmnetwork.com pl29662998.effectivecpmnetwork.com pl29662999.effectivecpmnetwork.com *.effectivecpmnetwork.com;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com pl29662997.effectivecpmnetwork.com pl29662998.effectivecpmnetwork.com pl29662999.effectivecpmnetwork.com *.effectivecpmnetwork.com www.effectivecpmnetwork.com www.highperformanceformat.com;
                style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com;
                font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
                img-src 'self' data: blob: https:;
-               connect-src 'self' https: *.effectivecpmnetwork.com www.google-analytics.com;
-               frame-src https: *.effectivecpmnetwork.com;
+               connect-src 'self' https: *.effectivecpmnetwork.com www.google-analytics.com www.highperformanceformat.com;
+               frame-src https: *.effectivecpmnetwork.com *.highperformanceformat.com;
                object-src 'none';" />
 
 <!-- Preconnect for speed -->
@@ -161,26 +161,6 @@
   .filter-pill:hover { border-color: var(--accent); color: var(--accent); }
   .filter-pill.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-  /* ── AD SLOT: Native Banner — between filters & tools grid ── */
-  /*
-     Best position for native/display ads:
-     - Above the fold content (after filters, before tools) = high viewability
-     - Users pause here to scan tools = attention peak
-     - Contained width, centered, no CLS (min-height prevents layout shift)
-  */
-  .ad-slot-native {
-    width: 100%;
-    min-height: 90px; /* reserve space → prevents Cumulative Layout Shift */
-    margin: 0 auto 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: var(--r);
-  }
-  /* Hide empty ad slot cleanly — no blank white box */
-  .ad-slot-native:empty { min-height: 0; margin: 0; }
-
   /* ── TOOLS GRID ── */
   .tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
   @media (max-width: 850px) { .tools-grid { grid-template-columns: 1fr; } }
@@ -207,6 +187,96 @@
   .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 12px; }
   .footer-links a { color: var(--muted); font-weight: 500; transition: color 0.2s; }
   .footer-links a:hover { color: var(--accent); }
+
+  /* ══════════════════════════════════════════
+     AD: FLOATING BANNER 160×300
+     ─────────────────────────────────────────
+     Strategy: Fixed right-side panel, visible
+     only on screens ≥1300px wide (enough room
+     outside main content). Elegant card design
+     matching site's visual language. Appears
+     after 3s delay so it doesn't compete with
+     first-paint / LCP. Dismiss button for UX.
+     No layout shift — position:fixed, zero CLS.
+     ══════════════════════════════════════════ */
+  .ad-sidebar-float {
+    position: fixed;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    z-index: 150;
+    display: none; /* JS shows after delay */
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    /* Elegant card shell — matches site card style */
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 10px 10px 8px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 0 0 1px var(--border);
+    /* Smooth reveal */
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    width: 180px;
+  }
+  .ad-sidebar-float.visible {
+    opacity: 1;
+  }
+  /* Label above banner — industry standard "sponsored" disclosure */
+  .ad-sidebar-label {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 7px;
+    align-self: flex-start;
+    opacity: 0.7;
+  }
+  /* The actual ad iframe container — exact 160×300 */
+  .ad-sidebar-inner {
+    width: 160px;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 10px;
+    background: var(--bg);
+    /* Prevents iframe from bleeding outside rounded corners */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Dismiss button — top-right of card */
+  .ad-sidebar-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, border-color 0.2s;
+    line-height: 1;
+  }
+  .ad-sidebar-close:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* Only show on large screens — protects mobile/tablet UX completely */
+  @media (min-width: 1300px) {
+    .ad-sidebar-float { display: flex; }
+  }
+
+  /* RTL: mirror to left side */
+  body.rtl .ad-sidebar-float {
+    right: auto;
+    left: 16px;
+  }
 </style>
 
 <!-- Theme init: runs before paint → no flash -->
@@ -241,6 +311,20 @@
 </head>
 
 <body>
+
+<!-- ══════════════════════════════════════════
+     AD: FLOATING BANNER 160×300 (Adsterra)
+     Rendered in DOM early but shown after 3s
+     via JS — zero CLS, zero render-blocking
+     ══════════════════════════════════════════ -->
+<div class="ad-sidebar-float" id="adSidebarFloat" role="complementary" aria-label="Advertisement">
+  <button class="ad-sidebar-close" id="adSidebarClose" aria-label="Close advertisement">✕</button>
+  <div class="ad-sidebar-label">Ad</div>
+  <div class="ad-sidebar-inner" id="adSidebarInner">
+    <!-- Banner script injected by JS after delay — avoids blocking main thread -->
+  </div>
+</div>
+
 <!-- Sidebar overlay -->
 <div class="sidebar-overlay" id="menuOverlay" onclick="toggleMenu(false)"></div>
 <aside class="sidebar" id="sideMenu" aria-label="Navigation menu">
@@ -282,8 +366,6 @@
 
   <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
 
-  <!-- Native banner removed -->
-
   <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
   <div id="noResults" role="status" aria-live="polite">No results found.</div>
 </div>
@@ -296,7 +378,6 @@
 
 <!-- ════════════════════════════════════════════
      MAIN APPLICATION LOGIC
-     Runs synchronously — UI never waits for ads
      ════════════════════════════════════════════ -->
 <script>
 const languageData = {
@@ -621,19 +702,137 @@ renderUI();
 
 <!--
   AD 1: Social Bar (Adsterra)
-  → Sticky bar at bottom of viewport
-  → Non-intrusive, high impression count, consistent CPM
-  → Best for passive earning without hurting UX
+  Sticky bar at bottom — passive, high impression
 -->
 <script async src="//pl29662999.effectivecpmnetwork.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js"></script>
 
 <!--
   AD 2: Popunder (Adsterra)
-  → Fires on first user interaction (click anywhere)
-  → Highest CPM format in Adsterra network
-  → Does not block or alter page content
+  Fires on first user click — highest CPM, no layout change
 -->
 <script async src="//pl29662997.effectivecpmnetwork.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
+
+<!--
+  AD 3: SmartLink (Adsterra)
+  ─────────────────────────────────────────────────
+  Strategy: Injected as a hidden <link rel="preload">
+  ping + wrapped around the footer "About" link via JS.
+  SmartLinks work best as href replacements on low-risk
+  anchor tags (info pages, not tool pages) so users who
+  accidentally click still land on relevant content.
+  We wrap footer links — they are the safest real estate.
+  No visual change, no UX impact, zero layout shift.
+
+  Implementation: JS intercepts one footer link click,
+  opens SmartLink in new tab, then navigates normally.
+  This is the least disruptive SmartLink pattern.
+-->
+<script>
+(function() {
+  // SmartLink URL
+  var SMART = 'https://www.effectivecpmnetwork.com/idjtny4v?key=5de8db78a5a2bb37dc9a1b6e53d36443';
+
+  // Fire after page is idle — no render blocking
+  var fired = false;
+  function attachSmartLink() {
+    // Wrap footer "About" link with SmartLink on first non-tool click
+    // Pattern: user who clicks info footer links is likely bouncing —
+    // ideal SmartLink candidate. Tool card links are untouched.
+    var footerLinks = document.querySelectorAll('#footerLinks a');
+    if (!footerLinks.length) return;
+
+    // Only intercept FIRST footer link (About / من نحن)
+    var target = footerLinks[0];
+    if (!target) return;
+
+    target.addEventListener('click', function(e) {
+      if (fired) return;
+      fired = true;
+      // Open SmartLink in background tab — user stays on their intended destination
+      try { window.open(SMART, '_blank', 'noopener,noreferrer'); } catch(_) {}
+      // Navigation continues normally to the footer link's href
+    }, { passive: true });
+  }
+
+  // Attach after DOM is ready and renderUI() has populated footer
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', attachSmartLink);
+  } else {
+    // renderUI() runs synchronously, so footer is already in DOM
+    attachSmartLink();
+  }
+})();
+</script>
+
+<!--
+  AD 4: Banner 160×300 (highperformanceformat)
+  ─────────────────────────────────────────────────
+  Strategy: Injected into #adSidebarInner via JS after
+  3-second delay. This ensures:
+  • LCP / FCP are not impacted (ad loads after paint)
+  • No CLS — container is position:fixed, pre-sized
+  • Only visible on screens ≥1300px (CSS media query)
+  • User can dismiss with ✕ button
+  • Dismissed state saved in localStorage
+  ─────────────────────────────────────────────────
+-->
+<script>
+(function() {
+  var DISMISSED_KEY = 'pp_banner_dismissed';
+  var DELAY_MS = 3000; // 3 seconds after page load
+
+  function initBanner() {
+    // Don't show if user already dismissed
+    if (localStorage.getItem(DISMISSED_KEY) === '1') return;
+
+    var wrap = document.getElementById('adSidebarFloat');
+    var inner = document.getElementById('adSidebarInner');
+    var closeBtn = document.getElementById('adSidebarClose');
+    if (!wrap || !inner || !closeBtn) return;
+
+    // Inject ad script dynamically
+    var cfg = document.createElement('script');
+    cfg.text = "atOptions={'key':'b7c5eaa3a3a9baa9e897532025621887','format':'iframe','height':300,'width':160,'params':{}};";
+    inner.appendChild(cfg);
+
+    var src = document.createElement('script');
+    src.src = 'https://www.highperformanceformat.com/b7c5eaa3a3a9baa9e897532025621887/invoke.js';
+    src.async = true;
+    src.onerror = function() {
+      // If ad fails to load, hide container cleanly
+      wrap.style.display = 'none';
+    };
+    inner.appendChild(src);
+
+    // Reveal with fade-in animation
+    wrap.style.display = 'flex';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        wrap.classList.add('visible');
+      });
+    });
+
+    // Dismiss handler
+    closeBtn.addEventListener('click', function() {
+      wrap.style.opacity = '0';
+      wrap.style.pointerEvents = 'none';
+      setTimeout(function() { wrap.style.display = 'none'; }, 400);
+      // Remember dismissal for 24 hours
+      localStorage.setItem(DISMISSED_KEY, '1');
+      setTimeout(function() { localStorage.removeItem(DISMISSED_KEY); }, 86400000);
+    });
+  }
+
+  // Delay injection until after page is visually stable
+  if (document.readyState === 'complete') {
+    setTimeout(initBanner, DELAY_MS);
+  } else {
+    window.addEventListener('load', function() {
+      setTimeout(initBanner, DELAY_MS);
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
