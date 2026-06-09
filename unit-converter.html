@@ -333,13 +333,13 @@
       <!-- History -->
       <div class="info-card">
         <h3><i class="fa-solid fa-clock-rotate-left"></i> Recent Conversions</h3>
-        <div id="history"><p class="empty">No conversions yet</p></div>
+        <div id="history"></div>
       </div>
 
       <!-- Favorites -->
       <div class="info-card">
         <h3><i class="fa-solid fa-star"></i> Saved Favorites</h3>
-        <div id="favorites"><p class="empty">No favorites yet</p></div>
+        <div id="favorites"></div>
       </div>
     </div>
   </div>
@@ -354,6 +354,18 @@
 
   <script>
     (function() {
+      // ─── SMALL DOM HELPERS (no innerHTML for dynamic data) ───
+      function el(tag, opts = {}) {
+        const node = document.createElement(tag);
+        if (opts.class) node.className = opts.class;
+        if (opts.text != null) node.textContent = opts.text;   // safe: never parsed as HTML
+        if (opts.title) node.title = opts.title;
+        if (opts.style) node.setAttribute('style', opts.style);
+        return node;
+      }
+      function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+      function emptyMsg(node, msg) { clear(node); node.appendChild(el('p', { class: 'empty', text: msg })); }
+
       // ─── THEME ───────────────────────────────────────────────
       function syncTheme() {
         const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
@@ -367,18 +379,18 @@
       });
       syncTheme();
 
-      // ─── TOASTS ──────────────────────────────────────────────
+      // ─── TOASTS (built with elements + textContent) ──────────
       function toast(msg, type = 'info') {
         const wrap = document.getElementById('toastWrap');
-        const el = document.createElement('div');
-        el.className = 'toast ' + type;
-        const icon = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info';
-        el.innerHTML = `<i class="fa-solid ${icon}"></i>${msg}`;
-        wrap.appendChild(el);
+        const node = el('div', { class: 'toast ' + type });
+        const iconName = type === 'success' ? 'fa-circle-check' : type === 'error' ? 'fa-circle-exclamation' : 'fa-circle-info';
+        node.appendChild(el('i', { class: 'fa-solid ' + iconName }));
+        node.appendChild(document.createTextNode(msg));   // safe text node
+        wrap.appendChild(node);
         setTimeout(() => {
-          el.style.transition = 'opacity .3s, transform .3s';
-          el.style.opacity = '0'; el.style.transform = 'translateY(10px)';
-          setTimeout(() => el.remove(), 300);
+          node.style.transition = 'opacity .3s, transform .3s';
+          node.style.opacity = '0'; node.style.transform = 'translateY(10px)';
+          setTimeout(() => node.remove(), 300);
         }, 2200);
       }
 
@@ -388,16 +400,16 @@
         length:   { Meters:1, Kilometers:0.001, Centimeters:100, Millimeters:1000, Micrometers:1e6, Nanometers:1e9, Miles:0.000621371, Yards:1.09361, Feet:3.28084, Inches:39.3701, 'Nautical miles':0.000539957 },
         area:     { 'Square meters':1, 'Square kilometers':1e-6, 'Square centimeters':10000, 'Square miles':3.861e-7, 'Square yards':1.19599, 'Square feet':10.7639, 'Square inches':1550, Acres:0.000247105, Hectares:0.0001 },
         volume:   { Liters:1, Milliliters:1000, 'Cubic meters':0.001, 'Cubic feet':0.0353147, 'Cubic inches':61.0237, 'Gallons (US)':0.264172, 'Gallons (UK)':0.219969, Quarts:1.05669, Pints:2.11338, Cups:4.16667, 'Fluid ounces':33.814, Tablespoons:67.628, Teaspoons:202.884 },
-        weight:   { Kilograms:1, Grams:1000, Milligrams:1e6, Micrograms:1e9, 'Metric tons':0.001, Pounds:2.20462, Ounces:35.274, Stones:0.157473, 'Carats':5000 },
+        weight:   { Kilograms:1, Grams:1000, Milligrams:1e6, Micrograms:1e9, 'Metric tons':0.001, Pounds:2.20462, Ounces:35.274, Stones:0.157473, Carats:5000 },
         temp:     { Celsius:'C', Fahrenheit:'F', Kelvin:'K' },
         speed:    { 'Meters/sec':1, 'Kilometers/hour':3.6, 'Miles/hour':2.23694, 'Feet/sec':3.28084, Knots:1.94384, Mach:0.00293858 },
         time:     { Seconds:1, Milliseconds:1000, Minutes:1/60, Hours:1/3600, Days:1/86400, Weeks:1/604800, Months:1/2629800, Years:1/31557600 },
         digital:  { Bytes:1, Kilobytes:1/1024, Megabytes:1/1048576, Gigabytes:1/1073741824, Terabytes:1/1099511627776, Petabytes:1/1.1258999e15, Bits:8, Kilobits:8/1024, Megabits:8/1048576, Gigabits:8/1073741824 },
         pressure: { Pascals:1, Kilopascals:0.001, Bar:1e-5, PSI:0.000145038, Atmospheres:9.8692e-6, Torr:0.00750062, mmHg:0.00750062 },
-        energy:   { Joules:1, Kilojoules:0.001, Calories:0.239006, Kilocalories:0.000239006, 'Watt-hours':0.000277778, 'Kilowatt-hours':2.77778e-7, 'Electronvolts':6.242e18, 'BTU':0.000947817, 'Foot-pounds':0.737562 },
+        energy:   { Joules:1, Kilojoules:0.001, Calories:0.239006, Kilocalories:0.000239006, 'Watt-hours':0.000277778, 'Kilowatt-hours':2.77778e-7, Electronvolts:6.242e18, BTU:0.000947817, 'Foot-pounds':0.737562 },
         power:    { Watts:1, Kilowatts:0.001, Megawatts:1e-6, Horsepower:0.00134102, 'BTU/hour':3.41214, 'Calories/sec':0.239006 },
-        angle:    { Degrees:1, Radians:Math.PI/180, Gradians:1.11111, Arcminutes:60, Arcseconds:3600, 'Turns':1/360 },
-        frequency:{ Hertz:1, Kilohertz:0.001, Megahertz:1e-6, Gigahertz:1e-9, 'RPM':60 },
+        angle:    { Degrees:1, Radians:Math.PI/180, Gradians:1.11111, Arcminutes:60, Arcseconds:3600, Turns:1/360 },
+        frequency:{ Hertz:1, Kilohertz:0.001, Megahertz:1e-6, Gigahertz:1e-9, RPM:60 },
         fuel:     { 'km/L':1, 'L/100km':'L100', 'MPG (US)':2.35215, 'MPG (UK)':2.82481, 'Miles/L':0.621371 }
       };
 
@@ -433,10 +445,11 @@
       }
 
       function populateUnits() {
-        inputUnit.innerHTML = ''; outputUnit.innerHTML = '';
+        clear(inputUnit); clear(outputUnit);
         Object.keys(unitsDB[currentCat]).forEach(u => {
-          const opt = `<option value="${u}">${u}</option>`;
-          inputUnit.innerHTML += opt; outputUnit.innerHTML += opt;
+          const o1 = el('option', { text: u }); o1.value = u;
+          const o2 = el('option', { text: u }); o2.value = u;
+          inputUnit.appendChild(o1); outputUnit.appendChild(o2);
         });
         if (outputUnit.options.length > 1) outputUnit.selectedIndex = 1;
         convert();
@@ -492,16 +505,18 @@
 
       // ─── LIVE ALL-UNITS TABLE ────────────────────────────────
       function renderTable(v) {
-        convTable.innerHTML = '';
-        if (isNaN(v)) { convTable.innerHTML = '<p class="empty">Enter a value to see all conversions</p>'; return; }
+        clear(convTable);
+        if (isNaN(v)) { emptyMsg(convTable, 'Enter a value to see all conversions'); return; }
         const from = inputUnit.value;
         Object.keys(unitsDB[currentCat]).forEach(unit => {
           const val = genericConvert(v, from, unit);
-          const item = document.createElement('div');
-          item.className = 'table-item' + (unit === outputUnit.value ? ' is-active' : '');
-          item.innerHTML = `<span class="ti-unit">${unit}</span><span class="ti-val">${fmt(val)}</span>`;
+          const item = el('div', { class: 'table-item' + (unit === outputUnit.value ? ' is-active' : '') });
+          item.appendChild(el('span', { class: 'ti-unit', text: unit }));
+          item.appendChild(el('span', { class: 'ti-val', text: fmt(val) }));
           item.addEventListener('click', () => {
-            navigator.clipboard.writeText(fmt(val)).then(() => toast(`Copied ${unit}`, 'success')).catch(() => toast('Copy failed', 'error'));
+            navigator.clipboard.writeText(fmt(val))
+              .then(() => toast('Copied ' + unit, 'success'))
+              .catch(() => toast('Copy failed', 'error'));
           });
           convTable.appendChild(item);
         });
@@ -521,14 +536,20 @@
       function renderHistory() {
         const div = document.getElementById('history');
         const h = JSON.parse(localStorage.getItem('unitHistory') || '[]');
-        if (!h.length) { div.innerHTML = '<p class="empty">No conversions yet</p>'; return; }
-        div.innerHTML = h.slice(0, 6).map((x, i) => `
-          <div class="list-item">
-            <span>${x.v} ${x.f} → ${x.r} ${x.t}</span>
-            <div class="li-actions"><i class="fa-solid fa-arrow-up-right-from-square" title="Load" onclick="loadHist(${i})"></i></div>
-          </div>`).join('');
+        if (!h.length) { emptyMsg(div, 'No conversions yet'); return; }
+        clear(div);
+        h.slice(0, 6).forEach((x, i) => {
+          const row = el('div', { class: 'list-item' });
+          row.appendChild(el('span', { text: `${x.v} ${x.f} → ${x.r} ${x.t}` }));
+          const actions = el('div', { class: 'li-actions' });
+          const load = el('i', { class: 'fa-solid fa-arrow-up-right-from-square', title: 'Load' });
+          load.addEventListener('click', () => loadHist(i));
+          actions.appendChild(load);
+          row.appendChild(actions);
+          div.appendChild(row);
+        });
       }
-      window.loadHist = (i) => {
+      function loadHist(i) {
         const h = JSON.parse(localStorage.getItem('unitHistory') || '[]');
         if (i < h.length) {
           const x = h[i];
@@ -537,7 +558,7 @@
           convert(false);
           toast('Loaded from history', 'success');
         }
-      };
+      }
 
       // ─── FAVORITES ───────────────────────────────────────────
       function addFav() {
@@ -555,17 +576,24 @@
       function renderFavs() {
         const div = document.getElementById('favorites');
         const f = JSON.parse(localStorage.getItem('unitFavs') || '[]');
-        if (!f.length) { div.innerHTML = '<p class="empty">No favorites yet</p>'; return; }
-        div.innerHTML = f.map((x, i) => `
-          <div class="list-item">
-            <span>${x.from} → ${x.to} <span style="color:var(--muted);">(${x.cat})</span></span>
-            <div class="li-actions">
-              <i class="fa-solid fa-arrow-up-right-from-square" title="Load" onclick="loadFav(${i})"></i>
-              <i class="fa-solid fa-xmark" title="Remove" onclick="delFav(${i})"></i>
-            </div>
-          </div>`).join('');
+        if (!f.length) { emptyMsg(div, 'No favorites yet'); return; }
+        clear(div);
+        f.forEach((x, i) => {
+          const row = el('div', { class: 'list-item' });
+          const span = el('span', { text: `${x.from} → ${x.to} ` });
+          span.appendChild(el('span', { text: `(${x.cat})`, style: 'color:var(--muted);' }));
+          row.appendChild(span);
+          const actions = el('div', { class: 'li-actions' });
+          const load = el('i', { class: 'fa-solid fa-arrow-up-right-from-square', title: 'Load' });
+          load.addEventListener('click', () => loadFav(i));
+          const del = el('i', { class: 'fa-solid fa-xmark', title: 'Remove' });
+          del.addEventListener('click', () => delFav(i));
+          actions.appendChild(load); actions.appendChild(del);
+          row.appendChild(actions);
+          div.appendChild(row);
+        });
       }
-      window.loadFav = (i) => {
+      function loadFav(i) {
         const f = JSON.parse(localStorage.getItem('unitFavs') || '[]');
         if (i < f.length) {
           const x = f[i];
@@ -574,19 +602,18 @@
           convert(false);
           toast('Loaded favorite', 'success');
         }
-      };
-      window.delFav = (i) => {
+      }
+      function delFav(i) {
         const f = JSON.parse(localStorage.getItem('unitFavs') || '[]');
         f.splice(i, 1);
         localStorage.setItem('unitFavs', JSON.stringify(f));
         renderFavs();
         toast('Favorite removed', 'info');
-      };
+      }
 
       // ─── EVENTS ──────────────────────────────────────────────
       document.getElementById('swapBtn').addEventListener('click', () => {
         const t = inputUnit.value; inputUnit.value = outputUnit.value; outputUnit.value = t;
-        // Also swap the numeric value so the conversion feels reversible
         const out = parseFloat(outputVal.value);
         if (!isNaN(out)) inputVal.value = out;
         convert(false);
