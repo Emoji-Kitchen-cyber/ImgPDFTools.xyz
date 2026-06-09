@@ -200,7 +200,7 @@
     <div class="message" id="messageBox"></div>
 
     <div class="note">
-      ⚡ Entirely client-side — your file never leaves your device.NLBR
+      ⚡ Entirely client-side — your file never leaves your device.<br>
       <strong>Note:</strong> pages are rasterized (text becomes an image), so this is best for scanned or image-heavy PDFs rather than text you need to keep selectable.
     </div>
   </div>
@@ -264,6 +264,7 @@
     function loadFile(file){
       if(!file || file.type !== 'application/pdf'){ toast('Please upload a PDF'); return; }
       originalFileName = file.name.replace(/\.pdf$/i, '');
+      // SECURE: file name shown via textContent (never parsed as HTML).
       $('uploadText').textContent = `📄 ${file.name}`;
       const reader = new FileReader();
       reader.onload = async (e) => {
@@ -280,7 +281,9 @@
     }
 
     async function renderThumbs(){
-      const wrap = $('thumbs'); wrap.innerHTML = '';
+      const wrap = $('thumbs');
+      // SECURE: clear via textContent; thumbnails are appended as real DOM nodes.
+      wrap.textContent = '';
       try {
         const doc = await pdfjsLib.getDocument({ data: pdfBytes.slice() }).promise;
         const n = Math.min(doc.numPages, 6);
@@ -373,4 +376,3 @@
   </script>
 </body>
 </html>
- 
