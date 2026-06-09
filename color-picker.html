@@ -357,7 +357,7 @@
 
       <div class="block">
         <h3><i class="fa-solid fa-image"></i> Image Color Extractor</h3>
-        <button class="btn" onclick="document.getElementById('extractImage').click()">
+        <button class="btn" id="extractTriggerBtn">
           <i class="fa-solid fa-upload"></i> Upload image
         </button>
         <input type="file" id="extractImage" accept="image/*" hidden />
@@ -445,6 +445,15 @@
       navigator.clipboard.writeText(text).then(()=>toast('Copied: ' + text)).catch(()=>toast('Copy failed'));
     }
 
+    /* ---------- SECURE: hex validation helper ---------- */
+    // Only accept canonical #rrggbb (or #rgb) strings before they touch the DOM/storage.
+    function isHex(c){ return typeof c === 'string' && /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(c.trim()); }
+    function normHex(c){
+      let h = c.trim().toLowerCase().replace('#','');
+      if(h.length === 3) h = h.split('').map(x=>x+x).join('');
+      return '#' + h;
+    }
+
     /* ---------- ELEMENTS ---------- */
     const colorInput = document.getElementById('colorInput');
     const preview = document.getElementById('preview');
@@ -455,7 +464,13 @@
     const cmykVal = document.getElementById('cmykVal');
     const cssVar = document.getElementById('cssVar');
 
-    let history = JSON.parse(localStorage.getItem('colorHistory') || '[]');
+    /* SECURE: parse stored history defensively — tolerate corrupt/tampered JSON,
+       force to an array, and keep only valid hex strings. */
+    let history = [];
+    try {
+      const raw = JSON.parse(localStorage.getItem('colorHistory') || '[]');
+      if(Array.isArray(raw)) history = raw.filter(isHex).map(normHex);
+    } catch(e){ history = []; }
     if (history.length > 12) history = history.slice(-12);
 
     /* ---------- CONVERSIONS ---------- */
@@ -516,6 +531,31 @@
       return best;
     }
 
+    /* ---------- SECURE swatch builders (DOM nodes, no innerHTML) ---------- */
+    // Big swatch with hex label, click selects the color.
+    function makeSwatch(c, withTitle){
+      const div = document.createElement('div');
+      div.className = 'swatch';
+      div.style.background = c;            // hex value as style property
+      if(withTitle) div.title = c.toUpperCase();
+      const lbl = document.createElement('span');
+      lbl.className = 'hex-label';
+      lbl.textContent = c.toUpperCase();   // text only — never markup
+      div.appendChild(lbl);
+      div.addEventListener('click', () => setColor(c));
+      return div;
+    }
+    // Thin scale cell for tints/shades.
+    function makeScaleCell(c){
+      const div = document.createElement('div');
+      div.className = 'scale-cell';
+      div.style.background = c;
+      div.setAttribute('data-hex', c.toUpperCase());
+      div.addEventListener('click', () => setColor(c));
+      return div;
+    }
+    function clearNode(node){ while(node.firstChild) node.removeChild(node.firstChild); }
+
     /* ---------- MAIN UPDATE ---------- */
     function updateUI(hex, fromField){
       hex = hex.toLowerCase();
@@ -531,16 +571,13 @@
       cmykVal.value = `cmyk(${cmyk.c}%, ${cmyk.m}%, ${cmyk.y}%, ${cmyk.k}%)`;
       cssVar.value = `--color: ${hex};`;
       document.getElementById('colorName').textContent = nearestName(hex);
-      // contrast text color auto
-      preview.querySelector('.cp-name');
       generateHarmonies(hex);
       buildScales(hex);
       // sync contrast bg
       document.getElementById('bgContrastInput').value = hex;
       updateContrast();
     }
-    function setColor(hex){ colorInput.value = hex; updateUI(hex); }
-    window.selectColor = setColor;
+    function setColor(hex){ if(!isHex(hex)) return; hex = normHex(hex); colorInput.value = hex; updateUI(hex); }
 
     /* ---------- HARMONIES ---------- */
     function generateHarmonies(hex){
@@ -554,9 +591,9 @@
       else if(mode==='split') colors=[hex,mk(hsl.h+150,hsl.s,hsl.l),mk(hsl.h+210,hsl.s,hsl.l)];
       else if(mode==='square') colors=[hex,mk(hsl.h+90,hsl.s,hsl.l),mk(hsl.h+180,hsl.s,hsl.l),mk(hsl.h+270,hsl.s,hsl.l)];
       else colors=[mk(hsl.h,hsl.s,Math.max(0,hsl.l-25)),hex,mk(hsl.h,hsl.s,Math.min(100,hsl.l+20)),mk(hsl.h,hsl.s,Math.min(100,hsl.l+35))];
-      document.getElementById('harmonySwatches').innerHTML = colors.map(c=>
-        `<div class="swatch" style="background:${c}" onclick="selectColor('${c}')" title="Click to use">
-          <span class="hex-label">${c.toUpperCase()}</span></div>`).join('');
+      const box = document.getElementById('harmonySwatches');
+      clearNode(box);
+      colors.forEach(c => box.appendChild(makeSwatch(c, true)));
     }
     document.getElementById('harmonyMode').addEventListener('change',()=>generateHarmonies(colorInput.value));
 
@@ -568,9 +605,10 @@
         tints.push(hslToHex(hsl.h,hsl.s,Math.min(100, hsl.l + (100-hsl.l)*(i/11))));
         shades.push(hslToHex(hsl.h,hsl.s,Math.max(0, hsl.l - hsl.l*(i/11))));
       }
-      const cell=c=>`<div class="scale-cell" style="background:${c}" data-hex="${c.toUpperCase()}" onclick="selectColor('${c}')"></div>`;
-      document.getElementById('tintsBar').innerHTML = tints.map(cell).join('');
-      document.getElementById('shadesBar').innerHTML = shades.map(cell).join('');
+      const tBar=document.getElementById('tintsBar'), sBar=document.getElementById('shadesBar');
+      clearNode(tBar); clearNode(sBar);
+      tints.forEach(c => tBar.appendChild(makeScaleCell(c)));
+      shades.forEach(c => sBar.appendChild(makeScaleCell(c)));
     }
 
     /* ---------- CONTRAST ---------- */
@@ -584,9 +622,16 @@
       document.getElementById('contrastRatio').textContent = ratio.toFixed(2);
       const demo=document.getElementById('contrastDemo');
       demo.style.background=bg; demo.style.color=fg;
-      const g=(label,ok)=>`<span class="grade ${ok?'pass':'fail'}">${label} ${ok?'✓':'✕'}</span>`;
-      document.getElementById('contrastBadges').innerHTML =
-        g('AA normal',ratio>=4.5)+g('AAA normal',ratio>=7)+g('AA large',ratio>=3)+g('AAA large',ratio>=4.5);
+      const badges=document.getElementById('contrastBadges');
+      clearNode(badges);
+      const add=(label,ok)=>{
+        const s=document.createElement('span');
+        s.className='grade '+(ok?'pass':'fail');
+        s.textContent=label+' '+(ok?'✓':'✕');
+        badges.appendChild(s);
+      };
+      add('AA normal',ratio>=4.5); add('AAA normal',ratio>=7);
+      add('AA large',ratio>=3); add('AAA large',ratio>=4.5);
     }
     document.getElementById('fgColorInput').addEventListener('input',updateContrast);
     document.getElementById('bgContrastInput').addEventListener('input',updateContrast);
@@ -615,13 +660,26 @@
     /* ---------- HISTORY ---------- */
     function renderHistory(){
       const bar=document.getElementById('historyBar');
-      bar.innerHTML = history.length
-        ? history.map(c=>`<div class="hist-swatch" style="background:${c}" title="${c.toUpperCase()}" onclick="selectColor('${c}')"></div>`).join('')
-        : '<span class="empty-hint">No colors saved yet.</span>';
+      clearNode(bar);
+      if(history.length){
+        history.forEach(c => {
+          const sw=document.createElement('div');
+          sw.className='hist-swatch';
+          sw.style.background=c;          // validated hex as style property
+          sw.title=c.toUpperCase();       // text property — cannot inject markup
+          sw.addEventListener('click', () => setColor(c));
+          bar.appendChild(sw);
+        });
+      } else {
+        const hint=document.createElement('span');
+        hint.className='empty-hint';
+        hint.textContent='No colors saved yet.';
+        bar.appendChild(hint);
+      }
       localStorage.setItem('colorHistory', JSON.stringify(history));
     }
     document.getElementById('addToHistoryBtn').addEventListener('click',()=>{
-      const hex=colorInput.value; history=history.filter(c=>c!==hex); history.push(hex);
+      const hex=normHex(colorInput.value); history=history.filter(c=>c!==hex); history.push(hex);
       if(history.length>12) history.shift(); renderHistory(); toast('Added to history');
     });
     document.getElementById('clearHistoryBtn').addEventListener('click',()=>{ history=[]; renderHistory(); toast('History cleared'); });
@@ -659,6 +717,7 @@
     });
 
     /* ---------- IMAGE EXTRACTOR ---------- */
+    document.getElementById('extractTriggerBtn').addEventListener('click',()=>document.getElementById('extractImage').click());
     document.getElementById('extractImage').addEventListener('change',function(e){
       const file=e.target.files[0]; if(!file) return;
       const img=new Image();
@@ -673,9 +732,9 @@
           const hex=rgbToHex(r,g,b); map[hex]=(map[hex]||0)+1;
         }
         const sorted=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,8).map(e=>e[0]);
-        document.getElementById('extractedColors').innerHTML = sorted.map(c=>
-          `<div class="swatch" style="background:${c}" onclick="selectColor('${c}')" title="${c.toUpperCase()}">
-            <span class="hex-label">${c.toUpperCase()}</span></div>`).join('');
+        const box=document.getElementById('extractedColors');
+        clearNode(box);
+        sorted.forEach(c => box.appendChild(makeSwatch(c, true)));
         toast('Palette extracted');
       };
       img.src=URL.createObjectURL(file);
