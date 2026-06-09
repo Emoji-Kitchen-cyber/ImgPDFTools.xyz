@@ -7,56 +7,63 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-3P7QPQKV3K');
 </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Background Remover – PixelPress</title>
-  <meta name="description" content="Remove image background free online. AI-powered, bulk upload, instant download, no signup needed.">
+  <title>AI Background Remover — ImgPDFTools</title>
+  <meta name="description" content="Remove image backgrounds free online. AI-powered (RMBG-1.4), bulk upload, instant download, 100% private — no signup.">
+  <link rel="canonical" href="https://imgpdftools.xyz/remove-bg.html">
+  <meta name="theme-color" content="#6366f1">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap">
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
     :root {
-      --bg:#f5f5f7; --surface:rgba(255,255,255,0.85); --card:#ffffff;
-      --border:rgba(0,0,0,0.07); --text:#1d1d1f; --muted:#6e6e73;
-      --accent:#ec4899; --accent2:#a78bfa; --glow:rgba(236,72,153,0.12);
-      --green:#10b981; --red:#ef4444; --blue:#3b82f6; --r:16px;
-      --fhead:'Syne',sans-serif; --fbody:system-ui,-apple-system,sans-serif;
+      --bg:#f8f8fc; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(0,0,0,0.07); --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --green:#10b981; --red:#ef4444; --blue:#3b82f6; --r:18px;
+      --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif;
     }
     [data-theme="dark"] {
-      --bg:#09090e; --surface:rgba(21,21,30,0.8); --card:#15151e;
-      --border:rgba(255,255,255,0.08); --text:#e8e8f0; --muted:#86868b;
-      --glow:rgba(236,72,153,0.2);
+      --bg:#0c0c14; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(255,255,255,0.08); --text:#e4e4f0; --muted:#8888aa;
+      --glow:rgba(99,102,241,0.28);
     }
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;transition:background .3s,color .3s;}
+    body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;transition:background .3s,color .3s;-webkit-font-smoothing:antialiased;}
+    a{color:inherit;text-decoration:none;}
 
     /* NAV */
-    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+    nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:66px;background:var(--surface);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--border);}
     .nav-left{display:flex;align-items:center;gap:1rem;}
-    .back-btn{background:var(--card);border:1px solid var(--border);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;cursor:pointer;text-decoration:none;transition:.2s;}
-    .back-btn:hover{border-color:var(--accent);transform:scale(1.05);}
-    .nav-logo{font-family:var(--fhead);font-weight:800;font-size:1.25rem;text-transform:uppercase;text-decoration:none;color:inherit;}
-    .nav-logo span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .back-btn{background:var(--card);border:1px solid var(--border);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1rem;cursor:pointer;text-decoration:none;transition:transform .2s,border-color .2s,box-shadow .2s;}
+    .back-btn:hover{border-color:var(--accent);transform:scale(1.08);box-shadow:0 0 0 3px var(--glow);}
+    .nav-logo{display:flex;align-items:center;gap:8px;font-family:var(--fhead);font-weight:700;font-size:1.15rem;letter-spacing:-.3px;}
+    .logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 4px 14px var(--glow);}
+    .logo-text-img{color:var(--text);}
+    .logo-text-pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .logo-text-tools{color:var(--muted);font-weight:600;}
     .nav-right{display:flex;align-items:center;gap:10px;}
     .stat-pill{background:var(--card);border:1px solid var(--border);border-radius:999px;padding:5px 12px;font-size:0.75rem;font-weight:600;color:var(--muted);display:flex;align-items:center;gap:5px;}
     .stat-pill span{color:var(--accent);font-weight:700;}
 
-    /* MAIN */
     .main{flex:1;max-width:1200px;margin:0 auto;width:100%;padding:2rem 20px;}
 
     /* HERO */
     .hero{text-align:center;margin-bottom:2rem;}
-    .hero h1{font-family:var(--fhead);font-size:clamp(2rem,5vw,3rem);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;}
+    .hero h1{font-family:var(--fhead);font-size:clamp(2rem,5vw,3rem);font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;}
     .hero p{color:var(--muted);font-size:1rem;max-width:560px;margin:.6rem auto 0;}
     .hero-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:1rem;}
     .badge{padding:5px 14px;border-radius:999px;font-size:0.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px;}
     .badge-free{background:rgba(16,185,129,.12);color:var(--green);border:1px solid rgba(16,185,129,.2);}
     .badge-unlimited{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.2);}
-    .badge-private{background:rgba(167,139,250,.12);color:var(--accent2);border:1px solid rgba(167,139,250,.2);}
-    .badge-ai{background:rgba(236,72,153,.12);color:var(--accent);border:1px solid rgba(236,72,153,.2);}
+    .badge-private{background:rgba(139,92,246,.12);color:var(--accent2);border:1px solid rgba(139,92,246,.2);}
+    .badge-ai{background:rgba(99,102,241,.12);color:var(--accent);border:1px solid rgba(99,102,241,.2);}
 
     /* MODE SWITCH */
     .mode-switch{display:flex;justify-content:center;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;}
@@ -84,7 +91,7 @@
     .drop-zone:hover,.drop-zone.drag-over{border-color:var(--accent);background:var(--glow);}
     .drop-zone i{font-size:2.5rem;color:var(--accent);}
     .drop-zone input{display:none;}
-    .drop-zone h2{margin-top:.6rem;font-size:1.1rem;}
+    .drop-zone h2{margin-top:.6rem;font-size:1.1rem;font-family:var(--fhead);font-weight:700;}
 
     /* BG PRESETS */
     .bg-presets{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:1rem;}
@@ -96,10 +103,13 @@
     .preset-swatch.black{background:#000000;}
 
     /* SETTINGS BAR */
-    .settings-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:1rem;}
-    .setting-group{display:flex;align-items:center;gap:6px;font-size:.85rem;}
-    .setting-group label{color:var(--muted);white-space:nowrap;}
-    .setting-group select,.setting-group input[type=range],.setting-group input[type=color]{background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.8rem;}
+    .settings-bar{display:none;flex-wrap:wrap;gap:16px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:12px 16px;margin-bottom:1rem;}
+    .settings-bar.visible{display:flex;}
+    .setting-group{display:flex;align-items:center;gap:8px;font-size:.85rem;}
+    .setting-group label{color:var(--muted);white-space:nowrap;font-weight:600;}
+    .setting-group input[type=range]{accent-color:var(--accent);}
+    .setting-group span{min-width:26px;font-weight:700;color:var(--accent);}
+    .setting-hint{font-size:.74rem;color:var(--muted);}
 
     /* OUTPUT PRESETS */
     .output-presets{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1rem;align-items:center;}
@@ -109,9 +119,9 @@
     .preset-btn.active{background:var(--accent);color:white;border-color:var(--accent);}
 
     /* BUTTONS */
-    .btn{padding:10px 18px;border:none;border-radius:10px;font-weight:600;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px;font-size:.85rem;}
-    .btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:white;}
-    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px var(--glow);}
+    .btn{padding:10px 18px;border:none;border-radius:10px;font-weight:700;cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:6px;font-size:.85rem;font-family:var(--fbody);}
+    .btn-primary{background:var(--accent);color:white;box-shadow:0 4px 14px var(--glow);}
+    .btn-primary:hover{background:var(--accent2);}
     .btn-success{background:var(--green);color:white;}
     .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text);}
     .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
@@ -136,7 +146,7 @@
     .card-slider::before{content:'⟺';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:28px;height:28px;background:var(--accent);border-radius:50%;border:2px solid white;box-shadow:0 2px 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;font-size:10px;color:white;}
     .card-badge{position:absolute;top:8px;right:8px;padding:2px 10px;border-radius:999px;font-size:.7rem;font-weight:600;z-index:3;}
     .badge-queue{background:rgba(107,107,128,.15);color:var(--muted);}
-    .badge-processing{background:rgba(236,72,153,.15);color:var(--accent);animation:pulse 1s infinite;}
+    .badge-processing{background:rgba(99,102,241,.15);color:var(--accent);animation:pulse 1s infinite;}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
     .badge-done{background:rgba(16,185,129,.15);color:var(--green);}
     .badge-fail{background:rgba(239,68,68,.15);color:var(--red);}
@@ -166,22 +176,27 @@
     .feature-item i{color:var(--accent);font-size:.9rem;}
     .feature-item strong{color:var(--text);}
 
-    footer{text-align:center;padding:2rem;color:var(--muted);font-size:.82rem;border-top:1px solid var(--border);margin-top:auto;line-height:1.8;}
+    footer{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);background:var(--card);margin-top:auto;line-height:1.8;}
+    .footer-logo{display:inline-flex;align-items:center;gap:7px;margin-bottom:10px;font-family:var(--fhead);font-weight:700;font-size:1rem;}
 
-    /* COPY SUCCESS */
     @keyframes copyPop{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
     .copy-success{animation:copyPop .3s ease;}
 
-    /* TOOLTIP */
     [data-tip]{position:relative;}
     [data-tip]:hover::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:#111;color:#fff;font-size:.7rem;padding:4px 8px;border-radius:6px;white-space:nowrap;pointer-events:none;z-index:20;}
+
+    #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:11px 20px;border-radius:99px;font-size:13px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.2);}
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
     <div class="nav-right">
       <div class="stat-pill"><i class="fa-solid fa-wand-magic-sparkles" style="color:var(--accent);font-size:.7rem;"></i><span id="totalCount">0</span> processed</div>
@@ -201,7 +216,6 @@
       </div>
     </div>
 
-    <!-- Feature Strip -->
     <div class="feature-strip">
       <div class="feature-item"><i class="fa-solid fa-bolt"></i><span><strong>Fast mode</strong> plain backgrounds</span></div>
       <div class="feature-item"><i class="fa-solid fa-brain"></i><span><strong>AI mode</strong> people &amp; complex scenes</span></div>
@@ -210,14 +224,12 @@
       <div class="feature-item"><i class="fa-solid fa-crop"></i><span><strong>Social presets</strong> LinkedIn, Instagram</span></div>
     </div>
 
-    <!-- Mode Switch -->
     <div class="mode-switch" id="modeSwitch">
       <button class="mode-btn active" data-mode="fast">⚡ Fast (Edge Fill)</button>
       <button class="mode-btn" data-mode="ai">🤖 AI Model (RMBG-1.4)</button>
       <button class="sample-btn" id="sampleBtn">🧪 Try Sample Image</button>
     </div>
 
-    <!-- AI Status Banner -->
     <div class="ai-status-banner" id="aiStatusBanner">
       <div class="ai-status-icon" id="aiStatusIcon">🤖</div>
       <div class="ai-status-text">
@@ -230,7 +242,6 @@
       <button class="ai-preload-btn" id="aiPreloadBtn">Load Model</button>
     </div>
 
-    <!-- Drop Zone -->
     <div class="drop-zone" id="dropZone">
       <i class="fa-solid fa-cloud-arrow-up"></i>
       <h2 style="margin-top:.75rem;">Drop images or click to upload</h2>
@@ -238,7 +249,19 @@
       <input type="file" id="fileInput" accept="image/*" multiple />
     </div>
 
-    <!-- BG Color Presets -->
+    <!-- Fast-mode tuning bar -->
+    <div class="settings-bar" id="settingsBar">
+      <div class="setting-group">
+        <label><i class="fa-solid fa-sliders"></i> Edge tolerance</label>
+        <input type="range" id="tolRange" min="10" max="100" value="40"><span id="tolVal">40</span>
+      </div>
+      <div class="setting-group">
+        <label>Feather</label>
+        <input type="range" id="featherRange" min="0" max="4" value="2"><span id="featherVal">2</span>
+      </div>
+      <span class="setting-hint">Affects <strong>Fast mode</strong> — higher tolerance removes more, feather softens edges.</span>
+    </div>
+
     <div class="bg-presets" id="bgPresetsRow" style="display:none;">
       <label>Background:</label>
       <div class="preset-swatch transparent active" data-bg="transparent" data-tip="Transparent"></div>
@@ -253,13 +276,11 @@
       <div class="preset-swatch" style="background:#1e3a5f;" data-bg="color-navyblue" data-tip="Navy Blue"></div>
       <div class="preset-swatch" style="background:#2d2d2d;" data-bg="color-darkgray" data-tip="Dark Gray"></div>
       <div class="preset-swatch" style="background:#f0f0f0;border-color:#ccc;" data-bg="color-lightgray" data-tip="Light Gray"></div>
-      <div class="preset-swatch" style="background:linear-gradient(45deg,#ccc 25%,transparent 25%,transparent 75%,#ccc 75%),linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 75%,#ccc 75%);background-size:12px 12px;background-position:0 0,6px 6px;" data-bg="custom-image" data-tip="Custom Image">
-      </div>
+      <div class="preset-swatch" style="background:linear-gradient(45deg,#ccc 25%,transparent 25%,transparent 75%,#ccc 75%),linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 75%,#ccc 75%);background-size:12px 12px;background-position:0 0,6px 6px;" data-bg="custom-image" data-tip="Custom Image"></div>
       <input type="file" id="bgImageInput" accept="image/*" style="display:none;">
-      <input type="color" id="bgColorPicker" value="#667eea" style="width:32px;height:32px;border-radius:8px;border:2px solid var(--border);padding:0;cursor:pointer;" data-tip="Custom Color">
+      <input type="color" id="bgColorPicker" value="#6366f1" style="width:32px;height:32px;border-radius:8px;border:2px solid var(--border);padding:0;cursor:pointer;" data-tip="Custom Color">
     </div>
 
-    <!-- Social/Output Presets -->
     <div class="output-presets" id="outputPresetsRow" style="display:none;">
       <label>Output size:</label>
       <button class="preset-btn active" data-size="original">Original</button>
@@ -269,7 +290,6 @@
       <button class="preset-btn" data-size="hd">HD (1280×720)</button>
     </div>
 
-    <!-- Action Bar -->
     <div style="display:flex;gap:10px;margin-bottom:.75rem;flex-wrap:wrap;align-items:center;">
       <button class="btn btn-primary" id="processAllBtn">⚡ Remove All Backgrounds</button>
       <button class="btn btn-success" id="downloadZipBtn" disabled>⬇ Download All (ZIP)</button>
@@ -288,7 +308,6 @@
     </div>
   </div>
 
-  <!-- Refine Modal -->
   <div class="refine-overlay" id="refineOverlay">
     <div class="refine-panel" id="refinePanel">
       <button class="close-btn" id="closeRefine">✕</button>
@@ -307,11 +326,17 @@
   </div>
 
   <footer>
-    © 2026 PixelPress — <strong>No images leave your device</strong> &nbsp;·&nbsp;
-    Powered by <a href="https://huggingface.co/briaai/RMBG-1.4" target="_blank" style="color:var(--accent);text-decoration:none;">RMBG-1.4</a> &amp; Transformers.js
-    <br>
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
+    © 2026 ImgPDFTools — <strong>No images leave your device</strong> &nbsp;·&nbsp;
+    Powered by <a href="https://huggingface.co/briaai/RMBG-1.4" target="_blank" style="color:var(--accent);">RMBG-1.4</a> &amp; Transformers.js
+    NLBR
     <span style="opacity:.6;">Free · Unlimited · Private · No Signup</span>
   </footer>
+
+  <div id="toast"></div>
 
   <script type="module">
     import { env, AutoModel, AutoProcessor, RawImage } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.5.2/+esm';
@@ -319,29 +344,22 @@
     env.allowLocalModels = false;
     env.useBrowserCache = true;
 
+    let toastTimer;
+    function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2000); }
+
     // ─── CONSTANTS ───────────────────────────────────────────────
     const MAX_DIM = 2048;
-    const OUTPUT_SIZES = {
-      original: null,
-      linkedin: [400, 400],
-      instagram: [1080, 1080],
-      passport: [413, 531],
-      hd: [1280, 720],
-    };
+    const OUTPUT_SIZES = { original:null, linkedin:[400,400], instagram:[1080,1080], passport:[413,531], hd:[1280,720] };
     const BG_GRADIENTS = {
-      'grad-purple': ['#667eea','#764ba2'],
-      'grad-pink':   ['#f093fb','#f5576c'],
-      'grad-blue':   ['#4facfe','#00f2fe'],
-      'grad-green':  ['#43e97b','#38f9d7'],
-      'grad-sunset': ['#fa709a','#fee140'],
-      'grad-ocean':  ['#30cfd0','#667eea'],
+      'grad-purple':['#667eea','#764ba2'], 'grad-pink':['#f093fb','#f5576c'], 'grad-blue':['#4facfe','#00f2fe'],
+      'grad-green':['#43e97b','#38f9d7'], 'grad-sunset':['#fa709a','#fee140'], 'grad-ocean':['#30cfd0','#667eea'],
     };
-    const BG_SOLID = {
-      'color-navyblue': '#1e3a5f',
-      'color-darkgray': '#2d2d2d',
-      'color-lightgray': '#f0f0f0',
-    };
+    const BG_SOLID = { 'color-navyblue':'#1e3a5f', 'color-darkgray':'#2d2d2d', 'color-lightgray':'#f0f0f0' };
     const SAMPLE_URL = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80';
+
+    // Fast-mode tuning (wired to sliders)
+    window.__edgeTol = 40;
+    window.__feather = 2;
 
     // ─── AI STATE ────────────────────────────────────────────────
     let aiModel = null, aiProcessor = null, aiModelState = 'idle';
@@ -420,20 +438,20 @@
 
     // ─── THEME ───────────────────────────────────────────────────
     function syncTheme() {
-      const saved = localStorage.getItem('pixelpress-theme');
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
       const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
     }
     document.getElementById('themeToggle').addEventListener('click', () => {
       const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('pixelpress-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
     });
     syncTheme();
 
     // ─── STATS ───────────────────────────────────────────────────
-    function getTotal() { return parseInt(localStorage.getItem('pp-count') || '0'); }
-    function incTotal(n) { const v = getTotal() + n; localStorage.setItem('pp-count', v); document.getElementById('totalCount').textContent = v.toLocaleString(); }
+    function getTotal() { return parseInt(localStorage.getItem('imgpdftools-count') || localStorage.getItem('pp-count') || '0'); }
+    function incTotal(n) { const v = getTotal() + n; localStorage.setItem('imgpdftools-count', v); document.getElementById('totalCount').textContent = v.toLocaleString(); }
     document.getElementById('totalCount').textContent = getTotal().toLocaleString();
 
     // ─── STATE ───────────────────────────────────────────────────
@@ -450,6 +468,7 @@
     const fileInput       = document.getElementById('fileInput');
     const bgPresetsRow    = document.getElementById('bgPresetsRow');
     const outputPresetsRow= document.getElementById('outputPresetsRow');
+    const settingsBar     = document.getElementById('settingsBar');
     const processAllBtn   = document.getElementById('processAllBtn');
     const downloadZipBtn  = document.getElementById('downloadZipBtn');
     const addMoreBtn      = document.getElementById('addMoreBtn');
@@ -471,8 +490,10 @@
     const closeRefine     = document.getElementById('closeRefine');
     const bgImageInput    = document.getElementById('bgImageInput');
     const bgColorPicker   = document.getElementById('bgColorPicker');
-    const formatSelect    = document.createElement('select'); // hidden, always PNG unless overridden
-    formatSelect.innerHTML = '<option value="png">PNG</option>';
+
+    // Fast-mode tuning sliders
+    document.getElementById('tolRange').addEventListener('input', e => { window.__edgeTol = parseInt(e.target.value); document.getElementById('tolVal').textContent = e.target.value; });
+    document.getElementById('featherRange').addEventListener('input', e => { window.__feather = parseInt(e.target.value); document.getElementById('featherVal').textContent = e.target.value; });
 
     // ─── MODE SWITCH ─────────────────────────────────────────────
     modeBtns.forEach(btn => btn.addEventListener('click', () => {
@@ -484,26 +505,18 @@
 
     // ─── SAMPLE IMAGE ────────────────────────────────────────────
     sampleBtn.addEventListener('click', async () => {
-      sampleBtn.disabled = true;
-      sampleBtn.textContent = '⏳ Loading…';
+      sampleBtn.disabled = true; sampleBtn.textContent = '⏳ Loading…';
       try {
         const resp = await fetch(SAMPLE_URL);
         const blob = await resp.blob();
         const file = new File([blob], 'sample-portrait.jpg', { type: blob.type });
-        // Switch to AI mode automatically
         modeBtns.forEach(b => b.classList.remove('active'));
         document.querySelector('[data-mode="ai"]').classList.add('active');
-        currentMode = 'ai';
-        aiStatusBanner.classList.add('visible');
+        currentMode = 'ai'; aiStatusBanner.classList.add('visible');
         addFiles([file]);
-        // Auto-process after a tick
         setTimeout(() => processAllBtn.click(), 200);
-      } catch {
-        alert('Could not load sample image. Check your internet connection.');
-      } finally {
-        sampleBtn.disabled = false;
-        sampleBtn.textContent = '🧪 Try Sample Image';
-      }
+      } catch { toast('Could not load sample image — check your connection'); }
+      finally { sampleBtn.disabled = false; sampleBtn.textContent = '🧪 Try Sample Image'; }
     });
 
     // ─── BG PRESETS ──────────────────────────────────────────────
@@ -512,16 +525,15 @@
         const bg = sw.dataset.bg;
         if (bg === 'custom-image') { bgImageInput.click(); return; }
         document.querySelectorAll('.preset-swatch').forEach(s => s.classList.remove('active'));
-        sw.classList.add('active');
-        currentBg = bg;
+        sw.classList.add('active'); currentBg = bg;
       });
     });
     bgImageInput.addEventListener('change', e => {
       if (e.target.files[0]) {
-        customBgImage = e.target.files[0];
-        currentBg = 'custom-image';
+        customBgImage = e.target.files[0]; currentBg = 'custom-image';
         document.querySelectorAll('.preset-swatch').forEach(s => s.classList.remove('active'));
         document.querySelector('[data-bg="custom-image"]').classList.add('active');
+        toast('Custom background set');
       }
     });
     bgColorPicker.addEventListener('input', () => {
@@ -533,8 +545,7 @@
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentSize = btn.dataset.size;
+        btn.classList.add('active'); currentSize = btn.dataset.size;
       });
     });
 
@@ -554,6 +565,7 @@
       });
       bgPresetsRow.style.display = 'flex';
       outputPresetsRow.style.display = 'flex';
+      settingsBar.classList.add('visible');
       renderGrid(); updateStats();
     }
 
@@ -611,13 +623,11 @@
     function renderGrid() {
       grid.innerHTML = '';
       items.forEach(item => renderCard(item));
-      if (items.length === 0) { grid.appendChild(emptyState); bgPresetsRow.style.display = 'none'; outputPresetsRow.style.display = 'none'; }
+      if (items.length === 0) { grid.appendChild(emptyState); bgPresetsRow.style.display = 'none'; outputPresetsRow.style.display = 'none'; settingsBar.classList.remove('visible'); }
       updateStats();
     }
 
-    function updateStats() {
-      downloadZipBtn.disabled = !items.some(i => i.status === 'done');
-    }
+    function updateStats() { downloadZipBtn.disabled = !items.some(i => i.status === 'done'); }
 
     // ─── PROCESS ALL ─────────────────────────────────────────────
     processAllBtn.addEventListener('click', async () => {
@@ -625,7 +635,7 @@
       if (currentMode === 'ai') {
         aiStatusBanner.classList.add('visible');
         const ready = await loadAIModel();
-        if (!ready) { alert('AI model failed to load. Please try again.'); return; }
+        if (!ready) { toast('AI model failed to load — please retry'); return; }
       }
       processAllBtn.disabled = true;
       progressBar.style.display = 'block';
@@ -640,17 +650,12 @@
         progressLabel.textContent = `Processing ${i+1} / ${queue.length}…`;
         try {
           let blob;
-          if (currentMode === 'fast') {
-            blob = await processWithEdgeFill(item.url);
-          } else {
-            blob = await processWithAI(item.url);
-          }
+          if (currentMode === 'fast') { blob = await processWithEdgeFill(item.url); }
+          else { blob = await processWithAI(item.url); }
           blob = await applyBgAndSize(blob);
           item.resultBlob = blob; item.resultUrl = URL.createObjectURL(blob); item.status = 'done';
           incTotal(1);
-        } catch (e) {
-          item.status = 'fail'; item.error = e.message || 'Unknown error';
-        }
+        } catch (e) { item.status = 'fail'; item.error = e.message || 'Unknown error'; }
         hideSpinner(item); updateBadge(item); updateCardButtons(item);
         if (item.status === 'done') {
           document.getElementById('resImg-' + item.id).src = item.resultUrl;
@@ -661,7 +666,9 @@
       }
       processAllBtn.disabled = false;
       updateStats();
-      progressLabel.textContent = `Done! ${queue.filter(i => i.status === 'done').length}/${queue.length} succeeded.`;
+      const ok = queue.filter(i => i.status === 'done').length;
+      progressLabel.textContent = `Done! ${ok}/${queue.length} succeeded.`;
+      toast(`Removed background from ${ok} image${ok===1?'':'s'}`);
       setTimeout(() => { progressBar.style.display = 'none'; progressLabel.style.display = 'none'; }, 3000);
     });
 
@@ -676,27 +683,18 @@
       canvas.width = W; canvas.height = H;
       const ctx = canvas.getContext('2d');
 
-      if (currentBg === 'transparent') {
-        ctx.drawImage(img, 0, 0, W, H);
-      } else if (currentBg === 'white') {
-        ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H);
-      } else if (currentBg === 'black') {
-        ctx.fillStyle = '#000000'; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H);
-      } else if (currentBg.startsWith('grad-')) {
+      if (currentBg === 'transparent') { ctx.drawImage(img, 0, 0, W, H); }
+      else if (currentBg === 'white') { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H); }
+      else if (currentBg === 'black') { ctx.fillStyle = '#000000'; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H); }
+      else if (currentBg.startsWith('grad-')) {
         const [c1, c2] = BG_GRADIENTS[currentBg];
         const grad = ctx.createLinearGradient(0, 0, W, H);
         grad.addColorStop(0, c1); grad.addColorStop(1, c2);
         ctx.fillStyle = grad; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H);
-      } else if (currentBg.startsWith('color-')) {
-        ctx.fillStyle = BG_SOLID[currentBg]; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H);
-      } else if (currentBg.startsWith('custom-color:')) {
-        ctx.fillStyle = currentBg.split(':')[1]; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H);
-      } else if (currentBg === 'custom-image' && customBgImage) {
-        const bgImg = await loadImgFromBlob(customBgImage);
-        ctx.drawImage(bgImg, 0, 0, W, H); ctx.drawImage(img, 0, 0, W, H);
-      } else {
-        ctx.drawImage(img, 0, 0, W, H);
-      }
+      } else if (currentBg.startsWith('color-')) { ctx.fillStyle = BG_SOLID[currentBg]; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H); }
+      else if (currentBg.startsWith('custom-color:')) { ctx.fillStyle = currentBg.split(':')[1]; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H); }
+      else if (currentBg === 'custom-image' && customBgImage) { const bgImg = await loadImgFromBlob(customBgImage); ctx.drawImage(bgImg, 0, 0, W, H); ctx.drawImage(img, 0, 0, W, H); }
+      else { ctx.drawImage(img, 0, 0, W, H); }
 
       const mime = currentBg === 'transparent' ? 'image/png' : 'image/jpeg';
       return canvasToBlob(canvas, mime, 0.92);
@@ -716,22 +714,21 @@
     function updateCardButtons(item) {
       const done = item.status === 'done';
       ['dlBtn','copyBtn','refineBtn','compareBtn','resetBtn'].forEach(id => {
-        const el = document.getElementById(id + '-' + item.id);
-        if (el) el.disabled = !done;
+        const el = document.getElementById(id + '-' + item.id); if (el) el.disabled = !done;
       });
-      const dlBtn      = document.getElementById('dlBtn-'     + item.id);
-      const copyBtn    = document.getElementById('copyBtn-'   + item.id);
-      const refineBtn  = document.getElementById('refineBtn-' + item.id);
-      const compareBtn = document.getElementById('compareBtn-'+ item.id);
-      const resetBtn   = document.getElementById('resetBtn-'  + item.id);
-      const rmBtn      = document.getElementById('rmBtn-'     + item.id);
-      const slider     = document.getElementById('slider-'    + item.id);
-      if (dlBtn)      dlBtn.onclick      = () => downloadSingle(item);
-      if (copyBtn)    copyBtn.onclick    = () => copyToClipboard(item, copyBtn);
-      if (refineBtn)  refineBtn.onclick  = () => openRefine(item);
+      const dlBtn = document.getElementById('dlBtn-' + item.id);
+      const copyBtn = document.getElementById('copyBtn-' + item.id);
+      const refineBtn = document.getElementById('refineBtn-' + item.id);
+      const compareBtn = document.getElementById('compareBtn-' + item.id);
+      const resetBtn = document.getElementById('resetBtn-' + item.id);
+      const rmBtn = document.getElementById('rmBtn-' + item.id);
+      const slider = document.getElementById('slider-' + item.id);
+      if (dlBtn) dlBtn.onclick = () => downloadSingle(item);
+      if (copyBtn) copyBtn.onclick = () => copyToClipboard(item, copyBtn);
+      if (refineBtn) refineBtn.onclick = () => openRefine(item);
       if (compareBtn) compareBtn.onclick = () => toggleCompare(item);
-      if (resetBtn)   resetBtn.onclick   = () => resetItem(item);
-      if (rmBtn)      rmBtn.onclick      = () => removeItem(item);
+      if (resetBtn) resetBtn.onclick = () => resetItem(item);
+      if (rmBtn) rmBtn.onclick = () => removeItem(item);
       if (slider && done) slider.style.display = 'block';
     }
 
@@ -740,17 +737,16 @@
       s.style.display = 'flex';
       const l = document.getElementById('spinnerLabel-' + item.id); if (l) l.textContent = label;
     }
-    function hideSpinner(item) {
-      const s = document.getElementById('spinner-' + item.id); if (s) s.style.display = 'none';
-    }
+    function hideSpinner(item) { const s = document.getElementById('spinner-' + item.id); if (s) s.style.display = 'none'; }
 
     // ─── DOWNLOAD / COPY ─────────────────────────────────────────
     function downloadSingle(item) {
       if (!item.resultUrl) return;
       const ext = currentBg === 'transparent' ? 'png' : 'jpg';
       const a = document.createElement('a');
-      a.download = item.file.name.replace(/\.[^/.]+$/, '') + '_nobg.' + ext;
+      a.download = item.file.name.replace(/\.+$/, '') + '_nobg.' + ext;
       a.href = item.resultUrl; a.click();
+      toast('Downloaded');
     }
 
     async function copyToClipboard(item, btn) {
@@ -773,7 +769,7 @@
     function toggleCompare(item) {
       item.showOriginal = !item.showOriginal;
       const orig = document.getElementById('origImg-' + item.id);
-      const res  = document.getElementById('resImg-'  + item.id);
+      const res = document.getElementById('resImg-' + item.id);
       orig.style.clipPath = item.showOriginal ? 'inset(0 0 0 0)' : 'inset(0 50% 0 0)';
       if (res) res.style.display = item.showOriginal ? 'none' : 'block';
     }
@@ -790,14 +786,14 @@
       URL.revokeObjectURL(item.url); if (item.resultUrl) URL.revokeObjectURL(item.resultUrl);
       items = items.filter(i => i.id !== item.id);
       document.getElementById('card-' + item.id)?.remove();
-      if (items.length === 0) { grid.appendChild(emptyState); bgPresetsRow.style.display = 'none'; outputPresetsRow.style.display = 'none'; }
+      if (items.length === 0) { grid.appendChild(emptyState); bgPresetsRow.style.display = 'none'; outputPresetsRow.style.display = 'none'; settingsBar.classList.remove('visible'); }
       updateStats();
     }
 
     clearAllBtn.addEventListener('click', () => {
       items.forEach(i => { URL.revokeObjectURL(i.url); if (i.resultUrl) URL.revokeObjectURL(i.resultUrl); });
       items = []; grid.innerHTML = ''; grid.appendChild(emptyState);
-      bgPresetsRow.style.display = 'none'; outputPresetsRow.style.display = 'none';
+      bgPresetsRow.style.display = 'none'; outputPresetsRow.style.display = 'none'; settingsBar.classList.remove('visible');
       progressBar.style.display = 'none'; progressLabel.style.display = 'none';
       updateStats();
     });
@@ -807,9 +803,10 @@
       const done = items.filter(i => i.status === 'done' && i.resultBlob); if (!done.length) return;
       const zip = new JSZip();
       const ext = currentBg === 'transparent' ? 'png' : 'jpg';
-      done.forEach(item => zip.file(item.file.name.replace(/\.[^/.]+$/, '') + '_nobg.' + ext, item.resultBlob));
+      done.forEach(item => zip.file(item.file.name.replace(/\.+$/, '') + '_nobg.' + ext, item.resultBlob));
       const content = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(content); a.download = 'pixelpress_nobg.zip'; a.click();
+      const a = document.createElement('a'); a.href = URL.createObjectURL(content); a.download = 'imgpdftools_nobg.zip'; a.click();
+      toast('ZIP downloaded');
     });
 
     // ─── EDGE FILL (FAST MODE) ───────────────────────────────────
@@ -827,7 +824,7 @@
             let r=0,g=0,b=0;
             samples.forEach(([x,y]) => { const i=(y*W+x)*4; r+=d[i]; g+=d[i+1]; b+=d[i+2]; });
             const bgR=r/samples.length, bgG=g/samples.length, bgB=b/samples.length;
-            const tol = 40;
+            const tol = window.__edgeTol || 40;
             const mask = new Uint8Array(W*H);
             const qBuf = new Int32Array(W*H*2);
             let qHead=0, qTail=0;
@@ -841,9 +838,9 @@
             for (let y=1;y<H-1;y++) { enq(0,y); enq(W-1,y); }
             while (qHead<qTail) { const cx=qBuf[qHead++], cy=qBuf[qHead++]; enq(cx-1,cy); enq(cx+1,cy); enq(cx,cy-1); enq(cx,cy+1); }
             for (let i=0;i<mask.length;i++) { if (mask[i]===0) mask[i]=2; }
-            // Feather 2px
+            const featherPasses = (window.__feather ?? 2);
             const tmp=new Uint8Array(W*H);
-            for (let pass=0;pass<2;pass++) {
+            for (let pass=0;pass<featherPasses;pass++) {
               for (let y=0;y<H;y++) for (let x=0;x<W;x++) {
                 let sum=0,cnt=0;
                 for (let dy=-1;dy<=1;dy++) for (let dx=-1;dx<=1;dx++) { const nx=x+dx,ny=y+dy; if (nx>=0&&nx<W&&ny>=0&&ny<H) { sum+=mask[ny*W+nx]; cnt++; } }
@@ -925,22 +922,16 @@
       canvasToBlob(c,'image/png').then(blob => {
         refineItem.resultBlob=blob; refineItem.resultUrl=URL.createObjectURL(blob);
         document.getElementById('resImg-'+refineItem.id).src=refineItem.resultUrl;
-        refineOverlay.style.display='none';
+        refineOverlay.style.display='none'; toast('Refinement applied');
       });
     });
     cancelRefine.addEventListener('click', () => refineOverlay.style.display='none');
     closeRefine.addEventListener('click', () => refineOverlay.style.display='none');
 
     // ─── HELPERS ─────────────────────────────────────────────────
-    function loadImg(src) {
-      return new Promise((res,rej) => { const i=new Image(); i.onload=()=>res(i); i.onerror=()=>rej(new Error('Image load failed')); i.src=src; });
-    }
-    function loadImgFromBlob(blob) {
-      return loadImg(URL.createObjectURL(blob));
-    }
-    function canvasToBlob(canvas, mime='image/png', q=0.92) {
-      return new Promise((res,rej) => canvas.toBlob(b => b?res(b):rej(new Error('Canvas export failed')), mime, q));
-    }
+    function loadImg(src) { return new Promise((res,rej) => { const i=new Image(); i.onload=()=>res(i); i.onerror=()=>rej(new Error('Image load failed')); i.src=src; }); }
+    function loadImgFromBlob(blob) { return loadImg(URL.createObjectURL(blob)); }
+    function canvasToBlob(canvas, mime='image/png', q=0.92) { return new Promise((res,rej) => canvas.toBlob(b => b?res(b):rej(new Error('Canvas export failed')), mime, q)); }
     function resizeToMax(img, maxDim) {
       if (!maxDim) maxDim = MAX_DIM;
       let W = img.naturalWidth||img.width, H = img.naturalHeight||img.height;
