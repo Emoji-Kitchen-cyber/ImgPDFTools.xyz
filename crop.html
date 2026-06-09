@@ -248,7 +248,8 @@
 
     function loadImage(file){
       if(!file.type.startsWith('image/')){ toast('Please upload an image'); return; }
-      originalFileName = file.name.replace(/\.+$/, '') || 'image';
+      // FIX: strip the real extension (not just trailing dots)
+      originalFileName = file.name.replace(/\.[^.]+$/, '') || 'image';
       const reader = new FileReader();
       reader.onload = e => {
         cropImage.src = e.target.result;
