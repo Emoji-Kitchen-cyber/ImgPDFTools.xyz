@@ -264,9 +264,9 @@
 
       <label>Quick presets</label>
       <div class="presets" id="presets">
-        <div class="preset" data-q="40">MaxNLBRcompression</div>
+        <div class="preset" data-q="40">Max<br>compression</div>
         <div class="preset active" data-q="75">Balanced</div>
-        <div class="preset" data-q="92">HighNLBRquality</div>
+        <div class="preset" data-q="92">High<br>quality</div>
         <div class="preset" data-q="100">Lossless</div>
       </div>
 
@@ -589,13 +589,19 @@
       };
     }
 
+    // SECURE: build the estimate line with DOM nodes / textContent (no innerHTML).
     function updateEstimate(){
       if(!uploadedFiles.length){ estLine.textContent=''; return; }
       const total = uploadedFiles.reduce((a,f)=>a+f.size,0);
       const q = parseInt(qualitySlider.value);
       // rough heuristic estimate
       const factor = Math.max(0.05, Math.min(1, (q/100)*0.85));
-      estLine.innerHTML = `Estimated output: <strong>~${formatBytes(total*factor)}</strong> from ${formatBytes(total)}`;
+      estLine.textContent = '';
+      estLine.appendChild(document.createTextNode('Estimated output: '));
+      const strong = document.createElement('strong');
+      strong.textContent = '~' + formatBytes(total*factor);
+      estLine.appendChild(strong);
+      estLine.appendChild(document.createTextNode(' from ' + formatBytes(total)));
     }
 
     function addFiles(files){
@@ -609,35 +615,64 @@
       renderThumbs(); updateUI();
     }
 
+    // SECURE: thumbnails are built with createElement + textContent and img.src is
+    // assigned as a property. No file-derived data is ever parsed as HTML.
     function renderThumbs(){
-      thumbStrip.innerHTML = '';
+      thumbStrip.textContent = '';
       uploadedFiles.forEach((f, i) => {
         const wrap = document.createElement('div');
         wrap.className = 'thumb' + (i === currentPreviewIndex ? ' active' : '');
         const url = URL.createObjectURL(f);
         const res = compressedResults[i];
         const saved = res ? Math.max(0, ((f.size - res.size)/f.size*100)).toFixed(0) : null;
-        wrap.innerHTML = `
-          <div class="t-rm" data-rm="${i}" title="Remove">✕</div>
-          <img src="${url}" alt="">
-          <div class="t-meta">${formatBytes(f.size)}${saved!==null?` → <span class="t-save">-${saved}%</span>`:''}</div>`;
-        wrap.querySelector('img').addEventListener('click', () => showPreview(i));
-        wrap.querySelector('.t-rm').addEventListener('click', e => {
+
+        const rm = document.createElement('div');
+        rm.className = 't-rm';
+        rm.title = 'Remove';
+        rm.textContent = '✕';
+
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = '';
+
+        const meta = document.createElement('div');
+        meta.className = 't-meta';
+        meta.appendChild(document.createTextNode(formatBytes(f.size)));
+        if (saved !== null){
+          meta.appendChild(document.createTextNode(' → '));
+          const sv = document.createElement('span');
+          sv.className = 't-save';
+          sv.textContent = '-' + saved + '%';
+          meta.appendChild(sv);
+        }
+
+        wrap.appendChild(rm);
+        wrap.appendChild(img);
+        wrap.appendChild(meta);
+
+        img.addEventListener('click', () => showPreview(i));
+        rm.addEventListener('click', e => {
           e.stopPropagation();
           uploadedFiles.splice(i,1); compressedResults.length = 0;
           if(currentPreviewIndex >= uploadedFiles.length) currentPreviewIndex = 0;
           renderThumbs(); updateUI();
         });
+
         thumbStrip.appendChild(wrap);
       });
     }
 
+    // SECURE: batch indicator built from DOM nodes instead of innerHTML.
     function updateUI(){
       if(!uploadedFiles.length){
         batchInfo.textContent=''; compressBtn.disabled=true;
         previewSection.classList.add('hidden'); statsGrid.classList.add('hidden'); estLine.textContent='';
       } else {
-        batchInfo.innerHTML = `${uploadedFiles.length} image(s) loaded · <a href="#" id="resetFiles">Remove all</a>`;
+        batchInfo.textContent = '';
+        batchInfo.appendChild(document.createTextNode(`${uploadedFiles.length} image(s) loaded · `));
+        const reset = document.createElement('a');
+        reset.href = '#'; reset.id = 'resetFiles'; reset.textContent = 'Remove all';
+        batchInfo.appendChild(reset);
         compressBtn.disabled=false;
         showPreview(currentPreviewIndex);
         updateEstimate();
@@ -705,7 +740,7 @@
           });
           const dims = window.computeDims(natural.w, natural.h, opts);
           const result = await window.smartEncode(file, format, quality, dims, targetBytes);
-          const baseName = file.name.replace(/\.+$/, '');
+          const baseName = file.name.replace(/\.[^.]+$/, '');
           compressedResults.push({ blob: result.blob, name: `${baseName}_compressed.${result.ext}`, size: result.blob.size });
           progressBar.style.width = `${Math.round(((i+1)/uploadedFiles.length)*100)}%`;
         }
@@ -742,7 +777,7 @@
     });
     clearBtn.addEventListener('click', () => {
       uploadedFiles.length=0; compressedResults.length=0; currentPreviewIndex=0;
-      originalImg.src=''; compressedImg.src=''; thumbStrip.innerHTML='';
+      originalImg.src=''; compressedImg.src=''; thumbStrip.textContent='';
       previewSection.classList.add('hidden'); statsGrid.classList.add('hidden');
       updateUI();
     });
