@@ -318,14 +318,34 @@
       updateDimPreview();
     }
 
+    /* SECURE: build thumbnails with DOM nodes — file name set via property,
+       never interpolated into innerHTML (prevents XSS via crafted filenames). */
     function renderThumbs(){
-      queueThumbs.innerHTML = queue.map((q,i)=>`<div class="qt"><img src="${q.src}" alt="" title="${q.file.name}"><button class="rm" data-i="${i}">×</button></div>`).join('');
-      queueThumbs.querySelectorAll('.rm').forEach(b => b.addEventListener('click', () => {
-        const i=parseInt(b.dataset.i); const removed=queue.splice(i,1)[0];
-        if(primary===removed){ primary=null; if(queue.length) setPrimary(queue[0]); }
-        if(!queue.length){ workspace.style.display='none'; uploadZone.style.display='block'; }
-        renderThumbs(); updateResizeCount();
-      }));
+      queueThumbs.textContent = '';
+      queue.forEach((q, i) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'qt';
+
+        const img = document.createElement('img');
+        img.src = q.src;            // data URL from FileReader (safe as property)
+        img.alt = '';
+        img.title = q.file.name;    // file name as text property — cannot inject markup
+
+        const rm = document.createElement('button');
+        rm.className = 'rm';
+        rm.type = 'button';
+        rm.textContent = '×';
+        rm.addEventListener('click', () => {
+          const removed = queue.splice(i, 1)[0];
+          if(primary === removed){ primary = null; if(queue.length) setPrimary(queue[0]); }
+          if(!queue.length){ workspace.style.display='none'; uploadZone.style.display='block'; }
+          renderThumbs(); updateResizeCount();
+        });
+
+        wrap.appendChild(img);
+        wrap.appendChild(rm);
+        queueThumbs.appendChild(wrap);
+      });
     }
     function updateResizeCount(){ const c=queue.length; $('resizeCount').textContent=c>1?`(${c} images)`:''; }
 
@@ -400,7 +420,8 @@
         if(outputFormat==='jpeg'){ ctx.fillStyle=$('bgColor').value; ctx.fillRect(0,0,w,h); }
         ctx.drawImage(item.img,0,0,w,h);
         const mime = outputFormat==='png'?'image/png':outputFormat==='webp'?'image/webp':'image/jpeg';
-        const base=item.file.name.replace(/\.+$/,'');
+        // SECURE/FIX: strip the real extension (not just trailing dots)
+        const base=item.file.name.replace(/\.[^.]+$/,'');
         canvas.toBlob(blob => resolve({ name:`${base}-${w}x${h}.${outputFormat==='jpeg'?'jpg':outputFormat}`, blob, size:blob.size, w, h }), mime, outputQuality);
       });
     }
