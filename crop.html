@@ -7,100 +7,138 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-3P7QPQKV3K');
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advanced Crop – PixelPress</title>
-  <meta name="description" content="Crop images precisely with preset aspect ratios. Free online tool — drag, zoom, and download instantly.">
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/crop.html">
+  <title>Advanced Crop — ImgPDFTools</title>
+  <meta name="description" content="Crop images precisely with preset & custom aspect ratios, circle crop, rotate, flip, and zoom. Free, private, in-browser. Download as PNG, JPG or WebP." />
+  <link rel="canonical" href="https://imgpdftools.xyz/crop.html" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
     :root {
-      --bg: #f5f5f7; --surface: rgba(255,255,255,0.75); --card: #ffffff;
-      --border: rgba(0,0,0,0.06); --text: #1d1d1f; --muted: #6e6e73;
-      --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236,72,153,0.1); --r: 16px;
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --r:18px; --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif; --nav-h:66px;
     }
     [data-theme="dark"] {
-      --bg: #09090e; --surface: rgba(21,21,30,0.7); --card: #15151e;
-      --border: rgba(255,255,255,0.08); --text: #e8e8f0; --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
-    
-    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:var(--surface); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh;
+      display:flex; flex-direction:column; transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
+
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+      padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
+      backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
     .nav-left { display:flex; align-items:center; gap:1rem; }
-    .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.1rem; cursor:pointer; text-decoration:none; transition:0.2s; }
-    .back-btn:hover { border-color:var(--accent); transform:scale(1.05); }
-    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; text-transform:uppercase; text-decoration:none; color:inherit; }
-    .nav-logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2); width:40px; height:40px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text);
+      font-size:1rem; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-.3px; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px;
+      display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
 
-    .main { flex:1; max-width:900px; margin:0 auto; width:100%; padding:1.5rem 16px 4rem; display:flex; flex-direction:column; gap:1.5rem; }
+    .main { flex:1; max-width:920px; margin:0 auto; width:100%; padding:1.5rem 16px 4rem; display:flex; flex-direction:column; gap:1.4rem; }
 
-    /* Upload Card */
-    .upload-card { background:var(--card); border:2px dashed var(--border); border-radius:var(--r); padding:3rem 2rem; text-align:center; cursor:pointer; transition:0.2s; }
+    .upload-card { background:var(--card); border:2px dashed var(--border2); border-radius:var(--r);
+      padding:3rem 2rem; text-align:center; cursor:pointer; transition:.2s; }
     .upload-card:hover { border-color:var(--accent); background:var(--glow); }
-    .upload-card i { font-size:3rem; color:var(--accent); }
+    .upload-card i { font-size:2.8rem; color:var(--accent); }
+    .upload-card h2 { font-family:var(--fhead); margin:.8rem 0 .3rem; }
+    .upload-card p { color:var(--muted); font-size:.9rem; }
     .upload-card input { display:none; }
 
-    /* Workspace */
-    .workspace { display:none; flex-direction:column; gap:1.5rem; }
+    .workspace { display:none; flex-direction:column; gap:1.2rem; }
     .workspace.active { display:flex; }
 
-    /* Aspect Ratio Chips */
-    .ratio-scroll { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .ratio-scroll { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; align-items:center; }
     .ratio-scroll::-webkit-scrollbar { display:none; }
-    .ratio-chip { padding:8px 16px; border-radius:999px; background:var(--card); border:1px solid var(--border); cursor:pointer; font-weight:600; font-size:0.85rem; white-space:nowrap; transition:0.2s; flex-shrink:0; color:var(--muted); }
-    .ratio-chip:hover { border-color:var(--accent); color:var(--text); }
-    .ratio-chip.active { background:var(--accent); color:white; border-color:var(--accent); }
+    .ratio-chip { padding:8px 16px; border-radius:999px; background:var(--card); border:1.5px solid var(--border2);
+      cursor:pointer; font-weight:600; font-size:.85rem; white-space:nowrap; transition:.2s; flex-shrink:0; color:var(--muted); }
+    .ratio-chip:hover { border-color:var(--accent); color:var(--accent); }
+    .ratio-chip.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 12px var(--glow); }
+    .custom-ratio { display:flex; align-items:center; gap:6px; flex-shrink:0; background:var(--card); border:1.5px solid var(--border2); border-radius:999px; padding:4px 10px; }
+    .custom-ratio input { width:42px; border:none; background:transparent; color:var(--text); font-size:.85rem; text-align:center; outline:none; font-family:var(--fbody); }
+    .custom-ratio span { color:var(--muted); font-weight:700; }
 
-    /* Crop Container */
-    .crop-wrap { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1rem; }
+    .crop-wrap { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1rem; position:relative; }
     .crop-inner { max-width:100%; max-height:55vh; margin:0 auto; }
     .crop-inner img { max-width:100%; display:block; }
+    .crop-readout { position:absolute; top:1.3rem; right:1.3rem; background:rgba(0,0,0,.55); color:#fff;
+      font-size:11px; font-weight:700; padding:4px 10px; border-radius:99px; backdrop-filter:blur(4px); pointer-events:none; }
+    .cropper-view-box.circle, .cropper-face.circle { border-radius:50%; }
 
-    /* Action Buttons */
     .action-row { display:flex; gap:10px; flex-wrap:wrap; }
-    .btn { padding:10px 20px; border-radius:10px; border:1px solid var(--border); background:var(--card); color:var(--text); font-weight:600; cursor:pointer; font-size:0.9rem; transition:0.2s; display:inline-flex; align-items:center; gap:6px; }
-    .btn:hover { border-color:var(--accent); }
-    .btn-accent { background:var(--accent); color:white; border:none; }
-    .btn-accent:hover { background:var(--accent2); }
-    .btn-success { background:#10b981; color:white; border:none; }
+    .btn { padding:10px 18px; border-radius:10px; border:1.5px solid var(--border2); background:var(--card); color:var(--text);
+      font-weight:600; cursor:pointer; font-size:.9rem; transition:.2s; display:inline-flex; align-items:center; gap:6px; font-family:var(--fbody); }
+    .btn:hover { border-color:var(--accent); color:var(--accent); }
+    .btn-accent { background:var(--accent); color:#fff; border:none; box-shadow:0 4px 14px var(--glow); }
+    .btn-accent:hover { background:var(--accent2); color:#fff; }
+    .btn-success { background:#10b981; color:#fff; border:none; }
+    .btn-success:hover { background:#059669; color:#fff; }
 
-    /* Result */
-    .result-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; text-align:center; display:none; }
+    .options-card { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.2rem;
+      display:flex; gap:18px; flex-wrap:wrap; align-items:center; }
+    .opt { display:flex; flex-direction:column; gap:5px; }
+    .opt label { font-size:.72rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.5px; }
+    .opt select, .opt input[type="color"] { padding:8px 10px; border:1.5px solid var(--border2); border-radius:10px;
+      background:var(--bg); color:var(--text); font-family:var(--fbody); font-size:13px; outline:none; }
+    .opt input[type="color"] { width:48px; height:38px; padding:2px; cursor:pointer; }
+    .opt input[type="range"] { accent-color:var(--accent); }
+
+    .result-card { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.5rem; text-align:center; display:none; }
     .result-card.active { display:block; }
-    .result-card img { max-width:100%; max-height:400px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.08); }
-    .size-info { margin-top:0.8rem; font-size:0.85rem; color:var(--muted); }
+    .result-card h2 { font-family:var(--fhead); margin-bottom:1rem; }
+    .result-card img { max-width:100%; max-height:400px; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.10); background:
+      conic-gradient(#0001 90deg,#0000 90deg 180deg,#0001 180deg 270deg,#0000 270deg) 0 0/20px 20px; }
+    .size-info { margin-top:.8rem; font-size:.85rem; color:var(--muted); }
 
-    footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); margin-top:auto; }
+    #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--text);
+      color:var(--bg); padding:11px 20px; border-radius:99px; font-size:13px; font-weight:600; opacity:0;
+      pointer-events:none; transition:opacity .3s,transform .3s; z-index:999; box-shadow:0 8px 24px rgba(0,0,0,.2); }
+    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    footer { text-align:center; padding:30px 20px; color:var(--muted); font-size:13px; border-top:1px solid var(--border2); background:var(--card); margin-top:auto; }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-family:var(--fhead); font-weight:700; font-size:1rem; }
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="control-btn" aria-label="Toggle theme">🌓</button>
   </nav>
 
   <div class="main">
-    <!-- Upload -->
     <div class="upload-card" id="uploadZone">
-      <i class="fa-solid fa-cloud-upload"></i>
-      <h2 style="margin:0.8rem 0 0.3rem;">Drop image or click to upload</h2>
-      <p style="color:var(--muted);font-size:0.9rem;">JPG, PNG, WebP supported</p>
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      <h2>Drop image or click to upload</h2>
+      <p>JPG, PNG, WebP supported · processed entirely in your browser</p>
       <input type="file" id="fileInput" accept="image/*" />
     </div>
 
-    <!-- Workspace -->
     <div class="workspace" id="workspace">
-      <!-- Aspect Ratios -->
       <div class="ratio-scroll" id="ratioChips">
         <button class="ratio-chip active" data-ratio="free">Free</button>
         <button class="ratio-chip" data-ratio="1:1">1:1 Square</button>
@@ -110,205 +148,211 @@
         <button class="ratio-chip" data-ratio="3:2">3:2 Photo</button>
         <button class="ratio-chip" data-ratio="2:3">2:3 Portrait</button>
         <button class="ratio-chip" data-ratio="21:9">21:9 Ultrawide</button>
-      </div>
-
-      <!-- Crop Area -->
-      <div class="crop-wrap">
-        <div class="crop-inner">
-          <img id="cropImage" alt="Crop preview" />
+        <div class="custom-ratio">
+          <input type="number" id="customW" placeholder="W" min="1" />
+          <span>:</span>
+          <input type="number" id="customH" placeholder="H" min="1" />
+          <button class="btn" id="applyCustom" style="padding:5px 10px;font-size:.78rem;">Set</button>
         </div>
       </div>
 
-      <!-- Actions -->
+      <div class="crop-wrap">
+        <div class="crop-inner"><img id="cropImage" alt="Crop preview" /></div>
+        <div class="crop-readout" id="cropReadout">—</div>
+      </div>
+
       <div class="action-row">
-        <button class="btn btn-accent" id="cropBtn"><i class="fa-solid fa-crop"></i> Apply Crop</button>
+        <button class="btn btn-accent" id="cropBtn"><i class="fa-solid fa-crop"></i> Apply crop</button>
+        <button class="btn" id="circleBtn"><i class="fa-regular fa-circle"></i> Circle</button>
         <button class="btn" id="resetBtn"><i class="fa-solid fa-rotate"></i> Reset</button>
         <button class="btn" id="zoomInBtn"><i class="fa-solid fa-plus"></i></button>
         <button class="btn" id="zoomOutBtn"><i class="fa-solid fa-minus"></i></button>
         <button class="btn" id="rotateBtn"><i class="fa-solid fa-rotate-right"></i></button>
         <button class="btn" id="flipHBtn"><i class="fa-solid fa-arrows-left-right"></i></button>
         <button class="btn" id="flipVBtn"><i class="fa-solid fa-arrows-up-down"></i></button>
-        <button class="btn" id="newImageBtn"><i class="fa-solid fa-image"></i> New Image</button>
+        <button class="btn" id="newImageBtn"><i class="fa-solid fa-image"></i> New image</button>
+      </div>
+
+      <div class="options-card">
+        <div class="opt">
+          <label>Format</label>
+          <select id="formatSelect">
+            <option value="png">PNG (transparent)</option>
+            <option value="jpg">JPG</option>
+            <option value="webp">WebP</option>
+          </select>
+        </div>
+        <div class="opt" id="qualityOpt" style="display:none;">
+          <label>Quality: <span id="qVal">92</span>%</label>
+          <input type="range" id="qualityRange" min="40" max="100" value="92" />
+        </div>
+        <div class="opt" id="bgOpt" style="display:none;">
+          <label>Background</label>
+          <input type="color" id="bgColor" value="#ffffff" />
+        </div>
       </div>
     </div>
 
-    <!-- Result -->
     <div class="result-card" id="resultCard">
-      <h2 style="font-family:'Syne',sans-serif;margin-bottom:1rem;">✅ Cropped Image Ready</h2>
+      <h2>✅ Cropped image ready</h2>
       <img id="resultPreview" alt="Cropped result" />
       <div class="size-info" id="sizeInfo"></div>
       <div style="margin-top:1rem;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
-        <button class="btn btn-success" id="downloadBtn"><i class="fa-solid fa-download"></i> Download PNG</button>
-        <button class="btn" id="downloadJpgBtn"><i class="fa-solid fa-download"></i> Download JPG</button>
-        <button class="btn" id="cropAgainBtn"><i class="fa-solid fa-arrow-left"></i> Crop Again</button>
+        <button class="btn btn-success" id="downloadBtn"><i class="fa-solid fa-download"></i> Download</button>
+        <button class="btn" id="cropAgainBtn"><i class="fa-solid fa-arrow-left"></i> Crop again</button>
       </div>
     </div>
   </div>
 
-  <footer>© 2026 PixelPress – All processing happens in your browser</footer>
+  <div id="toast"></div>
+
+  <footer>
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
+    <p>© 2026 ImgPDFTools — All processing happens in your browser.</p>
+  </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
   <script>
-    (function() {
-      // Theme sync
-      function syncTheme() {
-        const saved = localStorage.getItem('pixelpress-theme');
-        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-      }
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const curr = document.documentElement.getAttribute('data-theme');
-        const next = curr === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
-      });
-      syncTheme();
+  (function(){
+    const $ = id => document.getElementById(id);
+    let toastTimer;
+    function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1700); }
 
-      // State
-      let cropper = null;
-      let originalFileName = 'image';
+    /* Theme (shared key with homepage) */
+    function syncTheme(){
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
+      document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'));
+    }
+    $('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light':'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
+    });
+    syncTheme();
 
-      // DOM
-      const uploadZone = document.getElementById('uploadZone');
-      const fileInput = document.getElementById('fileInput');
-      const workspace = document.getElementById('workspace');
-      const cropImage = document.getElementById('cropImage');
-      const resultCard = document.getElementById('resultCard');
-      const resultPreview = document.getElementById('resultPreview');
-      const sizeInfo = document.getElementById('sizeInfo');
+    let cropper = null, originalFileName = 'image', isCircle = false;
 
-      // Upload handling
-      uploadZone.addEventListener('click', () => fileInput.click());
-      fileInput.addEventListener('change', handleFile);
-      uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = 'var(--accent)'; });
-      uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = 'var(--border)'; });
-      uploadZone.addEventListener('drop', e => {
-        e.preventDefault();
-        uploadZone.style.borderColor = 'var(--border)';
-        if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
-      });
+    const uploadZone=$('uploadZone'), fileInput=$('fileInput'), workspace=$('workspace'),
+      cropImage=$('cropImage'), resultCard=$('resultCard'), resultPreview=$('resultPreview'),
+      sizeInfo=$('sizeInfo'), cropReadout=$('cropReadout');
 
-      function handleFile(e) {
-        if (e.target.files[0]) loadImage(e.target.files[0]);
-      }
+    /* Upload */
+    uploadZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => { if(e.target.files[0]) loadImage(e.target.files[0]); });
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor='var(--accent)'; });
+    uploadZone.addEventListener('dragleave', () => uploadZone.style.borderColor='');
+    uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.style.borderColor=''; if(e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]); });
 
-      function loadImage(file) {
-        originalFileName = file.name.replace(/\.[^/.]+$/, '') || 'image';
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          cropImage.src = e.target.result;
-          uploadZone.style.display = 'none';
-          workspace.classList.add('active');
-          resultCard.classList.remove('active');
-          if (cropper) cropper.destroy();
-          cropper = new Cropper(cropImage, {
-            viewMode: 1,
-            dragMode: 'move',
-            autoCropArea: 0.8,
-            responsive: true,
-            restore: false,
-            guides: true,
-            center: true,
-            highlight: false,
-            cropBoxMovable: true,
-            cropBoxResizable: true,
-            toggleDragModeOnDblclick: false,
-          });
-        };
-        reader.readAsDataURL(file);
-        fileInput.value = '';
-      }
-
-      // Aspect ratio chips
-      document.querySelectorAll('.ratio-chip').forEach(chip => {
-        chip.addEventListener('click', () => {
-          document.querySelectorAll('.ratio-chip').forEach(c => c.classList.remove('active'));
-          chip.classList.add('active');
-          const ratio = chip.dataset.ratio;
-          if (!cropper) return;
-          if (ratio === 'free') cropper.setAspectRatio(NaN);
-          else {
-            const [w, h] = ratio.split(':').map(Number);
-            cropper.setAspectRatio(w / h);
-          }
-        });
-      });
-
-      // Crop button
-      document.getElementById('cropBtn').addEventListener('click', () => {
-        if (!cropper) return;
-        const canvas = cropper.getCroppedCanvas({ maxWidth: 4096, maxHeight: 4096, imageSmoothingQuality: 'high' });
-        if (!canvas) return alert('Could not crop. Try again.');
-        resultPreview.src = canvas.toDataURL('image/png');
-        sizeInfo.textContent = `Size: ${canvas.width} × ${canvas.height} px`;
-        workspace.classList.remove('active');
-        resultCard.classList.add('active');
-      });
-
-      // Reset
-      document.getElementById('resetBtn').addEventListener('click', () => { if (cropper) cropper.reset(); });
-
-      // Zoom
-      document.getElementById('zoomInBtn').addEventListener('click', () => { if (cropper) cropper.zoom(0.1); });
-      document.getElementById('zoomOutBtn').addEventListener('click', () => { if (cropper) cropper.zoom(-0.1); });
-
-      // Rotate
-      document.getElementById('rotateBtn').addEventListener('click', () => { if (cropper) cropper.rotate(90); });
-
-      // Flip
-      document.getElementById('flipHBtn').addEventListener('click', () => {
-        if (!cropper) return;
-        const scaleX = cropper.getImageData().scaleX || 1;
-        cropper.scaleX(-scaleX);
-      });
-      document.getElementById('flipVBtn').addEventListener('click', () => {
-        if (!cropper) return;
-        const scaleY = cropper.getImageData().scaleY || 1;
-        cropper.scaleY(-scaleY);
-      });
-
-      // New image
-      document.getElementById('newImageBtn').addEventListener('click', () => {
-        if (cropper) cropper.destroy();
-        cropper = null;
-        cropImage.src = '';
-        workspace.classList.remove('active');
-        resultCard.classList.remove('active');
-        uploadZone.style.display = 'block';
-      });
-
-      // Download
-      function downloadCanvas(format) {
-        if (!resultPreview.src) return;
-        const canvas = document.createElement('canvas');
-        const img = new Image();
-        img.onload = () => {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          canvas.getContext('2d').drawImage(img, 0, 0);
-          const mime = format === 'jpg' ? 'image/jpeg' : 'image/png';
-          const ext = format === 'jpg' ? 'jpg' : 'png';
-          canvas.toBlob(blob => {
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${originalFileName}-cropped.${ext}`;
-            a.click();
-            URL.revokeObjectURL(url);
-          }, mime, 0.92);
-        };
-        img.src = resultPreview.src;
-      }
-
-      document.getElementById('downloadBtn').addEventListener('click', () => downloadCanvas('png'));
-      document.getElementById('downloadJpgBtn').addEventListener('click', () => downloadCanvas('jpg'));
-
-      // Crop again
-      document.getElementById('cropAgainBtn').addEventListener('click', () => {
-        resultCard.classList.remove('active');
+    function loadImage(file){
+      if(!file.type.startsWith('image/')){ toast('Please upload an image'); return; }
+      originalFileName = file.name.replace(/\.+$/, '') || 'image';
+      const reader = new FileReader();
+      reader.onload = e => {
+        cropImage.src = e.target.result;
+        uploadZone.style.display = 'none';
         workspace.classList.add('active');
-      });
-    })();
+        resultCard.classList.remove('active');
+        if(cropper) cropper.destroy();
+        cropper = new Cropper(cropImage, {
+          viewMode:1, dragMode:'move', autoCropArea:0.8, responsive:true, restore:false,
+          guides:true, center:true, highlight:false, cropBoxMovable:true, cropBoxResizable:true,
+          toggleDragModeOnDblclick:false,
+          crop(){ const d=cropper && cropper.getData ? cropper.getData(true):null; if(d) cropReadout.textContent=`${Math.round(d.width)} × ${Math.round(d.height)} px`; }
+        });
+      };
+      reader.readAsDataURL(file);
+      fileInput.value = '';
+    }
+
+    /* Aspect ratios */
+    function clearChips(){ document.querySelectorAll('.ratio-chip').forEach(c=>c.classList.remove('active')); }
+    document.querySelectorAll('.ratio-chip').forEach(chip => chip.addEventListener('click', () => {
+      clearChips(); chip.classList.add('active');
+      if(!cropper) return;
+      const r = chip.dataset.ratio;
+      if(r==='free') cropper.setAspectRatio(NaN);
+      else { const [w,h]=r.split(':').map(Number); cropper.setAspectRatio(w/h); }
+    }));
+    $('applyCustom').addEventListener('click', () => {
+      const w=parseFloat($('customW').value), h=parseFloat($('customH').value);
+      if(cropper && w>0 && h>0){ clearChips(); cropper.setAspectRatio(w/h); toast(`Aspect set to ${w}:${h}`); }
+    });
+
+    /* Toolbar */
+    $('resetBtn').addEventListener('click', () => cropper && cropper.reset());
+    $('zoomInBtn').addEventListener('click', () => cropper && cropper.zoom(0.1));
+    $('zoomOutBtn').addEventListener('click', () => cropper && cropper.zoom(-0.1));
+    $('rotateBtn').addEventListener('click', () => cropper && cropper.rotate(90));
+    $('flipHBtn').addEventListener('click', () => { if(!cropper) return; cropper.scaleX(-(cropper.getImageData().scaleX||1)); });
+    $('flipVBtn').addEventListener('click', () => { if(!cropper) return; cropper.scaleY(-(cropper.getImageData().scaleY||1)); });
+    $('circleBtn').addEventListener('click', function(){
+      isCircle = !isCircle;
+      document.querySelector('.cropper-view-box')?.classList.toggle('circle', isCircle);
+      document.querySelector('.cropper-face')?.classList.toggle('circle', isCircle);
+      this.classList.toggle('btn-accent', isCircle);
+      if(isCircle){ clearChips(); document.querySelector('[data-ratio="1:1"]').classList.add('active'); cropper.setAspectRatio(1); }
+      toast(isCircle ? 'Circle crop on' : 'Circle crop off');
+    });
+    $('newImageBtn').addEventListener('click', () => {
+      if(cropper) cropper.destroy(); cropper=null; cropImage.src='';
+      workspace.classList.remove('active'); resultCard.classList.remove('active'); uploadZone.style.display='block';
+    });
+
+    /* Output options */
+    const formatSelect=$('formatSelect'), qualityOpt=$('qualityOpt'), bgOpt=$('bgOpt'), qualityRange=$('qualityRange'), qVal=$('qVal');
+    formatSelect.addEventListener('change', () => {
+      const f = formatSelect.value;
+      qualityOpt.style.display = (f==='jpg'||f==='webp') ? 'flex':'none';
+      bgOpt.style.display = (f==='jpg') ? 'flex':'none';
+    });
+    qualityRange.addEventListener('input', () => qVal.textContent = qualityRange.value);
+
+    /* Apply crop → produce canvas */
+    let croppedCanvas = null;
+    function buildCanvas(){
+      if(!cropper) return null;
+      let canvas = cropper.getCroppedCanvas({ maxWidth:8192, maxHeight:8192, imageSmoothingQuality:'high' });
+      if(!canvas) return null;
+      if(isCircle){
+        const c = document.createElement('canvas'); c.width=canvas.width; c.height=canvas.height;
+        const ctx=c.getContext('2d');
+        ctx.beginPath(); ctx.arc(c.width/2,c.height/2,Math.min(c.width,c.height)/2,0,Math.PI*2); ctx.closePath(); ctx.clip();
+        ctx.drawImage(canvas,0,0); canvas=c;
+      }
+      return canvas;
+    }
+    $('cropBtn').addEventListener('click', () => {
+      croppedCanvas = buildCanvas();
+      if(!croppedCanvas){ toast('Could not crop, try again'); return; }
+      resultPreview.src = croppedCanvas.toDataURL('image/png');
+      sizeInfo.textContent = `Size: ${croppedCanvas.width} × ${croppedCanvas.height} px`;
+      workspace.classList.remove('active'); resultCard.classList.add('active');
+    });
+
+    /* Download in chosen format */
+    $('downloadBtn').addEventListener('click', () => {
+      if(!croppedCanvas) return;
+      const f = formatSelect.value;
+      const mime = f==='jpg' ? 'image/jpeg' : f==='webp' ? 'image/webp' : 'image/png';
+      const ext = f==='jpg' ? 'jpg' : f;
+      const q = parseInt(qualityRange.value)/100;
+      let out = croppedCanvas;
+      if(f==='jpg'){ // flatten transparency onto background color
+        const c=document.createElement('canvas'); c.width=croppedCanvas.width; c.height=croppedCanvas.height;
+        const ctx=c.getContext('2d'); ctx.fillStyle=$('bgColor').value; ctx.fillRect(0,0,c.width,c.height); ctx.drawImage(croppedCanvas,0,0); out=c;
+      }
+      out.toBlob(blob => {
+        const url=URL.createObjectURL(blob); const a=document.createElement('a');
+        a.href=url; a.download=`${originalFileName}-cropped.${ext}`; a.click(); URL.revokeObjectURL(url);
+        toast('Downloaded');
+      }, mime, q);
+    });
+
+    $('cropAgainBtn').addEventListener('click', () => { resultCard.classList.remove('active'); workspace.classList.add('active'); });
+  })();
   </script>
 </body>
 </html>
