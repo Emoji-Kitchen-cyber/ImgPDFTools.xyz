@@ -11,231 +11,263 @@
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Compress Image – PixelPress</title>
+  <title>Compress Image — ImgPDFTools</title>
+  <meta name="description" content="Free online image compressor. Shrink JPG, PNG, WebP and AVIF in your browser with quality control, batch ZIP export, and before/after preview. Private — no uploads." />
+  <link rel="canonical" href="https://imgpdftools.xyz/compress.html" />
+  <meta property="og:title" content="Compress Image — ImgPDFTools" />
+  <meta property="og:description" content="Compress images in your browser. Private, fast, batch-ready." />
+  <meta property="og:url" content="https://imgpdftools.xyz/compress.html" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#6366f1" />
+
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
     :root {
-      --bg: #f5f5f7;
-      --surface: rgba(255,255,255,0.75);
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.06);
-      --text: #1d1d1f;
-      --muted: #6e6e73;
-      --accent: #ec4899;
-      --accent2: #a78bfa;
-      --glow: rgba(236,72,153,0.1);
-      --r: 16px;
-      --fhead: 'Syne', sans-serif;
-      --fbody: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4;
+      --glow:rgba(99,102,241,0.14);
+      --r:18px; --r-sm:12px;
+      --fhead:'Space Grotesk', sans-serif;
+      --fbody:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --nav-h:66px;
     }
-
     [data-theme="dark"] {
-      --bg: #09090e;
-      --surface: rgba(21,21,30,0.7);
-      --card: #15151e;
-      --border: rgba(255,255,255,0.08);
-      --text: #e8e8f0;
-      --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
     }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody);
+      min-height:100vh; display:flex; flex-direction:column;
+      transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: var(--bg); color: var(--text); font-family: var(--fbody);
-      min-height: 100vh; display: flex; flex-direction: column;
-      transition: background 0.3s, color 0.3s;
-    }
+    /* NAV */
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center;
+      justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h);
+      background:var(--surface); backdrop-filter:blur(28px) saturate(180%);
+      -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
+    .nav-left { display:flex; align-items:center; gap:1rem; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2);
+      width:40px; height:40px; border-radius:50%; display:flex; align-items:center;
+      justify-content:center; color:var(--text); font-size:1rem; cursor:pointer;
+      transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead);
+      font-weight:700; font-size:1.15rem; letter-spacing:-.3px; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2));
+      border-radius:9px; display:flex; align-items:center; justify-content:center;
+      font-size:16px; box-shadow:0 4px 14px var(--glow); flex-shrink:0; }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
 
-    nav {
-      position: sticky; top:0; z-index:200; display: flex; align-items: center;
-      justify-content: space-between; padding: 0 clamp(1rem,5vw,3rem); height:64px;
-      background: var(--surface); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-left { display: flex; align-items: center; gap:1rem; }
-    .back-btn {
-      background: var(--card); border: 1px solid var(--border);
-      width:42px; height:42px; border-radius:50%; display: flex; align-items: center;
-      justify-content: center; color: var(--text); font-size:1.1rem; cursor:pointer;
-      text-decoration: none; transition: all 0.2s;
-    }
-    .back-btn:hover { border-color: var(--accent); transform: scale(1.05); }
-    .nav-logo {
-      font-family: var(--fhead); font-weight:800; font-size:1.25rem;
-      text-transform: uppercase; text-decoration: none; color: inherit;
-    }
-    .nav-logo span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    }
+    /* HEAD */
+    .ph-head { text-align:center; padding:1.8rem 1rem .3rem; }
+    .ph-head .badge { display:inline-flex; align-items:center; gap:7px; background:var(--card);
+      border:1px solid var(--border); padding:5px 14px; border-radius:99px; font-size:12px;
+      font-weight:700; color:var(--accent); box-shadow:0 0 0 4px var(--glow); margin-bottom:.9rem; }
+    .ph-head h1 { font-family:var(--fhead); font-weight:700; letter-spacing:-.5px; font-size:clamp(1.6rem,4vw,2.3rem); }
+    .ph-head h1 span { background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .ph-head p { color:var(--muted); margin-top:.3rem; font-size:14px; }
 
-    .main {
-      max-width: 1100px; margin: 0 auto; width:100%; padding:2rem 20px 4rem;
-      display: grid; grid-template-columns: 1fr 380px; gap:2rem;
-    }
-    @media (max-width: 850px) { .main { grid-template-columns:1fr; } }
+    /* LAYOUT */
+    .main { max-width:1160px; margin:0 auto; width:100%; padding:1.5rem 18px 4rem;
+      display:grid; grid-template-columns:1fr 360px; gap:1.5rem; }
+    @media(max-width:860px){ .main { grid-template-columns:1fr; } }
 
-    /* Upload Panel */
-    .upload-panel {
-      background: var(--card); border:1px solid var(--border);
-      border-radius: var(--r); padding:2rem; display: flex;
-      flex-direction: column; align-items: center; box-shadow:0 4px 20px rgba(0,0,0,0.02);
-    }
-    .upload-zone {
-      border: 2px dashed var(--border); border-radius: 16px; padding:3rem;
-      text-align: center; cursor:pointer; width:100%; transition:0.2s;
-    }
-    .upload-zone:hover { border-color: var(--accent); background: var(--glow); }
-    .upload-zone i { font-size:3rem; color: var(--accent); }
-    .batch-indicator { margin-top:1rem; font-size:0.85rem; color:var(--muted); }
+    .panel { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r);
+      padding:1.5rem; box-shadow:0 4px 24px rgba(0,0,0,0.04); }
+    .upload-panel { display:flex; flex-direction:column; align-items:center; }
+    .upload-zone { border:2px dashed var(--border2); border-radius:16px; padding:3rem 1rem;
+      text-align:center; cursor:pointer; width:100%; transition:.2s; }
+    .upload-zone:hover { border-color:var(--accent); background:var(--glow); }
+    .upload-zone i { font-size:2.6rem; color:var(--accent); }
+    .upload-zone .uz-title { font-weight:700; margin-top:.6rem; font-family:var(--fhead); }
+    .upload-zone .uz-sub { font-size:.85rem; color:var(--muted); margin-top:.3rem; }
+    .batch-indicator { margin-top:1rem; font-size:.85rem; color:var(--muted); }
+    .batch-indicator a { color:var(--accent); font-weight:600; }
 
-    /* Preview Area */
-    .preview-section { margin-top:1.5rem; width:100%; }
-    .comparison-slider {
-      position: relative; width:100%; overflow:hidden; border-radius:12px;
-      background: #f0f0f0; min-height: 250px; display: flex; align-items: center; justify-content: center;
-    }
-    .comp-image {
-      position: absolute; top:0; left:0; width:100%; height:100%; object-fit: contain;
-    }
+    /* Thumb strip */
+    .thumb-strip { display:flex; gap:8px; flex-wrap:wrap; margin-top:1rem; width:100%; }
+    .thumb { position:relative; width:74px; cursor:pointer; }
+    .thumb img { width:74px; height:60px; object-fit:cover; border-radius:10px;
+      border:2px solid var(--border2); transition:border-color .2s; }
+    .thumb.active img { border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .thumb .t-meta { font-size:9px; text-align:center; color:var(--muted); margin-top:3px;
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .thumb .t-save { color:#16a34a; font-weight:700; }
+    .thumb .t-rm { position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%;
+      background:var(--card); border:1px solid var(--border2); color:var(--muted); font-size:9px;
+      display:flex; align-items:center; justify-content:center; cursor:pointer; }
+    .thumb .t-rm:hover { color:#dc2626; border-color:#dc2626; }
+
+    /* Preview */
+    .preview-section { margin-top:1.4rem; width:100%; }
+    .comparison-slider { position:relative; width:100%; overflow:hidden; border-radius:12px;
+      background:var(--bg2); min-height:260px; display:flex; align-items:center; justify-content:center;
+      user-select:none; }
+    .comp-image { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
     .comp-original { z-index:1; }
-    .comp-compressed { z-index:2; clip-path: inset(0 50% 0 0); }
-    .slider-handle {
-      position: absolute; top:0; bottom:0; width:4px; background: var(--accent);
-      left:50%; cursor: ew-resize; z-index:3;
-    }
-    .slider-input { position: absolute; width:100%; bottom:10px; z-index:4; opacity:0.7; }
+    .comp-compressed { z-index:2; clip-path:inset(0 50% 0 0); }
+    .slider-handle { position:absolute; top:0; bottom:0; width:3px; background:var(--accent);
+      left:50%; cursor:ew-resize; z-index:4; box-shadow:0 0 10px var(--glow); }
+    .slider-handle::after { content:'\f0db'; font-family:'Font Awesome 6 Free'; font-weight:900;
+      position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      width:30px; height:30px; border-radius:50%; background:var(--accent); color:#fff;
+      display:flex; align-items:center; justify-content:center; font-size:12px; }
+    .comp-tag { position:absolute; top:8px; z-index:5; font-size:10px; font-weight:700;
+      padding:3px 9px; border-radius:99px; background:rgba(0,0,0,.5); color:#fff; backdrop-filter:blur(4px); }
+    .comp-tag.left { left:8px; } .comp-tag.right { right:8px; }
+    .image-actions { display:flex; gap:10px; margin-top:1rem; flex-wrap:wrap; justify-content:center; }
 
-    .image-actions { display: flex; gap:10px; margin-top:1rem; flex-wrap: wrap; justify-content: center; }
+    /* Settings */
+    .section-title { font-family:var(--fhead); font-size:1rem; font-weight:700; display:flex;
+      align-items:center; gap:8px; margin-bottom:1rem; }
+    .section-title i { color:var(--accent); }
+    .input-group { margin-bottom:1.1rem; }
+    label { display:block; margin-bottom:5px; font-weight:700; font-size:.74rem; color:var(--muted);
+      text-transform:uppercase; letter-spacing:.5px; }
+    select, input[type="number"] { width:100%; padding:10px 12px; border:1.5px solid var(--border2);
+      border-radius:10px; background:var(--bg); color:var(--text); font-size:14px;
+      font-family:var(--fbody); outline:none; transition:border-color .2s,box-shadow .2s; }
+    select:focus, input[type="number"]:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    input[type="range"] { width:100%; accent-color:var(--accent); cursor:pointer; }
+    .range-row { display:flex; align-items:center; gap:10px; }
+    .range-row span { min-width:42px; font-size:13px; font-weight:700; color:var(--accent); }
 
-    /* Settings Panel */
-    .settings-panel {
-      background: var(--card); border:1px solid var(--border);
-      border-radius: var(--r); padding:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.02);
-      overflow-y: auto; max-height: calc(100vh - 120px);
-    }
-    .section-title {
-      font-family: var(--fhead); font-size:1rem; font-weight:800;
-      display: flex; align-items: center; gap:8px; margin-bottom:1rem;
-    }
-    .input-group { margin-bottom:1rem; }
-    label { display: block; margin-bottom:4px; font-weight:600; font-size:0.85rem; color:var(--muted); }
-    select, input[type="number"], input[type="range"] {
-      width:100%; padding:10px 12px; border:1px solid var(--border);
-      border-radius:10px; background: var(--bg); color: var(--text); font-size:14px;
-    }
-    input[type="range"] { padding:0; accent-color: var(--accent); }
-    .range-row { display:flex; align-items: center; gap:10px; }
-    .range-row span { min-width:40px; font-size:13px; }
-    .btn {
-      padding:10px 18px; border:none; border-radius:10px; font-weight:600;
-      cursor:pointer; font-size:13px; display: inline-flex; align-items: center; gap:6px;
-      transition: all 0.2s;
-    }
-    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color:white; }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--glow); }
-    .btn-secondary { background: var(--bg); color: var(--text); border:1px solid var(--border); }
-    .btn-secondary:hover { border-color: var(--accent); }
-    .btn:disabled { opacity:0.5; cursor:not-allowed; }
+    .presets { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:1.1rem; }
+    .preset { flex:1; min-width:70px; padding:8px 6px; border:1.5px solid var(--border2); border-radius:10px;
+      background:var(--bg); color:var(--muted); font-size:11.5px; font-weight:700; cursor:pointer;
+      text-align:center; transition:all .2s; font-family:var(--fbody); }
+    .preset:hover { border-color:var(--accent); color:var(--accent); }
+    .preset.active { background:var(--accent); color:#fff; border-color:var(--accent); box-shadow:0 4px 12px var(--glow); }
 
-    .stats-grid { display: flex; gap:15px; margin-top:1rem; }
-    .stat-card {
-      flex:1; background: var(--bg); padding:12px; border-radius:10px; text-align:center;
-    }
-    .stat-card strong { display:block; color: var(--accent); font-size:1.2rem; }
+    .switch-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:.9rem; }
+    .switch-row label { margin:0; text-transform:none; font-size:13px; font-weight:600; color:var(--text); letter-spacing:0; }
+    .switch { position:relative; width:42px; height:23px; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .switch .slider-tog { position:absolute; inset:0; background:#c4c4d8; border-radius:99px; cursor:pointer; transition:.3s; }
+    [data-theme="dark"] .switch .slider-tog { background:#2a2a42; }
+    .switch .slider-tog::before { content:''; position:absolute; width:17px; height:17px; left:3px; top:3px;
+      background:#fff; border-radius:50%; transition:.3s; }
+    .switch input:checked + .slider-tog { background:var(--accent); }
+    .switch input:checked + .slider-tog::before { transform:translateX(19px); }
 
-    /* Engine badge */
-    .engine-badge {
-      display: inline-flex; align-items: center; gap:6px;
-      background: linear-gradient(135deg, rgba(236,72,153,0.12), rgba(167,139,250,0.12));
-      border: 1px solid rgba(236,72,153,0.25);
-      border-radius: 8px; padding: 6px 10px;
-      font-size: 11px; font-weight: 700; color: var(--accent);
-      margin-bottom: 1rem; width: 100%;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .engine-badge .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--accent); animation: pulse 1.8s infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity:1; transform:scale(1); }
-      50% { opacity:0.5; transform:scale(0.8); }
-    }
+    .btn { padding:11px 18px; border:none; border-radius:10px; font-weight:600; cursor:pointer;
+      font-size:13px; display:inline-flex; align-items:center; justify-content:center; gap:7px;
+      transition:all .2s; font-family:var(--fbody); }
+    .btn-primary { background:var(--accent); color:#fff; box-shadow:0 4px 14px var(--glow); }
+    .btn-primary:hover { background:var(--accent2); }
+    .btn-secondary { background:var(--bg); color:var(--text); border:1.5px solid var(--border2); }
+    .btn-secondary:hover { border-color:var(--accent); color:var(--accent); }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
 
-    /* Codec info pills */
-    .codec-info {
-      font-size: 11px; color: var(--muted); margin-top: 4px;
-      font-family: 'JetBrains Mono', monospace;
-    }
+    .codec-info { font-size:11px; color:var(--muted); margin-top:5px; }
+    .engine-badge { display:inline-flex; align-items:center; gap:6px;
+      background:linear-gradient(135deg,rgba(99,102,241,.12),rgba(139,92,246,.12));
+      border:1px solid rgba(99,102,241,.25); border-radius:8px; padding:6px 10px;
+      font-size:11px; font-weight:700; color:var(--accent); margin-bottom:1.1rem; width:100%; }
+    .engine-badge .dot { width:7px; height:7px; border-radius:50%; background:var(--accent); animation:pulse 1.8s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:.5;transform:scale(.7);} }
 
-    /* Progress bar */
-    .progress-wrap {
-      width:100%; background: var(--bg); border-radius:8px;
-      height:6px; margin-top:10px; overflow:hidden; display:none;
-    }
-    .progress-bar {
-      height:100%; width:0%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius:8px; transition: width 0.3s;
-    }
+    .est { font-size:12px; color:var(--muted); margin:8px 0 2px; text-align:center; }
+    .est strong { color:var(--accent); }
 
-    footer { text-align:center; padding:2rem; color: var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:auto; }
+    .progress-wrap { width:100%; background:var(--bg2); border-radius:8px; height:7px;
+      margin-top:10px; overflow:hidden; display:none; }
+    .progress-bar { height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--accent3));
+      border-radius:8px; transition:width .3s; }
+
+    .stats-grid { display:flex; gap:12px; margin-top:1rem; }
+    .stat-card { flex:1; background:var(--bg); padding:12px; border-radius:12px; text-align:center;
+      border:1px solid var(--border2); }
+    .stat-card span { font-size:11px; color:var(--muted); font-weight:600; }
+    .stat-card strong { display:block; color:var(--accent); font-size:1.15rem; font-family:var(--fhead); margin-top:2px; }
+
+    #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
+      background:var(--text); color:var(--bg); padding:11px 20px; border-radius:99px; font-size:13px;
+      font-weight:600; opacity:0; pointer-events:none; transition:opacity .3s,transform .3s; z-index:999;
+      box-shadow:0 8px 24px rgba(0,0,0,.2); }
+    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    footer { text-align:center; padding:30px 20px; color:var(--muted); font-size:13px;
+      border-top:1px solid var(--border2); background:var(--card); margin-top:auto; }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px;
+      font-family:var(--fhead); font-weight:700; font-size:1rem; }
     .hidden { display:none !important; }
   </style>
 </head>
 <body>
-  <nav>
+  <nav role="navigation" aria-label="Main navigation">
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="control-btn" aria-label="Toggle theme">🌓</button>
   </nav>
+
+  <div class="ph-head">
+    <div class="badge"><i class="fa-solid fa-box"></i> Compress Image</div>
+    <h1>Shrink images <span>without losing quality</span></h1>
+    <p>JPG · PNG · WebP · AVIF — batch compress in your browser. No uploads, fully private.</p>
+  </div>
 
   <div class="main">
     <!-- Upload & Preview -->
-    <div class="upload-panel" id="uploadPanel">
+    <div class="panel upload-panel" id="uploadPanel">
       <div class="upload-zone" id="dropZone">
-        <i class="fa-solid fa-cloud-upload"></i>
-        <p style="font-weight:600; margin-top:0.5rem;">Drag & Drop or Click to Upload</p>
-        <p style="font-size:0.85rem; color:var(--muted);">JPG, PNG, WEBP, AVIF (Max 25MB per file)</p>
+        <i class="fa-solid fa-cloud-arrow-up"></i>
+        <p class="uz-title">Drag &amp; drop or click to upload</p>
+        <p class="uz-sub">JPG, PNG, WEBP, AVIF · up to 25MB each · batch supported</p>
       </div>
       <input type="file" id="fileInput" accept="image/*" multiple hidden />
       <div class="batch-indicator" id="batchInfo"></div>
+      <div class="thumb-strip" id="thumbStrip"></div>
 
-      <!-- Preview with comparison slider -->
       <div class="preview-section hidden" id="previewSection">
         <div class="comparison-slider" id="comparisonContainer">
+          <span class="comp-tag left">Original</span>
+          <span class="comp-tag right">Compressed</span>
           <img id="originalImg" class="comp-image comp-original" alt="Original" />
           <img id="compressedImg" class="comp-image comp-compressed" alt="Compressed" />
           <div class="slider-handle" id="sliderHandle"></div>
-          <input type="range" min="0" max="100" value="50" class="slider-input" id="comparisonRange" />
         </div>
-        <div class="progress-wrap" id="progressWrap">
-          <div class="progress-bar" id="progressBar"></div>
-        </div>
+        <div class="progress-wrap" id="progressWrap"><div class="progress-bar" id="progressBar"></div></div>
         <div class="image-actions">
           <button id="downloadSingleBtn" class="btn btn-primary"><i class="fa-solid fa-download"></i> Download</button>
-          <button id="downloadBatchBtn" class="btn btn-secondary hidden"><i class="fa-solid fa-file-zipper"></i> Download All (ZIP)</button>
+          <button id="downloadBatchBtn" class="btn btn-secondary hidden"><i class="fa-solid fa-file-zipper"></i> Download all (ZIP)</button>
           <button id="clearBtn" class="btn btn-secondary"><i class="fa-solid fa-trash"></i> Clear</button>
         </div>
       </div>
     </div>
 
     <!-- Settings -->
-    <div class="settings-panel">
+    <div class="panel settings-panel">
       <div class="section-title"><i class="fa-solid fa-sliders"></i> Compression Settings</div>
+      <div class="engine-badge"><span class="dot"></span> In-browser WebAssembly + Canvas engine</div>
 
-      <!-- Engine Badge -->
-      <div class="engine-badge">
-        <span class="dot"></span>
-        Squoosh WebAssembly Engine
+      <label>Quick presets</label>
+      <div class="presets" id="presets">
+        <div class="preset" data-q="40">MaxNLBRcompression</div>
+        <div class="preset active" data-q="75">Balanced</div>
+        <div class="preset" data-q="92">HighNLBRquality</div>
+        <div class="preset" data-q="100">Lossless</div>
       </div>
 
       <div class="input-group">
@@ -247,607 +279,488 @@
       </div>
 
       <div class="input-group">
-        <label>Output Format</label>
+        <label>Output format</label>
         <select id="formatSelect">
-          <option value="mozjpeg">MozJPEG (Best JPEG – Squoosh)</option>
-          <option value="webp">WebP (Smallest – Squoosh)</option>
-          <option value="oxipng">OxiPNG (Lossless PNG – Squoosh)</option>
-          <option value="avif">AVIF (Next-Gen – Squoosh)</option>
-          <option value="jxl">JPEG XL (Future-Proof – Squoosh)</option>
-          <option value="canvas-jpeg">JPEG (Canvas fallback)</option>
-          <option value="canvas-png">PNG (Canvas fallback)</option>
+          <option value="keep">Keep original format</option>
+          <option value="mozjpeg">JPEG (best quality/size)</option>
+          <option value="webp">WebP (smallest)</option>
+          <option value="oxipng">PNG (lossless)</option>
+          <option value="avif">AVIF (next-gen)</option>
         </select>
-        <div class="codec-info" id="codecInfo">MozJPEG — up to 30% smaller than standard JPEG</div>
+        <div class="codec-info" id="codecInfo">Keeps each file in its original format where possible.</div>
       </div>
 
       <div class="input-group">
-        <label>Max Dimensions (px)</label>
+        <label>Resize mode</label>
+        <select id="resizeMode">
+          <option value="none">No resize</option>
+          <option value="dims" selected>Max dimensions (px)</option>
+          <option value="percent">Scale by percentage</option>
+        </select>
+      </div>
+
+      <div class="input-group" id="dimsGroup">
+        <label>Max width × height (px)</label>
         <div style="display:flex; gap:8px;">
-          <input type="number" id="maxWidth" placeholder="Width" value="2000" min="1" max="8000" />
-          <input type="number" id="maxHeight" placeholder="Height" value="2000" min="1" max="8000" />
+          <input type="number" id="maxWidth" placeholder="Width" value="2000" min="1" max="12000" />
+          <input type="number" id="maxHeight" placeholder="Height" value="2000" min="1" max="12000" />
         </div>
       </div>
 
-      <div class="input-group">
-        <label>Maintain Aspect Ratio</label>
-        <input type="checkbox" id="keepRatio" checked />
+      <div class="input-group hidden" id="percentGroup">
+        <label>Scale: <span id="percentVal">100</span>%</label>
+        <input type="range" id="scalePercent" min="10" max="100" value="100" />
+      </div>
+
+      <div class="switch-row">
+        <label for="keepRatio">Maintain aspect ratio</label>
+        <span class="switch"><input type="checkbox" id="keepRatio" checked /><span class="slider-tog"></span></span>
+      </div>
+      <div class="switch-row">
+        <label for="noUpscale">Don't upscale smaller images</label>
+        <span class="switch"><input type="checkbox" id="noUpscale" checked /><span class="slider-tog"></span></span>
+      </div>
+      <div class="switch-row">
+        <label for="stripMeta">Strip metadata (EXIF)</label>
+        <span class="switch"><input type="checkbox" id="stripMeta" checked /><span class="slider-tog"></span></span>
       </div>
 
       <div class="input-group">
-        <label>Target File Size (KB) – optional</label>
-        <input type="number" id="targetSize" placeholder="e.g., 200" min="1" />
+        <label>Target file size (KB) — optional</label>
+        <input type="number" id="targetSize" placeholder="e.g. 200" min="1" />
       </div>
 
+      <p class="est" id="estLine"></p>
       <button id="compressBtn" class="btn btn-primary" style="width:100%;" disabled>
         <i class="fa-solid fa-compress"></i> Compress
       </button>
 
       <div class="stats-grid hidden" id="statsGrid">
-        <div class="stat-card">
-          <span>Original</span>
-          <strong id="origSize">—</strong>
-        </div>
-        <div class="stat-card">
-          <span>Compressed</span>
-          <strong id="compSize">—</strong>
-        </div>
-        <div class="stat-card">
-          <span>Saved</span>
-          <strong id="savedPercent">—</strong>
-        </div>
+        <div class="stat-card"><span>Original</span><strong id="origSize">—</strong></div>
+        <div class="stat-card"><span>Compressed</span><strong id="compSize">—</strong></div>
+        <div class="stat-card"><span>Saved</span><strong id="savedPercent">—</strong></div>
       </div>
     </div>
   </div>
 
-  <footer>© 2026 PixelPress – Client‑side, 100% Private · Powered by Squoosh WebAssembly</footer>
+  <div id="toast"></div>
 
-  <!-- ===================== SQUOOSH WASM CODECS ===================== -->
-  <!--
-    We load Squoosh's published WebAssembly codec modules from the
-    official @squoosh/lib CDN mirrors. Each codec is a standalone WASM
-    module that runs entirely in the browser — zero server uploads.
+  <footer role="contentinfo">
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
+    <p>© 2026 ImgPDFTools — Client-side &amp; 100% private. Images never leave your device.</p>
+  </footer>
 
-    Codecs used:
-      • MozJPEG  — Mozilla's JPEG encoder (best-in-class JPEG compression)
-      • WebP     — Google's WebP encoder (libwebp)
-      • OxiPNG   — Rust-based lossless PNG optimizer
-      • AVIF     — AOM AV1 Image encoder
-      • JPEG XL  — libjxl encoder (future-proof format)
-
-    CDN: unpkg.com/@squoosh/lib  (official npm package mirror)
-    All WASM binaries are fetched and cached by the browser automatically.
-  -->
+  <!-- ===================== ENCODE ENGINE (WASM attempt + Canvas fallback) ===================== -->
   <script type="module">
-    // ---------------------------------------------------------------
-    // Squoosh ImagePool — wraps each WASM codec cleanly
-    // We use the lower-level codec scripts directly for browser compat.
-    // ---------------------------------------------------------------
-
-    // ---- Utility: resize via OffscreenCanvas / regular canvas ----
-    function resizeImageData(imageData, targetW, targetH) {
-      const canvas = document.createElement('canvas');
-      canvas.width = imageData.width;
-      canvas.height = imageData.height;
-      const ctx = canvas.getContext('2d');
-      ctx.putImageData(imageData, 0, 0);
-
-      const out = document.createElement('canvas');
-      out.width = targetW;
-      out.height = targetH;
-      const octx = out.getContext('2d');
-      octx.drawImage(canvas, 0, 0, targetW, targetH);
-      return octx.getImageData(0, 0, targetW, targetH);
+    // Squoosh WASM codecs are attempted first; if unavailable, a reliable canvas
+    // encoder is used. Everything runs locally — zero uploads.
+    const codecCache = {};
+    async function loadCodec(name){
+      if (codecCache[name] !== undefined) return codecCache[name];
+      const base = 'https://unpkg.com/@squoosh/lib@0.4.0/build/';
+      const map = {
+        mozjpeg:'mozjpeg/mozjpeg_enc.js', webp:'webp/webp_enc.js',
+        oxipng:'oxipng/oxipng.js', avif:'avif/avif_enc.js'
+      };
+      try {
+        const mod = await import(base + map[name]);
+        if (mod.default) await mod.default();
+        codecCache[name] = mod;
+      } catch(e){
+        console.warn(`WASM codec "${name}" unavailable, using canvas fallback.`);
+        codecCache[name] = null;
+      }
+      return codecCache[name];
     }
 
-    // ---- Get ImageData from File ----
-    async function fileToImageData(file, maxW, maxH, keepRatio) {
+    async function fileToImageData(file, targetW, targetH){
       return new Promise((resolve, reject) => {
         const img = new Image();
         const url = URL.createObjectURL(file);
         img.onload = () => {
           URL.revokeObjectURL(url);
-          let w = img.naturalWidth;
-          let h = img.naturalHeight;
-          if (keepRatio) {
-            const ratio = Math.min(maxW / w, maxH / h);
-            if (ratio < 1) { w = Math.round(w * ratio); h = Math.round(h * ratio); }
-          } else {
-            w = Math.min(w, maxW);
-            h = Math.min(h, maxH);
-          }
-          const canvas = document.createElement('canvas');
-          canvas.width = w; canvas.height = h;
-          const ctx = canvas.getContext('2d');
+          const w = targetW || img.naturalWidth, h = targetH || img.naturalHeight;
+          const c = document.createElement('canvas');
+          c.width = w; c.height = h;
+          const ctx = c.getContext('2d');
           ctx.drawImage(img, 0, 0, w, h);
           resolve(ctx.getImageData(0, 0, w, h));
         };
-        img.onerror = reject;
-        img.src = url;
+        img.onerror = reject; img.src = url;
       });
     }
 
-    // ---- Canvas fallback compressor (original engine, kept as safety net) ----
-    async function canvasCompress(file, quality, mimeType, maxW, maxH, keepRatio) {
-      const imageData = await fileToImageData(file, maxW, maxH, keepRatio);
-      const canvas = document.createElement('canvas');
-      canvas.width = imageData.width; canvas.height = imageData.height;
-      canvas.getContext('2d').putImageData(imageData, 0, 0);
-      return new Promise((resolve) => canvas.toBlob(resolve, mimeType, quality));
-    }
-
-    // ================================================================
-    // SQUOOSH WASM CODEC LOADERS
-    // Each codec is dynamically imported from unpkg CDN.
-    // The codecs expose an `encode` function that takes ImageData + options
-    // and returns a Uint8Array of compressed bytes.
-    // ================================================================
-
-    // Cache loaded codec modules
-    const codecCache = {};
-
-    async function loadCodec(name) {
-      if (codecCache[name]) return codecCache[name];
-
-      // Squoosh publishes individual codec WASM packages on npm.
-      // We import the JS wrapper which auto-fetches the .wasm binary.
-      const base = 'https://unpkg.com/@squoosh/lib@0.4.0/build/';
-
-      let mod;
-      try {
-        switch(name) {
-          case 'mozjpeg':
-            mod = await import(base + 'mozjpeg/mozjpeg_enc.js');
-            await mod.default();  // init WASM
-            break;
-          case 'webp':
-            mod = await import(base + 'webp/webp_enc.js');
-            await mod.default();
-            break;
-          case 'oxipng':
-            mod = await import(base + 'oxipng/oxipng.js');
-            await mod.default();
-            break;
-          case 'avif':
-            mod = await import(base + 'avif/avif_enc.js');
-            await mod.default();
-            break;
-          case 'jxl':
-            mod = await import(base + 'jxl/jxl_enc.js');
-            await mod.default();
-            break;
-        }
-        codecCache[name] = mod;
-      } catch(e) {
-        console.warn(`Squoosh WASM codec "${name}" failed to load, using canvas fallback.`, e);
-        return null;
+    // Decide output dimensions from settings
+    window.computeDims = function(natW, natH, opts){
+      let w = natW, h = natH;
+      if (opts.mode === 'dims'){
+        const mW = opts.maxW || natW, mH = opts.maxH || natH;
+        if (opts.keepRatio){
+          const r = Math.min(mW / w, mH / h);
+          if (r < 1 || (!opts.noUpscale && r > 1)) { w = Math.round(w*r); h = Math.round(h*r); }
+        } else { w = Math.min(w, mW); h = Math.min(h, mH); }
+      } else if (opts.mode === 'percent'){
+        const p = opts.percent / 100;
+        if (!(opts.noUpscale && p > 1)) { w = Math.round(w*p); h = Math.round(h*p); }
       }
-      return mod;
+      return { w: Math.max(1,w), h: Math.max(1,h) };
+    };
+
+    async function canvasEncode(file, mime, quality, dims){
+      const id = await fileToImageData(file, dims.w, dims.h);
+      const c = document.createElement('canvas');
+      c.width = id.width; c.height = id.height;
+      c.getContext('2d').putImageData(id, 0, 0);
+      return new Promise(res => c.toBlob(b => res(b || new Blob([file])), mime, quality));
     }
 
-    // ================================================================
-    // MAIN ENCODE FUNCTION — Squoosh WASM first, canvas fallback
-    // ================================================================
-    async function squooshEncode(file, format, quality, maxW, maxH, keepRatio, targetBytes) {
-      const imageData = await fileToImageData(file, maxW, maxH, keepRatio);
-      const q01 = quality / 100; // normalize 0–1
-
+    // Main encode — exposed globally for the UI script below.
+    window.smartEncode = async function(file, format, quality, dims, targetBytes){
+      // Resolve format ("keep" → from file type)
+      let fmt = format;
+      if (fmt === 'keep'){
+        if (file.type === 'image/png') fmt = 'oxipng';
+        else if (file.type === 'image/webp') fmt = 'webp';
+        else if (file.type === 'image/avif') fmt = 'avif';
+        else fmt = 'mozjpeg';
+      }
+      const meta = {
+        mozjpeg:{mime:'image/jpeg',ext:'jpg'}, webp:{mime:'image/webp',ext:'webp'},
+        oxipng:{mime:'image/png',ext:'png'}, avif:{mime:'image/avif',ext:'avif'}
+      }[fmt];
+      const id = await fileToImageData(file, dims.w, dims.h);
       let bytes = null;
-      let mime = 'image/jpeg';
-      let ext  = 'jpg';
 
-      // ---- Try Squoosh WASM codecs ----
       try {
-        if (format === 'mozjpeg') {
-          // MozJPEG: quality 0-100 integer
+        if (fmt === 'mozjpeg'){
           const enc = await loadCodec('mozjpeg');
-          if (enc && enc.encode) {
-            bytes = enc.encode(imageData.data, imageData.width, imageData.height, {
-              quality: Math.round(quality),
-              baseline: false,
-              arithmetic: false,
-              progressive: true,
-              optimize_coding: true,
-              smoothing: 0,
-              color_space: 3, // YCbCr
-              quant_table: 3,
-              trellis_multipass: false,
-              trellis_opt_zero: false,
-              trellis_opt_table: false,
-              trellis_loops: 1,
-              auto_subsample: true,
-              chroma_subsample: 2,
-              separate_chroma_quality: false,
-              chroma_quality: 75,
-            });
-            mime = 'image/jpeg'; ext = 'jpg';
-          }
-        }
-
-        else if (format === 'webp') {
+          if (enc && enc.encode) bytes = enc.encode(id.data, id.width, id.height,
+            { quality:Math.round(quality), progressive:true, optimize_coding:true, color_space:3,
+              quant_table:3, auto_subsample:true, chroma_subsample:2, baseline:false, arithmetic:false,
+              smoothing:0, trellis_multipass:false, trellis_opt_zero:false, trellis_opt_table:false,
+              trellis_loops:1, separate_chroma_quality:false, chroma_quality:75 });
+        } else if (fmt === 'webp'){
           const enc = await loadCodec('webp');
-          if (enc && enc.encode) {
-            bytes = enc.encode(imageData.data, imageData.width, imageData.height, {
-              quality: Math.round(quality),
-              target_size: 0,
-              target_PSNR: 0,
-              method: 4,
-              sns_strength: 50,
-              filter_strength: 60,
-              filter_sharpness: 0,
-              filter_type: 1,
-              partitions: 0,
-              segments: 4,
-              pass: 1,
-              show_compressed: 0,
-              preprocessing: 0,
-              autofilter: 0,
-              partition_limit: 0,
-              alpha_compression: 1,
-              alpha_filtering: 1,
-              alpha_quality: 100,
-              lossless: 0,
-              exact: 0,
-              image_hint: 0,
-              emulate_jpeg_size: 0,
-              thread_level: 0,
-              low_memory: 0,
-              near_lossless: 100,
-              use_delta_palette: 0,
-              use_sharp_yuv: 0,
-            });
-            mime = 'image/webp'; ext = 'webp';
-          }
-        }
-
-        else if (format === 'oxipng') {
-          const enc = await loadCodec('oxipng');
-          if (enc && enc.encode) {
-            // OxiPNG: first canvas-encode to PNG, then optimize
-            const pngBlob = await canvasCompress(file, 1, 'image/png', maxW, maxH, keepRatio);
-            const pngBuf  = await pngBlob.arrayBuffer();
-            bytes = enc.encode(new Uint8Array(pngBuf), {
-              level: 2,         // 0=fastest…6=smallest
-              interlace: false,
-            });
-            mime = 'image/png'; ext = 'png';
-          }
-        }
-
-        else if (format === 'avif') {
+          if (enc && enc.encode) bytes = enc.encode(id.data, id.width, id.height,
+            { quality:Math.round(quality), method:4, lossless:0, alpha_quality:100, near_lossless:100,
+              sns_strength:50, filter_strength:60, segments:4, pass:1 });
+        } else if (fmt === 'avif'){
           const enc = await loadCodec('avif');
-          if (enc && enc.encode) {
-            bytes = enc.encode(imageData.data, imageData.width, imageData.height, {
-              cqLevel:   Math.round(62 - (quality * 0.62)),  // inverse: lower = better
-              cqAlphaLevel: -1,
-              denoiseLevel: 0,
-              tileColsLog2: 0,
-              tileRowsLog2: 0,
-              speed:  6,
-              subsample: 1,
-              chromaDeltaQ: false,
-              sharpness: 0,
-              tune: 0,
-            });
-            mime = 'image/avif'; ext = 'avif';
+          if (enc && enc.encode) bytes = enc.encode(id.data, id.width, id.height,
+            { cqLevel:Math.round(62 - quality*0.62), cqAlphaLevel:-1, speed:6, subsample:1, sharpness:0, tune:0 });
+        } else if (fmt === 'oxipng'){
+          const enc = await loadCodec('oxipng');
+          if (enc && enc.encode){
+            const pngBlob = await canvasEncode(file, 'image/png', 1, dims);
+            bytes = enc.encode(new Uint8Array(await pngBlob.arrayBuffer()), { level:2, interlace:false });
           }
         }
+      } catch(e){ console.warn('WASM encode failed, fallback:', e); bytes = null; }
 
-        else if (format === 'jxl') {
-          const enc = await loadCodec('jxl');
-          if (enc && enc.encode) {
-            bytes = enc.encode(imageData.data, imageData.width, imageData.height, {
-              effort: 7,
-              quality: Math.round(quality),
-              progressive: false,
-              epf: -1,
-              lossyPalette: false,
-              decodingSpeedTier: 0,
-              photonNoiseIso: 0,
-              separation: 0,
-            });
-            mime = 'image/jxl'; ext = 'jxl';
+      if (bytes){
+        let blob = new Blob([bytes], { type: meta.mime });
+        // Target-size search (lossy formats only)
+        if (targetBytes && blob.size > targetBytes && (fmt === 'mozjpeg' || fmt === 'webp')){
+          let lo = 5, hi = quality, best = blob;
+          for (let i = 0; i < 8; i++){
+            const mid = Math.round((lo+hi)/2);
+            try {
+              const enc = codecCache[fmt];
+              const tb = fmt === 'mozjpeg'
+                ? enc.encode(id.data, id.width, id.height, { quality:mid, progressive:true, optimize_coding:true, color_space:3, quant_table:3, auto_subsample:true, chroma_subsample:2 })
+                : enc.encode(id.data, id.width, id.height, { quality:mid, method:4, lossless:0, alpha_quality:100 });
+              const tblob = new Blob([tb], { type: meta.mime });
+              if (tblob.size <= targetBytes){ best = tblob; lo = mid+1; } else { hi = mid-1; }
+            } catch(e){ break; }
           }
+          blob = best;
         }
-      } catch(wasmErr) {
-        console.warn('Squoosh encode error, falling back to canvas:', wasmErr);
-        bytes = null;
+        return { blob, ext: meta.ext };
       }
 
-      // ---- Canvas fallback if WASM unavailable or failed ----
-      if (!bytes) {
-        const fmtMap = {
-          'mozjpeg': 'image/jpeg', 'webp': 'image/webp',
-          'oxipng': 'image/png',   'avif': 'image/avif',
-          'jxl': 'image/jpeg',     'canvas-jpeg': 'image/jpeg', 'canvas-png': 'image/png'
-        };
-        const canvasMime = fmtMap[format] || 'image/jpeg';
-        const extMap = { 'image/jpeg':'jpg','image/webp':'webp','image/png':'png','image/avif':'avif' };
-        mime = canvasMime;
-        ext  = extMap[canvasMime] || 'jpg';
-        const blob = await canvasCompress(file, q01, canvasMime, maxW, maxH, keepRatio);
-        return { blob, mime, ext };
+      // ---- Canvas fallback ----
+      let cMime = meta.mime, cExt = meta.ext;
+      // Canvas can't reliably produce avif; fall back to webp/jpeg
+      if (cMime === 'image/avif'){ cMime = 'image/webp'; cExt = 'webp'; }
+      let blob = await canvasEncode(file, cMime, quality/100, dims);
+      // Verify the browser honored the mime; if not, retry as jpeg
+      if (!blob || (cMime !== 'image/png' && blob.type === 'image/png')){
+        blob = await canvasEncode(file, 'image/jpeg', quality/100, dims); cExt = 'jpg';
       }
-
-      // Convert Uint8Array → Blob
-      let blob = new Blob([bytes], { type: mime });
-
-      // ---- Target size: binary-search quality reduction (WASM path) ----
-      if (targetBytes && blob.size > targetBytes && (format === 'mozjpeg' || format === 'webp')) {
-        let lo = 5, hi = quality, bestBlob = blob;
-        for (let iter = 0; iter < 8; iter++) {
-          const mid = Math.round((lo + hi) / 2);
-          let tryBytes = null;
-          try {
-            if (format === 'mozjpeg') {
-              const enc = codecCache['mozjpeg'];
-              tryBytes = enc.encode(imageData.data, imageData.width, imageData.height, { quality: mid, progressive: true, optimize_coding: true, color_space: 3, quant_table: 3, auto_subsample: true, chroma_subsample: 2, baseline: false, arithmetic: false, smoothing: 0, trellis_multipass: false, trellis_opt_zero: false, trellis_opt_table: false, trellis_loops: 1, separate_chroma_quality: false, chroma_quality: 75 });
-            } else {
-              const enc = codecCache['webp'];
-              tryBytes = enc.encode(imageData.data, imageData.width, imageData.height, { quality: mid, method: 4, sns_strength: 50, filter_strength: 60, filter_sharpness: 0, filter_type: 1, partitions: 0, segments: 4, pass: 1, alpha_compression: 1, alpha_filtering: 1, alpha_quality: 100, lossless: 0, near_lossless: 100, target_size: 0, target_PSNR: 0, show_compressed: 0, preprocessing: 0, autofilter: 0, partition_limit: 0, exact: 0, image_hint: 0, emulate_jpeg_size: 0, thread_level: 0, low_memory: 0, use_delta_palette: 0, use_sharp_yuv: 0 });
-            }
-            const tryBlob = new Blob([tryBytes], { type: mime });
-            if (tryBlob.size <= targetBytes) { bestBlob = tryBlob; lo = mid + 1; }
-            else { hi = mid - 1; }
-          } catch(e) { break; }
+      // Target-size search for jpeg/webp fallback
+      if (targetBytes && blob.size > targetBytes && cExt !== 'png'){
+        let lo = 5, hi = quality, best = blob;
+        for (let i = 0; i < 7; i++){
+          const mid = Math.round((lo+hi)/2);
+          const tb = await canvasEncode(file, blob.type, mid/100, dims);
+          if (tb.size <= targetBytes){ best = tb; lo = mid+1; } else { hi = mid-1; }
         }
-        blob = bestBlob;
+        blob = best;
       }
+      return { blob, ext: cExt };
+    };
+  </script>
 
-      return { blob, mime, ext };
+  <!-- ===================== UI ===================== -->
+  <script>
+  (function(){
+    /* THEME (shared key with homepage) */
+    function syncTheme(){
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
+      document.documentElement.setAttribute('data-theme',
+        saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    }
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
+    });
+    syncTheme();
+
+    let toastTimer;
+    function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show');
+      clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1800); }
+
+    const uploadedFiles = [], compressedResults = [];
+    let currentPreviewIndex = 0;
+
+    const $ = id => document.getElementById(id);
+    const dropZone=$('dropZone'), fileInput=$('fileInput'), batchInfo=$('batchInfo'),
+      thumbStrip=$('thumbStrip'), previewSection=$('previewSection'),
+      originalImg=$('originalImg'), compressedImg=$('compressedImg'),
+      sliderHandle=$('sliderHandle'), comparisonContainer=$('comparisonContainer'),
+      downloadSingleBtn=$('downloadSingleBtn'), downloadBatchBtn=$('downloadBatchBtn'),
+      clearBtn=$('clearBtn'), compressBtn=$('compressBtn'),
+      qualitySlider=$('qualitySlider'), qualityValue=$('qualityValue'),
+      formatSelect=$('formatSelect'), resizeMode=$('resizeMode'),
+      dimsGroup=$('dimsGroup'), percentGroup=$('percentGroup'),
+      maxWidthEl=$('maxWidth'), maxHeightEl=$('maxHeight'),
+      scalePercent=$('scalePercent'), percentVal=$('percentVal'),
+      keepRatio=$('keepRatio'), noUpscale=$('noUpscale'), stripMeta=$('stripMeta'),
+      targetSize=$('targetSize'), statsGrid=$('statsGrid'),
+      origSizeEl=$('origSize'), compSizeEl=$('compSize'), savedPercentEl=$('savedPercent'),
+      progressWrap=$('progressWrap'), progressBar=$('progressBar'),
+      codecInfo=$('codecInfo'), estLine=$('estLine');
+
+    const codecDesc = {
+      keep:'Keeps each file in its original format where possible.',
+      mozjpeg:'JPEG — great quality/size for photos.',
+      webp:'WebP — 25–35% smaller than JPEG, supports transparency.',
+      oxipng:'PNG — lossless, best for graphics & screenshots.',
+      avif:'AVIF — next-gen, up to 50% smaller (falls back to WebP if unsupported).'
+    };
+    formatSelect.addEventListener('change', () => codecInfo.textContent = codecDesc[formatSelect.value] || '');
+
+    function formatBytes(b){ if(!b) return '0 B'; const k=1024,s=['B','KB','MB','GB'];
+      const i=Math.floor(Math.log(b)/Math.log(k)); return parseFloat((b/Math.pow(k,i)).toFixed(1))+' '+s[i]; }
+
+    /* Presets */
+    document.querySelectorAll('.preset').forEach(p => p.addEventListener('click', () => {
+      document.querySelectorAll('.preset').forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      qualitySlider.value = p.dataset.q;
+      qualityValue.textContent = p.dataset.q + '%';
+      updateEstimate();
+    }));
+    qualitySlider.addEventListener('input', () => {
+      qualityValue.textContent = qualitySlider.value + '%';
+      document.querySelectorAll('.preset').forEach(x=>x.classList.toggle('active', x.dataset.q === qualitySlider.value));
+      updateEstimate();
+    });
+
+    /* Resize mode toggle */
+    resizeMode.addEventListener('change', () => {
+      dimsGroup.classList.toggle('hidden', resizeMode.value !== 'dims');
+      percentGroup.classList.toggle('hidden', resizeMode.value !== 'percent');
+    });
+    scalePercent.addEventListener('input', () => { percentVal.textContent = scalePercent.value; });
+
+    function getOpts(){
+      return {
+        mode: resizeMode.value,
+        maxW: parseInt(maxWidthEl.value) || 99999,
+        maxH: parseInt(maxHeightEl.value) || 99999,
+        percent: parseInt(scalePercent.value) || 100,
+        keepRatio: keepRatio.checked,
+        noUpscale: noUpscale.checked
+      };
     }
 
-    // ================================================================
-    // UI WIRING  — identical to original, just calls squooshEncode()
-    // ================================================================
-    (function(){
-      function syncTheme() {
-        const saved = localStorage.getItem('pixelpress-theme');
-        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-      }
-      document.getElementById('themeToggle').addEventListener('click', ()=>{
-        const curr = document.documentElement.getAttribute('data-theme');
-        const next = curr === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
+    function updateEstimate(){
+      if(!uploadedFiles.length){ estLine.textContent=''; return; }
+      const total = uploadedFiles.reduce((a,f)=>a+f.size,0);
+      const q = parseInt(qualitySlider.value);
+      // rough heuristic estimate
+      const factor = Math.max(0.05, Math.min(1, (q/100)*0.85));
+      estLine.innerHTML = `Estimated output: <strong>~${formatBytes(total*factor)}</strong> from ${formatBytes(total)}`;
+    }
+
+    function addFiles(files){
+      const imgs = Array.from(files).filter(f => f.type.startsWith('image/'));
+      if(!imgs.length){ toast('No valid images selected'); return; }
+      imgs.forEach(f => {
+        if(f.size > 25*1024*1024){ toast(`${f.name} exceeds 25MB`); return; }
+        uploadedFiles.push(f);
       });
+      compressedResults.length = 0;
+      renderThumbs(); updateUI();
+    }
 
-      const uploadedFiles    = [];
-      const compressedResults = [];
-      let currentPreviewIndex = 0;
-
-      const dropZone          = document.getElementById('dropZone');
-      const fileInput         = document.getElementById('fileInput');
-      const batchInfo         = document.getElementById('batchInfo');
-      const previewSection    = document.getElementById('previewSection');
-      const originalImg       = document.getElementById('originalImg');
-      const compressedImg     = document.getElementById('compressedImg');
-      const comparisonRange   = document.getElementById('comparisonRange');
-      const downloadSingleBtn = document.getElementById('downloadSingleBtn');
-      const downloadBatchBtn  = document.getElementById('downloadBatchBtn');
-      const clearBtn          = document.getElementById('clearBtn');
-      const compressBtn       = document.getElementById('compressBtn');
-      const qualitySlider     = document.getElementById('qualitySlider');
-      const qualityValue      = document.getElementById('qualityValue');
-      const formatSelect      = document.getElementById('formatSelect');
-      const maxWidthEl        = document.getElementById('maxWidth');
-      const maxHeightEl       = document.getElementById('maxHeight');
-      const keepRatio         = document.getElementById('keepRatio');
-      const targetSize        = document.getElementById('targetSize');
-      const statsGrid         = document.getElementById('statsGrid');
-      const origSizeEl        = document.getElementById('origSize');
-      const compSizeEl        = document.getElementById('compSize');
-      const savedPercentEl    = document.getElementById('savedPercent');
-      const progressWrap      = document.getElementById('progressWrap');
-      const progressBar       = document.getElementById('progressBar');
-      const codecInfo         = document.getElementById('codecInfo');
-
-      // Codec descriptions
-      const codecDesc = {
-        'mozjpeg':     'MozJPEG — up to 30% smaller than standard JPEG',
-        'webp':        'WebP — 25-35% smaller than JPEG, alpha support',
-        'oxipng':      'OxiPNG — lossless PNG, Rust-powered optimizer',
-        'avif':        'AVIF — next-gen, 50% smaller than JPEG',
-        'jxl':         'JPEG XL — future-proof, lossless & lossy',
-        'canvas-jpeg': 'JPEG — standard canvas encoder (fallback)',
-        'canvas-png':  'PNG — standard canvas encoder (fallback)',
-      };
-      formatSelect.addEventListener('change', () => {
-        codecInfo.textContent = codecDesc[formatSelect.value] || '';
-      });
-
-      function formatBytes(bytes) {
-        if (bytes === 0) return '0 B';
-        const k = 1024, sizes = ['B','KB','MB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-      }
-
-      function addFiles(files) {
-        const imageFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
-        if (!imageFiles.length) { alert('No valid images selected.'); return; }
-        imageFiles.forEach(f => {
-          if (f.size > 25 * 1024 * 1024) { alert(`${f.name} exceeds 25MB limit.`); return; }
-          uploadedFiles.push(f);
+    function renderThumbs(){
+      thumbStrip.innerHTML = '';
+      uploadedFiles.forEach((f, i) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'thumb' + (i === currentPreviewIndex ? ' active' : '');
+        const url = URL.createObjectURL(f);
+        const res = compressedResults[i];
+        const saved = res ? Math.max(0, ((f.size - res.size)/f.size*100)).toFixed(0) : null;
+        wrap.innerHTML = `
+          <div class="t-rm" data-rm="${i}" title="Remove">✕</div>
+          <img src="${url}" alt="">
+          <div class="t-meta">${formatBytes(f.size)}${saved!==null?` → <span class="t-save">-${saved}%</span>`:''}</div>`;
+        wrap.querySelector('img').addEventListener('click', () => showPreview(i));
+        wrap.querySelector('.t-rm').addEventListener('click', e => {
+          e.stopPropagation();
+          uploadedFiles.splice(i,1); compressedResults.length = 0;
+          if(currentPreviewIndex >= uploadedFiles.length) currentPreviewIndex = 0;
+          renderThumbs(); updateUI();
         });
+        thumbStrip.appendChild(wrap);
+      });
+    }
+
+    function updateUI(){
+      if(!uploadedFiles.length){
+        batchInfo.textContent=''; compressBtn.disabled=true;
+        previewSection.classList.add('hidden'); statsGrid.classList.add('hidden'); estLine.textContent='';
+      } else {
+        batchInfo.innerHTML = `${uploadedFiles.length} image(s) loaded · <a href="#" id="resetFiles">Remove all</a>`;
+        compressBtn.disabled=false;
+        showPreview(currentPreviewIndex);
+        updateEstimate();
+      }
+      downloadBatchBtn.classList.toggle('hidden', uploadedFiles.length < 2 || compressedResults.length < uploadedFiles.length);
+    }
+
+    function showPreview(index){
+      if(index >= uploadedFiles.length) return;
+      currentPreviewIndex = index;
+      renderThumbs();
+      const reader = new FileReader();
+      reader.onload = e => {
+        originalImg.src = e.target.result;
+        previewSection.classList.remove('hidden');
+        const res = compressedResults[index];
+        compressedImg.src = res ? URL.createObjectURL(res.blob) : e.target.result;
+        setSlider(50);
+      };
+      reader.readAsDataURL(uploadedFiles[index]);
+    }
+
+    /* Draggable comparison slider */
+    function setSlider(pct){
+      pct = Math.max(0, Math.min(100, pct));
+      compressedImg.style.clipPath = `inset(0 ${100-pct}% 0 0)`;
+      sliderHandle.style.left = pct + '%';
+    }
+    let dragging = false;
+    function moveFromEvent(e){
+      const rect = comparisonContainer.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      setSlider(x / rect.width * 100);
+    }
+    sliderHandle.addEventListener('mousedown', () => dragging = true);
+    comparisonContainer.addEventListener('mousedown', e => { dragging = true; moveFromEvent(e); });
+    window.addEventListener('mousemove', e => { if(dragging) moveFromEvent(e); });
+    window.addEventListener('mouseup', () => dragging = false);
+    sliderHandle.addEventListener('touchstart', () => dragging = true, {passive:true});
+    comparisonContainer.addEventListener('touchmove', e => { if(dragging) moveFromEvent(e); }, {passive:true});
+    window.addEventListener('touchend', () => dragging = false);
+
+    /* Run compression */
+    async function runCompression(){
+      if(!uploadedFiles.length) return;
+      compressBtn.disabled = true;
+      compressBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Compressing…';
+      compressedResults.length = 0;
+
+      const quality = parseInt(qualitySlider.value);
+      const format = formatSelect.value;
+      const targetBytes = targetSize.value ? parseInt(targetSize.value)*1024 : null;
+      const opts = getOpts();
+
+      progressWrap.style.display = 'block';
+      progressBar.style.width = '0%';
+
+      try {
+        for(let i=0;i<uploadedFiles.length;i++){
+          const file = uploadedFiles[i];
+          const natural = await new Promise(res => {
+            const img = new Image(); const u = URL.createObjectURL(file);
+            img.onload = () => { URL.revokeObjectURL(u); res({w:img.naturalWidth,h:img.naturalHeight}); };
+            img.src = u;
+          });
+          const dims = window.computeDims(natural.w, natural.h, opts);
+          const result = await window.smartEncode(file, format, quality, dims, targetBytes);
+          const baseName = file.name.replace(/\.+$/, '');
+          compressedResults.push({ blob: result.blob, name: `${baseName}_compressed.${result.ext}`, size: result.blob.size });
+          progressBar.style.width = `${Math.round(((i+1)/uploadedFiles.length)*100)}%`;
+        }
+
+        const origTotal = uploadedFiles.reduce((a,f)=>a+f.size,0);
+        const compTotal = compressedResults.reduce((a,r)=>a+r.size,0);
+        origSizeEl.textContent = formatBytes(origTotal);
+        compSizeEl.textContent = formatBytes(compTotal);
+        savedPercentEl.textContent = (origTotal>0 ? ((origTotal-compTotal)/origTotal*100).toFixed(1) : 0) + '%';
+        statsGrid.classList.remove('hidden');
+        showPreview(currentPreviewIndex);
         updateUI();
+        toast('Compression complete');
+      } catch(err){
+        toast('Error: ' + err.message);
+      } finally {
+        compressBtn.disabled = false;
+        compressBtn.innerHTML = '<i class="fa-solid fa-compress"></i> Compress';
+        setTimeout(() => { progressWrap.style.display='none'; progressBar.style.width='0%'; }, 1000);
       }
+    }
 
-      function updateUI() {
-        if (!uploadedFiles.length) {
-          batchInfo.textContent = ''; compressBtn.disabled = true;
-          previewSection.classList.add('hidden');
-        } else {
-          batchInfo.innerHTML = `${uploadedFiles.length} image(s) loaded. <a href="#" id="resetFiles">Remove all</a>`;
-          compressBtn.disabled = false;
-          showOriginalPreview(0);
-        }
-        downloadBatchBtn.classList.toggle('hidden', uploadedFiles.length < 2 || compressedResults.length < uploadedFiles.length);
-      }
-
-      function showOriginalPreview(index) {
-        if (index >= uploadedFiles.length) return;
-        currentPreviewIndex = index;
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          originalImg.src = e.target.result;
-          previewSection.classList.remove('hidden');
-          compressedImg.src = '';
-          comparisonRange.value = 50;
-          updateComparisonSlider();
-        };
-        reader.readAsDataURL(uploadedFiles[index]);
-      }
-
-      comparisonRange.addEventListener('input', updateComparisonSlider);
-      function updateComparisonSlider() {
-        const val = comparisonRange.value;
-        compressedImg.style.clipPath = `inset(0 ${100 - val}% 0 0)`;
-      }
-
-      // ---- Main compression runner ----
-      async function runCompression() {
-        if (!uploadedFiles.length) return;
-        compressBtn.disabled = true;
-        compressBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Compressing…';
-        compressedResults.length = 0;
-
-        const quality    = parseInt(qualitySlider.value);
-        const format     = formatSelect.value;
-        const maxW       = parseInt(maxWidthEl.value)  || 9999;
-        const maxH       = parseInt(maxHeightEl.value) || 9999;
-        const keep       = keepRatio.checked;
-        const targetBytes = targetSize.value ? parseInt(targetSize.value) * 1024 : null;
-
-        // Show progress bar
-        progressWrap.style.display = 'block';
-        progressBar.style.width = '0%';
-
-        try {
-          for (let i = 0; i < uploadedFiles.length; i++) {
-            const file = uploadedFiles[i];
-
-            // Canvas-only formats bypass WASM
-            let result;
-            if (format === 'canvas-jpeg' || format === 'canvas-png') {
-              const mime = format === 'canvas-jpeg' ? 'image/jpeg' : 'image/png';
-              const blob = await (async () => {
-                const imageData = await (async (f, mW, mH, kr) => {
-                  return new Promise((res, rej) => {
-                    const img = new Image();
-                    const url = URL.createObjectURL(f);
-                    img.onload = () => {
-                      URL.revokeObjectURL(url);
-                      let w = img.naturalWidth, h = img.naturalHeight;
-                      if (kr) { const r = Math.min(mW/w, mH/h); if (r<1){w=Math.round(w*r);h=Math.round(h*r);} }
-                      else { w=Math.min(w,mW); h=Math.min(h,mH); }
-                      const c = document.createElement('canvas');
-                      c.width=w; c.height=h;
-                      c.getContext('2d').drawImage(img,0,0,w,h);
-                      res(c.getContext('2d').getImageData(0,0,w,h));
-                    };
-                    img.onerror=rej; img.src=url;
-                  });
-                })(file, maxW, maxH, keep);
-                const c = document.createElement('canvas');
-                c.width=imageData.width; c.height=imageData.height;
-                c.getContext('2d').putImageData(imageData,0,0);
-                return new Promise(res => c.toBlob(res, mime, quality/100));
-              })();
-              result = { blob, mime, ext: format==='canvas-jpeg'?'jpg':'png' };
-            } else {
-              result = await squooshEncode(file, format, quality, maxW, maxH, keep, targetBytes);
-            }
-
-            const baseName = file.name.replace(/\.[^/.]+$/, '');
-            compressedResults.push({
-              blob: result.blob,
-              name: `${baseName}_compressed.${result.ext}`,
-              size: result.blob.size
-            });
-
-            // Update progress
-            progressBar.style.width = `${Math.round(((i + 1) / uploadedFiles.length) * 100)}%`;
-          }
-
-          // Show first compressed preview
-          if (compressedResults.length > 0) {
-            const url = URL.createObjectURL(compressedResults[0].blob);
-            compressedImg.src = url;
-            updateComparisonSlider();
-          }
-
-          // Stats
-          const origTotal = uploadedFiles.reduce((a, f) => a + f.size, 0);
-          const compTotal = compressedResults.reduce((a, r) => a + r.size, 0);
-          origSizeEl.textContent    = formatBytes(origTotal);
-          compSizeEl.textContent    = formatBytes(compTotal);
-          const savings = origTotal > 0 ? ((origTotal - compTotal) / origTotal * 100).toFixed(1) : 0;
-          savedPercentEl.textContent = savings + '%';
-          statsGrid.classList.remove('hidden');
-          updateUI();
-
-        } catch(err) {
-          alert('Compression error: ' + err.message);
-        } finally {
-          compressBtn.disabled = false;
-          compressBtn.innerHTML = '<i class="fa-solid fa-compress"></i> Compress';
-          setTimeout(() => { progressWrap.style.display = 'none'; progressBar.style.width = '0%'; }, 1000);
-        }
-      }
-
-      // ---- Download handlers ----
-      downloadSingleBtn.addEventListener('click', () => {
-        if (!compressedResults.length) return;
-        const res = compressedResults[currentPreviewIndex] || compressedResults[0];
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(res.blob);
-        a.download = res.name; a.click();
-      });
-
-      downloadBatchBtn.addEventListener('click', async () => {
-        if (compressedResults.length < 2) return;
-        const zip = new JSZip();
-        compressedResults.forEach(r => zip.file(r.name, r.blob));
-        const content = await zip.generateAsync({ type: 'blob' });
-        saveAs(content, 'compressed_images.zip');
-      });
-
-      clearBtn.addEventListener('click', () => {
-        uploadedFiles.length = 0; compressedResults.length = 0;
-        originalImg.src = ''; compressedImg.src = '';
-        previewSection.classList.add('hidden');
-        statsGrid.classList.add('hidden');
-        updateUI(); compressBtn.disabled = true;
-      });
-
-      // ---- Event listeners ----
-      dropZone.addEventListener('click', () => fileInput.click());
-      fileInput.addEventListener('change', (e) => addFiles(e.target.files));
-      dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = 'var(--accent)'; });
-      dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = 'var(--border)'; });
-      dropZone.addEventListener('drop', (e) => {
-        e.preventDefault(); dropZone.style.borderColor = 'var(--border)';
-        if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
-      });
-
-      qualitySlider.addEventListener('input', () => { qualityValue.textContent = qualitySlider.value + '%'; });
-
-      compressBtn.addEventListener('click', runCompression);
-
-      batchInfo.addEventListener('click', (e) => {
-        if (e.target.id === 'resetFiles') {
-          e.preventDefault();
-          uploadedFiles.length = 0; compressedResults.length = 0;
-          originalImg.src = ''; compressedImg.src = '';
-          previewSection.classList.add('hidden'); statsGrid.classList.add('hidden');
-          updateUI(); compressBtn.disabled = true;
-        }
-      });
-
-      syncTheme();
+    /* Downloads */
+    downloadSingleBtn.addEventListener('click', () => {
+      if(!compressedResults.length){ toast('Compress first'); return; }
+      const res = compressedResults[currentPreviewIndex] || compressedResults[0];
+      const a = document.createElement('a'); a.href = URL.createObjectURL(res.blob); a.download = res.name; a.click();
+    });
+    downloadBatchBtn.addEventListener('click', async () => {
+      if(compressedResults.length < 2) return;
+      const zip = new JSZip();
+      compressedResults.forEach(r => zip.file(r.name, r.blob));
+      saveAs(await zip.generateAsync({type:'blob'}), 'imgpdftools_compressed.zip');
+    });
+    clearBtn.addEventListener('click', () => {
+      uploadedFiles.length=0; compressedResults.length=0; currentPreviewIndex=0;
+      originalImg.src=''; compressedImg.src=''; thumbStrip.innerHTML='';
+      previewSection.classList.add('hidden'); statsGrid.classList.add('hidden');
       updateUI();
-    })();
+    });
+
+    /* Upload events */
+    dropZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => addFiles(e.target.files));
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.style.borderColor='var(--accent)'; dropZone.style.background='var(--glow)'; });
+    dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor=''; dropZone.style.background=''; });
+    dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.style.borderColor=''; dropZone.style.background='';
+      if(e.dataTransfer.files.length) addFiles(e.dataTransfer.files); });
+    compressBtn.addEventListener('click', runCompression);
+    batchInfo.addEventListener('click', e => {
+      if(e.target.id === 'resetFiles'){ e.preventDefault(); clearBtn.click(); }
+    });
+
+    updateUI();
+  })();
   </script>
 </body>
 </html>
