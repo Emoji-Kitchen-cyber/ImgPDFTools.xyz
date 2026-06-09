@@ -1,40 +1,11 @@
 {
-  "name": "PixelPress — Free Online Image & Document Toolkit",
-  "short_name": "PixelPress",
-  "description": "Free online image tools: compress, resize, crop, convert, remove background, blur faces, and more. All processing happens in your browser – private and fast.",
-  "id": "/",
-  "start_url": "/",
-  "scope": "/",
-  "display": "standalone",
-  "orientation": "any",
-  "background_color": "#f5f5f7",
-  "theme_color": "#ec4899",
-  "lang": "en",
-  "dir": "ltr",
-  "categories": ["utilities", "productivity", "photography"],
+  "name": "ImgPDFTools",
+  "short_name": "ImgPDFTools",
   "icons": [
-    { "src": "/favicon-16x16.png", "sizes": "16x16", "type": "image/png" },
-    { "src": "/favicon-32x32.png", "sizes": "32x32", "type": "image/png" },
-    { "src": "/favicon-96x96.png", "sizes": "96x96", "type": "image/png" },
-    { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/favicon-192x192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/apple-icon-180x180.png", "sizes": "180x180", "type": "image/png" },
-    { "src": "/apple-icon-180x180.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/android-icon-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-icon-144x144.png", "sizes": "144x144", "type": "image/png" }
   ],
-  "screenshots": [
-    {
-      "src": "/favicon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "PixelPress Mobile"
-    },
-    {
-      "src": "/favicon-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "PixelPress Desktop"
-    }
-  ]
+  "theme_color": "#6366f1",
+  "background_color": "#f8f8fc",
+  "display": "standalone"
 }
