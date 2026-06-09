@@ -413,33 +413,49 @@
       return false;
     }
 
+    /* SECURE: queue rows are built with createElement; the user-controlled
+       file name is set via textContent (never innerHTML), so a malicious
+       file name cannot inject or execute HTML. */
     function renderQueue(){
       queueCount.textContent=filesQueue.length;
-      queueList.innerHTML=filesQueue.map((file,idx)=>`
-        <div class="queue-item" id="item-${idx}">
-          <img src="${URL.createObjectURL(file)}" alt="preview" />
-          <div class="info">
-            <div class="name">${file.name}</div>
-            <div class="size" id="size-${idx}">${formatBytes(file.size)}</div>
-          </div>
-          <div class="actions">
-            <span class="badge badge-ready" id="badge-${idx}">Ready</span>
-            <button class="btn-danger" data-remove="${idx}"><i class="fa-solid fa-xmark"></i></button>
-          </div>
-        </div>`).join('');
-      document.querySelectorAll('[data-remove]').forEach(btn => btn.addEventListener('click', () => {
-        filesQueue.splice(parseInt(btn.dataset.remove),1);
-        convertedResults=[];
-        renderQueue();
-        if(!filesQueue.length){ queueContainer.style.display='none'; settingsPanel.style.display='none'; }
-        resultPreview.innerHTML=''; summary.classList.remove('show'); downloadZipBtn.disabled=true;
-      }));
+      queueList.textContent='';
+      filesQueue.forEach((file,idx)=>{
+        const item=document.createElement('div');
+        item.className='queue-item'; item.id='item-'+idx;
+
+        const img=document.createElement('img');
+        img.src=URL.createObjectURL(file); img.alt='preview';
+
+        const info=document.createElement('div'); info.className='info';
+        const name=document.createElement('div'); name.className='name';
+        name.textContent=file.name; name.title=file.name;
+        const size=document.createElement('div'); size.className='size'; size.id='size-'+idx;
+        size.textContent=formatBytes(file.size);
+        info.appendChild(name); info.appendChild(size);
+
+        const actions=document.createElement('div'); actions.className='actions';
+        const badge=document.createElement('span'); badge.className='badge badge-ready'; badge.id='badge-'+idx;
+        badge.textContent='Ready';
+        const rm=document.createElement('button'); rm.className='btn-danger';
+        const xi=document.createElement('i'); xi.className='fa-solid fa-xmark'; rm.appendChild(xi);
+        rm.addEventListener('click', () => {
+          filesQueue.splice(idx,1);
+          convertedResults=[];
+          renderQueue();
+          if(!filesQueue.length){ queueContainer.style.display='none'; settingsPanel.style.display='none'; }
+          resultPreview.textContent=''; summary.classList.remove('show'); downloadZipBtn.disabled=true;
+        });
+        actions.appendChild(badge); actions.appendChild(rm);
+
+        item.appendChild(img); item.appendChild(info); item.appendChild(actions);
+        queueList.appendChild(item);
+      });
     }
 
     clearQueueBtn.addEventListener('click', () => {
       filesQueue=[]; convertedResults=[]; renderQueue();
       queueContainer.style.display='none'; settingsPanel.style.display='none';
-      resultPreview.innerHTML=''; summary.classList.remove('show'); downloadZipBtn.disabled=true;
+      resultPreview.textContent=''; summary.classList.remove('show'); downloadZipBtn.disabled=true;
     });
 
     convertAllBtn.addEventListener('click', startConversion);
@@ -453,7 +469,7 @@
       convertAllBtn.disabled=true; cancelBtn.style.display='inline-flex';
       progressBar.style.display='block'; progressFill.style.width='0%';
       statusMessage.textContent='Starting…'; convertedResults=[]; downloadZipBtn.disabled=true;
-      resultPreview.innerHTML=''; summary.classList.remove('show');
+      resultPreview.textContent=''; summary.classList.remove('show');
 
       let format=formatSelect.value;
       if(format==='image/avif' && !avifSupported) format='image/webp';
@@ -528,13 +544,19 @@
     }
 
     function downloadBlob(blob,name){ const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url); }
-    function outName(originalName){ const base=originalName.replace(/\.+$/,''); return ($('prefix').value||'')+base+($('suffix').value||'')+'.'+targetExt(); }
+    // FIX: strip the real extension (was /\.+$/ which only removed trailing dots).
+    function outName(originalName){ const base=originalName.replace(/\.[^.]+$/,''); return ($('prefix').value||'')+base+($('suffix').value||'')+'.'+targetExt(); }
 
+    /* SECURE: preview tiles built via DOM nodes; blob URL set as a property. */
     function addPreviewImage(idx,blob,originalName){
       const url=URL.createObjectURL(blob);
       const c=document.createElement('div'); c.className='preview-item';
-      c.innerHTML=`<img src="${url}" alt="converted" /><span class="size-tag">${formatBytes(blob.size)}</span><button class="dl" title="Download"><i class="fa-solid fa-download"></i></button>`;
-      c.querySelector('.dl').addEventListener('click', () => downloadBlob(blob, outName(originalName)));
+      const img=document.createElement('img'); img.src=url; img.alt='converted';
+      const tag=document.createElement('span'); tag.className='size-tag'; tag.textContent=formatBytes(blob.size);
+      const dl=document.createElement('button'); dl.className='dl'; dl.title='Download';
+      const di=document.createElement('i'); di.className='fa-solid fa-download'; dl.appendChild(di);
+      dl.addEventListener('click', () => downloadBlob(blob, outName(originalName)));
+      c.appendChild(img); c.appendChild(tag); c.appendChild(dl);
       resultPreview.appendChild(c);
     }
 
@@ -550,16 +572,35 @@
 
     /* History */
     function saveHistory(count,format,quality){
-      const h=JSON.parse(localStorage.getItem('convertHistory')||'[]');
+      let h;
+      try { h=JSON.parse(localStorage.getItem('convertHistory')||'[]'); } catch(e){ h=[]; }
+      if(!Array.isArray(h)) h=[];
       h.push({ date:new Date().toISOString(), count, format, quality });
       if(h.length>10) h.shift();
       localStorage.setItem('convertHistory', JSON.stringify(h));
     }
+    /* SECURE: history entries (read from localStorage, which other scripts can
+       tamper with) are rebuilt as DOM nodes via textContent with defensive
+       parsing — no innerHTML, so stored data can never inject markup. */
     $('historyBtn').addEventListener('click', () => {
       const panel=$('historyPanel');
-      const h=JSON.parse(localStorage.getItem('convertHistory')||'[]');
-      if(!h.length){ panel.innerHTML='<div>No conversion history yet.</div>'; }
-      else { panel.innerHTML=h.slice(-5).reverse().map(x=>`<div>${new Date(x.date).toLocaleString()} — ${x.count} files → ${x.format.split('/')[1].toUpperCase()} @ ${Math.round(x.quality*100)}%</div>`).join(''); }
+      let h;
+      try { h=JSON.parse(localStorage.getItem('convertHistory')||'[]'); } catch(e){ h=[]; }
+      if(!Array.isArray(h)) h=[];
+      panel.textContent='';
+      if(!h.length){
+        const d=document.createElement('div'); d.textContent='No conversion history yet.'; panel.appendChild(d);
+      } else {
+        h.slice(-5).reverse().forEach(x=>{
+          const d=document.createElement('div');
+          const fmt=(typeof x.format==='string' && x.format.includes('/')) ? x.format.split('/')[1].toUpperCase() : 'IMG';
+          const q=Math.round((parseFloat(x.quality)||0)*100);
+          const cnt=parseInt(x.count)||0;
+          const date=x.date ? new Date(x.date).toLocaleString() : '';
+          d.textContent=`${date} — ${cnt} files → ${fmt} @ ${q}%`;
+          panel.appendChild(d);
+        });
+      }
       panel.classList.toggle('show');
     });
 
