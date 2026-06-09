@@ -7,101 +7,145 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
-</script>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
   gtag('config', 'G-3P7QPQKV3K');
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resize Image – PixelPress</title>
+  <title>Resize Image — ImgPDFTools</title>
+  <meta name="description" content="Resize images by pixels, percentage or social-media presets. Batch resize, lock aspect ratio, choose format & quality. Free, private, in-browser." />
+  <link rel="canonical" href="https://imgpdftools.xyz/resize.html" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
     :root {
-      --bg: #f5f5f7; --surface: rgba(255,255,255,0.75); --card: #ffffff;
-      --border: rgba(0,0,0,0.06); --text: #1d1d1f; --muted: #6e6e73;
-      --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236,72,153,0.1); --r: 16px;
-      --green: #10b981; --red: #ef4444;
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --green:#10b981; --red:#ef4444;
+      --r:18px; --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif; --nav-h:66px;
     }
     [data-theme="dark"] {
-      --bg: #09090e; --surface: rgba(21,21,30,0.7); --card: #15151e;
-      --border: rgba(255,255,255,0.08); --text: #e8e8f0; --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
-    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:var(--surface); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh;
+      display:flex; flex-direction:column; transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
+
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+      padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
+      backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
     .nav-left { display:flex; align-items:center; gap:1rem; }
-    .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.1rem; cursor:pointer; text-decoration:none; transition:0.2s; }
-    .back-btn:hover { border-color:var(--accent); transform:scale(1.05); }
-    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; text-transform:uppercase; text-decoration:none; color:inherit; }
-    .nav-logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .main { flex:1; max-width:1100px; margin:0 auto; width:100%; padding:2rem 20px; }
-    .upload-area { border:2px dashed var(--border); border-radius:var(--r); padding:3rem; text-align:center; cursor:pointer; transition:0.2s; background:var(--card); margin-bottom:1.5rem; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2); width:40px; height:40px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text);
+      font-size:1rem; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-.3px; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px;
+      display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
+
+    .main { flex:1; max-width:1120px; margin:0 auto; width:100%; padding:2rem 20px 4rem; }
+    .upload-area { border:2px dashed var(--border2); border-radius:var(--r); padding:3rem; text-align:center; cursor:pointer; transition:.2s; background:var(--card); margin-bottom:1.5rem; }
     .upload-area:hover { border-color:var(--accent); background:var(--glow); }
     .upload-area i { font-size:3rem; color:var(--accent); }
+    .upload-area h2 { font-family:var(--fhead); font-weight:700; margin:.6rem 0 .3rem; }
     .upload-area input { display:none; }
+
     .workspace { display:grid; grid-template-columns:1fr 380px; gap:1.5rem; }
-    @media(max-width:850px){ .workspace{grid-template-columns:1fr;} }
-    .preview-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:350px; }
-    .preview-panel img { max-width:100%; max-height:400px; border-radius:8px; box-shadow:0 4px 12px rgba(0,0,0,0.05); }
-    .preview-meta { margin-top:1rem; font-size:0.9rem; color:var(--muted); text-align:center; }
-    .controls-panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; display:flex; flex-direction:column; gap:1.2rem; }
-    .tabs { display:flex; gap:4px; border-bottom:2px solid var(--border); padding-bottom:0; }
-    .tab-btn { flex:1; padding:10px; background:none; border:none; font-size:13px; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:0.2s; }
+    @media(max-width:850px){ .workspace { grid-template-columns:1fr; } }
+    .preview-panel { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.5rem; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:350px; }
+    .preview-panel img { max-width:100%; max-height:360px; border-radius:10px; box-shadow:0 8px 24px rgba(0,0,0,0.06); }
+    .preview-meta { margin-top:1rem; font-size:.9rem; color:var(--muted); text-align:center; }
+    .stats-row { display:flex; gap:12px; margin-top:1rem; width:100%; }
+    .stat-chip { flex:1; background:var(--bg); border:1px solid var(--border2); border-radius:10px; padding:10px; text-align:center; font-size:.72rem; color:var(--muted); }
+    .stat-chip strong { display:block; color:var(--accent); font-size:1rem; font-family:var(--fhead); margin-bottom:3px; }
+
+    .queue-thumbs { display:flex; gap:8px; flex-wrap:wrap; margin-top:1rem; width:100%; justify-content:center; }
+    .queue-thumbs .qt { position:relative; }
+    .queue-thumbs img { width:54px; height:54px; object-fit:cover; border-radius:8px; border:1px solid var(--border2); }
+    .queue-thumbs .rm { position:absolute; top:-6px; right:-6px; width:18px; height:18px; border-radius:50%; border:none; background:var(--red); color:#fff; font-size:10px; cursor:pointer; line-height:1; }
+
+    .controls-panel { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.5rem; display:flex; flex-direction:column; gap:1.2rem; height:fit-content; }
+    .tabs { display:flex; gap:4px; border-bottom:2px solid var(--border2); }
+    .tab-btn { flex:1; padding:10px; background:none; border:none; font-size:13px; font-weight:700; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-2px; transition:.2s; font-family:var(--fbody); }
     .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
     .tab-content { display:none; }
     .tab-content.active { display:block; }
     .input-group { margin-bottom:1rem; }
-    .input-group label { display:block; font-size:0.8rem; font-weight:600; color:var(--muted); text-transform:uppercase; margin-bottom:4px; }
+    .input-group label { display:block; font-size:.74rem; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:.4px; margin-bottom:5px; }
     .input-row { display:flex; align-items:center; gap:8px; }
-    .input-row input { flex:1; padding:10px 12px; border:1px solid var(--border); border-radius:8px; background:var(--bg); color:var(--text); font-size:1rem; font-weight:600; outline:none; }
-    .input-row span { font-size:0.9rem; font-weight:700; color:var(--muted); }
-    .lock-btn { background:var(--bg); border:1px solid var(--border); width:38px; height:38px; border-radius:8px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1rem; transition:0.2s; }
-    .lock-btn.locked { background:var(--accent); color:white; border-color:var(--accent); }
+    .input-row input { flex:1; padding:10px 12px; border:1.5px solid var(--border2); border-radius:10px; background:var(--bg); color:var(--text); font-size:1rem; font-weight:600; outline:none; transition:border-color .2s,box-shadow .2s; font-family:var(--fbody); }
+    .input-row input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .input-row span { font-size:.9rem; font-weight:700; color:var(--muted); }
+    .lock-btn { background:var(--bg); border:1.5px solid var(--border2); width:40px; height:40px; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1rem; transition:.2s; }
+    .lock-btn.locked { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .dim-preview { font-size:.8rem; color:var(--accent); font-weight:700; margin-top:4px; }
     .preset-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-    .preset-btn { padding:12px; border:1px solid var(--border); border-radius:8px; background:var(--bg); cursor:pointer; text-align:center; font-size:0.85rem; font-weight:600; transition:0.2s; }
-    .preset-btn:hover { border-color:var(--accent); background:var(--glow); }
-    .preset-btn.active { background:var(--accent); color:white; border-color:var(--accent); }
+    .preset-btn { padding:11px; border:1.5px solid var(--border2); border-radius:10px; background:var(--bg); cursor:pointer; text-align:center; font-size:.8rem; font-weight:600; transition:.2s; color:var(--text); }
+    .preset-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .preset-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
     .percent-slider { display:flex; align-items:center; gap:10px; }
-    .percent-slider input[type=range] { flex:1; accent-color:var(--accent); }
-    .percent-slider span { font-weight:700; min-width:45px; text-align:right; }
-    .format-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px; }
-    .format-btn { padding:8px; border:1px solid var(--border); border-radius:6px; background:var(--bg); cursor:pointer; text-align:center; font-size:0.8rem; font-weight:600; }
-    .format-btn.active { background:var(--accent); color:white; border-color:var(--accent); }
-    .btn { padding:12px 20px; border:none; border-radius:10px; font-weight:600; cursor:pointer; transition:0.2s; display:flex; align-items:center; justify-content:center; gap:8px; font-size:0.95rem; width:100%; }
-    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 25px var(--glow); }
-    .btn-success { background:var(--green); color:white; }
-    .btn:disabled { opacity:0.5; pointer-events:none; }
-    .stats-row { display:flex; gap:12px; margin-top:0.5rem; }
-    .stat-chip { flex:1; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:8px; text-align:center; font-size:0.75rem; }
-    .stat-chip strong { display:block; color:var(--accent); font-size:1rem; }
-    footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); margin-top:auto; }
+    .percent-slider input[type=range] { flex:1; accent-color:var(--accent); cursor:pointer; }
+    .percent-slider span { font-weight:700; min-width:46px; text-align:right; color:var(--accent); }
+    .format-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px; }
+    .format-btn { padding:9px; border:1.5px solid var(--border2); border-radius:9px; background:var(--bg); cursor:pointer; text-align:center; font-size:.82rem; font-weight:600; color:var(--text); transition:.2s; }
+    .format-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .format-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+    .switch-row { display:flex; align-items:center; justify-content:space-between; }
+    .switch-row label { font-size:.85rem; font-weight:600; }
+    .switch { position:relative; width:42px; height:23px; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .switch .tog { position:absolute; inset:0; background:#c4c4d8; border-radius:99px; cursor:pointer; transition:.3s; }
+    [data-theme="dark"] .switch .tog { background:#2a2a42; }
+    .switch .tog::before { content:''; position:absolute; width:17px; height:17px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.3s; }
+    .switch input:checked + .tog { background:var(--accent); }
+    .switch input:checked + .tog::before { transform:translateX(19px); }
+
+    .btn { padding:12px 20px; border:none; border-radius:12px; font-weight:700; cursor:pointer; transition:.2s; display:flex; align-items:center; justify-content:center; gap:8px; font-size:.95rem; width:100%; font-family:var(--fbody); }
+    .btn-primary { background:var(--accent); color:#fff; box-shadow:0 4px 14px var(--glow); }
+    .btn-primary:hover { background:var(--accent2); }
+    .btn-success { background:var(--green); color:#fff; }
+    .btn-success:hover { background:#059669; }
+    .btn:disabled { opacity:.5; pointer-events:none; }
+
+    #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--text);
+      color:var(--bg); padding:11px 20px; border-radius:99px; font-size:13px; font-weight:600; opacity:0;
+      pointer-events:none; transition:opacity .3s,transform .3s; z-index:999; box-shadow:0 8px 24px rgba(0,0,0,.2); }
+    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    footer { text-align:center; padding:30px 20px; color:var(--muted); font-size:13px; border-top:1px solid var(--border2); background:var(--card); margin-top:auto; }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-family:var(--fhead); font-weight:700; font-size:1rem; }
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="control-btn" aria-label="Toggle theme">🌓</button>
   </nav>
 
   <div class="main">
     <div class="upload-area" id="uploadZone">
-      <i class="fa-solid fa-cloud-upload"></i>
-      <h2>Drop image or click to upload</h2>
-      <p style="color:var(--muted);">JPG, PNG, WebP – batch resize supported</p>
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      <h2>Drop images or click to upload</h2>
+      <p style="color:var(--muted);">JPG, PNG, WebP — batch resize supported</p>
       <input type="file" id="fileInput" accept="image/*" multiple />
     </div>
 
@@ -109,28 +153,30 @@
       <div class="preview-panel">
         <img id="previewImg" src="" alt="Preview" />
         <div class="preview-meta" id="previewMeta">Original: 0 × 0 px</div>
+        <div class="queue-thumbs" id="queueThumbs"></div>
         <div class="stats-row" id="statsRow" style="display:none;">
           <div class="stat-chip"><strong id="origSize">—</strong> Original</div>
           <div class="stat-chip"><strong id="newSize">—</strong> Resized</div>
-          <div class="stat-chip"><strong id="newDims">—</strong> New Dims</div>
+          <div class="stat-chip"><strong id="newDims">—</strong> New dims</div>
         </div>
       </div>
 
       <div class="controls-panel">
         <div class="tabs">
-          <button class="tab-btn active" data-tab="pixels">📏 By Pixels</button>
-          <button class="tab-btn" data-tab="percent">% By Percent</button>
+          <button class="tab-btn active" data-tab="pixels">📏 Pixels</button>
+          <button class="tab-btn" data-tab="percent">% Percent</button>
           <button class="tab-btn" data-tab="presets">📐 Presets</button>
         </div>
 
         <!-- Pixels Tab -->
         <div class="tab-content active" id="pixelsTab">
-          <div class="input-group"><label>Width (px)</label><div class="input-row"><input type="number" id="widthInput" value="0" /><span>px</span></div></div>
-          <div class="input-group"><label>Height (px)</label><div class="input-row"><input type="number" id="heightInput" value="0" /><span>px</span></div></div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:1rem;">
-            <button class="lock-btn locked" id="lockBtn" title="Lock Aspect Ratio"><i class="fa-solid fa-lock"></i></button>
-            <span style="font-size:0.8rem;color:var(--muted);">Lock Aspect Ratio</span>
+          <div class="input-group"><label>Width (px)</label><div class="input-row"><input type="number" id="widthInput" value="0" min="1" /><span>px</span></div></div>
+          <div class="input-group"><label>Height (px)</label><div class="input-row"><input type="number" id="heightInput" value="0" min="1" /><span>px</span></div></div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:.5rem;">
+            <button class="lock-btn locked" id="lockBtn" title="Lock aspect ratio"><i class="fa-solid fa-lock"></i></button>
+            <span style="font-size:.8rem;color:var(--muted);">Lock aspect ratio</span>
           </div>
+          <div class="dim-preview" id="dimPreview"></div>
         </div>
 
         <!-- Percent Tab -->
@@ -147,247 +193,252 @@
             <button class="preset-btn" data-pct="150">150%</button>
             <button class="preset-btn" data-pct="200">200%</button>
           </div>
+          <div class="dim-preview" id="pctPreview" style="margin-top:1rem;"></div>
         </div>
 
         <!-- Presets Tab -->
         <div class="tab-content" id="presetsTab">
           <div class="preset-grid">
-            <button class="preset-btn" data-preset="instagram">Instagram (1080×1080)</button>
-            <button class="preset-btn" data-preset="facebook">Facebook (1200×630)</button>
-            <button class="preset-btn" data-preset="twitter">Twitter (1200×675)</button>
-            <button class="preset-btn" data-preset="linkedin">LinkedIn (1200×627)</button>
-            <button class="preset-btn" data-preset="youtube">YouTube (1280×720)</button>
-            <button class="preset-btn" data-preset="thumbnail">Thumbnail (150×150)</button>
-            <button class="preset-btn" data-preset="story">Story (1080×1920)</button>
-            <button class="preset-btn" data-preset="pinterest">Pinterest (1000×1500)</button>
+            <button class="preset-btn" data-preset="instagram">Instagram 1080×1080</button>
+            <button class="preset-btn" data-preset="facebook">Facebook 1200×630</button>
+            <button class="preset-btn" data-preset="twitter">Twitter 1200×675</button>
+            <button class="preset-btn" data-preset="linkedin">LinkedIn 1200×627</button>
+            <button class="preset-btn" data-preset="youtube">YouTube 1280×720</button>
+            <button class="preset-btn" data-preset="thumbnail">Thumbnail 150×150</button>
+            <button class="preset-btn" data-preset="story">Story 1080×1920</button>
+            <button class="preset-btn" data-preset="pinterest">Pinterest 1000×1500</button>
           </div>
         </div>
 
         <!-- Format & Quality -->
-        <div style="border-top:1px solid var(--border);padding-top:1rem;">
-          <div class="input-group"><label>Output Format</label><div class="format-grid"><button class="format-btn active" data-fmt="jpeg">JPG</button><button class="format-btn" data-fmt="png">PNG</button><button class="format-btn" data-fmt="webp">WebP</button></div></div>
-          <div class="input-group"><label>Quality</label><div class="percent-slider"><input type="range" id="qualitySlider" min="10" max="100" value="90" /><span id="qualityVal">90%</span></div></div>
+        <div style="border-top:1px solid var(--border2);padding-top:1rem;">
+          <div class="input-group"><label>Output format</label>
+            <div class="format-grid">
+              <button class="format-btn active" data-fmt="jpeg">JPG</button>
+              <button class="format-btn" data-fmt="png">PNG</button>
+              <button class="format-btn" data-fmt="webp">WebP</button>
+            </div>
+          </div>
+          <div class="input-group" id="qualityGroup"><label>Quality</label>
+            <div class="percent-slider"><input type="range" id="qualitySlider" min="10" max="100" value="90" /><span id="qualityVal">90%</span></div>
+          </div>
+          <div class="input-group" id="bgGroup"><label>JPEG background (transparent areas)</label>
+            <input type="color" id="bgColor" value="#ffffff" style="width:100%;height:40px;border:1.5px solid var(--border2);border-radius:10px;padding:3px;cursor:pointer;background:var(--bg);" />
+          </div>
+          <div class="switch-row" style="margin-top:.6rem;">
+            <label for="noUpscale">Don't upscale</label>
+            <span class="switch"><input type="checkbox" id="noUpscale" checked /><span class="tog"></span></span>
+          </div>
         </div>
 
-        <button class="btn btn-primary" id="resizeBtn"><i class="fa-solid fa-arrows-up-to-line"></i> Resize & Download</button>
+        <button class="btn btn-primary" id="resizeBtn"><i class="fa-solid fa-arrows-up-to-line"></i> Resize <span id="resizeCount"></span></button>
+        <button class="btn btn-success" id="downloadZipBtn" style="display:none;"><i class="fa-solid fa-file-zipper"></i> Download all (ZIP)</button>
       </div>
     </div>
   </div>
 
-  <footer>© 2026 PixelPress – All processing is local & private</footer>
+  <div id="toast"></div>
+
+  <footer>
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
+    <p>© 2026 ImgPDFTools — All processing is local &amp; private.</p>
+  </footer>
 
   <script>
-    (function() {
-      // Theme
-      function syncTheme() {
-        const saved = localStorage.getItem('pixelpress-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', saved);
-      }
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
-      });
-      syncTheme();
+  (function(){
+    const $ = id => document.getElementById(id);
+    let toastTimer;
+    function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1800); }
 
-      // State
-      let originalImage = null;
-      let originalFile = null;
-      let aspectRatio = 1;
-      let aspectLocked = true;
-      let currentMode = 'pixels';
-      let selectedPercent = 75;
-      let outputFormat = 'jpeg';
-      let outputQuality = 0.9;
+    /* Theme (shared key with homepage) */
+    function syncTheme(){
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
+      document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'));
+    }
+    $('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light':'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
+    });
+    syncTheme();
 
-      // DOM
-      const uploadZone = document.getElementById('uploadZone');
-      const fileInput = document.getElementById('fileInput');
-      const workspace = document.getElementById('workspace');
-      const previewImg = document.getElementById('previewImg');
-      const previewMeta = document.getElementById('previewMeta');
-      const widthInput = document.getElementById('widthInput');
-      const heightInput = document.getElementById('heightInput');
-      const lockBtn = document.getElementById('lockBtn');
-      const percentSlider = document.getElementById('percentSlider');
-      const percentValue = document.getElementById('percentValue');
-      const qualitySlider = document.getElementById('qualitySlider');
-      const qualityVal = document.getElementById('qualityVal');
-      const resizeBtn = document.getElementById('resizeBtn');
-      const statsRow = document.getElementById('statsRow');
+    /* State */
+    let queue = [];          // { file, img, w, h }
+    let results = [];        // { name, blob, size }
+    let primary = null;      // first image (drives aspect/preview)
+    let aspectRatio = 1, aspectLocked = true, currentMode = 'pixels';
+    let outputFormat = 'jpeg', outputQuality = 0.9;
 
-      // Upload
-      uploadZone.addEventListener('click', () => fileInput.click());
-      fileInput.addEventListener('change', (e) => {
-        if (e.target.files[0]) loadImage(e.target.files[0]);
-      });
-      uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.style.borderColor = 'var(--accent)'; });
-      uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor = 'var(--border)'; });
-      uploadZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadZone.style.borderColor = 'var(--border)';
-        if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
-      });
+    /* DOM */
+    const uploadZone=$('uploadZone'), fileInput=$('fileInput'), workspace=$('workspace'),
+      previewImg=$('previewImg'), previewMeta=$('previewMeta'), widthInput=$('widthInput'),
+      heightInput=$('heightInput'), lockBtn=$('lockBtn'), percentSlider=$('percentSlider'),
+      percentValue=$('percentValue'), qualitySlider=$('qualitySlider'), qualityVal=$('qualityVal'),
+      resizeBtn=$('resizeBtn'), statsRow=$('statsRow'), queueThumbs=$('queueThumbs'),
+      downloadZipBtn=$('downloadZipBtn'), dimPreview=$('dimPreview'), pctPreview=$('pctPreview'),
+      qualityGroup=$('qualityGroup'), bgGroup=$('bgGroup'), noUpscale=$('noUpscale');
 
-      function loadImage(file) {
-        originalFile = file;
+    /* Upload */
+    uploadZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => { addFiles([...e.target.files]); fileInput.value=''; });
+    uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor='var(--accent)'; uploadZone.style.background='var(--glow)'; });
+    uploadZone.addEventListener('dragleave', () => { uploadZone.style.borderColor=''; uploadZone.style.background=''; });
+    uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.style.borderColor=''; uploadZone.style.background=''; addFiles([...e.dataTransfer.files]); });
+
+    function addFiles(files){
+      const imgs = files.filter(f => f.type.startsWith('image/'));
+      if(!imgs.length){ toast('No valid images'); return; }
+      let pending = imgs.length;
+      imgs.forEach(file => {
         const reader = new FileReader();
-        reader.onload = (ev) => {
+        reader.onload = ev => {
           const img = new Image();
           img.onload = () => {
-            originalImage = img;
-            aspectRatio = img.width / img.height;
-            widthInput.value = img.width;
-            heightInput.value = img.height;
-            previewImg.src = ev.target.result;
-            previewMeta.textContent = `Original: ${img.width} × ${img.height} px | ${formatBytes(file.size)}`;
-            uploadZone.style.display = 'none';
-            workspace.style.display = 'grid';
-            updatePercentLabels();
+            queue.push({ file, img, w:img.width, h:img.height, src:ev.target.result });
+            if(!primary) setPrimary(queue[queue.length-1]);
+            if(--pending===0) afterLoad();
+            renderThumbs();
           };
           img.src = ev.target.result;
         };
         reader.readAsDataURL(file);
-        fileInput.value = '';
+      });
+    }
+    function afterLoad(){ uploadZone.style.display='none'; workspace.style.display='grid'; updateResizeCount(); updateDimPreview(); }
+
+    function setPrimary(item){
+      primary = item;
+      aspectRatio = item.w / item.h;
+      widthInput.value = item.w; heightInput.value = item.h;
+      previewImg.src = item.src;
+      previewMeta.textContent = `Original: ${item.w} × ${item.h} px | ${formatBytes(item.file.size)}`;
+      updateDimPreview();
+    }
+
+    function renderThumbs(){
+      queueThumbs.innerHTML = queue.map((q,i)=>`<div class="qt"><img src="${q.src}" alt="" title="${q.file.name}"><button class="rm" data-i="${i}">×</button></div>`).join('');
+      queueThumbs.querySelectorAll('.rm').forEach(b => b.addEventListener('click', () => {
+        const i=parseInt(b.dataset.i); const removed=queue.splice(i,1)[0];
+        if(primary===removed){ primary=null; if(queue.length) setPrimary(queue[0]); }
+        if(!queue.length){ workspace.style.display='none'; uploadZone.style.display='block'; }
+        renderThumbs(); updateResizeCount();
+      }));
+    }
+    function updateResizeCount(){ const c=queue.length; $('resizeCount').textContent=c>1?`(${c} images)`:''; }
+
+    /* Tabs */
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+      document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+      $(btn.dataset.tab+'Tab').classList.add('active'); currentMode=btn.dataset.tab; updateDimPreview();
+    }));
+
+    /* Lock */
+    lockBtn.addEventListener('click', () => {
+      aspectLocked=!aspectLocked; lockBtn.classList.toggle('locked', aspectLocked);
+      lockBtn.innerHTML = aspectLocked ? '<i class="fa-solid fa-lock"></i>' : '<i class="fa-solid fa-lock-open"></i>';
+    });
+    widthInput.addEventListener('input', () => { if(aspectLocked && primary && widthInput.value) heightInput.value=Math.round(parseInt(widthInput.value)/aspectRatio); updateDimPreview(); });
+    heightInput.addEventListener('input', () => { if(aspectLocked && primary && heightInput.value) widthInput.value=Math.round(parseInt(heightInput.value)*aspectRatio); updateDimPreview(); });
+
+    function updateDimPreview(){
+      if(!primary) return;
+      if(currentMode==='pixels'||currentMode==='presets'){
+        const w=parseInt(widthInput.value)||0, h=parseInt(heightInput.value)||0;
+        dimPreview.textContent = `→ Output: ${w} × ${h} px`;
       }
-
-      function updatePercentLabels() {
-        if (!originalImage) return;
-        const pct = parseInt(percentSlider.value);
-        const w = Math.round(originalImage.width * pct / 100);
-        const h = Math.round(originalImage.height * pct / 100);
-        percentValue.textContent = pct + '%';
-        document.querySelectorAll('.preset-btn[data-pct]').forEach(b => {
-          b.classList.toggle('active', parseInt(b.dataset.pct) === pct);
-        });
+      if(currentMode==='percent'){
+        const pct=parseInt(percentSlider.value);
+        pctPreview.textContent = `→ Output: ${Math.round(primary.w*pct/100)} × ${Math.round(primary.h*pct/100)} px (applied per image)`;
       }
+    }
 
-      // Tabs
-      document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-          document.getElementById(btn.dataset.tab + 'Tab').classList.add('active');
-          currentMode = btn.dataset.tab;
-        });
+    /* Percent */
+    percentSlider.addEventListener('input', () => {
+      percentValue.textContent=percentSlider.value+'%';
+      document.querySelectorAll('.preset-btn[data-pct]').forEach(b=>b.classList.toggle('active', parseInt(b.dataset.pct)===parseInt(percentSlider.value)));
+      updateDimPreview();
+    });
+    document.querySelectorAll('.preset-btn[data-pct]').forEach(btn => btn.addEventListener('click', () => {
+      percentSlider.value=btn.dataset.pct; percentSlider.dispatchEvent(new Event('input'));
+    }));
+
+    /* Social presets */
+    document.querySelectorAll('.preset-btn[data-preset]').forEach(btn => btn.addEventListener('click', () => {
+      const presets={ instagram:[1080,1080], facebook:[1200,630], twitter:[1200,675], linkedin:[1200,627], youtube:[1280,720], thumbnail:[150,150], story:[1080,1920], pinterest:[1000,1500] };
+      const [w,h]=presets[btn.dataset.preset];
+      widthInput.value=w; heightInput.value=aspectLocked && primary ? Math.round(w/aspectRatio) : h;
+      document.querySelector('.tab-btn[data-tab="pixels"]').click();
+      toast(`Preset: ${w}×${h}`);
+    }));
+
+    /* Format / quality */
+    document.querySelectorAll('.format-btn').forEach(btn => btn.addEventListener('click', () => {
+      document.querySelectorAll('.format-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+      outputFormat=btn.dataset.fmt;
+      qualityGroup.style.display = outputFormat==='png' ? 'none':'block';
+      bgGroup.style.display = outputFormat==='jpeg' ? 'block':'none';
+    }));
+    qualitySlider.addEventListener('input', () => { outputQuality=parseInt(qualitySlider.value)/100; qualityVal.textContent=qualitySlider.value+'%'; });
+
+    /* Resize */
+    function computeDims(item){
+      let w,h;
+      if(currentMode==='percent'){ const pct=parseInt(percentSlider.value); w=Math.round(item.w*pct/100); h=Math.round(item.h*pct/100); }
+      else { w=parseInt(widthInput.value)||item.w; h=parseInt(heightInput.value)||item.h; }
+      if(noUpscale.checked){ if(w>item.w){ w=item.w; } if(h>item.h){ h=item.h; } }
+      return { w:Math.max(1,w), h:Math.max(1,h) };
+    }
+    function renderOne(item){
+      return new Promise(resolve => {
+        const { w,h } = computeDims(item);
+        const canvas=document.createElement('canvas'); canvas.width=w; canvas.height=h;
+        const ctx=canvas.getContext('2d'); ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+        if(outputFormat==='jpeg'){ ctx.fillStyle=$('bgColor').value; ctx.fillRect(0,0,w,h); }
+        ctx.drawImage(item.img,0,0,w,h);
+        const mime = outputFormat==='png'?'image/png':outputFormat==='webp'?'image/webp':'image/jpeg';
+        const base=item.file.name.replace(/\.+$/,'');
+        canvas.toBlob(blob => resolve({ name:`${base}-${w}x${h}.${outputFormat==='jpeg'?'jpg':outputFormat}`, blob, size:blob.size, w, h }), mime, outputQuality);
       });
+    }
 
-      // Lock aspect ratio
-      lockBtn.addEventListener('click', () => {
-        aspectLocked = !aspectLocked;
-        lockBtn.classList.toggle('locked', aspectLocked);
-        lockBtn.innerHTML = aspectLocked ? '<i class="fa-solid fa-lock"></i>' : '<i class="fa-solid fa-lock-open"></i>';
-      });
+    resizeBtn.addEventListener('click', async () => {
+      if(!queue.length) return;
+      resizeBtn.disabled=true; resizeBtn.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i> Resizing…';
+      results=[];
+      for(const item of queue){ results.push(await renderOne(item)); }
 
-      // Width/Height sync
-      widthInput.addEventListener('input', () => {
-        if (aspectLocked && originalImage && widthInput.value) {
-          heightInput.value = Math.round(parseInt(widthInput.value) / aspectRatio);
-        }
-      });
-      heightInput.addEventListener('input', () => {
-        if (aspectLocked && originalImage && heightInput.value) {
-          widthInput.value = Math.round(parseInt(heightInput.value) * aspectRatio);
-        }
-      });
+      const origTotal=queue.reduce((a,q)=>a+q.file.size,0);
+      const newTotal=results.reduce((a,r)=>a+r.size,0);
+      $('origSize').textContent=formatBytes(origTotal);
+      $('newSize').textContent=formatBytes(newTotal);
+      $('newDims').textContent = results.length===1 ? `${results[0].w}×${results[0].h}` : `${results.length} files`;
+      statsRow.style.display='flex';
 
-      // Percent slider
-      percentSlider.addEventListener('input', () => {
-        selectedPercent = parseInt(percentSlider.value);
-        updatePercentLabels();
-      });
+      if(results.length===1){ downloadBlob(results[0].blob, results[0].name); downloadZipBtn.style.display='none'; toast('Resized & downloaded'); }
+      else { downloadZipBtn.style.display='flex'; toast(`Resized ${results.length} images`); }
 
-      // Percent preset buttons
-      document.querySelectorAll('.preset-btn[data-pct]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          selectedPercent = parseInt(btn.dataset.pct);
-          percentSlider.value = selectedPercent;
-          updatePercentLabels();
-        });
-      });
+      resizeBtn.disabled=false; resizeBtn.innerHTML='<i class="fa-solid fa-arrows-up-to-line"></i> Resize '+(queue.length>1?`(${queue.length} images)`:'');
+    });
 
-      // Social presets
-      document.querySelectorAll('.preset-btn[data-preset]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const presets = {
-            instagram: [1080,1080], facebook: [1200,630], twitter: [1200,675],
-            linkedin: [1200,627], youtube: [1280,720], thumbnail: [150,150],
-            story: [1080,1920], pinterest: [1000,1500]
-          };
-          const [w,h] = presets[btn.dataset.preset];
-          widthInput.value = w;
-          heightInput.value = aspectLocked ? Math.round(w / aspectRatio) : h;
-          document.querySelectorAll('.tab-btn[data-tab="pixels"]')[0].click();
-        });
-      });
+    downloadZipBtn.addEventListener('click', async () => {
+      if(!results.length) return;
+      const zip=new JSZip();
+      results.forEach(r=>zip.file(r.name, r.blob));
+      const content=await zip.generateAsync({ type:'blob', compression:'DEFLATE' });
+      downloadBlob(content, 'imgpdftools-resized.zip');
+      toast('ZIP downloaded');
+    });
 
-      // Format
-      document.querySelectorAll('.format-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          outputFormat = btn.dataset.fmt;
-        });
-      });
+    function downloadBlob(blob,name){ const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url); }
+    function formatBytes(bytes){ if(!bytes) return '0 B'; const k=1024, s=['B','KB','MB']; const i=Math.floor(Math.log(bytes)/Math.log(k)); return parseFloat((bytes/Math.pow(k,i)).toFixed(1))+' '+s[i]; }
 
-      // Quality
-      qualitySlider.addEventListener('input', () => {
-        outputQuality = parseInt(qualitySlider.value) / 100;
-        qualityVal.textContent = qualitySlider.value + '%';
-      });
-
-      // Resize & Download
-      resizeBtn.addEventListener('click', () => {
-        if (!originalImage) return;
-        let targetW, targetH;
-
-        if (currentMode === 'pixels') {
-          targetW = parseInt(widthInput.value) || originalImage.width;
-          targetH = parseInt(heightInput.value) || originalImage.height;
-        } else if (currentMode === 'percent') {
-          const pct = parseInt(percentSlider.value);
-          targetW = Math.round(originalImage.width * pct / 100);
-          targetH = Math.round(originalImage.height * pct / 100);
-        } else {
-          targetW = parseInt(widthInput.value) || originalImage.width;
-          targetH = parseInt(heightInput.value) || originalImage.height;
-        }
-
-        if (targetW <= 0 || targetH <= 0) return alert('Invalid dimensions');
-
-        const canvas = document.createElement('canvas');
-        canvas.width = targetW;
-        canvas.height = targetH;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(originalImage, 0, 0, targetW, targetH);
-
-        const mime = outputFormat === 'png' ? 'image/png' : outputFormat === 'webp' ? 'image/webp' : 'image/jpeg';
-        canvas.toBlob((blob) => {
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = `resized-${targetW}x${targetH}.${outputFormat}`;
-          a.click();
-          URL.revokeObjectURL(url);
-
-          // Update stats
-          document.getElementById('origSize').textContent = formatBytes(originalFile.size);
-          document.getElementById('newSize').textContent = formatBytes(blob.size);
-          document.getElementById('newDims').textContent = `${targetW}×${targetH}`;
-          statsRow.style.display = 'flex';
-        }, mime, outputQuality);
-      });
-
-      function formatBytes(bytes) {
-        if (bytes === 0) return '0 B';
-        const k = 1024;
-        const sizes = ['B','KB','MB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
-      }
-    })();
+    /* Init */
+    qualityGroup.style.display='block'; bgGroup.style.display='block';
+  })();
   </script>
 </body>
 </html>
