@@ -332,7 +332,7 @@
     </div>
     © 2026 ImgPDFTools — <strong>No images leave your device</strong> &nbsp;·&nbsp;
     Powered by <a href="https://huggingface.co/briaai/RMBG-1.4" target="_blank" style="color:var(--accent);">RMBG-1.4</a> &amp; Transformers.js
-    NLBR
+    <br>
     <span style="opacity:.6;">Free · Unlimited · Private · No Signup</span>
   </footer>
 
@@ -574,6 +574,8 @@
       const card = document.createElement('div');
       card.className = 'card'; card.id = 'card-' + item.id;
       const sizeKB = Math.round(item.file.size / 1024);
+      // NOTE: only safe, non-user values are interpolated here (numeric id, blob: URL, size).
+      // The user-controlled file name is intentionally NOT placed in innerHTML — see below.
       card.innerHTML = `
         <div class="card-image" id="imgContainer-${item.id}">
           <img class="card-original" src="${item.url}" id="origImg-${item.id}" />
@@ -585,7 +587,7 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="filename">${item.file.name}</span>
+          <span class="filename" id="fname-${item.id}"></span>
           <span class="filesize">${sizeKB} KB</span>
           <div class="btn-row">
             <button class="btn btn-outline btn-small" id="dlBtn-${item.id}" disabled data-tip="Download">⬇</button>
@@ -597,6 +599,11 @@
           </div>
         </div>`;
       grid.appendChild(card);
+      // ─── SECURITY: user-controlled file name set via textContent (never innerHTML) ───
+      // A file named like `<img src=x onerror=alert(1)>.png` would execute if injected
+      // into innerHTML. textContent renders it as literal text — safe.
+      const fnameEl = card.querySelector('#fname-' + item.id);
+      if (fnameEl) { fnameEl.textContent = item.file.name; fnameEl.title = item.file.name; }
       updateCardButtons(item);
       attachSlider(item);
     }
@@ -744,7 +751,7 @@
       if (!item.resultUrl) return;
       const ext = currentBg === 'transparent' ? 'png' : 'jpg';
       const a = document.createElement('a');
-      a.download = item.file.name.replace(/\.+$/, '') + '_nobg.' + ext;
+      a.download = item.file.name.replace(/\.[^.]+$/, '') + '_nobg.' + ext;
       a.href = item.resultUrl; a.click();
       toast('Downloaded');
     }
@@ -803,7 +810,7 @@
       const done = items.filter(i => i.status === 'done' && i.resultBlob); if (!done.length) return;
       const zip = new JSZip();
       const ext = currentBg === 'transparent' ? 'png' : 'jpg';
-      done.forEach(item => zip.file(item.file.name.replace(/\.+$/, '') + '_nobg.' + ext, item.resultBlob));
+      done.forEach(item => zip.file(item.file.name.replace(/\.[^.]+$/, '') + '_nobg.' + ext, item.resultBlob));
       const content = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(content); a.download = 'imgpdftools_nobg.zip'; a.click();
       toast('ZIP downloaded');
