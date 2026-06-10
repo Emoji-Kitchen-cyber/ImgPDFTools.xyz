@@ -82,7 +82,10 @@
       background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
     .hero p { color:var(--muted); margin-top:.5rem; }
 
-    .toc { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.2rem 1.4rem; margin:0 0 2rem; }
+    /* IMPORTANT: .toc is a <nav>, so it must opt out of the global top-navbar nav{} rules
+       (position:sticky, display:flex, fixed height:66px). Without these resets the box
+       collapses to 66px and the tiles overflow over the page. */
+    .toc { display:block; position:static; height:auto; background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.2rem 1.4rem; margin:0 0 2rem; backdrop-filter:none; -webkit-backdrop-filter:none; }
     .toc h2 { font-family:var(--fhead); font-size:1rem; margin-bottom:.9rem; }
     /* Bulletproof flex-wrap grid: tiles auto-wrap to fit ANY screen width — overflow impossible */
     .toc-grid { display:flex; flex-wrap:wrap; gap:.55rem; }
