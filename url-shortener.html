@@ -1,80 +1,119 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+    analytics_storage: 'denied', functionality_storage: 'granted',
+    security_storage: 'granted', wait_for_update: 500
+  });
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
+  gtag('config', 'G-3P7QPQKV3K', { anonymize_ip: true });
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>URL Shortener – PixelPress</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <meta name="description" content="Create short, shareable links with QR codes — entirely in your browser. No server, your data stays local. By ImgPDFTools." />
+  <meta name="theme-color" content="#6366f1" />
+  <title>URL Shortener — ImgPDFTools</title>
+  <link rel="canonical" href="https://imgpdftools.xyz/url-shortener.html" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
     :root {
-      --bg: #f5f5f7; --surface: rgba(255,255,255,0.75); --card: #ffffff;
-      --border: rgba(0,0,0,0.06); --text: #1d1d1f; --muted: #6e6e73;
-      --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236,72,153,0.1); --r: 16px;
-      --fhead: 'Syne', sans-serif; --fbody: system-ui, -apple-system, sans-serif; --fmono: 'JetBrains Mono', monospace;
+      --bg:#f6f7fb; --surface:rgba(255,255,255,0.82); --card:#ffffff; --border:rgba(0,0,0,0.08);
+      --text:#15151f; --muted:#6b6b7b; --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4;
+      --ok:#10b981; --danger:#ef4444; --glow:rgba(99,102,241,0.12); --r:16px;
+      --fmono:'JetBrains Mono',monospace;
     }
     [data-theme="dark"] {
-      --bg: #09090e; --surface: rgba(21,21,30,0.7); --card: #15151e;
-      --border: rgba(255,255,255,0.08); --text: #e8e8f0; --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --bg:#0c0c14; --surface:rgba(22,22,42,0.78); --card:#16162a; --border:rgba(255,255,255,0.09);
+      --text:#e9e9f4; --muted:#9a9ab0; --glow:rgba(99,102,241,0.2);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
+    body { background:var(--bg); color:var(--text); font-family:'Plus Jakarta Sans',system-ui,sans-serif; min-height:100vh; display:flex; flex-direction:column; transition:.3s; }
     nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:var(--surface); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
     .nav-left { display:flex; align-items:center; gap:1rem; }
-    .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.1rem; cursor:pointer; text-decoration:none; transition:0.2s; }
-    .back-btn:hover { border-color:var(--accent); transform:scale(1.05); }
-    .nav-logo { font-family:var(--fhead); font-weight:800; font-size:1.25rem; text-transform:uppercase; text-decoration:none; color:inherit; }
-    .nav-logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    .main { flex:1; max-width:900px; margin:0 auto; width:100%; padding:2rem 20px; }
+    .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.05rem; cursor:pointer; text-decoration:none; transition:.2s; }
+    .back-btn:hover { border-color:var(--accent); }
+    .logo { display:flex; align-items:center; gap:.5rem; text-decoration:none; color:inherit; }
+    .logo-icon { font-size:1.25rem; }
+    .logo-text { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.2rem; letter-spacing:-.02em; }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text-tools { color:var(--muted); }
+    .main { flex:1; max-width:900px; margin:0 auto; width:100%; padding:2rem 20px 3rem; }
     .hero { text-align:center; margin-bottom:2rem; }
-    .hero h1 { font-family:var(--fhead); font-size:clamp(2rem,5vw,2.5rem); font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:2rem; box-shadow:0 4px 20px rgba(0,0,0,0.02); }
-    .input-group { display:flex; gap:12px; margin-bottom:1.5rem; flex-wrap:wrap; }
-    input, select { flex:1; padding:12px 16px; border:1px solid var(--border); border-radius:12px; font-size:15px; background:var(--bg); color:var(--text); outline:none; min-width:200px; }
-    input:focus { border-color:var(--accent); box-shadow:0 0 0 4px var(--glow); }
-    .btn { padding:12px 24px; border:none; border-radius:12px; font-weight:600; cursor:pointer; transition:0.2s; display:inline-flex; align-items:center; gap:6px; font-size:0.95rem; }
-    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; }
-    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 25px var(--glow); }
+    .hero h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,5vw,2.5rem); font-weight:700; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero p { color:var(--muted); margin-top:.5rem; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:clamp(1.2rem,4vw,2rem); }
+    .input-group { display:flex; gap:12px; margin-bottom:1rem; flex-wrap:wrap; }
+    input, select { padding:12px 16px; border:1px solid var(--border); border-radius:12px; font-size:15px; background:var(--bg); color:var(--text); outline:none; font-family:inherit; }
+    #longUrl { flex:1; min-width:220px; }
+    #customAlias { flex:1; min-width:160px; }
+    input:focus, select:focus { border-color:var(--accent); box-shadow:0 0 0 4px var(--glow); }
+    .btn { padding:12px 22px; border:none; border-radius:12px; font-weight:600; cursor:pointer; transition:.2s; display:inline-flex; align-items:center; gap:7px; font-size:.92rem; font-family:inherit; }
+    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 24px var(--glow); }
     .btn-outline { background:transparent; border:1px solid var(--border); color:var(--text); }
-    .result-box { background:var(--bg); border-radius:12px; padding:16px; display:flex; align-items:center; gap:12px; margin:1.5rem 0; flex-wrap:wrap; }
-    .short-url { font-family:var(--fmono); font-size:1.1rem; color:var(--accent); word-break:break-all; flex:1; }
-    .qr-container { display:inline-block; background:white; padding:10px; border-radius:12px; }
-    .history { margin-top:2rem; }
-    .history-item { display:flex; justify-content:space-between; align-items:center; padding:12px; background:var(--bg); margin-bottom:8px; border-radius:10px; font-size:14px; gap:10px; flex-wrap:wrap; }
-    .history-item .actions { display:flex; gap:8px; }
-    .toolbar { display:flex; gap:10px; margin-bottom:1rem; flex-wrap:wrap; }
-    .batch-textarea { width:100%; min-height:80px; margin-top:10px; border-radius:10px; padding:10px; background:var(--bg); color:var(--text); border:1px solid var(--border); font-family:var(--fmono); font-size:0.9rem; }
-    .expired { opacity:0.6; text-decoration:line-through; }
-    footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); margin-top:auto; }
+    .btn-outline:hover { border-color:var(--accent); color:var(--accent); }
+    .btn-small { padding:8px 12px; font-size:.8rem; }
+    .err-msg { color:var(--danger); font-size:.85rem; margin-bottom:1rem; min-height:18px; }
+    .result-box { background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; align-items:center; gap:14px; margin:1rem 0; flex-wrap:wrap; }
+    .short-url { font-family:var(--fmono); font-size:1.05rem; color:var(--accent); word-break:break-all; flex:1; min-width:180px; }
+    .qr-container { background:#fff; padding:8px; border-radius:10px; line-height:0; }
+    .toolbar { display:flex; gap:10px; margin:1rem 0; flex-wrap:wrap; }
+    .batch-textarea { width:100%; min-height:90px; margin-bottom:1rem; border-radius:12px; padding:12px; background:var(--bg); color:var(--text); border:1px solid var(--border); font-family:var(--fmono); font-size:.88rem; resize:vertical; }
+    .history h3 { margin-bottom:12px; font-family:'Space Grotesk',sans-serif; }
+    .search-box { width:100%; margin-bottom:12px; }
+    .history-item { display:flex; justify-content:space-between; align-items:center; padding:12px 14px; background:var(--bg); margin-bottom:8px; border-radius:12px; gap:12px; flex-wrap:wrap; border:1px solid var(--border); }
+    .history-item .info { flex:1; min-width:0; }
+    .history-item .info .s { font-family:var(--fmono); font-weight:600; color:var(--accent); word-break:break-all; }
+    .history-item .info .l { color:var(--muted); font-size:.78rem; word-break:break-all; margin-top:2px; }
+    .history-item .info .meta { color:var(--muted); font-size:.72rem; margin-top:3px; }
+    .history-item .actions { display:flex; gap:6px; }
+    .expired { opacity:.55; }
+    .expired .s { text-decoration:line-through; }
+    .empty { color:var(--muted); text-align:center; padding:1.5rem; }
+    footer { text-align:center; padding:1.6rem; color:var(--muted); font-size:.82rem; border-top:1px solid var(--border); }
+    footer a { color:var(--accent); text-decoration:none; }
+    .ck-banner { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); width:min(680px,92vw); background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 18px; box-shadow:0 12px 40px rgba(0,0,0,.18); z-index:300; display:none; gap:14px; align-items:center; flex-wrap:wrap; }
+    .ck-banner.show { display:flex; }
+    .ck-banner p { flex:1; min-width:200px; font-size:.86rem; color:var(--muted); }
+    .ck-banner a { color:var(--accent); text-decoration:none; }
+    .ck-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .ck-actions button { padding:9px 16px; border-radius:10px; font-weight:600; cursor:pointer; font-family:inherit; font-size:.85rem; border:1px solid var(--border); background:var(--card); color:var(--text); }
+    .ck-actions .accept { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; }
+    .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--text); color:var(--bg); padding:10px 18px; border-radius:10px; font-size:.85rem; font-weight:600; opacity:0; transition:.25s; z-index:400; pointer-events:none; }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="logo" aria-label="ImgPDFTools home">
+        <span class="logo-icon">🛠️</span>
+        <span class="logo-text"><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="back-btn" aria-label="Toggle theme">🌓</button>
   </nav>
+
   <div class="main">
     <div class="hero">
       <h1>URL Shortener</h1>
-      <p style="color:var(--muted); margin-top:0.5rem;">Shorten, customize, track – all client‑side</p>
+      <p>Shorten, customize and QR-code your links — 100% client-side, your data never leaves this browser.</p>
     </div>
     <div class="card">
       <div class="input-group">
-        <input type="url" id="longUrl" placeholder="Enter long URL (https://...)" />
+        <input type="url" id="longUrl" placeholder="Enter long URL (https://…)" />
         <input type="text" id="customAlias" placeholder="Custom alias (optional)" maxlength="30" />
         <select id="expirySelect">
           <option value="">No expiry</option>
@@ -85,237 +124,212 @@
         </select>
         <button class="btn btn-primary" id="shortenBtn"><i class="fa-solid fa-link"></i> Shorten</button>
       </div>
+      <div class="err-msg" id="errMsg"></div>
+
       <div id="resultSection" style="display:none;">
         <div class="result-box">
           <div class="short-url" id="shortUrlDisplay"></div>
           <div class="qr-container" id="qrContainer"></div>
-          <button class="btn btn-outline" id="copyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-          <button class="btn btn-outline" id="openBtn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</button>
+          <button class="btn btn-outline btn-small" id="copyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
+          <button class="btn btn-outline btn-small" id="openBtn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open</button>
         </div>
       </div>
+
       <div class="toolbar">
-        <button class="btn btn-outline" id="batchBtn"><i class="fa-solid fa-layer-group"></i> Batch Shorten</button>
-        <button class="btn btn-outline" id="exportBtn"><i class="fa-solid fa-download"></i> Export</button>
-        <button class="btn btn-outline" id="importBtn"><i class="fa-solid fa-upload"></i> Import</button>
-        <button class="btn btn-outline" id="clearHistoryBtn"><i class="fa-solid fa-trash"></i> Clear All</button>
+        <button class="btn btn-outline btn-small" id="batchBtn"><i class="fa-solid fa-layer-group"></i> Batch</button>
+        <button class="btn btn-outline btn-small" id="exportBtn"><i class="fa-solid fa-download"></i> Export</button>
+        <button class="btn btn-outline btn-small" id="importBtn"><i class="fa-solid fa-upload"></i> Import</button>
+        <button class="btn btn-outline btn-small" id="clearHistoryBtn"><i class="fa-solid fa-trash"></i> Clear All</button>
       </div>
-      <textarea class="batch-textarea" id="batchInput" placeholder="Paste multiple URLs (one per line)" style="display:none;"></textarea>
+      <textarea class="batch-textarea" id="batchInput" placeholder="Paste multiple URLs (one per line) and click outside to process" style="display:none;"></textarea>
+
       <div class="history">
-        <h3 style="margin-bottom:12px;">Your Shortened URLs</h3>
+        <h3>Your Shortened URLs</h3>
+        <input type="text" class="search-box" id="searchBox" placeholder="Search your links…" />
         <div id="historyList"></div>
       </div>
     </div>
   </div>
-  <footer>© 2026 PixelPress – No server, all data stays in your browser</footer>
+
+  <footer>© 2026 <strong>ImgPDFTools</strong> — No server, all data stays in your browser. · <a href="./privacy-policy.html">Privacy</a></footer>
+
+  <div class="ck-banner" id="ckBanner" role="dialog" aria-live="polite">
+    <p>We use privacy-friendly analytics to improve ImgPDFTools. Your links stay in your browser. <a href="./privacy-policy.html">Learn more</a>.</p>
+    <div class="ck-actions">
+      <button id="ckReject">Reject</button>
+      <button class="accept" id="ckAccept">Accept</button>
+    </div>
+  </div>
+  <button class="back-btn" id="manageCk" title="Cookie settings" aria-label="Cookie settings" style="position:fixed;left:14px;bottom:14px;z-index:250;display:none;"><i class="fa-solid fa-cookie-bite"></i></button>
+  <div class="toast" id="toast"></div>
 
   <script>
-    (function() {
-      // Theme sync
-      function syncTheme() {
-        const saved = localStorage.getItem('pixelpress-theme');
-        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-      }
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const curr = document.documentElement.getAttribute('data-theme');
-        const next = curr === 'dark' ? 'light' : 'dark';
+    (function () {
+      'use strict';
+      const PREF_KEY = 'imgpdftools-consent-prefs';
+      const STORE = 'imgpdftools_urls';
+      const RKEY = (id) => 'imgpdftools_redirect_' + id;
+      const $ = (id) => document.getElementById(id);
+      function gtagSafe() { if (typeof gtag === 'function') gtag.apply(null, arguments); }
+      function migrateKey(o, n) { try { const v = localStorage.getItem(o); if (v !== null && localStorage.getItem(n) === null) localStorage.setItem(n, v); } catch (e) {} }
+      function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+      function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+      /* theme */
+      migrateKey('pixelpress-theme', 'imgpdftools-theme');
+      document.documentElement.setAttribute('data-theme', safeGet('imgpdftools-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'));
+      $('themeToggle').addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
+        safeSet('imgpdftools-theme', next);
       });
-      syncTheme();
 
-      const longUrlInput = document.getElementById('longUrl');
-      const customAliasInput = document.getElementById('customAlias');
-      const expirySelect = document.getElementById('expirySelect');
-      const shortenBtn = document.getElementById('shortenBtn');
-      const resultSection = document.getElementById('resultSection');
-      const shortUrlDisplay = document.getElementById('shortUrlDisplay');
-      const qrContainer = document.getElementById('qrContainer');
-      const historyList = document.getElementById('historyList');
+      /* consent */
+      function readPrefs() { try { return JSON.parse(safeGet(PREF_KEY) || 'null'); } catch (e) { return null; } }
+      function applyConsent(p) { gtagSafe('consent', 'update', { analytics_storage: p.analytics ? 'granted' : 'denied' }); }
+      function gpcDenied() { return (navigator.globalPrivacyControl === true) || (navigator.doNotTrack === '1'); }
+      function savePrefs(a) { const p = { analytics: !!a, ts: Date.now() }; safeSet(PREF_KEY, JSON.stringify(p)); applyConsent(p); $('ckBanner').classList.remove('show'); $('manageCk').style.display = 'flex'; }
+      (function () { const p = readPrefs(); if (p) { applyConsent(p); $('manageCk').style.display = 'flex'; return; } if (gpcDenied()) { savePrefs(false); return; } $('ckBanner').classList.add('show'); })();
+      $('ckAccept').addEventListener('click', () => savePrefs(true));
+      $('ckReject').addEventListener('click', () => savePrefs(false));
+      $('manageCk').addEventListener('click', () => $('ckBanner').classList.add('show'));
 
-      let currentShortURL = '';
+      /* one-time migration of old pixelpress data */
+      (function migrateOld() {
+        if (safeGet(STORE)) return;
+        const old = safeGet('pixelpress_urls');
+        if (!old) return;
+        try {
+          const arr = JSON.parse(old);
+          if (Array.isArray(arr)) { safeSet(STORE, JSON.stringify(arr)); arr.forEach(e => { if (e && e.id) safeSet(RKEY(e.id), JSON.stringify(e)); }); }
+        } catch (e) {}
+      })();
+
+      /* toast */
+      let toastTimer = null;
+      function toast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1600); }
+
+      /* helpers */
+      function load() { try { return JSON.parse(safeGet(STORE) || '[]'); } catch (e) { return []; } }
+      function store(list) { safeSet(STORE, JSON.stringify(list.slice(0, 200))); }
+      function genId() { const a = new Uint8Array(6); crypto.getRandomValues(a); return Array.from(a, b => b.toString(36).padStart(2, '0')).join('').slice(0, 8); }
+      function expiryTs(v) { const n = Date.now(); return ({ '1h': 3600000, '24h': 86400000, '7d': 604800000, '30d': 2592000000 })[v] ? n + ({ '1h': 3600000, '24h': 86400000, '7d': 604800000, '30d': 2592000000 })[v] : null; }
+      const ALIAS_RE = /^[A-Za-z0-9_-]{1,30}$/;
+
       let currentQR = null;
-
-      function generateShortId() {
-        const arr = new Uint8Array(6);
-        crypto.getRandomValues(arr);
-        return Array.from(arr, b => b.toString(36).padStart(2, '0')).join('');
+      function renderQR(container, url, size) {
+        container.textContent = '';
+        currentQR = new QRCode(container, { text: url, width: size, height: size, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
       }
 
-      function getExpiryTimestamp(expiry) {
-        if (!expiry) return null;
-        const now = Date.now();
-        switch(expiry) {
-          case '1h': return now + 3600000;
-          case '24h': return now + 86400000;
-          case '7d': return now + 604800000;
-          case '30d': return now + 2592000000;
-          default: return null;
-        }
-      }
-
-      function shortenURL(longUrl, customAlias, expiry) {
-        if (!longUrl) return alert('Please enter a URL');
-        try { new URL(longUrl); } catch { return alert('Invalid URL. Include http:// or https://'); }
-
-        let shortId = customAlias.trim();
-        if (shortId) {
-          if (localStorage.getItem(`redirect_${shortId}`)) {
-            return alert('Alias already taken. Try another.');
-          }
-        } else {
-          shortId = generateShortId();
-        }
-        // USE HASH-BASED SHORT LINK
-        const shortURL = `${window.location.origin}/#/s/${shortId}`;
-        const entry = {
-          id: shortId,
-          long: longUrl,
-          short: shortURL,
-          time: new Date().toISOString(),
-          expiry: getExpiryTimestamp(expiry),
-          clicks: 0
-        };
-        localStorage.setItem(`redirect_${shortId}`, JSON.stringify(entry));
-        const history = JSON.parse(localStorage.getItem('pixelpress_urls') || '[]');
-        history.unshift(entry);
-        localStorage.setItem('pixelpress_urls', JSON.stringify(history.slice(0, 50)));
-
+      function shorten(longUrl, alias, expiry) {
+        $('errMsg').textContent = '';
+        if (!longUrl) { $('errMsg').textContent = 'Please enter a URL.'; return null; }
+        let parsed;
+        try { parsed = new URL(longUrl); } catch (e) { $('errMsg').textContent = 'Invalid URL. Include http:// or https://'; return null; }
+        if (!/^https?:$/.test(parsed.protocol)) { $('errMsg').textContent = 'Only http and https URLs are allowed.'; return null; }
+        let id = (alias || '').trim();
+        if (id) {
+          if (!ALIAS_RE.test(id)) { $('errMsg').textContent = 'Alias can only contain letters, numbers, _ and - (max 30).'; return null; }
+          if (safeGet(RKEY(id))) { $('errMsg').textContent = 'That alias is already taken. Try another.'; return null; }
+        } else { id = genId(); }
+        const entry = { id, long: longUrl, short: location.origin + '/#/s/' + id, time: new Date().toISOString(), expiry: expiryTs(expiry), clicks: 0 };
+        safeSet(RKEY(id), JSON.stringify(entry));
+        const list = load(); list.unshift(entry); store(list);
         return entry;
       }
 
-      function renderQR(url) {
-        qrContainer.innerHTML = '';
-        if (currentQR) currentQR.clear();
-        currentQR = new QRCode(qrContainer, {
-          text: url,
-          width: 100,
-          height: 100,
-          colorDark: '#000000',
-          colorLight: '#ffffff',
-          correctLevel: QRCode.CorrectLevel.M
-        });
-      }
-
       function displayResult(entry) {
-        currentShortURL = entry.short;
-        shortUrlDisplay.textContent = entry.short;
-        resultSection.style.display = 'block';
-        renderQR(entry.short);
-        document.getElementById('openBtn').onclick = () => window.open(entry.short, '_blank');
-        document.getElementById('copyBtn').onclick = () => {
-          navigator.clipboard.writeText(entry.short).then(() => alert('Copied!'));
-        };
+        $('shortUrlDisplay').textContent = entry.short;
+        $('resultSection').style.display = 'block';
+        renderQR($('qrContainer'), entry.short, 100);
+        $('openBtn').onclick = () => { bumpClick(entry.id); window.open(entry.long, '_blank', 'noopener'); };
+        $('copyBtn').onclick = () => navigator.clipboard.writeText(entry.short).then(() => toast('Copied!'));
       }
 
+      function bumpClick(id) {
+        const list = load(); const it = list.find(e => e.id === id);
+        if (it) { it.clicks = (it.clicks || 0) + 1; store(list); safeSet(RKEY(id), JSON.stringify(it)); renderHistory(); }
+      }
+
+      function deleteEntry(id) {
+        const list = load().filter(e => e.id !== id);
+        store(list); try { localStorage.removeItem(RKEY(id)); } catch (e) {}
+        renderHistory();
+      }
+
+      // SECURE render — no innerHTML with user data
       function renderHistory() {
-        const history = JSON.parse(localStorage.getItem('pixelpress_urls') || '[]');
-        historyList.innerHTML = history.length ? '' : '<p style="color:var(--muted);">No URLs yet.</p>';
-        history.forEach((item, idx) => {
-          const isExpired = item.expiry && Date.now() > item.expiry;
-          const div = document.createElement('div');
-          div.className = `history-item ${isExpired ? 'expired' : ''}`;
-          div.innerHTML = `
-            <div style="flex:1;">
-              <strong>${item.short}</strong>${isExpired ? ' (Expired)' : ''}<br>
-              <small style="color:var(--muted);">${item.long.substring(0, 60)}... · ${new Date(item.time).toLocaleString()} · Clicks: ${item.clicks || 0}</small>
-            </div>
-            <div class="actions">
-              <button class="btn btn-outline btn-small" onclick="copyText('${item.short}')"><i class="fa-solid fa-copy"></i></button>
-              <button class="btn btn-outline btn-small" onclick="deleteEntry(${idx})"><i class="fa-solid fa-trash"></i></button>
-            </div>
-          `;
-          historyList.appendChild(div);
+        const wrap = $('historyList');
+        wrap.textContent = '';
+        const q = ($('searchBox').value || '').toLowerCase();
+        const list = load().filter(e => !q || (e.long && e.long.toLowerCase().includes(q)) || (e.short && e.short.toLowerCase().includes(q)));
+        if (!list.length) { const p = document.createElement('p'); p.className = 'empty'; p.textContent = q ? 'No matching links.' : 'No links yet — shorten one above.'; wrap.appendChild(p); return; }
+        list.forEach(item => {
+          const expired = item.expiry && Date.now() > item.expiry;
+          const row = document.createElement('div');
+          row.className = 'history-item' + (expired ? ' expired' : '');
+          const info = document.createElement('div'); info.className = 'info';
+          const s = document.createElement('div'); s.className = 's'; s.textContent = item.short + (expired ? '  (expired)' : '');
+          const l = document.createElement('div'); l.className = 'l'; l.textContent = item.long;
+          const meta = document.createElement('div'); meta.className = 'meta';
+          meta.textContent = new Date(item.time).toLocaleString() + ' · Clicks: ' + (item.clicks || 0);
+          info.appendChild(s); info.appendChild(l); info.appendChild(meta);
+          const actions = document.createElement('div'); actions.className = 'actions';
+          const copyB = mkBtn('fa-copy', 'Copy'); copyB.addEventListener('click', () => navigator.clipboard.writeText(item.short).then(() => toast('Copied!')));
+          const openB = mkBtn('fa-arrow-up-right-from-square', 'Open'); openB.addEventListener('click', () => { bumpClick(item.id); window.open(item.long, '_blank', 'noopener'); });
+          const delB = mkBtn('fa-trash', 'Delete'); delB.addEventListener('click', () => deleteEntry(item.id));
+          actions.appendChild(copyB); actions.appendChild(openB); actions.appendChild(delB);
+          row.appendChild(info); row.appendChild(actions);
+          wrap.appendChild(row);
         });
       }
+      function mkBtn(icon, label) { const b = document.createElement('button'); b.className = 'btn btn-outline btn-small'; b.title = label; b.setAttribute('aria-label', label); const i = document.createElement('i'); i.className = 'fa-solid ' + icon; b.appendChild(i); return b; }
 
-      window.copyText = (text) => {
-        navigator.clipboard.writeText(text).then(() => alert('Copied!'));
-      };
-      window.deleteEntry = (index) => {
-        const history = JSON.parse(localStorage.getItem('pixelpress_urls') || '[]');
-        const removed = history.splice(index, 1)[0];
-        localStorage.setItem('pixelpress_urls', JSON.stringify(history));
-        localStorage.removeItem(`redirect_${removed.id}`);
-        renderHistory();
-      };
-
-      shortenBtn.addEventListener('click', () => {
-        const longUrl = longUrlInput.value.trim();
-        const alias = customAliasInput.value.trim();
-        const expiry = expirySelect.value;
-        if (!longUrl) return alert('Enter URL');
-        const entry = shortenURL(longUrl, alias, expiry);
-        if (entry) {
-          displayResult(entry);
-          renderHistory();
-          longUrlInput.value = '';
-          customAliasInput.value = '';
-          expirySelect.value = '';
-        }
+      /* events */
+      $('shortenBtn').addEventListener('click', () => {
+        const entry = shorten($('longUrl').value.trim(), $('customAlias').value.trim(), $('expirySelect').value);
+        if (entry) { displayResult(entry); renderHistory(); $('longUrl').value = ''; $('customAlias').value = ''; $('expirySelect').value = ''; gtagSafe('event', 'shorten_url'); }
       });
-
-      // Batch shorten
-      document.getElementById('batchBtn').addEventListener('click', () => {
-        const batchInput = document.getElementById('batchInput');
-        batchInput.style.display = batchInput.style.display === 'none' ? 'block' : 'none';
-        if (batchInput.style.display === 'block') batchInput.focus();
+      $('longUrl').addEventListener('keydown', e => { if (e.key === 'Enter') $('shortenBtn').click(); });
+      $('searchBox').addEventListener('input', renderHistory);
+      $('batchBtn').addEventListener('click', () => { const b = $('batchInput'); b.style.display = b.style.display === 'none' ? 'block' : 'none'; if (b.style.display === 'block') b.focus(); });
+      $('batchInput').addEventListener('blur', () => {
+        const lines = $('batchInput').value.split('\n').map(l => l.trim()).filter(Boolean);
+        if (!lines.length) { $('batchInput').style.display = 'none'; return; }
+        let ok = 0; lines.forEach(u => { const e = shorten(u, '', ''); if (e) ok++; });
+        $('batchInput').value = ''; $('batchInput').style.display = 'none'; $('errMsg').textContent = '';
+        renderHistory(); toast('Shortened ' + ok + ' of ' + lines.length + ' URLs.');
       });
-
-      document.getElementById('batchInput').addEventListener('change', () => {
-        const lines = document.getElementById('batchInput').value.split('\n').filter(l => l.trim());
-        lines.forEach(url => {
-          try { new URL(url); shortenURL(url, '', ''); } catch {}
-        });
-        document.getElementById('batchInput').value = '';
-        document.getElementById('batchInput').style.display = 'none';
-        renderHistory();
-        alert(`Shortened ${lines.length} URLs.`);
+      $('exportBtn').addEventListener('click', () => {
+        const blob = new Blob([JSON.stringify(load(), null, 2)], { type: 'application/json' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'imgpdftools_urls.json';
+        document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
       });
-
-      document.getElementById('exportBtn').addEventListener('click', () => {
-        const history = JSON.parse(localStorage.getItem('pixelpress_urls') || '[]');
-        const blob = new Blob([JSON.stringify(history, null, 2)], { type: 'application/json' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = 'pixelpress_urls.json';
-        a.click();
-      });
-
-      document.getElementById('importBtn').addEventListener('click', () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = '.json';
-        input.onchange = (e) => {
-          const file = e.target.files[0];
-          if (!file) return;
-          const reader = new FileReader();
-          reader.onload = (ev) => {
+      $('importBtn').addEventListener('click', () => {
+        const inp = document.createElement('input'); inp.type = 'file'; inp.accept = 'application/json,.json';
+        inp.onchange = (e) => {
+          const f = e.target.files[0]; if (!f) return;
+          const r = new FileReader();
+          r.onload = (ev) => {
             try {
               const data = JSON.parse(ev.target.result);
-              if (Array.isArray(data)) {
-                localStorage.setItem('pixelpress_urls', JSON.stringify(data));
-                data.forEach(item => localStorage.setItem(`redirect_${item.id}`, JSON.stringify(item)));
-                renderHistory();
-                alert('Imported successfully.');
-              }
-            } catch { alert('Invalid file.'); }
+              if (!Array.isArray(data)) throw new Error('bad');
+              const clean = data.filter(x => x && typeof x.id === 'string' && ALIAS_RE.test(x.id) && typeof x.long === 'string');
+              store(clean); clean.forEach(x => safeSet(RKEY(x.id), JSON.stringify(x)));
+              renderHistory(); toast('Imported ' + clean.length + ' links.');
+            } catch (err) { toast('Invalid file.'); }
           };
-          reader.readAsText(file);
+          r.readAsText(f);
         };
-        input.click();
+        inp.click();
       });
-
-      document.getElementById('clearHistoryBtn').addEventListener('click', () => {
-        if (confirm('Delete all shortened URLs?')) {
-          const history = JSON.parse(localStorage.getItem('pixelpress_urls') || '[]');
-          history.forEach(item => localStorage.removeItem(`redirect_${item.id}`));
-          localStorage.removeItem('pixelpress_urls');
-          renderHistory();
-        }
+      $('clearHistoryBtn').addEventListener('click', () => {
+        if (!confirm('Delete all shortened URLs?')) return;
+        load().forEach(e => { try { localStorage.removeItem(RKEY(e.id)); } catch (x) {} });
+        try { localStorage.removeItem(STORE); } catch (x) {}
+        renderHistory(); toast('All links cleared.');
       });
-
-      // NO longer need the path-based redirect check (it's handled in index.html via hash)
 
       renderHistory();
     })();
