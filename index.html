@@ -243,21 +243,33 @@ body.rtl .page-inner { flex-direction: row-reverse; }
 body.rtl .tool-card-arrow { right: auto; left: 16px; }
 .tool-card:hover .tool-card-arrow { opacity: 1; transform: translate(2px, -2px); }
 #noResults { text-align: center; color: var(--muted); padding: 5rem 0; display: none; font-size: 15px; }
-.seo-section { max-width: 1100px; margin: 0 auto; padding: 1.5rem 18px 4rem; position: relative; z-index: 1; }
-.seo-section > h2 { font-family: var(--fhead); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -.3px; line-height: 1.3; margin: 2.6rem 0 1rem; overflow-wrap: anywhere; }
-.seo-section > h2:first-child { margin-top: 0; }
-.seo-section > p { color: var(--muted); line-height: 1.7; font-size: 15px; margin: 0 0 1.6rem; overflow-wrap: anywhere; }
-.seo-section > p strong { color: var(--text); }
-.seo-cat { display: block; clear: both; position: relative; width: 100%; margin: 0 0 2rem; }
-.seo-cat h3 { font-family: var(--fhead); font-size: 1.05rem; font-weight: 700; color: var(--accent); margin: 0 0 .9rem; line-height: 1.3; position: relative; clear: both; overflow-wrap: anywhere; }
-.seo-link-grid { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; margin: 0; padding: 0; list-style: none; }
-.seo-link-grid a { display: inline-flex; align-items: center; max-width: 100%; padding: 8px 15px; background: var(--card); border: 1px solid var(--border2); border-radius: 99px; color: var(--text); font-size: 13.5px; font-weight: 500; line-height: 1.2; overflow-wrap: anywhere; transition: border-color .15s, color .15s, background .15s; }
-.seo-link-grid a:hover { color: var(--accent); border-color: var(--accent); background: var(--glow); }
-.seo-faq { margin-top: 1.5rem; }
-.seo-faq h2 { font-family: var(--fhead); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -.3px; margin: 0 0 1rem; }
-.seo-faq h3 { font-family: var(--fhead); font-size: 1.02rem; font-weight: 600; color: var(--accent); margin: 1.4rem 0 .4rem; }
-.seo-faq p { color: var(--muted); line-height: 1.7; font-size: 15px; margin-bottom: .6rem; }
+
+/* ===== SEO SECTION (card layout — overlap-proof, every device) ===== */
+.seo-section { max-width: 1140px; margin: 0 auto; padding: 1.5rem 18px 4rem; position: relative; z-index: 1; }
+.seo-intro { margin-bottom: 2rem; }
+.seo-intro h2 { font-family: var(--fhead); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -.3px; line-height: 1.3; margin: 0 0 .8rem; overflow-wrap: anywhere; }
+.seo-intro p { color: var(--muted); line-height: 1.7; font-size: 15px; margin: 0; overflow-wrap: anywhere; }
+.seo-cats { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; align-items: start; margin-bottom: 2.4rem; }
+.seo-cat { background: var(--card); border: 1px solid var(--border2); border-radius: var(--r); padding: 22px 20px; overflow: hidden; }
+.seo-cat h3 { display: flex; align-items: center; gap: 9px; font-family: var(--fhead); font-size: 1.02rem; font-weight: 700; color: var(--text); margin: 0 0 1rem; padding-bottom: .8rem; border-bottom: 1px solid var(--border2); line-height: 1.3; }
+.seo-cat h3 i { color: var(--accent); font-size: 1rem; flex-shrink: 0; }
+.seo-links { display: flex; flex-direction: column; gap: 2px; }
+.seo-links a { display: block; padding: 9px 12px; border-radius: var(--r-sm); color: var(--text); font-size: 14px; font-weight: 500; line-height: 1.4; transition: background .15s, color .15s; overflow-wrap: anywhere; }
+.seo-links a:hover { background: var(--glow); color: var(--accent); }
+.seo-why { background: var(--card); border: 1px solid var(--border2); border-radius: var(--r); padding: 22px 20px; margin-bottom: 2.4rem; }
+.seo-why h2 { font-family: var(--fhead); font-size: clamp(1.2rem, 2.6vw, 1.6rem); font-weight: 700; margin: 0 0 .8rem; }
+.seo-why p { color: var(--muted); line-height: 1.7; font-size: 15px; margin: 0; overflow-wrap: anywhere; }
+.seo-why p strong { color: var(--text); }
+.seo-faq h2 { font-family: var(--fhead); font-size: clamp(1.2rem, 2.6vw, 1.6rem); font-weight: 700; margin: 0 0 1rem; }
+.seo-faq details { background: var(--card); border: 1px solid var(--border2); border-radius: var(--r-sm); margin-bottom: 10px; overflow: hidden; }
+.seo-faq summary { list-style: none; cursor: pointer; padding: 16px 18px; font-weight: 600; font-size: 15px; color: var(--text); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.seo-faq summary::-webkit-details-marker { display: none; }
+.seo-faq summary::after { content: '+'; font-size: 1.3rem; line-height: 1; color: var(--accent); transition: transform .2s; flex-shrink: 0; }
+.seo-faq details[open] summary::after { transform: rotate(45deg); }
+.seo-faq details p { color: var(--muted); line-height: 1.7; font-size: 14.5px; padding: 0 18px 16px; margin: 0; }
+body.rtl .seo-cat h3, body.rtl .seo-faq summary { flex-direction: row-reverse; }
 body.rtl .seo-section { text-align: right; }
+
 footer { text-align: center; padding: 36px 20px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border2); background: var(--card); position: relative; z-index: 1; }
 .footer-logo { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px; font-family: var(--fhead); font-weight: 700; font-size: 1rem; }
 .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 14px; }
@@ -296,8 +308,8 @@ footer { text-align: center; padding: 36px 20px; font-size: 13px; color: var(--m
   .tool-info-pane h3 { font-size: 14px; }
   .tool-info-pane p { font-size: 12.5px; }
   .seo-section { padding: 1rem 14px 3.5rem; }
-  .seo-cat h3 { font-size: 1rem; }
-  .seo-link-grid a { padding: 7px 13px; font-size: 13px; }
+  .seo-cats { gap: 14px; }
+  .seo-cat { padding: 18px 16px; }
   .sidebar { width: 86vw; max-width: 320px; left: -90vw; }
   body.rtl .sidebar { right: -90vw; left: auto; }
   footer { padding: 30px 16px; }
@@ -426,60 +438,72 @@ window.onerror = function(msg, src, line){
 </div>
 
 <section class="seo-section" aria-label="About ImgPDFTools and tool directory">
-  <h2>Free Online Image &amp; PDF Tools — Right in Your Browser</h2>
-  <p>ImgPDFTools is a collection of 25+ free, privacy-first tools to compress, resize, convert, and edit images, plus a full set of PDF utilities like merge, split, compress, and annotate. Everything runs entirely in your browser — your files are never uploaded to a server, so your work stays private and fast.</p>
-  <div class="seo-cat">
-    <h3>Image Tools</h3>
-    <nav class="seo-link-grid" aria-label="Image tools">
-      <a href="./compress.html">Compress Image</a>
-      <a href="./resize.html">Resize Image</a>
-      <a href="./photo-editor.html">Photo Editor</a>
-      <a href="./convert.html">Convert Image Format</a>
-      <a href="./watermark.html">Watermark Image</a>
-      <a href="./remove-bg.html">Remove Background</a>
-      <a href="./meme-generator.html">Meme Generator</a>
-      <a href="./crop.html">Advanced Crop</a>
-      <a href="./blur-face.html">Blur Face</a>
-      <a href="./thumbnail-maker.html">Thumbnail Maker</a>
-      <a href="./screenshot-editor.html">Screenshot Editor</a>
-      <a href="./favicon-generator.html">Favicon Generator</a>
-    </nav>
+  <div class="seo-intro">
+    <h2>Free Online Image &amp; PDF Tools — Right in Your Browser</h2>
+    <p>ImgPDFTools is a collection of 25+ free, privacy-first tools to compress, resize, convert, and edit images, plus a full set of PDF utilities like merge, split, compress, and annotate. Everything runs entirely in your browser — your files are never uploaded to a server, so your work stays private and fast.</p>
   </div>
-  <div class="seo-cat">
-    <h3>PDF &amp; Document Tools</h3>
-    <nav class="seo-link-grid" aria-label="PDF and document tools">
-      <a href="./pdf-to-jpg.html">PDF to JPG</a>
-      <a href="./jpg-to-pdf.html">JPG to PDF</a>
-      <a href="./split-pdf.html">Split PDF</a>
-      <a href="./merge-pdf.html">Merge PDF</a>
-      <a href="./compress-pdf.html">Compress PDF</a>
-      <a href="./pdf-annotator.html">PDF Annotator</a>
-    </nav>
+  <div class="seo-cats">
+    <div class="seo-cat">
+      <h3><i class="fa-solid fa-image" aria-hidden="true"></i> Image Tools</h3>
+      <nav class="seo-links" aria-label="Image tools">
+        <a href="./compress.html">Compress Image</a>
+        <a href="./resize.html">Resize Image</a>
+        <a href="./photo-editor.html">Photo Editor</a>
+        <a href="./convert.html">Convert Image Format</a>
+        <a href="./watermark.html">Watermark Image</a>
+        <a href="./remove-bg.html">Remove Background</a>
+        <a href="./meme-generator.html">Meme Generator</a>
+        <a href="./crop.html">Advanced Crop</a>
+        <a href="./blur-face.html">Blur Face</a>
+        <a href="./thumbnail-maker.html">Thumbnail Maker</a>
+        <a href="./screenshot-editor.html">Screenshot Editor</a>
+        <a href="./favicon-generator.html">Favicon Generator</a>
+      </nav>
+    </div>
+    <div class="seo-cat">
+      <h3><i class="fa-solid fa-file-pdf" aria-hidden="true"></i> PDF &amp; Document Tools</h3>
+      <nav class="seo-links" aria-label="PDF and document tools">
+        <a href="./pdf-to-jpg.html">PDF to JPG</a>
+        <a href="./jpg-to-pdf.html">JPG to PDF</a>
+        <a href="./split-pdf.html">Split PDF</a>
+        <a href="./merge-pdf.html">Merge PDF</a>
+        <a href="./compress-pdf.html">Compress PDF</a>
+        <a href="./pdf-annotator.html">PDF Annotator</a>
+      </nav>
+    </div>
+    <div class="seo-cat">
+      <h3><i class="fa-solid fa-code" aria-hidden="true"></i> Developer &amp; Utility Tools</h3>
+      <nav class="seo-links" aria-label="Developer and utility tools">
+        <a href="./qr-generator.html">QR Code Generator</a>
+        <a href="./password-generator.html">Password Generator</a>
+        <a href="./json-formatter.html">JSON Formatter</a>
+        <a href="./url-shortener.html">URL Shortener</a>
+        <a href="./color-picker.html">Color Picker</a>
+        <a href="./palette-generator.html">Palette Generator</a>
+        <a href="./unit-converter.html">Unit Converter</a>
+        <a href="./dxf-dwg-converter.html">CAD Converter (DXF/DWG)</a>
+        <a href="./ocr.html">OCR Scanner</a>
+      </nav>
+    </div>
   </div>
-  <div class="seo-cat">
-    <h3>Developer &amp; Utility Tools</h3>
-    <nav class="seo-link-grid" aria-label="Developer and utility tools">
-      <a href="./qr-generator.html">QR Code Generator</a>
-      <a href="./password-generator.html">Password Generator</a>
-      <a href="./json-formatter.html">JSON Formatter</a>
-      <a href="./url-shortener.html">URL Shortener</a>
-      <a href="./color-picker.html">Color Picker</a>
-      <a href="./palette-generator.html">Palette Generator</a>
-      <a href="./unit-converter.html">Unit Converter</a>
-      <a href="./dxf-dwg-converter.html">CAD Converter (DXF/DWG)</a>
-      <a href="./ocr.html">OCR Scanner</a>
-    </nav>
+  <div class="seo-why">
+    <h2>Why use ImgPDFTools?</h2>
+    <p><strong>100% private:</strong> Files are processed on your device, never uploaded. <strong>No sign-up:</strong> Open a tool and start instantly. <strong>Fast &amp; offline-ready:</strong> Most tools keep working even without an internet connection.</p>
   </div>
-  <h2>Why use ImgPDFTools?</h2>
-  <p><strong>100% private:</strong> Files are processed on your device, never uploaded. <strong>No sign-up:</strong> Open a tool and start instantly. <strong>Fast &amp; offline-ready:</strong> Most tools keep working even without an internet connection.</p>
   <div class="seo-faq">
     <h2>Frequently Asked Questions</h2>
-    <h3>Are these tools really free?</h3>
-    <p>Yes — every tool is completely free with no account, no watermarks, and no limits.</p>
-    <h3>Are my files uploaded anywhere?</h3>
-    <p>No. All processing happens locally in your browser, so your images and PDFs never leave your device.</p>
-    <h3>Do I need to install anything?</h3>
-    <p>No installation required. The tools run in any modern browser, and many work offline as well.</p>
+    <details>
+      <summary>Are these tools really free?</summary>
+      <p>Yes — every tool is completely free with no account, no watermarks, and no limits.</p>
+    </details>
+    <details>
+      <summary>Are my files uploaded anywhere?</summary>
+      <p>No. All processing happens locally in your browser, so your images and PDFs never leave your device.</p>
+    </details>
+    <details>
+      <summary>Do I need to install anything?</summary>
+      <p>No installation required. The tools run in any modern browser, and many work offline as well.</p>
+    </details>
   </div>
 </section>
 
