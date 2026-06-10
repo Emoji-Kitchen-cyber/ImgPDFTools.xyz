@@ -122,9 +122,6 @@
 <style>
 /* ══════════════════════════════════════════════
    DESIGN TOKENS — ImgPDFTools
-   Palette: Deep indigo + electric violet + warm white
-   Signature: Glowing pill badge on hero +
-              floating category icons
    ══════════════════════════════════════════════ */
 :root {
   --bg: #f8f8fc;
@@ -175,7 +172,7 @@ body {
 body.rtl { direction: rtl; }
 a { color: inherit; text-decoration: none; }
 
-/* ── NOISE TEXTURE OVERLAY (subtle, modern) ── */
+/* ── NOISE TEXTURE OVERLAY ── */
 body::before {
   content: '';
   position: fixed;
@@ -214,7 +211,6 @@ nav {
 }
 .menu-trigger:hover { color: var(--accent); background: var(--glow); }
 
-/* LOGO */
 .nav-logo {
   display: flex;
   align-items: center;
@@ -352,6 +348,7 @@ nav {
   font-weight: 500;
   transition: background 0.15s, color 0.15s;
 }
+.sidebar-links a i { width: 18px; text-align: center; flex-shrink: 0; }
 .sidebar-links a:hover { background: var(--glow); color: var(--accent); }
 .menu-section-title {
   font-size: 10.5px;
@@ -362,16 +359,13 @@ nav {
   padding: 16px 13px 5px;
 }
 
-/* ══════════════════════════════════════════════
-   HERO — Signature: glowing badge + stat pills
-   ══════════════════════════════════════════════ */
+/* ── HERO ── */
 .hero {
   position: relative;
   text-align: center;
   padding: clamp(2.8rem,7vw,5rem) 1rem 2.5rem;
   overflow: hidden;
 }
-/* Radial glow blobs behind hero */
 .hero::before {
   content: '';
   position: absolute;
@@ -432,7 +426,6 @@ nav {
   margin: 0 auto 2rem;
   line-height: 1.6;
 }
-/* Stat pills row */
 .hero-stats {
   display: flex;
   justify-content: center;
@@ -459,9 +452,7 @@ nav {
   color: var(--accent);
 }
 
-/* ══════════════════════════════════════════════
-   PAGE LAYOUT
-   ══════════════════════════════════════════════ */
+/* ── PAGE LAYOUT ── */
 .page-outer { width: 100%; flex: 1; position: relative; z-index: 1; }
 .page-inner {
   max-width: 1420px;
@@ -537,9 +528,7 @@ body.rtl .search-icon { left: auto; right: 17px; }
   box-shadow: 0 4px 14px var(--glow);
 }
 
-/* ══════════════════════════════════════════════
-   AD STYLES
-   ══════════════════════════════════════════════ */
+/* ── AD STYLES ── */
 .ad-wrap {
   background: var(--card);
   border: 1px solid var(--border2);
@@ -582,8 +571,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
 .ad-dismiss:hover { color: var(--accent); border-color: var(--accent); }
 .ad-hidden { opacity: 0; transition: opacity 0.5s ease; }
 .ad-visible { opacity: 1; }
-
-/* Reserve ad slot box even before/without fill → prevents layout shift (CLS) */
 .ad-slot { display: block; background: var(--bg); }
 
 .ad-mobile-bottom {
@@ -640,9 +627,7 @@ body.rtl .search-icon { left: auto; right: 17px; }
 @media(min-width:1140px) { .ad-desktop-col { display: block; } }
 body.rtl .page-inner { flex-direction: row-reverse; }
 
-/* ══════════════════════════════════════════════
-   TOOLS GRID — Modern card design
-   ══════════════════════════════════════════════ */
+/* ── TOOLS GRID ── */
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -711,7 +696,6 @@ body.rtl .page-inner { flex-direction: row-reverse; }
 }
 .tool-info-pane p { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
-/* Arrow indicator on hover */
 .tool-card-arrow {
   position: absolute;
   top: 16px;
@@ -735,9 +719,6 @@ body.rtl .page-inner { flex-direction: row-reverse; }
   font-size: 15px;
 }
 
-/* ══════════════════════════════════════════════
-   SECTION DIVIDER with category label
-   ══════════════════════════════════════════════ */
 .grid-section-label {
   display: flex;
   align-items: center;
@@ -760,16 +741,56 @@ body.rtl .page-inner { flex-direction: row-reverse; }
 .grid-section-label::before { max-width: 20px; }
 
 /* ══════════════════════════════════════════════
-   SEO STATIC SECTION (crawlable + no-JS navigation)
+   SEO STATIC SECTION (overlap-proof, chip layout)
    ══════════════════════════════════════════════ */
-.seo-section { max-width: 1100px; margin: 0 auto; padding: 1rem 18px 4rem; position: relative; z-index: 1; }
-.seo-section h2 { font-family: var(--fhead); font-size: clamp(1.3rem,3vw,1.9rem); font-weight: 700; letter-spacing: -.3px; margin: 2.2rem 0 .8rem; }
-.seo-section h3 { font-family: var(--fhead); font-size: 1.05rem; font-weight: 600; color: var(--accent); margin: 1.4rem 0 .5rem; }
-.seo-section p { color: var(--muted); line-height: 1.7; font-size: 15px; margin-bottom: 1rem; }
-.seo-section p strong { color: var(--text); }
-.seo-link-grid { display: grid; grid-template-columns: repeat(auto-fill,minmax(210px,1fr)); gap: 4px 18px; margin: .4rem 0 1.2rem; }
-.seo-link-grid a { color: var(--text); font-size: 14px; font-weight: 500; padding: 5px 0; transition: color .15s; }
-.seo-link-grid a:hover { color: var(--accent); }
+.seo-section { max-width: 1100px; margin: 0 auto; padding: 1.5rem 18px 4rem; position: relative; z-index: 1; }
+.seo-section > h2 {
+  font-family: var(--fhead);
+  font-size: clamp(1.3rem, 3vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: -.3px;
+  line-height: 1.25;
+  margin: 2.4rem 0 1rem;
+}
+.seo-section > h2:first-child { margin-top: 0; }
+.seo-section > p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 15px;
+  margin-bottom: 1.6rem;
+}
+.seo-section > p strong { color: var(--text); }
+.seo-cat { margin: 0 0 1.8rem; }
+.seo-cat h3 {
+  font-family: var(--fhead);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 .9rem;
+}
+.seo-link-grid { display: flex; flex-wrap: wrap; gap: 9px 10px; }
+.seo-link-grid a {
+  display: inline-block;
+  padding: 8px 15px;
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: 99px;
+  color: var(--text);
+  font-size: 13.5px;
+  font-weight: 500;
+  line-height: 1.2;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.seo-link-grid a:hover { color: var(--accent); border-color: var(--accent); background: var(--glow); }
+.seo-faq { margin-top: 1rem; }
+.seo-faq h3 {
+  font-family: var(--fhead);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.4rem 0 .4rem;
+}
+.seo-faq p { color: var(--muted); line-height: 1.7; font-size: 15px; margin-bottom: .6rem; }
 body.rtl .seo-section { text-align: right; }
 
 /* ── FOOTER ── */
@@ -887,7 +908,8 @@ window.onerror = function(msg, src, line){
     <span>100% Free · No Upload · Private</span>
   </div>
   <h1 id="heroTitle">
-    Every Image & PDF toolNLBR
+    Every Image & PDF tool\
+
     <span class="h1-line2" id="heroSpan">you'll ever need</span>
   </h1>
   <p class="hero-sub" id="heroDesc">Process images and PDFs directly in your browser. No servers, no sign-up, no waiting — just instant results.</p>
@@ -963,55 +985,63 @@ window.onerror = function(msg, src, line){
   <h2>Free Online Image &amp; PDF Tools — Right in Your Browser</h2>
   <p>ImgPDFTools is a collection of 25+ free, privacy-first tools to compress, resize, convert, and edit images, plus a full set of PDF utilities like merge, split, compress, and annotate. Everything runs entirely in your browser — your files are never uploaded to a server, so your work stays private and fast.</p>
 
-  <h3>Image Tools</h3>
-  <nav class="seo-link-grid" aria-label="Image tools">
-    <a href="./compress.html">Compress Image</a>
-    <a href="./resize.html">Resize Image</a>
-    <a href="./photo-editor.html">Photo Editor</a>
-    <a href="./convert.html">Convert Image Format</a>
-    <a href="./watermark.html">Watermark Image</a>
-    <a href="./remove-bg.html">Remove Background</a>
-    <a href="./meme-generator.html">Meme Generator</a>
-    <a href="./crop.html">Advanced Crop</a>
-    <a href="./blur-face.html">Blur Face</a>
-    <a href="./thumbnail-maker.html">Thumbnail Maker</a>
-    <a href="./screenshot-editor.html">Screenshot Editor</a>
-    <a href="./favicon-generator.html">Favicon Generator</a>
-  </nav>
+  <div class="seo-cat">
+    <h3>Image Tools</h3>
+    <nav class="seo-link-grid" aria-label="Image tools">
+      <a href="./compress.html">Compress Image</a>
+      <a href="./resize.html">Resize Image</a>
+      <a href="./photo-editor.html">Photo Editor</a>
+      <a href="./convert.html">Convert Image Format</a>
+      <a href="./watermark.html">Watermark Image</a>
+      <a href="./remove-bg.html">Remove Background</a>
+      <a href="./meme-generator.html">Meme Generator</a>
+      <a href="./crop.html">Advanced Crop</a>
+      <a href="./blur-face.html">Blur Face</a>
+      <a href="./thumbnail-maker.html">Thumbnail Maker</a>
+      <a href="./screenshot-editor.html">Screenshot Editor</a>
+      <a href="./favicon-generator.html">Favicon Generator</a>
+    </nav>
+  </div>
 
-  <h3>PDF &amp; Document Tools</h3>
-  <nav class="seo-link-grid" aria-label="PDF and document tools">
-    <a href="./pdf-to-jpg.html">PDF to JPG</a>
-    <a href="./jpg-to-pdf.html">JPG to PDF</a>
-    <a href="./split-pdf.html">Split PDF</a>
-    <a href="./merge-pdf.html">Merge PDF</a>
-    <a href="./compress-pdf.html">Compress PDF</a>
-    <a href="./pdf-annotator.html">PDF Annotator</a>
-  </nav>
+  <div class="seo-cat">
+    <h3>PDF &amp; Document Tools</h3>
+    <nav class="seo-link-grid" aria-label="PDF and document tools">
+      <a href="./pdf-to-jpg.html">PDF to JPG</a>
+      <a href="./jpg-to-pdf.html">JPG to PDF</a>
+      <a href="./split-pdf.html">Split PDF</a>
+      <a href="./merge-pdf.html">Merge PDF</a>
+      <a href="./compress-pdf.html">Compress PDF</a>
+      <a href="./pdf-annotator.html">PDF Annotator</a>
+    </nav>
+  </div>
 
-  <h3>Developer &amp; Utility Tools</h3>
-  <nav class="seo-link-grid" aria-label="Developer and utility tools">
-    <a href="./qr-generator.html">QR Code Generator</a>
-    <a href="./password-generator.html">Password Generator</a>
-    <a href="./json-formatter.html">JSON Formatter</a>
-    <a href="./url-shortener.html">URL Shortener</a>
-    <a href="./color-picker.html">Color Picker</a>
-    <a href="./palette-generator.html">Palette Generator</a>
-    <a href="./unit-converter.html">Unit Converter</a>
-    <a href="./dxf-dwg-converter.html">CAD Converter (DXF/DWG)</a>
-    <a href="./ocr.html">OCR Scanner</a>
-  </nav>
+  <div class="seo-cat">
+    <h3>Developer &amp; Utility Tools</h3>
+    <nav class="seo-link-grid" aria-label="Developer and utility tools">
+      <a href="./qr-generator.html">QR Code Generator</a>
+      <a href="./password-generator.html">Password Generator</a>
+      <a href="./json-formatter.html">JSON Formatter</a>
+      <a href="./url-shortener.html">URL Shortener</a>
+      <a href="./color-picker.html">Color Picker</a>
+      <a href="./palette-generator.html">Palette Generator</a>
+      <a href="./unit-converter.html">Unit Converter</a>
+      <a href="./dxf-dwg-converter.html">CAD Converter (DXF/DWG)</a>
+      <a href="./ocr.html">OCR Scanner</a>
+    </nav>
+  </div>
 
   <h2>Why use ImgPDFTools?</h2>
   <p><strong>100% private:</strong> Files are processed on your device, never uploaded. <strong>No sign-up:</strong> Open a tool and start instantly. <strong>Fast &amp; offline-ready:</strong> Most tools keep working even without an internet connection.</p>
 
-  <h2>Frequently Asked Questions</h2>
-  <h3>Are these tools really free?</h3>
-  <p>Yes — every tool is completely free with no account, no watermarks, and no limits.</p>
-  <h3>Are my files uploaded anywhere?</h3>
-  <p>No. All processing happens locally in your browser, so your images and PDFs never leave your device.</p>
-  <h3>Do I need to install anything?</h3>
-  <p>No installation required. The tools run in any modern browser, and many work offline as well.</p>
+  <div class="seo-faq">
+    <h2>Frequently Asked Questions</h2>
+    <h3>Are these tools really free?</h3>
+    <p>Yes — every tool is completely free with no account, no watermarks, and no limits.</p>
+    <h3>Are my files uploaded anywhere?</h3>
+    <p>No. All processing happens locally in your browser, so your images and PDFs never leave your device.</p>
+    <h3>Do I need to install anything?</h3>
+    <p>No installation required. The tools run in any modern browser, and many work offline as well.</p>
+  </div>
 </section>
 
 <!-- FOOTER -->
@@ -1048,11 +1078,11 @@ const languageData = {
     toolsRegistry: [
       {href:"./index.html",icon:"fa-house",text:"Home",section:"home",isUtilityCard:false},
       {href:"./compress.html",icon:"fa-box",text:"Compress Image",section:"image",cat:"optimize",emoji:"📦",title:"Compress Image",desc:"Compress JPG, PNG, and WEBP while saving space.",isUtilityCard:true},
-      {href:"./resize.html",icon:"fa-arrows-maximize",text:"Resize Image",section:"image",cat:"edit",emoji:"📐",title:"Resize Image",desc:"Define dimensions by percent or pixel.",isUtilityCard:true},
+      {href:"./resize.html",icon:"fa-up-right-and-down-left-from-center",text:"Resize Image",section:"image",cat:"edit",emoji:"📐",title:"Resize Image",desc:"Define dimensions by percent or pixel.",isUtilityCard:true},
       {href:"./photo-editor.html",icon:"fa-wand-magic-sparkles",text:"Photo Editor",section:"image",cat:"edit create",emoji:"✨",title:"Photo Editor",desc:"Edit photos with filters, brightness, contrast.",isUtilityCard:true},
       {href:"./convert.html",icon:"fa-rotate",text:"Convert Format",section:"image",cat:"convert",emoji:"🔄",title:"Convert Format",desc:"Transform images into JPG, PNG, or WEBP.",isUtilityCard:true},
       {href:"./watermark.html",icon:"fa-droplet",text:"Watermark Image",section:"image",cat:"security create",emoji:"💧",title:"Watermark Image",desc:"Stamp text or image over your photos.",isUtilityCard:true},
-      {href:"./remove-bg.html",icon:"fa-user-ghost",text:"Remove Background",section:"image",cat:"edit create",emoji:"🫥",title:"Remove Background",desc:"AI-powered background remover.",isUtilityCard:true},
+      {href:"./remove-bg.html",icon:"fa-eraser",text:"Remove Background",section:"image",cat:"edit create",emoji:"🫥",title:"Remove Background",desc:"AI-powered background remover.",isUtilityCard:true},
       {href:"./meme-generator.html",icon:"fa-face-laugh-squint",text:"Meme Generator",section:"image",cat:"create",emoji:"😂",title:"Meme Generator",desc:"Create memes with templates and text.",isUtilityCard:true},
       {href:"./crop.html",icon:"fa-scissors",text:"Advanced Crop",section:"image",cat:"edit",emoji:"✂️",title:"Advanced Crop",desc:"Precise cropping with aspect ratios.",isUtilityCard:true},
       {href:"./blur-face.html",icon:"fa-user-shield",text:"Blur Face",section:"image",cat:"security edit",emoji:"👤",title:"Blur Face",desc:"Auto-detect and blur faces for privacy.",isUtilityCard:true},
@@ -1072,7 +1102,7 @@ const languageData = {
       {href:"./color-picker.html",icon:"fa-eye-dropper",text:"Color Picker",section:"utility",cat:"utility edit",emoji:"🎨",title:"Color Picker",desc:"Advanced color inspection and HEX copying.",isUtilityCard:true},
       {href:"./palette-generator.html",icon:"fa-palette",text:"Palette Generator",section:"utility",cat:"utility create",emoji:"🌈",title:"Palette Generator",desc:"Algorithmic color scheme generator.",isUtilityCard:true},
       {href:"./unit-converter.html",icon:"fa-calculator",text:"Unit Converter",section:"utility",cat:"utility",emoji:"📏",title:"Unit Converter",desc:"High performance digital metrics calculator.",isUtilityCard:true},
-      {href:"./dxf-dwg-converter.html",icon:"fa-drafting-compass",text:"CAD Converter",section:"utility",cat:"utility convert",emoji:"📐",title:"CAD Converter",desc:"DXF & DWG structural CAD utility.",isUtilityCard:true},
+      {href:"./dxf-dwg-converter.html",icon:"fa-compass-drafting",text:"CAD Converter",section:"utility",cat:"utility convert",emoji:"📐",title:"CAD Converter",desc:"DXF & DWG structural CAD utility.",isUtilityCard:true},
       {href:"./ocr.html",icon:"fa-file-lines",text:"OCR Scanner",section:"utility",cat:"utility",emoji:"📝",title:"OCR Scanner",desc:"Extract text from images with 100+ languages.",isUtilityCard:true},
       {href:"./about.html",icon:"fa-circle-info",text:"About Us",section:"info",isUtilityCard:false},
       {href:"./contact.html",icon:"fa-envelope",text:"Contact",section:"info",isUtilityCard:false},
@@ -1107,11 +1137,11 @@ const languageData = {
     toolsRegistry: [
       {href:"./index.html",icon:"fa-house",text:"الرئيسية",section:"home",isUtilityCard:false},
       {href:"./compress.html",icon:"fa-box",text:"ضغط الصور",section:"image",cat:"optimize",emoji:"📦",title:"ضغط الصور",desc:"ضغط JPG و PNG و WEBP.",isUtilityCard:true},
-      {href:"./resize.html",icon:"fa-arrows-maximize",text:"تغيير الحجم",section:"image",cat:"edit",emoji:"📐",title:"تغيير الحجم",desc:"تحديد الأبعاد بالبكسل أو النسبة.",isUtilityCard:true},
+      {href:"./resize.html",icon:"fa-up-right-and-down-left-from-center",text:"تغيير الحجم",section:"image",cat:"edit",emoji:"📐",title:"تغيير الحجم",desc:"تحديد الأبعاد بالبكسل أو النسبة.",isUtilityCard:true},
       {href:"./photo-editor.html",icon:"fa-wand-magic-sparkles",text:"محرر الصور",section:"image",cat:"edit create",emoji:"✨",title:"محرر الصور",desc:"تعديل الصور بالفلاتر والسطوع.",isUtilityCard:true},
       {href:"./convert.html",icon:"fa-rotate",text:"تحويل الصيغة",section:"image",cat:"convert",emoji:"🔄",title:"تحويل الصيغة",desc:"تحويل الصور إلى JPG أو PNG أو WEBP.",isUtilityCard:true},
       {href:"./watermark.html",icon:"fa-droplet",text:"علامة مائية",section:"image",cat:"security create",emoji:"💧",title:"علامة مائية",desc:"ختم نص أو صورة على صورك.",isUtilityCard:true},
-      {href:"./remove-bg.html",icon:"fa-user-ghost",text:"إزالة الخلفية",section:"image",cat:"edit create",emoji:"🫥",title:"إزالة الخلفية",desc:"مزيل خلفية بالذكاء الاصطناعي.",isUtilityCard:true},
+      {href:"./remove-bg.html",icon:"fa-eraser",text:"إزالة الخلفية",section:"image",cat:"edit create",emoji:"🫥",title:"إزالة الخلفية",desc:"مزيل خلفية بالذكاء الاصطناعي.",isUtilityCard:true},
       {href:"./meme-generator.html",icon:"fa-face-laugh-squint",text:"صانع الميمز",section:"image",cat:"create",emoji:"😂",title:"صانع الميمز",desc:"إنشاء ميمز مع قوالب ونصوص.",isUtilityCard:true},
       {href:"./crop.html",icon:"fa-scissors",text:"قص الصور",section:"image",cat:"edit",emoji:"✂️",title:"قص الصور",desc:"قص دقيق مع نسب أبعاد.",isUtilityCard:true},
       {href:"./blur-face.html",icon:"fa-user-shield",text:"تغبيش الوجوه",section:"image",cat:"security edit",emoji:"👤",title:"تغبيش الوجوه",desc:"اكتشاف وتغبيش الوجوه تلقائياً.",isUtilityCard:true},
@@ -1131,7 +1161,7 @@ const languageData = {
       {href:"./color-picker.html",icon:"fa-eye-dropper",text:"منتقي الألوان",section:"utility",cat:"utility edit",emoji:"🎨",title:"منتقي الألوان",desc:"فحص متقدم للألوان.",isUtilityCard:true},
       {href:"./palette-generator.html",icon:"fa-palette",text:"مولد لوحة الألوان",section:"utility",cat:"utility create",emoji:"🌈",title:"مولد لوحة الألوان",desc:"مولد أنظمة الألوان.",isUtilityCard:true},
       {href:"./unit-converter.html",icon:"fa-calculator",text:"محول الوحدات",section:"utility",cat:"utility",emoji:"📏",title:"محول الوحدات",desc:"حاسبة مقاييس رقمية.",isUtilityCard:true},
-      {href:"./dxf-dwg-converter.html",icon:"fa-drafting-compass",text:"محول CAD",section:"utility",cat:"utility convert",emoji:"📐",title:"محول CAD",desc:"أداة DXF و DWG.",isUtilityCard:true},
+      {href:"./dxf-dwg-converter.html",icon:"fa-compass-drafting",text:"محول CAD",section:"utility",cat:"utility convert",emoji:"📐",title:"محول CAD",desc:"أداة DXF و DWG.",isUtilityCard:true},
       {href:"./ocr.html",icon:"fa-file-lines",text:"OCR",section:"utility",cat:"utility",emoji:"📝",title:"OCR Scanner",desc:"استخراج النص من الصور.",isUtilityCard:true},
       {href:"./about.html",icon:"fa-circle-info",text:"من نحن",section:"info",isUtilityCard:false},
       {href:"./contact.html",icon:"fa-envelope",text:"اتصل بنا",section:"info",isUtilityCard:false},
@@ -1176,7 +1206,7 @@ function renderUI() {
     filterBox.appendChild(btn);
   });
 
-  // Tools grid
+  // Tools grid (textContent used → no HTML injection)
   const toolsGrid = document.getElementById('toolsList');
   toolsGrid.innerHTML = '';
   const fragment = document.createDocumentFragment();
@@ -1185,46 +1215,73 @@ function renderUI() {
     a.href = t.href;
     a.className = 'tool-link';
     a.setAttribute('data-category', t.cat);
-    a.innerHTML = `
-      <div class="tool-card">
-        <div class="tool-icon-wrapper" aria-hidden="true">${t.emoji}</div>
-        <div class="tool-info-pane">
-          <h3>${t.title}</h3>
-          <p>${t.desc}</p>
-        </div>
-        <span class="tool-card-arrow"><i class="fa-solid fa-arrow-up-right"></i></span>
-      </div>`;
+
+    const card = document.createElement('div');
+    card.className = 'tool-card';
+
+    const iconWrap = document.createElement('div');
+    iconWrap.className = 'tool-icon-wrapper';
+    iconWrap.setAttribute('aria-hidden', 'true');
+    iconWrap.textContent = t.emoji;
+
+    const infoPane = document.createElement('div');
+    infoPane.className = 'tool-info-pane';
+    const h3 = document.createElement('h3');
+    h3.textContent = t.title;
+    const p = document.createElement('p');
+    p.textContent = t.desc;
+    infoPane.appendChild(h3);
+    infoPane.appendChild(p);
+
+    const arrow = document.createElement('span');
+    arrow.className = 'tool-card-arrow';
+    arrow.innerHTML = '<i class="fa-solid fa-arrow-up-right"></i>';
+
+    card.appendChild(iconWrap);
+    card.appendChild(infoPane);
+    card.appendChild(arrow);
+    a.appendChild(card);
     fragment.appendChild(a);
   });
   toolsGrid.appendChild(fragment);
 
   // Footer
-  document.getElementById('footerLinks').innerHTML =
-    data.footer.map(item => `<a href="${item.href}">${item.text}</a>`).join('');
+  const footerBox = document.getElementById('footerLinks');
+  footerBox.innerHTML = '';
+  data.footer.forEach(item => {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.textContent = item.text;
+    footerBox.appendChild(a);
+  });
 
   // Sidebar
   const sidebarBox = document.getElementById('sidebarLinks');
   sidebarBox.innerHTML = '';
   const sf = document.createDocumentFragment();
-  const homeLink = data.toolsRegistry.find(t => t.section === 'home');
-  if (homeLink) {
+
+  function makeSidebarLink(t) {
     const a = document.createElement('a');
-    a.href = homeLink.href;
-    a.innerHTML = `<i class="fa-solid ${homeLink.icon}" aria-hidden="true"></i> ${homeLink.text}`;
-    sf.appendChild(a);
+    a.href = t.href;
+    const i = document.createElement('i');
+    i.className = 'fa-solid ' + t.icon;
+    i.setAttribute('aria-hidden', 'true');
+    a.appendChild(i);
+    a.appendChild(document.createTextNode(' ' + t.text));
+    return a;
   }
+
+  const homeLink = data.toolsRegistry.find(t => t.section === 'home');
+  if (homeLink) sf.appendChild(makeSidebarLink(homeLink));
+
   ['image','doc','utility'].forEach(sec => {
     const title = document.createElement('div');
     title.className = 'menu-section-title';
     title.textContent = data.sidebarTitles[sec];
     sf.appendChild(title);
-    data.toolsRegistry.filter(t => t.section === sec).forEach(t => {
-      const a = document.createElement('a');
-      a.href = t.href;
-      a.innerHTML = `<i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.text}`;
-      sf.appendChild(a);
-    });
+    data.toolsRegistry.filter(t => t.section === sec).forEach(t => sf.appendChild(makeSidebarLink(t)));
   });
+
   const hr = document.createElement('div');
   hr.style.cssText = 'height:1px;background:var(--border2);margin:10px 0;';
   sf.appendChild(hr);
@@ -1232,12 +1289,7 @@ function renderUI() {
   infoTitle.className = 'menu-section-title';
   infoTitle.textContent = data.sidebarTitles.info;
   sf.appendChild(infoTitle);
-  data.toolsRegistry.filter(t => t.section === 'info').forEach(t => {
-    const a = document.createElement('a');
-    a.href = t.href;
-    a.innerHTML = `<i class="fa-solid ${t.icon}" aria-hidden="true"></i> ${t.text}`;
-    sf.appendChild(a);
-  });
+  data.toolsRegistry.filter(t => t.section === 'info').forEach(t => sf.appendChild(makeSidebarLink(t)));
   sidebarBox.appendChild(sf);
 
   evaluateLiveSearchFilters();
@@ -1308,25 +1360,40 @@ document.addEventListener('keydown', e => {
 
 document.getElementById('toolSearch').addEventListener('input', evaluateLiveSearchFilters);
 
-// URL shortener redirect
+// URL shortener redirect (hardened: only http/https, safe parsing)
 (function() {
-  var hash = window.location.hash;
-  if (hash.startsWith('#/s/')) {
-    var shortId = hash.replace('#/s/', '').split('?')[0];
-    var stored = localStorage.getItem('redirect_' + shortId);
-    if (stored) {
-      var entry = JSON.parse(stored);
-      if (entry.expiry && Date.now() > entry.expiry) {
-        document.body.innerHTML = '<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>Link Expired</h2><a href="./index.html">Go Home</a></div>';
-      } else {
-        entry.clicks = (entry.clicks || 0) + 1;
-        localStorage.setItem('redirect_' + shortId, JSON.stringify(entry));
-        window.location.replace(entry.long);
-      }
-    } else {
-      document.body.innerHTML = '<div style="text-align:center;padding:4rem;font-family:sans-serif"><h2>URL Not Found</h2><a href="./index.html">Go Home</a></div>';
-    }
+  function isSafeUrl(u) {
+    try {
+      var p = new URL(u, window.location.origin);
+      return p.protocol === 'http:' || p.protocol === 'https:';
+    } catch (e) { return false; }
   }
+  function showError(msg) {
+    var box = document.createElement('div');
+    box.style.cssText = 'text-align:center;padding:4rem;font-family:sans-serif';
+    var h = document.createElement('h2');
+    h.textContent = msg;
+    var a = document.createElement('a');
+    a.href = './index.html';
+    a.textContent = 'Go Home';
+    box.appendChild(h);
+    box.appendChild(a);
+    document.body.innerHTML = '';
+    document.body.appendChild(box);
+  }
+  var hash = window.location.hash;
+  if (hash.indexOf('#/s/') !== 0) return;
+  var shortId = hash.replace('#/s/', '').split('?')[0];
+  if (!shortId) { showError('URL Not Found'); return; }
+  var stored = localStorage.getItem('redirect_' + shortId);
+  if (!stored) { showError('URL Not Found'); return; }
+  var entry;
+  try { entry = JSON.parse(stored); } catch (e) { showError('URL Not Found'); return; }
+  if (!entry || typeof entry.long !== 'string' || !isSafeUrl(entry.long)) { showError('Invalid Link'); return; }
+  if (entry.expiry && Date.now() > entry.expiry) { showError('Link Expired'); return; }
+  entry.clicks = (entry.clicks || 0) + 1;
+  try { localStorage.setItem('redirect_' + shortId, JSON.stringify(entry)); } catch (e) {}
+  window.location.replace(entry.long);
 })();
 
 if ('serviceWorker' in navigator) {
@@ -1378,7 +1445,7 @@ function attachSmartLink() {
     s.src = 'https://paviliongiddy.com/' + src + '/invoke.js';
     s.async = true;
     s.onerror = function() {
-      // Sirf fixed mobile ad ko hide karein (position:fixed hai → koi layout shift nahi).
+      // Sirf fixed mobile ad hide karein (position:fixed → koi layout shift nahi).
       // In-flow ad slots ki reserved jagah barqarar rehti hai taake CLS = 0 rahe.
       var mob = slot.closest('.ad-mobile-bottom');
       if (mob) mob.style.display = 'none';
@@ -1401,9 +1468,10 @@ function attachSmartLink() {
       containerEl.style.opacity = '0';
       containerEl.style.pointerEvents = 'none';
       setTimeout(function() { containerEl.style.display = 'none'; }, 400);
-      var d = JSON.parse(localStorage.getItem(DK) || '{}');
+      var d;
+      try { d = JSON.parse(localStorage.getItem(DK) || '{}'); } catch(e) { d = {}; }
       d[storageKey] = Date.now();
-      localStorage.setItem(DK, JSON.stringify(d));
+      try { localStorage.setItem(DK, JSON.stringify(d)); } catch(e) {}
     });
   }
 
@@ -1427,47 +1495,4 @@ function attachSmartLink() {
       }
     } else if (w < 1140) {
       if (!wasDismissed('tab_hero')) {
-        var thWrap = document.getElementById('adTabletHeroWrap');
-        inject('adTabletHeroSlot','75f7d51ae703b7d2ebc57e040d7ad6c5',60,468,'75f7d51ae703b7d2ebc57e040d7ad6c5');
-        fadeIn(thWrap);
-        setupDismiss('adTabletHeroClose', thWrap, 'tab_hero');
-      }
-      if (!wasDismissed('tab_rect')) {
-        var trWrap = document.getElementById('adTabletRectWrap');
-        inject('adTabletRectSlot','93a8bc2338daf962408f7f5ac06dc99e',250,300,'93a8bc2338daf962408f7f5ac06dc99e');
-        fadeIn(trWrap);
-        setupDismiss('adTabletRectClose', trWrap, 'tab_rect');
-      }
-    } else {
-      if (!wasDismissed('dsk_lead')) {
-        var dlWrap = document.getElementById('adDesktopLeaderWrap');
-        inject('adDesktopLeaderSlot','0b683192646e1d9ea7327ce3080d991c',90,728,'0b683192646e1d9ea7327ce3080d991c');
-        fadeIn(dlWrap);
-        setupDismiss('adDesktopLeaderClose', dlWrap, 'dsk_lead');
-      }
-      if (!wasDismissed('dsk_sky')) {
-        var dcWrap = document.getElementById('adDesktopColWrap');
-        inject('adDesktopColSlot','2fd4066fa8904c930baa995dca2d041a',600,160,'2fd4066fa8904c930baa995dca2d041a');
-        fadeIn(dcWrap);
-        setupDismiss('adDesktopColClose', dcWrap, 'dsk_sky');
-      }
-    }
-  }
-
-  if (document.readyState === 'complete') {
-    setTimeout(initAds, DELAY);
-  } else {
-    window.addEventListener('load', function() { setTimeout(initAds, DELAY); });
-  }
-
-  var resizeOnce = false;
-  window.addEventListener('resize', function() {
-    if (resizeOnce || Object.keys(injected).length) return;
-    resizeOnce = true;
-    setTimeout(initAds, 400);
-  });
-})();
-</script>
-
-</body>
-</html>
+        var thWrap = document.getElementById('ad
