@@ -1,67 +1,151 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied',
+    analytics_storage:'denied', functionality_storage:'granted', security_storage:'granted',
+    wait_for_update: 500
+  });
+  try {
+    var saved = JSON.parse(localStorage.getItem('imgpdftools-consent-prefs') || 'null');
+    if (saved && typeof saved === 'object') {
+      gtag('consent','update',{
+        analytics_storage: saved.analytics ? 'granted':'denied',
+        ad_storage: saved.ads ? 'granted':'denied',
+        ad_user_data: saved.ads ? 'granted':'denied',
+        ad_personalization: saved.ads ? 'granted':'denied'
+      });
+    }
+  } catch (e) {}
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
+  gtag('config', 'G-3P7QPQKV3K', { anonymize_ip: true });
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frequently Asked Questions — PixelPress</title>
-  <meta name="description" content="Find answers about PixelPress free online image & document tools: privacy, formats, AI features, compatibility, and more." />
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/faq.html" />
-  <meta property="og:title" content="FAQ — PixelPress" />
+  <title>Frequently Asked Questions — ImgPDFTools</title>
+  <meta name="description" content="Find answers about ImgPDFTools free online image & PDF tools: privacy, formats, compatibility, and more." />
+  <link rel="canonical" href="https://imgpdftools.xyz/faq.html" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta property="og:title" content="FAQ — ImgPDFTools" />
   <meta property="og:description" content="Answers to common questions about our free online tools." />
+  <meta property="og:url" content="https://imgpdftools.xyz/faq.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
     :root {
-      --bg: #f5f5f7; --surface: rgba(255,255,255,0.75); --card: #ffffff;
-      --border: rgba(0,0,0,0.06); --text: #1d1d1f; --muted: #6e6e73;
-      --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236,72,153,0.1); --r: 16px;
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --r:18px; --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif; --nav-h:66px;
     }
     [data-theme="dark"] {
-      --bg: #09090e; --surface: rgba(21,21,30,0.7); --card: #15151e;
-      --border: rgba(255,255,255,0.08); --text: #e8e8f0; --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
-    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:var(--surface); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh;
+      display:flex; flex-direction:column; transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; }
+
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+      padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
+      backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
     .nav-left { display:flex; align-items:center; gap:1rem; }
-    .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.1rem; cursor:pointer; text-decoration:none; transition:0.2s; }
-    .back-btn:hover { border-color:var(--accent); transform:scale(1.05); }
-    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; text-transform:uppercase; text-decoration:none; color:inherit; }
-    .nav-logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2); width:40px; height:40px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text);
+      font-size:1rem; cursor:pointer; text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-.3px; text-decoration:none; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px;
+      display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
+
     .main { flex:1; max-width:850px; margin:0 auto; width:100%; padding:2rem 20px 4rem; }
-    .hero { text-align:center; margin-bottom:3rem; }
-    .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(2rem,5vw,2.8rem); font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-    .faq-grid { display:flex; flex-direction:column; gap:12px; }
-    .faq-item { background:var(--card); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; transition:0.2s; }
-    .faq-item:hover { border-color:var(--accent); }
-    .faq-question { padding:1.2rem 1.5rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; font-weight:600; font-size:1.05rem; user-select:none; }
-    .faq-question i { transition:transform 0.3s; color:var(--accent); }
-    .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.3s ease, padding 0.3s ease; padding:0 1.5rem; color:var(--muted); line-height:1.8; }
-    .faq-item.open .faq-answer { max-height:500px; padding:0 1.5rem 1.2rem; }
-    .faq-item.open .faq-question i { transform:rotate(180deg); }
-    .search-box { margin-bottom:2rem; position:relative; }
-    .search-box input { width:100%; padding:14px 20px; border:1px solid var(--border); border-radius:12px; background:var(--card); color:var(--text); font-size:1rem; outline:none; }
+    .hero { text-align:center; margin-bottom:2.5rem; }
+    .hero h1 { font-family:var(--fhead); font-size:clamp(2rem,5vw,2.8rem); font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero p { color:var(--muted); margin-top:.5rem; }
+
+    .search-box { margin-bottom:1.5rem; position:relative; }
+    .search-box input { width:100%; padding:14px 20px; border:1.5px solid var(--border2); border-radius:12px; background:var(--card); color:var(--text); font-size:1rem; font-family:var(--fbody); outline:none; transition:border-color .2s, box-shadow .2s; }
     .search-box input:focus { border-color:var(--accent); box-shadow:0 0 0 4px var(--glow); }
+
     .category-tabs { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem; }
-    .tab { padding:6px 16px; border-radius:999px; background:var(--card); border:1px solid var(--border); cursor:pointer; font-size:0.85rem; font-weight:500; transition:0.2s; }
-    .tab.active { background:var(--accent); color:white; border-color:var(--accent); }
+    .tab { padding:6px 16px; border-radius:999px; background:var(--card); border:1.5px solid var(--border2); cursor:pointer; font-size:.85rem; font-weight:500; color:var(--text); font-family:var(--fbody); transition:.2s; }
+    .tab:hover { border-color:var(--accent); color:var(--accent); }
+    .tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+
+    .faq-grid { display:flex; flex-direction:column; gap:12px; }
+    .faq-item { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); overflow:hidden; transition:.2s; }
+    .faq-item:hover { border-color:var(--accent); }
+    .faq-question { padding:1.2rem 1.5rem; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:1rem; font-family:var(--fhead); font-weight:600; font-size:1.02rem; user-select:none; }
+    .faq-question i { transition:transform .3s; color:var(--accent); flex-shrink:0; }
+    .faq-answer { max-height:0; overflow:hidden; transition:max-height .3s ease, padding .3s ease; padding:0 1.5rem; color:var(--muted); line-height:1.8; }
+    .faq-answer a { color:var(--accent); font-weight:600; text-decoration:none; }
+    .faq-answer strong { color:var(--text); }
+    .faq-item.open .faq-answer { max-height:600px; padding:0 1.5rem 1.2rem; }
+    .faq-item.open .faq-question i { transform:rotate(180deg); }
+
     .still-help { text-align:center; margin-top:3rem; }
+    .still-help p { color:var(--muted); margin-bottom:.5rem; }
     .still-help a { color:var(--accent); font-weight:600; text-decoration:none; }
-    footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); margin-top:auto; }
-    .footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-bottom:8px; }
+    .still-help a:hover { text-decoration:underline; }
+
+    footer { text-align:center; padding:2rem; color:var(--muted); font-size:.85rem; border-top:1px solid var(--border2); background:var(--card); margin-top:auto; }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-family:var(--fhead); font-weight:700; font-size:1rem; }
+    .footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin:10px 0 8px; }
     .footer-links a { color:var(--muted); font-weight:500; text-decoration:none; }
     .footer-links a:hover { color:var(--accent); }
+
+    /* Cookie consent */
+    .cookie-banner { position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(140%); width:min(720px,calc(100% - 24px));
+      background:var(--card); border:1.5px solid var(--border2); border-radius:18px; box-shadow:0 18px 50px rgba(0,0,0,.25);
+      padding:1.1rem 1.3rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap; z-index:900; transition:transform .4s ease; }
+    .cookie-banner.show { transform:translateX(-50%) translateY(0); }
+    .cookie-text { flex:1; min-width:240px; }
+    .cookie-text strong { font-family:var(--fhead); display:block; margin-bottom:3px; }
+    .cookie-text p { color:var(--muted); font-size:.86rem; line-height:1.6; }
+    .cookie-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .cbtn { padding:9px 16px; border-radius:10px; font-weight:600; font-size:.84rem; cursor:pointer; border:1.5px solid var(--border2); background:var(--card); color:var(--text); font-family:var(--fbody); transition:.2s; }
+    .cbtn:hover { border-color:var(--accent); color:var(--accent); }
+    .cbtn.solid { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; box-shadow:0 4px 14px var(--glow); }
+    .cbtn.solid:hover { color:#fff; filter:brightness(1.05); }
+    .cookie-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(3px); z-index:950; display:none; align-items:center; justify-content:center; padding:16px; }
+    .cookie-overlay.show { display:flex; }
+    .cookie-modal { background:var(--card); border:1.5px solid var(--border2); border-radius:20px; max-width:520px; width:100%; padding:1.6rem; max-height:88vh; overflow:auto; }
+    .cookie-modal h3 { font-family:var(--fhead); font-size:1.2rem; margin-bottom:.4rem; }
+    .cookie-modal > p { color:var(--muted); font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
+    .pref-row { display:flex; align-items:flex-start; gap:12px; padding:.9rem 0; border-top:1px solid var(--border2); }
+    .pref-row:first-of-type { border-top:none; }
+    .pref-info { flex:1; }
+    .pref-info strong { font-family:var(--fhead); }
+    .pref-info p { color:var(--muted); font-size:.82rem; line-height:1.5; margin-top:2px; }
+    .switch { position:relative; width:46px; height:26px; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .slider { position:absolute; inset:0; background:var(--border2); border-radius:99px; cursor:pointer; transition:.2s; }
+    .slider::before { content:''; position:absolute; height:20px; width:20px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
+    .switch input:checked + .slider { background:var(--accent); }
+    .switch input:checked + .slider::before { transform:translateX(20px); }
+    .switch input:disabled + .slider { opacity:.6; cursor:not-allowed; }
+    .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:1.2rem; flex-wrap:wrap; }
+    .manage-cookies { position:fixed; left:16px; bottom:16px; z-index:800; background:var(--card); border:1.5px solid var(--border2);
+      border-radius:99px; padding:9px 14px; font-size:.8rem; font-weight:600; color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:6px;
+      box-shadow:0 6px 18px rgba(0,0,0,.12); transition:.2s; font-family:var(--fbody); }
+    .manage-cookies:hover { border-color:var(--accent); color:var(--accent); }
   </style>
 
   <script type="application/ld+json">
@@ -73,112 +157,107 @@
       { "@type": "Question", "name": "Which image formats are supported?", "acceptedAnswer": { "@type": "Answer", "text": "We support JPG, PNG, WebP across most tools. PDF tools work with standard PDF documents." } },
       { "@type": "Question", "name": "Is there a file size limit?", "acceptedAnswer": { "@type": "Answer", "text": "We recommend keeping files under 10MB for optimal performance. Larger files may cause slowdowns on mobile." } },
       { "@type": "Question", "name": "How does the background remover work?", "acceptedAnswer": { "@type": "Answer", "text": "It uses AI running directly in your browser. Upload an image and the tool removes the background automatically." } },
-      { "@type": "Question", "name": "Can I use PixelPress on my phone?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely! All tools work on Android, iPhone, and tablets." } },
-      { "@type": "Question", "name": "Is PixelPress completely free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All tools are free. We fund the site through advertising." } }
+      { "@type": "Question", "name": "Can I use ImgPDFTools on my phone?", "acceptedAnswer": { "@type": "Answer", "text": "Absolutely! All tools work on Android, iPhone, and tablets." } },
+      { "@type": "Question", "name": "Is ImgPDFTools completely free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. All tools are free. We fund the site through advertising." } }
     ]
   }
-  </script>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-3P7QPQKV3K');
   </script>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="control-btn" aria-label="Toggle theme">🌓</button>
   </nav>
 
   <div class="main">
     <div class="hero">
       <h1>Frequently Asked Questions</h1>
-      <p style="color:var(--muted); margin-top:0.5rem;">Quick answers to common questions about PixelPress</p>
+      <p>Quick answers to common questions about ImgPDFTools</p>
     </div>
 
     <div class="search-box">
-      <input type="text" id="faqSearch" placeholder="🔍 Search questions..." oninput="filterFAQs()" />
+      <input type="text" id="faqSearch" placeholder="🔍 Search questions..." autocomplete="off" />
     </div>
 
     <div class="category-tabs">
       <button class="tab active" data-cat="all">All</button>
-      <button class="tab" data-cat="privacy">Privacy & Security</button>
-      <button class="tab" data-cat="usage">Usage & Features</button>
-      <button class="tab" data-cat="tech">Technical & Compatibility</button>
-      <button class="tab" data-cat="account">Account & Support</button>
+      <button class="tab" data-cat="privacy">Privacy &amp; Security</button>
+      <button class="tab" data-cat="usage">Usage &amp; Features</button>
+      <button class="tab" data-cat="tech">Technical &amp; Compatibility</button>
+      <button class="tab" data-cat="account">Account &amp; Support</button>
     </div>
 
     <div class="faq-grid" id="faqContainer">
-      <!-- Privacy & Security -->
       <div class="faq-item" data-cat="privacy">
-        <div class="faq-question" onclick="toggleFAQ(this)">🔒 Are my images uploaded to any server? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">No. PixelPress processes <strong>everything inside your browser</strong>. Your images, documents, and files stay on your device and are never uploaded to any remote server. You can even disconnect your internet after the page loads and all tools will continue working offline.</div>
+        <div class="faq-question">🔒 Are my images uploaded to any server? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">No. ImgPDFTools processes <strong>everything inside your browser</strong>. Your images, documents, and files stay on your device and are never uploaded to any remote server. You can even disconnect your internet after the page loads and the tools will continue working offline.</div>
       </div>
       <div class="faq-item" data-cat="privacy">
-        <div class="faq-question" onclick="toggleFAQ(this)">🔐 Is my data safe while using PixelPress? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-question">🔐 Is my data safe while using ImgPDFTools? <i class="fa-solid fa-chevron-down"></i></div>
         <div class="faq-answer">Absolutely. Since all processing is local, no third party can access your files. We use <strong>localStorage</strong> only for your preferences (theme, language) and recent tool history — this data never leaves your browser and is automatically cleared after 30 days of inactivity.</div>
       </div>
 
-      <!-- Usage & Features -->
       <div class="faq-item" data-cat="usage">
-        <div class="faq-question" onclick="toggleFAQ(this)">🖼️ Which image formats are supported? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-question">🖼️ Which image formats are supported? <i class="fa-solid fa-chevron-down"></i></div>
         <div class="faq-answer">We fully support <strong>JPG, PNG, WebP</strong> across all image tools. Some tools also accept <strong>AVIF, BMP, TIFF, and SVG</strong>. PDF tools work with standard PDF documents. Check each tool's page for specific format support.</div>
       </div>
       <div class="faq-item" data-cat="usage">
-        <div class="faq-question" onclick="toggleFAQ(this)">📏 Is there a file size limit? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">We recommend keeping files under <strong>10MB</strong> for the smoothest experience. Larger files may cause slower processing, particularly on mobile devices or older browsers. There's no hard limit — the tool will process whatever your browser can handle.</div>
+        <div class="faq-question">📏 Is there a file size limit? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">We recommend keeping files under <strong>10MB</strong> for the smoothest experience. Larger files may process more slowly, particularly on mobile devices or older browsers. There's no hard limit — the tool will process whatever your browser can handle.</div>
       </div>
       <div class="faq-item" data-cat="usage">
-        <div class="faq-question" onclick="toggleFAQ(this)">🫥 How does the background remover work? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-question">🫥 How does the background remover work? <i class="fa-solid fa-chevron-down"></i></div>
         <div class="faq-answer">Our background remover uses an <strong>AI model that runs directly in your browser</strong>. When you upload an image, the AI detects the subject and removes the background automatically. It works offline once the model is loaded. Results are best with clear subjects on contrasting backgrounds.</div>
       </div>
       <div class="faq-item" data-cat="usage">
-        <div class="faq-question" onclick="toggleFAQ(this)">💰 Is PixelPress completely free? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">Yes! All <strong>30+ tools are 100% free</strong> with no hidden fees, premium walls, or forced sign‑ups. We sustain the website through non‑intrusive advertising. You'll never be asked to pay for any feature.</div>
+        <div class="faq-question">💰 Is ImgPDFTools completely free? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Yes! All tools are <strong>100% free</strong> with no hidden fees, premium walls, or forced sign-ups. We sustain the website through non-intrusive advertising. You'll never be asked to pay for any feature.</div>
       </div>
 
-      <!-- Technical & Compatibility -->
       <div class="faq-item" data-cat="tech">
-        <div class="faq-question" onclick="toggleFAQ(this)">🌐 Which browsers are supported? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">PixelPress works on all modern browsers: <strong>Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, and Samsung Internet</strong>. For the best experience, keep your browser updated to the latest version.</div>
+        <div class="faq-question">🌐 Which browsers are supported? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">ImgPDFTools works on all modern browsers: <strong>Google Chrome, Mozilla Firefox, Apple Safari, Microsoft Edge, and Samsung Internet</strong>. For the best experience, keep your browser updated to the latest version.</div>
       </div>
       <div class="faq-item" data-cat="tech">
-        <div class="faq-question" onclick="toggleFAQ(this)">📱 Can I use PixelPress on my phone or tablet? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-question">📱 Can I use ImgPDFTools on my phone or tablet? <i class="fa-solid fa-chevron-down"></i></div>
         <div class="faq-answer">Absolutely! All tools are <strong>fully responsive</strong> and work seamlessly on Android phones, iPhones, iPads, and other tablets. The interface adapts to your screen size for easy editing on the go.</div>
       </div>
       <div class="faq-item" data-cat="tech">
-        <div class="faq-question" onclick="toggleFAQ(this)">🛑 Why is a tool not working on my browser? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">Try these steps:<br>1. <strong>Update your browser</strong> to the latest version.<br>2. <strong>Disable extensions</strong> (ad blockers can sometimes interfere).<br>3. <strong>Clear browser cache</strong> and reload the page.<br>4. Try a <strong>different browser</strong> (Chrome recommended).<br>5. Check your <strong>internet connection</strong> — some tools need to download AI models on first use.</div>
+        <div class="faq-question">🛑 Why is a tool not working on my browser? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Try these steps: 1. <strong>Update your browser</strong> to the latest version. 2. <strong>Disable extensions</strong> (ad blockers can sometimes interfere). 3. <strong>Clear browser cache</strong> and reload the page. 4. Try a <strong>different browser</strong> (Chrome recommended). 5. Check your <strong>internet connection</strong> — some tools need to download AI models on first use.</div>
       </div>
 
-      <!-- Account & Support -->
       <div class="faq-item" data-cat="account">
-        <div class="faq-question" onclick="toggleFAQ(this)">📝 Do I need to create an account? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">No. PixelPress requires <strong>no registration, no login, and no account</strong>. Just visit the website and start using any tool immediately. Your preferences are saved locally in your browser.</div>
+        <div class="faq-question">📝 Do I need to create an account? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">No. ImgPDFTools requires <strong>no registration, no login, and no account</strong>. Just visit the website and start using any tool immediately. Your preferences are saved locally in your browser.</div>
       </div>
       <div class="faq-item" data-cat="account">
-        <div class="faq-question" onclick="toggleFAQ(this)">🆕 Will you add more tools in the future? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">Yes! We're constantly working on new tools and improvements. Planned features include <strong>batch processing, advanced AI editing, video tools, and more format support</strong>. Stay tuned — all future tools will remain free.</div>
+        <div class="faq-question">🆕 Will you add more tools in the future? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">Yes! We're constantly working on new tools and improvements. Planned features include <strong>batch processing, advanced AI editing, and more format support</strong>. Stay tuned — all future tools will remain free.</div>
       </div>
       <div class="faq-item" data-cat="account">
-        <div class="faq-question" onclick="toggleFAQ(this)">📧 How can I contact support? <i class="fa-solid fa-chevron-down"></i></div>
-        <div class="faq-answer">You can reach us through our <a href="./contact.html" style="color:var(--accent);">Contact page</a>. We typically respond within 24-48 hours. For urgent issues, you can also reach us on WhatsApp at <strong>+92 343 2535207</strong>.</div>
+        <div class="faq-question">📧 How can I contact support? <i class="fa-solid fa-chevron-down"></i></div>
+        <div class="faq-answer">You can reach us anytime through our <a href="./contact.html">Contact page</a>. We typically respond within 24 hours.</div>
       </div>
     </div>
 
     <div class="still-help">
-      <p style="color:var(--muted);">Still have questions?</p>
+      <p>Still have questions?</p>
       <a href="./contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a>
     </div>
   </div>
 
   <footer>
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
     <div class="footer-links">
       <a href="./about.html">About</a>
       <a href="./contact.html">Contact</a>
@@ -187,65 +266,137 @@
       <a href="./faq.html">FAQ</a>
       <a href="./blog/">Blog</a>
     </div>
-    <p>© 2026 PixelPress. All rights reserved.</p>
+    <p>© 2026 ImgPDFTools. All rights reserved.</p>
   </footer>
 
+  <button class="manage-cookies" id="manageCookies" aria-label="Manage cookie preferences"><i class="fa-solid fa-cookie-bite"></i> Cookies</button>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div class="cookie-text">
+      <strong>🍪 We value your privacy</strong>
+      <p>We use cookies for analytics and ads to keep ImgPDFTools free. The files you process always stay in your browser. Choose your preference below.</p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cbtn" id="cookieReject">Reject all</button>
+      <button class="cbtn" id="cookieCustomize">Customize</button>
+      <button class="cbtn solid" id="cookieAccept">Accept all</button>
+    </div>
+  </div>
+
+  <div class="cookie-overlay" id="cookieOverlay" role="dialog" aria-modal="true" aria-label="Cookie preferences">
+    <div class="cookie-modal">
+      <h3>Cookie preferences</h3>
+      <p>Manage how ImgPDFTools uses cookies. Necessary cookies are always on because the site cannot function without them.</p>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Necessary</strong><p>Theme, language and your consent choice.</p></div>
+        <label class="switch"><input type="checkbox" checked disabled /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Analytics</strong><p>Anonymous, aggregated usage statistics (Google Analytics).</p></div>
+        <label class="switch"><input type="checkbox" id="prefAnalytics" /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Advertising</strong><p>Ads that help fund the free tools (Google AdSense).</p></div>
+        <label class="switch"><input type="checkbox" id="prefAds" /><span class="slider"></span></label>
+      </div>
+      <div class="modal-actions">
+        <button class="cbtn" id="prefRejectAll">Reject all</button>
+        <button class="cbtn solid" id="prefSave">Save preferences</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    (function() {
-      function syncTheme() {
-        const saved = localStorage.getItem('pixelpress-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', saved);
-      }
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
-      });
-      syncTheme();
+  (function(){
+    const $ = id => document.getElementById(id);
 
-      // FAQ Accordion
-      window.toggleFAQ = function(element) {
-        const item = element.parentElement;
-        const isOpen = item.classList.contains('open');
-        // Close all
-        document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
-        // Open clicked (if wasn't already open)
-        if (!isOpen) item.classList.add('open');
-      };
+    function syncTheme(){
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
+      document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'));
+    }
+    $('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light':'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
+    });
+    syncTheme();
 
-      // Category Filter
-      document.querySelectorAll('.category-tabs .tab').forEach(tab => {
-        tab.addEventListener('click', () => {
-          document.querySelectorAll('.category-tabs .tab').forEach(t => t.classList.remove('active'));
-          tab.classList.add('active');
-          const cat = tab.dataset.cat;
-          document.querySelectorAll('.faq-item').forEach(item => {
-            if (cat === 'all' || item.dataset.cat === cat) {
-              item.style.display = 'block';
-            } else {
-              item.style.display = 'none';
-            }
-          });
-        });
-      });
+    /* ---------- FAQ accordion (event delegation, no inline handlers) ---------- */
+    const faqContainer = $('faqContainer');
+    faqContainer.addEventListener('click', (e) => {
+      const q = e.target.closest('.faq-question');
+      if(!q || !faqContainer.contains(q)) return;
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+      if(!isOpen) item.classList.add('open');
+    });
 
-      // Search Filter
-      window.filterFAQs = function() {
-        const query = document.getElementById('faqSearch').value.toLowerCase();
+    /* Category filter */
+    document.querySelectorAll('.category-tabs .tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.category-tabs .tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const cat = tab.dataset.cat;
         document.querySelectorAll('.faq-item').forEach(item => {
-          const text = item.textContent.toLowerCase();
-          if (query === '' || text.includes(query)) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
+          item.style.display = (cat === 'all' || item.dataset.cat === cat) ? 'block' : 'none';
         });
-      };
+      });
+    });
 
-      // Open first FAQ by default
-      document.querySelector('.faq-item')?.classList.add('open');
-    })();
+    /* Search filter (textContent only — safe) */
+    $('faqSearch').addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      document.querySelectorAll('.faq-item').forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = (query === '' || text.includes(query)) ? 'block' : 'none';
+      });
+    });
+
+    /* Open first FAQ by default */
+    document.querySelector('.faq-item') && document.querySelector('.faq-item').classList.add('open');
+
+    /* ---------- Cookie consent (Google Consent Mode v2) ---------- */
+    const PREF_KEY = 'imgpdftools-consent-prefs';
+    function gtagSafe(){ if(typeof gtag === 'function') gtag.apply(null, arguments); }
+    function readPrefs(){
+      try { const p = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if(p && typeof p === 'object') return { analytics: !!p.analytics, ads: !!p.ads }; } catch(e){}
+      return null;
+    }
+    function applyConsent(prefs){
+      gtagSafe('consent','update',{
+        analytics_storage: prefs.analytics ? 'granted':'denied',
+        ad_storage: prefs.ads ? 'granted':'denied',
+        ad_user_data: prefs.ads ? 'granted':'denied',
+        ad_personalization: prefs.ads ? 'granted':'denied'
+      });
+    }
+    function savePrefs(prefs){
+      try { localStorage.setItem(PREF_KEY, JSON.stringify({ analytics: !!prefs.analytics, ads: !!prefs.ads, ts: Date.now() })); } catch(e){}
+      applyConsent(prefs);
+    }
+
+    const banner = $('cookieBanner'), overlay = $('cookieOverlay');
+    const prefAnalytics = $('prefAnalytics'), prefAds = $('prefAds');
+    function showBanner(){ banner.classList.add('show'); }
+    function hideBanner(){ banner.classList.remove('show'); }
+    function openModal(){ const cur = readPrefs() || { analytics:false, ads:false }; prefAnalytics.checked = cur.analytics; prefAds.checked = cur.ads; overlay.classList.add('show'); }
+    function closeModal(){ overlay.classList.remove('show'); }
+
+    const gpc = (navigator.globalPrivacyControl === true) || (navigator.doNotTrack === '1') || (window.doNotTrack === '1');
+    const existing = readPrefs();
+    if(existing){ applyConsent(existing); }
+    else if(!gpc){ setTimeout(showBanner, 600); }
+
+    $('cookieAccept').addEventListener('click', () => { savePrefs({ analytics:true, ads:true }); hideBanner(); });
+    $('cookieReject').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); hideBanner(); });
+    $('cookieCustomize').addEventListener('click', () => { openModal(); });
+    $('manageCookies').addEventListener('click', () => { openModal(); });
+    $('prefSave').addEventListener('click', () => { savePrefs({ analytics: prefAnalytics.checked, ads: prefAds.checked }); closeModal(); hideBanner(); });
+    $('prefRejectAll').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); closeModal(); hideBanner(); });
+    overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+  })();
   </script>
 </body>
 </html>
