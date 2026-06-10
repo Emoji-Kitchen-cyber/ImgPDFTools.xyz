@@ -1,46 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied',
+    analytics_storage:'denied', functionality_storage:'granted', security_storage:'granted',
+    wait_for_update: 500
+  });
+  try {
+    var saved = JSON.parse(localStorage.getItem('imgpdftools-consent-prefs') || 'null');
+    if (saved && typeof saved === 'object') {
+      gtag('consent','update',{
+        analytics_storage: saved.analytics ? 'granted':'denied',
+        ad_storage: saved.ads ? 'granted':'denied',
+        ad_user_data: saved.ads ? 'granted':'denied',
+        ad_personalization: saved.ads ? 'granted':'denied'
+      });
+    }
+  } catch (e) {}
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
+  gtag('config', 'G-3P7QPQKV3K', { anonymize_ip: true });
 </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terms & Conditions — PixelPress</title>
-  <meta name="description" content="Terms of service for PixelPress free online image tools. Understand acceptable use and limitations.">
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/terms.html">
-  <meta property="og:title" content="Terms & Conditions">
-  <meta property="og:description" content="Terms of service for PixelPress.">
-  <meta property="og:url" content="https://pixelpress-smoky.vercel.app/terms.html">
-  <meta name="twitter:card" content="summary">
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Terms &amp; Conditions — ImgPDFTools</title>
+  <meta name="description" content="Terms of service for ImgPDFTools free online image & PDF tools. Understand acceptable use and limitations." />
+  <link rel="canonical" href="https://imgpdftools.xyz/terms.html" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta property="og:title" content="Terms & Conditions — ImgPDFTools" />
+  <meta property="og:description" content="Terms of service for ImgPDFTools." />
+  <meta property="og:url" content="https://imgpdftools.xyz/terms.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <style>
-    .terms-content { max-width:800px; margin:0 auto; }
-    .terms-content h2 { font-size:1.2rem; margin:24px 0 12px; }
-    .terms-content p, .terms-content li { color:#374151; line-height:1.7; }
+    :root {
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --r:18px; --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif; --nav-h:66px;
+    }
+    [data-theme="dark"] {
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
+    }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh;
+      display:flex; flex-direction:column; transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; }
+
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+      padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
+      backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
+    .nav-left { display:flex; align-items:center; gap:1rem; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2); width:40px; height:40px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text);
+      font-size:1rem; cursor:pointer; text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-.3px; text-decoration:none; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px;
+      display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
+
+    .main { flex:1; max-width:820px; margin:0 auto; width:100%; padding:2rem 20px 4rem; }
+    .hero { text-align:center; margin-bottom:2.5rem; }
+    .hero h1 { font-family:var(--fhead); font-size:clamp(2rem,5vw,2.8rem); font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero p { color:var(--muted); margin-top:.5rem; }
+
+    .terms-content { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.6rem 1.8rem; }
+    .terms-content h2 { font-family:var(--fhead); font-size:1.15rem; font-weight:700; margin:1.6rem 0 .7rem; }
+    .terms-content h2:first-child { margin-top:0; }
+    .terms-content p, .terms-content li { color:var(--muted); line-height:1.8; font-size:1rem; }
+    .terms-content ul { padding-left:22px; margin-top:.5rem; }
+    .terms-content li { margin:.3rem 0; }
+    .terms-content strong { color:var(--text); }
+
+    footer { text-align:center; padding:2rem; color:var(--muted); font-size:.85rem; border-top:1px solid var(--border2); background:var(--card); margin-top:auto; }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-family:var(--fhead); font-weight:700; font-size:1rem; }
+    .footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin:10px 0 8px; }
+    .footer-links a { color:var(--muted); font-weight:500; text-decoration:none; }
+    .footer-links a:hover { color:var(--accent); }
+
+    /* Cookie consent */
+    .cookie-banner { position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(140%); width:min(720px,calc(100% - 24px));
+      background:var(--card); border:1.5px solid var(--border2); border-radius:18px; box-shadow:0 18px 50px rgba(0,0,0,.25);
+      padding:1.1rem 1.3rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap; z-index:900; transition:transform .4s ease; }
+    .cookie-banner.show { transform:translateX(-50%) translateY(0); }
+    .cookie-text { flex:1; min-width:240px; }
+    .cookie-text strong { font-family:var(--fhead); display:block; margin-bottom:3px; }
+    .cookie-text p { color:var(--muted); font-size:.86rem; line-height:1.6; }
+    .cookie-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .cbtn { padding:9px 16px; border-radius:10px; font-weight:600; font-size:.84rem; cursor:pointer; border:1.5px solid var(--border2); background:var(--card); color:var(--text); font-family:var(--fbody); transition:.2s; }
+    .cbtn:hover { border-color:var(--accent); color:var(--accent); }
+    .cbtn.solid { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; box-shadow:0 4px 14px var(--glow); }
+    .cbtn.solid:hover { color:#fff; filter:brightness(1.05); }
+    .cookie-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(3px); z-index:950; display:none; align-items:center; justify-content:center; padding:16px; }
+    .cookie-overlay.show { display:flex; }
+    .cookie-modal { background:var(--card); border:1.5px solid var(--border2); border-radius:20px; max-width:520px; width:100%; padding:1.6rem; max-height:88vh; overflow:auto; }
+    .cookie-modal h3 { font-family:var(--fhead); font-size:1.2rem; margin-bottom:.4rem; }
+    .cookie-modal > p { color:var(--muted); font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
+    .pref-row { display:flex; align-items:flex-start; gap:12px; padding:.9rem 0; border-top:1px solid var(--border2); }
+    .pref-row:first-of-type { border-top:none; }
+    .pref-info { flex:1; }
+    .pref-info strong { font-family:var(--fhead); }
+    .pref-info p { color:var(--muted); font-size:.82rem; line-height:1.5; margin-top:2px; }
+    .switch { position:relative; width:46px; height:26px; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .slider { position:absolute; inset:0; background:var(--border2); border-radius:99px; cursor:pointer; transition:.2s; }
+    .slider::before { content:''; position:absolute; height:20px; width:20px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
+    .switch input:checked + .slider { background:var(--accent); }
+    .switch input:checked + .slider::before { transform:translateX(20px); }
+    .switch input:disabled + .slider { opacity:.6; cursor:not-allowed; }
+    .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:1.2rem; flex-wrap:wrap; }
+    .manage-cookies { position:fixed; left:16px; bottom:16px; z-index:800; background:var(--card); border:1.5px solid var(--border2);
+      border-radius:99px; padding:9px 14px; font-size:.8rem; font-weight:600; color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:6px;
+      box-shadow:0 6px 18px rgba(0,0,0,.12); transition:.2s; font-family:var(--fbody); }
+    .manage-cookies:hover { border-color:var(--accent); color:var(--accent); }
   </style>
 </head>
 <body>
-  <header class="main-header">
-    <a href="./index.html" class="logo">PIXEL<span style="color:#ec4899;">PRESS</span></a>
-    <button class="btn-outline" onclick="history.back()">← Back</button>
-  </header>
+  <nav>
+    <div class="nav-left">
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
+    </div>
+    <button id="themeToggle" class="control-btn" aria-label="Toggle theme">🌓</button>
+  </nav>
 
-  <main class="tool-page">
-    <h1>Terms & Conditions</h1>
-    <p style="color:#6b7280;">Effective date: June 2026</p>
+  <div class="main">
+    <div class="hero">
+      <h1>Terms &amp; Conditions</h1>
+      <p>Effective date: June 2026</p>
+    </div>
+
     <div class="terms-content">
       <h2>1. Acceptance</h2>
-      <p>By using PixelPress, you agree to these terms. If you disagree, please discontinue use.</p>
+      <p>By using ImgPDFTools, you agree to these terms. If you disagree, please discontinue use.</p>
 
       <h2>2. Services Description</h2>
-      <p>We provide browser-based image editing tools. All processing is done locally on your device; we do not store your files.</p>
+      <p>We provide browser-based image &amp; PDF editing tools. All processing is done locally on your device; we do not store your files.</p>
 
       <h2>3. Acceptable Use</h2>
       <p>You agree not to:</p>
@@ -51,13 +165,13 @@
       </ul>
 
       <h2>4. Intellectual Property</h2>
-      <p>You retain all rights to the images you process. The PixelPress name, logo, and website code are our property. Do not reproduce them without permission.</p>
+      <p>You retain all rights to the images and documents you process. The ImgPDFTools name, logo, and website code are our property. Do not reproduce them without permission.</p>
 
       <h2>5. Limitation of Liability</h2>
-      <p>PixelPress is provided "as is." We are not liable for any damages resulting from the use or inability to use the tools, including loss of data or business interruption. Always keep backups of your original files.</p>
+      <p>ImgPDFTools is provided "as is." We are not liable for any damages resulting from the use or inability to use the tools, including loss of data or business interruption. Always keep backups of your original files.</p>
 
       <h2>6. Third-Party Components</h2>
-      <p>Some tools rely on open-source libraries (e.g., background removal, face detection). We are not responsible for their accuracy or performance.</p>
+      <p>Some tools rely on open-source libraries (e.g., background removal, PDF rendering). We are not responsible for their accuracy or performance.</p>
 
       <h2>7. Service Availability</h2>
       <p>We strive for uptime but may occasionally perform maintenance or experience outages. We do not guarantee 100% availability.</p>
@@ -68,18 +182,117 @@
       <h2>9. Governing Law</h2>
       <p>These terms are governed by the laws of your jurisdiction, without regard to conflict of law principles.</p>
     </div>
-  </main>
+  </div>
 
-  <footer style="text-align:center; padding:30px 20px; border-top:1px solid #e5e7eb; margin-top:40px; color:#6b7280; font-size:0.9rem;">
-    <p>© 2026 PixelPress. All rights reserved.</p>
-    <div style="margin-top:10px;">
-      <a href="./about.html" style="color:#2563eb; text-decoration:none; margin:0 8px;">About</a>
-      <a href="./contact.html" style="color:#2563eb; text-decoration:none; margin:0 8px;">Contact</a>
-      <a href="./privacy-policy.html" style="color:#2563eb; text-decoration:none; margin:0 8px;">Privacy</a>
-      <a href="./terms.html" style="color:#2563eb; text-decoration:none; margin:0 8px;">Terms</a>
-      <a href="./faq.html" style="color:#2563eb; text-decoration:none; margin:0 8px;">FAQ</a>
-      <a href="./blog/" style="color:#2563eb; text-decoration:none; margin:0 8px;">Blog</a>
+  <footer>
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
     </div>
+    <div class="footer-links">
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy-policy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+      <a href="./faq.html">FAQ</a>
+      <a href="./blog/">Blog</a>
+    </div>
+    <p>© 2026 ImgPDFTools. All rights reserved.</p>
   </footer>
+
+  <button class="manage-cookies" id="manageCookies" aria-label="Manage cookie preferences"><i class="fa-solid fa-cookie-bite"></i> Cookies</button>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div class="cookie-text">
+      <strong>🍪 We value your privacy</strong>
+      <p>We use cookies for analytics and ads to keep ImgPDFTools free. The files you process always stay in your browser. Choose your preference below.</p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cbtn" id="cookieReject">Reject all</button>
+      <button class="cbtn" id="cookieCustomize">Customize</button>
+      <button class="cbtn solid" id="cookieAccept">Accept all</button>
+    </div>
+  </div>
+
+  <div class="cookie-overlay" id="cookieOverlay" role="dialog" aria-modal="true" aria-label="Cookie preferences">
+    <div class="cookie-modal">
+      <h3>Cookie preferences</h3>
+      <p>Manage how ImgPDFTools uses cookies. Necessary cookies are always on because the site cannot function without them.</p>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Necessary</strong><p>Theme, language and your consent choice.</p></div>
+        <label class="switch"><input type="checkbox" checked disabled /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Analytics</strong><p>Anonymous, aggregated usage statistics (Google Analytics).</p></div>
+        <label class="switch"><input type="checkbox" id="prefAnalytics" /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Advertising</strong><p>Ads that help fund the free tools (Google AdSense).</p></div>
+        <label class="switch"><input type="checkbox" id="prefAds" /><span class="slider"></span></label>
+      </div>
+      <div class="modal-actions">
+        <button class="cbtn" id="prefRejectAll">Reject all</button>
+        <button class="cbtn solid" id="prefSave">Save preferences</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    const $ = id => document.getElementById(id);
+
+    function syncTheme(){
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
+      document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'));
+    }
+    $('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light':'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
+    });
+    syncTheme();
+
+    /* ---------- Cookie consent (Google Consent Mode v2) ---------- */
+    const PREF_KEY = 'imgpdftools-consent-prefs';
+    function gtagSafe(){ if(typeof gtag === 'function') gtag.apply(null, arguments); }
+    function readPrefs(){
+      try { const p = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if(p && typeof p === 'object') return { analytics: !!p.analytics, ads: !!p.ads }; } catch(e){}
+      return null;
+    }
+    function applyConsent(prefs){
+      gtagSafe('consent','update',{
+        analytics_storage: prefs.analytics ? 'granted':'denied',
+        ad_storage: prefs.ads ? 'granted':'denied',
+        ad_user_data: prefs.ads ? 'granted':'denied',
+        ad_personalization: prefs.ads ? 'granted':'denied'
+      });
+    }
+    function savePrefs(prefs){
+      try { localStorage.setItem(PREF_KEY, JSON.stringify({ analytics: !!prefs.analytics, ads: !!prefs.ads, ts: Date.now() })); } catch(e){}
+      applyConsent(prefs);
+    }
+
+    const banner = $('cookieBanner'), overlay = $('cookieOverlay');
+    const prefAnalytics = $('prefAnalytics'), prefAds = $('prefAds');
+    function showBanner(){ banner.classList.add('show'); }
+    function hideBanner(){ banner.classList.remove('show'); }
+    function openModal(){ const cur = readPrefs() || { analytics:false, ads:false }; prefAnalytics.checked = cur.analytics; prefAds.checked = cur.ads; overlay.classList.add('show'); }
+    function closeModal(){ overlay.classList.remove('show'); }
+
+    const gpc = (navigator.globalPrivacyControl === true) || (navigator.doNotTrack === '1') || (window.doNotTrack === '1');
+    const existing = readPrefs();
+    if(existing){ applyConsent(existing); }
+    else if(!gpc){ setTimeout(showBanner, 600); }
+
+    $('cookieAccept').addEventListener('click', () => { savePrefs({ analytics:true, ads:true }); hideBanner(); });
+    $('cookieReject').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); hideBanner(); });
+    $('cookieCustomize').addEventListener('click', () => { openModal(); });
+    $('manageCookies').addEventListener('click', () => { openModal(); });
+    $('prefSave').addEventListener('click', () => { savePrefs({ analytics: prefAnalytics.checked, ads: prefAds.checked }); closeModal(); hideBanner(); });
+    $('prefRejectAll').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); closeModal(); hideBanner(); });
+    overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+  })();
+  </script>
 </body>
 </html>
