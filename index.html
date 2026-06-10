@@ -742,7 +742,7 @@ function renderUI() {
   sidebarBox.appendChild(sf);
 
   evaluateLiveSearchFilters();
-  attachSmartLink();
+  if (typeof attachSmartLink === 'function') attachSmartLink();
 }
 
 function toggleLanguage() {
@@ -870,6 +870,7 @@ function attachSmartLink() {
     try { window.open(SMART_URL, '_blank', 'noopener,noreferrer'); } catch(e) {}
   }, {passive:true, once:true});
 }
+attachSmartLink();
 </script>
 
 <script>
