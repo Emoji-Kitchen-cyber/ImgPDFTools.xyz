@@ -1,93 +1,173 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-</script>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied',
+    analytics_storage:'denied', functionality_storage:'granted', security_storage:'granted',
+    wait_for_update: 500
+  });
+  try {
+    var saved = JSON.parse(localStorage.getItem('imgpdftools-consent-prefs') || 'null');
+    if (saved && typeof saved === 'object') {
+      gtag('consent','update',{
+        analytics_storage: saved.analytics ? 'granted':'denied',
+        ad_storage: saved.ads ? 'granted':'denied',
+        ad_user_data: saved.ads ? 'granted':'denied',
+        ad_personalization: saved.ads ? 'granted':'denied'
+      });
+    }
+  } catch (e) {}
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
+  gtag('config', 'G-3P7QPQKV3K', { anonymize_ip: true });
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About PixelPress — Free Online Image & Document Tools</title>
-  <meta name="description" content="PixelPress is a privacy‑first suite of free online image & document editing tools. Process everything directly in your browser — no uploads, no servers." />
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/about.html" />
-  <meta property="og:title" content="About PixelPress — Free Online Image & Document Tools" />
-  <meta property="og:description" content="Privacy‑first image & document processing directly in your browser." />
-  <meta property="og:url" content="https://pixelpress-smoky.vercel.app/about.html" />
+  <title>About ImgPDFTools — Free Online Image &amp; PDF Tools</title>
+  <meta name="description" content="ImgPDFTools is a privacy-first suite of free online image & PDF tools. Everything is processed directly in your browser — no uploads, no servers." />
+  <link rel="canonical" href="https://imgpdftools.xyz/about.html" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta property="og:title" content="About ImgPDFTools — Free Online Image & PDF Tools" />
+  <meta property="og:description" content="Privacy-first image & PDF processing directly in your browser." />
+  <meta property="og:url" content="https://imgpdftools.xyz/about.html" />
+  <meta property="og:type" content="website" />
   <meta name="twitter:card" content="summary" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap');
     :root {
-      --bg: #f5f5f7; --surface: rgba(255,255,255,0.75); --card: #ffffff;
-      --border: rgba(0,0,0,0.06); --text: #1d1d1f; --muted: #6e6e73;
-      --accent: #ec4899; --accent2: #a78bfa; --glow: rgba(236,72,153,0.1); --r: 16px;
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --r:18px; --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif; --nav-h:66px;
     }
     [data-theme="dark"] {
-      --bg: #09090e; --surface: rgba(21,21,30,0.7); --card: #15151e;
-      --border: rgba(255,255,255,0.08); --text: #e8e8f0; --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'DM Sans',sans-serif; min-height:100vh; display:flex; flex-direction:column; transition:0.3s; }
-    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px; background:var(--surface); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh;
+      display:flex; flex-direction:column; transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; }
+
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+      padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
+      backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
     .nav-left { display:flex; align-items:center; gap:1rem; }
-    .back-btn { background:var(--card); border:1px solid var(--border); width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1.1rem; cursor:pointer; text-decoration:none; transition:0.2s; }
-    .back-btn:hover { border-color:var(--accent); transform:scale(1.05); }
-    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; text-transform:uppercase; text-decoration:none; color:inherit; }
-    .nav-logo span { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2); width:40px; height:40px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text);
+      font-size:1rem; cursor:pointer; text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-.3px; text-decoration:none; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px;
+      display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
+
     .main { flex:1; max-width:900px; margin:0 auto; width:100%; padding:2rem 20px 4rem; }
     .hero { text-align:center; margin-bottom:3rem; }
-    .hero h1 { font-family:'Syne',sans-serif; font-size:clamp(2rem,5vw,2.8rem); font-weight:800; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero h1 { font-family:var(--fhead); font-size:clamp(2rem,5vw,2.8rem); font-weight:700;
+      background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero p { color:var(--muted); font-size:1.1rem; margin-top:.5rem; }
+
     .section { margin-bottom:2.5rem; }
-    .section h2 { font-family:'Syne',sans-serif; font-size:1.4rem; font-weight:800; margin-bottom:1rem; }
+    .section h2 { font-family:var(--fhead); font-size:1.4rem; font-weight:700; margin-bottom:1rem; }
     .section p, .section li { color:var(--muted); line-height:1.8; font-size:1rem; }
+    .section strong { color:var(--text); }
+
     .values-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr)); gap:16px; margin-top:1rem; }
-    .value-card { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.5rem; text-align:center; transition:0.2s; }
+    .value-card { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.5rem; text-align:center; transition:.2s; }
     .value-card:hover { border-color:var(--accent); transform:translateY(-2px); box-shadow:0 8px 24px var(--glow); }
-    .value-card .icon { font-size:2rem; margin-bottom:0.8rem; color:var(--accent); }
-    .value-card h3 { font-size:1rem; margin-bottom:0.4rem; }
-    .value-card p { font-size:0.85rem; color:var(--muted); }
+    .value-card .icon { font-size:2rem; margin-bottom:.8rem; color:var(--accent); }
+    .value-card h3 { font-family:var(--fhead); font-size:1rem; margin-bottom:.4rem; }
+    .value-card p { font-size:.85rem; color:var(--muted); line-height:1.6; }
+
     .tool-list { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:8px; margin-top:1rem; padding:0; list-style:none; }
-    .tool-list li { background:var(--card); border:1px solid var(--border); border-radius:8px; padding:8px 14px; font-size:0.9rem; display:flex; align-items:center; gap:8px; }
+    .tool-list li { background:var(--card); border:1.5px solid var(--border2); border-radius:10px; padding:10px 14px; font-size:.9rem; display:flex; align-items:center; gap:8px; }
     .tool-list li i { color:var(--accent); width:20px; text-align:center; }
+
     .cta { text-align:center; margin-top:2rem; }
-    .btn-primary { padding:12px 28px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:0.2s; }
+    .btn-primary { padding:12px 28px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:.2s; box-shadow:0 4px 14px var(--glow); }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 25px var(--glow); }
-    footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.85rem; border-top:1px solid var(--border); margin-top:auto; }
-    .footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:12px; margin-bottom:8px; }
+
+    footer { text-align:center; padding:2rem; color:var(--muted); font-size:.85rem; border-top:1px solid var(--border2); background:var(--card); margin-top:auto; }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-family:var(--fhead); font-weight:700; font-size:1rem; }
+    .footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin:10px 0 8px; }
     .footer-links a { color:var(--muted); font-weight:500; text-decoration:none; }
     .footer-links a:hover { color:var(--accent); }
+
+    /* Cookie consent */
+    .cookie-banner { position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(140%); width:min(720px,calc(100% - 24px));
+      background:var(--card); border:1.5px solid var(--border2); border-radius:18px; box-shadow:0 18px 50px rgba(0,0,0,.25);
+      padding:1.1rem 1.3rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap; z-index:900; transition:transform .4s ease; }
+    .cookie-banner.show { transform:translateX(-50%) translateY(0); }
+    .cookie-text { flex:1; min-width:240px; }
+    .cookie-text strong { font-family:var(--fhead); display:block; margin-bottom:3px; }
+    .cookie-text p { color:var(--muted); font-size:.86rem; line-height:1.6; }
+    .cookie-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .cbtn { padding:9px 16px; border-radius:10px; font-weight:600; font-size:.84rem; cursor:pointer; border:1.5px solid var(--border2); background:var(--card); color:var(--text); font-family:var(--fbody); transition:.2s; }
+    .cbtn:hover { border-color:var(--accent); color:var(--accent); }
+    .cbtn.solid { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; box-shadow:0 4px 14px var(--glow); }
+    .cbtn.solid:hover { color:#fff; filter:brightness(1.05); }
+    .cookie-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(3px); z-index:950; display:none; align-items:center; justify-content:center; padding:16px; }
+    .cookie-overlay.show { display:flex; }
+    .cookie-modal { background:var(--card); border:1.5px solid var(--border2); border-radius:20px; max-width:520px; width:100%; padding:1.6rem; max-height:88vh; overflow:auto; }
+    .cookie-modal h3 { font-family:var(--fhead); font-size:1.2rem; margin-bottom:.4rem; }
+    .cookie-modal > p { color:var(--muted); font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
+    .pref-row { display:flex; align-items:flex-start; gap:12px; padding:.9rem 0; border-top:1px solid var(--border2); }
+    .pref-row:first-of-type { border-top:none; }
+    .pref-info { flex:1; }
+    .pref-info strong { font-family:var(--fhead); }
+    .pref-info p { color:var(--muted); font-size:.82rem; line-height:1.5; margin-top:2px; }
+    .switch { position:relative; width:46px; height:26px; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .slider { position:absolute; inset:0; background:var(--border2); border-radius:99px; cursor:pointer; transition:.2s; }
+    .slider::before { content:''; position:absolute; height:20px; width:20px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
+    .switch input:checked + .slider { background:var(--accent); }
+    .switch input:checked + .slider::before { transform:translateX(20px); }
+    .switch input:disabled + .slider { opacity:.6; cursor:not-allowed; }
+    .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:1.2rem; flex-wrap:wrap; }
+    .manage-cookies { position:fixed; left:16px; bottom:16px; z-index:800; background:var(--card); border:1.5px solid var(--border2);
+      border-radius:99px; padding:9px 14px; font-size:.8rem; font-weight:600; color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:6px;
+      box-shadow:0 6px 18px rgba(0,0,0,.12); transition:.2s; font-family:var(--fbody); }
+    .manage-cookies:hover { border-color:var(--accent); color:var(--accent); }
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="control-btn" aria-label="Toggle theme">🌓</button>
   </nav>
 
   <div class="main">
     <div class="hero">
-      <h1>About PixelPress</h1>
-      <p style="color:var(--muted); font-size:1.1rem; margin-top:0.5rem;">Privacy‑first tools for modern creators</p>
+      <h1>About ImgPDFTools</h1>
+      <p>Privacy-first tools for modern creators</p>
     </div>
 
     <div class="section">
       <h2>Our Mission</h2>
-      <p>We believe image & document editing should be <strong>instant, private, and free</strong> for everyone. PixelPress was built to give creators, marketers, students, and everyday users powerful tools — without expensive software, sign‑ups, or uploading files to unknown servers. Every single tool runs directly in your browser.</p>
+      <p>We believe image &amp; PDF editing should be <strong>instant, private, and free</strong> for everyone. ImgPDFTools was built to give creators, marketers, students, and everyday users powerful tools — without expensive software, sign-ups, or uploading files to unknown servers. Every single tool runs directly in your browser.</p>
     </div>
 
     <div class="section">
-      <h2>Why PixelPress?</h2>
+      <h2>Why ImgPDFTools?</h2>
       <div class="values-grid">
         <div class="value-card">
           <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
@@ -102,7 +182,7 @@
         <div class="value-card">
           <div class="icon"><i class="fa-solid fa-infinity"></i></div>
           <h3>Forever Free</h3>
-          <p>All 30+ tools are free, with no hidden fees or premium walls.</p>
+          <p>All tools are free, with no hidden fees or premium walls.</p>
         </div>
         <div class="value-card">
           <div class="icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
@@ -111,13 +191,13 @@
         </div>
         <div class="value-card">
           <div class="icon"><i class="fa-solid fa-code"></i></div>
-          <h3>Open & Transparent</h3>
-          <p>Client‑side code. No hidden trackers. You can inspect every tool in your browser.</p>
+          <h3>Open &amp; Transparent</h3>
+          <p>Client-side code. No hidden trackers. You can inspect every tool in your browser.</p>
         </div>
         <div class="value-card">
           <div class="icon"><i class="fa-solid fa-earth-asia"></i></div>
-          <h3>Multi‑Language</h3>
-          <p>Available in English & Arabic. More languages coming soon.</p>
+          <h3>Multi-Language</h3>
+          <p>Available in English &amp; Arabic. More languages coming soon.</p>
         </div>
       </div>
     </div>
@@ -129,23 +209,20 @@
         <li><i class="fa-solid fa-expand"></i> Resize Images</li>
         <li><i class="fa-solid fa-crop"></i> Crop Precisely</li>
         <li><i class="fa-solid fa-rotate"></i> Convert Formats</li>
-        <li><i class="fa-solid fa-droplet"></i> Watermark Assets</li>
         <li><i class="fa-solid fa-ghost"></i> Remove Backgrounds</li>
-        <li><i class="fa-solid fa-user-shield"></i> Blur Faces</li>
-        <li><i class="fa-solid fa-face-laugh-squint"></i> Create Memes</li>
         <li><i class="fa-solid fa-file-pdf"></i> Work with PDFs</li>
+        <li><i class="fa-solid fa-file-image"></i> PDF to JPG</li>
+        <li><i class="fa-solid fa-images"></i> JPG to PDF</li>
+        <li><i class="fa-solid fa-file-zipper"></i> Compress PDFs</li>
         <li><i class="fa-solid fa-qrcode"></i> Generate QR Codes</li>
-        <li><i class="fa-solid fa-key"></i> Generate Passwords</li>
-        <li><i class="fa-solid fa-map-location-dot"></i> Build GIS Shapefiles</li>
-        <li><i class="fa-solid fa-file-text"></i> Extract Text (OCR)</li>
-        <li><i class="fa-solid fa-pen-ruler"></i> Annotate PDFs</li>
-        <li><i class="fa-solid fa-palette"></i> Generate Color Palettes</li>
+        <li><i class="fa-solid fa-palette"></i> Pick &amp; Build Color Palettes</li>
+        <li><i class="fa-solid fa-ruler"></i> Unit Converter</li>
       </ul>
     </div>
 
     <div class="section">
       <h2>Our Vision</h2>
-      <p>We're expanding the toolkit while keeping the core promise of <strong>privacy and speed</strong>. Future updates will bring batch processing, advanced AI enhancements, and deeper integration with creative workflows — all without compromising your data.</p>
+      <p>We're expanding the toolkit while keeping the core promise of <strong>privacy and speed</strong>. Future updates will bring batch processing, advanced in-browser AI enhancements, and deeper integration with creative workflows — all without compromising your data.</p>
     </div>
 
     <div class="cta">
@@ -154,6 +231,10 @@
   </div>
 
   <footer>
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
     <div class="footer-links">
       <a href="./about.html">About</a>
       <a href="./contact.html">Contact</a>
@@ -162,23 +243,102 @@
       <a href="./faq.html">FAQ</a>
       <a href="./blog/">Blog</a>
     </div>
-    <p>© 2026 PixelPress. All rights reserved.</p>
+    <p>© 2026 ImgPDFTools. All rights reserved.</p>
   </footer>
 
+  <button class="manage-cookies" id="manageCookies" aria-label="Manage cookie preferences"><i class="fa-solid fa-cookie-bite"></i> Cookies</button>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div class="cookie-text">
+      <strong>🍪 We value your privacy</strong>
+      <p>We use cookies for analytics and ads to keep ImgPDFTools free. The files you process always stay in your browser. Choose your preference below.</p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cbtn" id="cookieReject">Reject all</button>
+      <button class="cbtn" id="cookieCustomize">Customize</button>
+      <button class="cbtn solid" id="cookieAccept">Accept all</button>
+    </div>
+  </div>
+
+  <div class="cookie-overlay" id="cookieOverlay" role="dialog" aria-modal="true" aria-label="Cookie preferences">
+    <div class="cookie-modal">
+      <h3>Cookie preferences</h3>
+      <p>Manage how ImgPDFTools uses cookies. Necessary cookies are always on because the site cannot function without them.</p>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Necessary</strong><p>Theme, language and your consent choice.</p></div>
+        <label class="switch"><input type="checkbox" checked disabled /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Analytics</strong><p>Anonymous, aggregated usage statistics (Google Analytics).</p></div>
+        <label class="switch"><input type="checkbox" id="prefAnalytics" /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Advertising</strong><p>Ads that help fund the free tools (Google AdSense).</p></div>
+        <label class="switch"><input type="checkbox" id="prefAds" /><span class="slider"></span></label>
+      </div>
+      <div class="modal-actions">
+        <button class="cbtn" id="prefRejectAll">Reject all</button>
+        <button class="cbtn solid" id="prefSave">Save preferences</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    (function() {
-      function syncTheme() {
-        const saved = localStorage.getItem('pixelpress-theme') || 'light';
-        document.documentElement.setAttribute('data-theme', saved);
-      }
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const cur = document.documentElement.getAttribute('data-theme');
-        const next = cur === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
+  (function(){
+    const $ = id => document.getElementById(id);
+
+    function syncTheme(){
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
+      document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'));
+    }
+    $('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light':'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
+    });
+    syncTheme();
+
+    /* ---------- Cookie consent (Google Consent Mode v2) ---------- */
+    const PREF_KEY = 'imgpdftools-consent-prefs';
+    function gtagSafe(){ if(typeof gtag === 'function') gtag.apply(null, arguments); }
+    function readPrefs(){
+      try { const p = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if(p && typeof p === 'object') return { analytics: !!p.analytics, ads: !!p.ads }; } catch(e){}
+      return null;
+    }
+    function applyConsent(prefs){
+      gtagSafe('consent','update',{
+        analytics_storage: prefs.analytics ? 'granted':'denied',
+        ad_storage: prefs.ads ? 'granted':'denied',
+        ad_user_data: prefs.ads ? 'granted':'denied',
+        ad_personalization: prefs.ads ? 'granted':'denied'
       });
-      syncTheme();
-    })();
+    }
+    function savePrefs(prefs){
+      try { localStorage.setItem(PREF_KEY, JSON.stringify({ analytics: !!prefs.analytics, ads: !!prefs.ads, ts: Date.now() })); } catch(e){}
+      applyConsent(prefs);
+    }
+
+    const banner = $('cookieBanner'), overlay = $('cookieOverlay');
+    const prefAnalytics = $('prefAnalytics'), prefAds = $('prefAds');
+    function showBanner(){ banner.classList.add('show'); }
+    function hideBanner(){ banner.classList.remove('show'); }
+    function openModal(){ const cur = readPrefs() || { analytics:false, ads:false }; prefAnalytics.checked = cur.analytics; prefAds.checked = cur.ads; overlay.classList.add('show'); }
+    function closeModal(){ overlay.classList.remove('show'); }
+
+    const gpc = (navigator.globalPrivacyControl === true) || (navigator.doNotTrack === '1') || (window.doNotTrack === '1');
+    const existing = readPrefs();
+    if(existing){ applyConsent(existing); }
+    else if(!gpc){ setTimeout(showBanner, 600); }
+
+    $('cookieAccept').addEventListener('click', () => { savePrefs({ analytics:true, ads:true }); hideBanner(); });
+    $('cookieReject').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); hideBanner(); });
+    $('cookieCustomize').addEventListener('click', () => { openModal(); });
+    $('manageCookies').addEventListener('click', () => { openModal(); });
+    $('prefSave').addEventListener('click', () => { savePrefs({ analytics: prefAnalytics.checked, ads: prefAds.checked }); closeModal(); hideBanner(); });
+    $('prefRejectAll').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); closeModal(); hideBanner(); });
+    overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+  })();
   </script>
 </body>
 </html>
