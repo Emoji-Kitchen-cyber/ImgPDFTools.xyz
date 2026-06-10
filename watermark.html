@@ -1,162 +1,151 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage:'denied', ad_user_data:'denied', ad_personalization:'denied',
+    analytics_storage:'denied', functionality_storage:'granted', security_storage:'granted',
+    wait_for_update: 500
+  });
+  try {
+    var saved = JSON.parse(localStorage.getItem('imgpdftools-consent-prefs') || 'null');
+    if (saved && typeof saved === 'object') {
+      gtag('consent','update',{
+        analytics_storage: saved.analytics ? 'granted':'denied',
+        ad_storage: saved.ads ? 'granted':'denied',
+        ad_user_data: saved.ads ? 'granted':'denied',
+        ad_personalization: saved.ads ? 'granted':'denied'
+      });
+    }
+  } catch (e) {}
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
+  gtag('config', 'G-3P7QPQKV3K', { anonymize_ip: true });
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advanced Watermark Tool — PixelPress</title>
+  <title>Watermark Image — ImgPDFTools</title>
+  <meta name="description" content="Add text or logo watermarks to your images right in your browser. Position, rotate, tile and style — 100% private, no uploads." />
+  <link rel="canonical" href="https://imgpdftools.xyz/watermark.html" />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+  <meta property="og:title" content="Watermark Image — ImgPDFTools" />
+  <meta property="og:description" content="Add text or logo watermarks to your images, privately in your browser." />
+  <meta property="og:url" content="https://imgpdftools.xyz/watermark.html" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
     :root {
-      --bg: #f5f5f7;
-      --surface: rgba(255,255,255,0.75);
-      --card: #ffffff;
-      --border: rgba(0,0,0,0.06);
-      --text: #1d1d1f;
-      --muted: #6e6e73;
-      --accent: #ec4899;
-      --accent2: #a78bfa;
-      --glow: rgba(236,72,153,0.1);
-      --r: 16px;
-      --fhead: 'Syne', sans-serif;
-      --fbody: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --r:18px; --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif; --nav-h:66px;
     }
-
     [data-theme="dark"] {
-      --bg: #09090e;
-      --surface: rgba(21,21,30,0.7);
-      --card: #15151e;
-      --border: rgba(255,255,255,0.08);
-      --text: #e8e8f0;
-      --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
     }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh; display:flex; flex-direction:column; transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface); backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
+    .nav-left { display:flex; align-items:center; gap:1rem; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2); width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1rem; cursor:pointer; text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-.3px; text-decoration:none; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: var(--bg); color: var(--text); font-family: var(--fbody);
-      min-height: 100vh; display: flex; flex-direction: column;
-      transition: background 0.3s, color 0.3s;
-    }
+    .main { max-width:1200px; margin:0 auto; width:100%; padding:2rem 20px 4rem; display:grid; grid-template-columns:1fr 380px; gap:2rem; }
+    @media (max-width:900px){ .main { grid-template-columns:1fr; } }
+    .preview-panel { display:flex; flex-direction:column; gap:1.5rem; }
+    .preview-card { background:var(--card); border:1px solid var(--border2); border-radius:var(--r); padding:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.04); }
+    .preview-area { position:relative; background:repeating-conic-gradient(#80808030 0% 25%, transparent 0% 50%) 50% / 20px 20px; border-radius:12px; min-height:300px; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .preview-area img { max-width:100%; max-height:500px; display:block; border-radius:8px; }
+    .design-panel { background:var(--card); border:1px solid var(--border2); border-radius:var(--r); padding:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.04); overflow-y:auto; max-height:calc(100vh - 140px); }
+    .section-title { font-family:var(--fhead); font-size:1.1rem; font-weight:700; margin-bottom:1rem; display:flex; align-items:center; gap:8px; }
+    .tab-row { display:flex; gap:6px; margin-bottom:1.2rem; flex-wrap:wrap; }
+    .tab { padding:8px 16px; border-radius:999px; background:var(--bg2); border:1px solid var(--border2); cursor:pointer; font-weight:500; font-size:13px; transition:all .2s; color:var(--text); }
+    .tab.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .input-group { margin-bottom:1rem; }
+    label { display:block; margin-bottom:4px; font-weight:600; font-size:0.85rem; color:var(--muted); }
+    input, select, textarea { width:100%; padding:10px 12px; border:1px solid var(--border2); border-radius:10px; background:var(--bg2); color:var(--text); font-size:14px; font-family:var(--fbody); }
+    input:focus, select:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); outline:none; }
+    input[type="color"] { padding:3px; height:40px; cursor:pointer; }
+    .range-row { display:flex; align-items:center; gap:8px; }
+    .range-row input[type="range"] { flex:1; }
+    .range-row span { min-width:35px; font-size:13px; }
+    .grid-9 { display:grid; grid-template-columns:repeat(3,1fr); gap:6px; margin-bottom:1rem; }
+    .pos-btn { padding:8px 4px; font-size:11px; background:var(--bg2); border:1px solid var(--border2); border-radius:8px; cursor:pointer; text-align:center; font-weight:600; transition:all .2s; color:var(--text); }
+    .pos-btn.active { background:var(--accent); color:#fff; border-color:var(--accent); }
+    .btn { padding:10px 18px; border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:13px; display:inline-flex; align-items:center; gap:6px; transition:all .2s; margin-top:0.5rem; font-family:var(--fbody); }
+    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; }
+    .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+    .btn-primary:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+    .btn-secondary { background:var(--bg2); color:var(--text); border:1px solid var(--border2); }
+    .btn-secondary:hover { border-color:var(--accent); }
+    footer { text-align:center; padding:2rem; color:var(--muted); font-size:.85rem; border-top:1px solid var(--border2); background:var(--card); }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-family:var(--fhead); font-weight:700; font-size:1rem; }
+    .footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:14px; margin:10px 0 8px; }
+    .footer-links a { color:var(--muted); font-weight:500; text-decoration:none; }
+    .footer-links a:hover { color:var(--accent); }
+    .hidden-file { display:none; }
+    .upload-zone { border:2px dashed var(--border2); border-radius:12px; padding:2rem; text-align:center; cursor:pointer; margin-bottom:1rem; transition:.2s; color:var(--muted); }
+    .upload-zone:hover { border-color:var(--accent); background:var(--glow); }
 
-    nav {
-      position: sticky; top: 0; z-index: 200; display: flex; align-items: center;
-      justify-content: space-between; padding: 0 clamp(1rem, 5vw, 3rem); height: 64px;
-      background: var(--surface); backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-left { display: flex; align-items: center; gap: 1rem; }
-    .back-btn {
-      background: var(--card); border: 1px solid var(--border);
-      width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center;
-      justify-content: center; color: var(--text); font-size: 1.1rem; cursor: pointer;
-      text-decoration: none; transition: all 0.2s;
-    }
-    .back-btn:hover { border-color: var(--accent); transform: scale(1.05); }
-    .nav-logo {
-      font-family: var(--fhead); font-weight: 800; font-size: 1.25rem;
-      text-transform: uppercase; text-decoration: none; color: inherit;
-    }
-    .nav-logo span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-
-    .main {
-      max-width: 1200px; margin: 0 auto; width: 100%; padding: 2rem 20px 4rem;
-      display: grid; grid-template-columns: 1fr 380px; gap: 2rem;
-    }
-    @media (max-width: 900px) { .main { grid-template-columns: 1fr; } }
-
-    .preview-panel { display: flex; flex-direction: column; gap: 1.5rem; }
-    .preview-card {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-      padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-    }
-    .preview-area {
-      position: relative; background: repeating-conic-gradient(#80808030 0% 25%, transparent 0% 50%) 50% / 20px 20px;
-      border-radius: 12px; min-height: 300px; display: flex; align-items: center; justify-content: center;
-      overflow: hidden;
-    }
-    .preview-area img { max-width: 100%; max-height: 500px; display: block; border-radius: 8px; }
-
-    .design-panel {
-      background: var(--card); border: 1px solid var(--border); border-radius: var(--r);
-      padding: 1.5rem; box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-      overflow-y: auto; max-height: calc(100vh - 140px);
-    }
-
-    .section-title {
-      font-family: var(--fhead); font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .tab-row { display: flex; gap: 6px; margin-bottom: 1.2rem; flex-wrap: wrap; }
-    .tab {
-      padding: 8px 16px; border-radius: 999px; background: var(--bg);
-      border: 1px solid var(--border); cursor: pointer; font-weight: 500; font-size: 13px;
-      transition: all 0.2s;
-    }
-    .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-    .input-group { margin-bottom: 1rem; }
-    label { display: block; margin-bottom: 4px; font-weight: 600; font-size: 0.85rem; color: var(--muted); }
-    input, select, textarea {
-      width: 100%; padding: 10px 12px; border: 1px solid var(--border);
-      border-radius: 10px; background: var(--bg); color: var(--text); font-size: 14px;
-    }
-    input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); outline: none; }
-    .range-row { display: flex; align-items: center; gap: 8px; }
-    .range-row input[type="range"] { flex: 1; }
-    .range-row span { min-width: 35px; font-size: 13px; }
-
-    .grid-9 {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 1rem;
-    }
-    .pos-btn {
-      padding: 8px 4px; font-size: 11px; background: var(--bg); border: 1px solid var(--border);
-      border-radius: 8px; cursor: pointer; text-align: center; font-weight: 600;
-      transition: all 0.2s;
-    }
-    .pos-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-    .btn {
-      padding: 10px 18px; border: none; border-radius: 10px; font-weight: 600;
-      cursor: pointer; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;
-      transition: all 0.2s; margin-top: 0.5rem;
-    }
-    .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: white; }
-    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px var(--glow); }
-    .btn-secondary { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-    .btn-secondary:hover { border-color: var(--accent); }
-
-    footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: auto; }
-
-    /* Hide file inputs */
-    .hidden-file { display: none; }
-    .upload-zone {
-      border: 2px dashed var(--border); border-radius: 12px; padding: 2rem;
-      text-align: center; cursor: pointer; margin-bottom: 1rem; transition: 0.2s;
-    }
-    .upload-zone:hover { border-color: var(--accent); background: var(--glow); }
+    /* Cookie consent */
+    .cookie-banner { position:fixed; left:50%; bottom:18px; transform:translateX(-50%) translateY(160%); width:min(720px,calc(100% - 24px)); background:var(--card); border:1.5px solid var(--border2); border-radius:18px; box-shadow:0 18px 50px rgba(0,0,0,.25); padding:1.1rem 1.3rem; display:flex; gap:1rem; align-items:center; flex-wrap:wrap; z-index:900; transition:transform .4s ease; }
+    .cookie-banner.show { transform:translateX(-50%) translateY(0); }
+    .cookie-text { flex:1; min-width:240px; }
+    .cookie-text strong { font-family:var(--fhead); display:block; margin-bottom:3px; }
+    .cookie-text p { color:var(--muted); font-size:.86rem; line-height:1.6; }
+    .cookie-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .cbtn { padding:9px 16px; border-radius:10px; font-weight:600; font-size:.84rem; cursor:pointer; border:1.5px solid var(--border2); background:var(--card); color:var(--text); font-family:var(--fbody); transition:.2s; }
+    .cbtn:hover { border-color:var(--accent); color:var(--accent); }
+    .cbtn.solid { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; box-shadow:0 4px 14px var(--glow); }
+    .cbtn.solid:hover { color:#fff; filter:brightness(1.05); }
+    .cookie-overlay { position:fixed; inset:0; background:rgba(0,0,0,.45); backdrop-filter:blur(3px); z-index:950; display:none; align-items:center; justify-content:center; padding:16px; }
+    .cookie-overlay.show { display:flex; }
+    .cookie-modal { background:var(--card); border:1.5px solid var(--border2); border-radius:20px; max-width:520px; width:100%; padding:1.6rem; max-height:88vh; overflow:auto; }
+    .cookie-modal h3 { font-family:var(--fhead); font-size:1.2rem; margin-bottom:.4rem; }
+    .cookie-modal > p { color:var(--muted); font-size:.9rem; line-height:1.6; margin-bottom:1rem; }
+    .pref-row { display:flex; align-items:flex-start; gap:12px; padding:.9rem 0; border-top:1px solid var(--border2); }
+    .pref-row:first-of-type { border-top:none; }
+    .pref-info { flex:1; }
+    .pref-info strong { font-family:var(--fhead); }
+    .pref-info p { color:var(--muted); font-size:.82rem; line-height:1.5; margin-top:2px; }
+    .switch { position:relative; width:46px; height:26px; flex-shrink:0; }
+    .switch input { opacity:0; width:0; height:0; }
+    .slider { position:absolute; inset:0; background:var(--border2); border-radius:99px; cursor:pointer; transition:.2s; }
+    .slider::before { content:''; position:absolute; height:20px; width:20px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.2s; }
+    .switch input:checked + .slider { background:var(--accent); }
+    .switch input:checked + .slider::before { transform:translateX(20px); }
+    .switch input:disabled + .slider { opacity:.6; cursor:not-allowed; }
+    .modal-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:1.2rem; flex-wrap:wrap; }
+    .manage-cookies { position:fixed; left:16px; bottom:16px; z-index:800; background:var(--card); border:1.5px solid var(--border2); border-radius:99px; padding:9px 14px; font-size:.8rem; font-weight:600; color:var(--muted); cursor:pointer; display:flex; align-items:center; gap:6px; box-shadow:0 6px 18px rgba(0,0,0,.12); transition:.2s; font-family:var(--fbody); }
+    .manage-cookies:hover { border-color:var(--accent); color:var(--accent); }
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back to home"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+        <div class="logo-icon">🛠️</div>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="control-btn" aria-label="Toggle theme">🌓</button>
   </nav>
 
   <div class="main">
@@ -175,21 +164,18 @@
 
     <!-- Design Panel -->
     <div class="design-panel">
-      <!-- Tab: Text / Image -->
       <div class="tab-row" id="typeTabs">
         <div class="tab active" data-type="text">Text Watermark</div>
         <div class="tab" data-type="image">Image/Logo Watermark</div>
       </div>
 
-      <!-- Dynamic Inputs -->
       <div id="dynamicInputs"></div>
 
-      <!-- Common Settings -->
       <div class="section-title"><i class="fa-solid fa-sliders"></i> General</div>
       <div class="input-group">
-        <label>Position (9‑point grid)</label>
+        <label>Position (9-point grid)</label>
         <div class="grid-9" id="positionGrid">
-          <div class="pos-btn active" data-pos="top-left">↖ TL</div>
+          <div class="pos-btn" data-pos="top-left">↖ TL</div>
           <div class="pos-btn" data-pos="top-center">↑ TC</div>
           <div class="pos-btn" data-pos="top-right">↗ TR</div>
           <div class="pos-btn" data-pos="center-left">← CL</div>
@@ -197,7 +183,7 @@
           <div class="pos-btn" data-pos="center-right">→ CR</div>
           <div class="pos-btn" data-pos="bottom-left">↙ BL</div>
           <div class="pos-btn" data-pos="bottom-center">↓ BC</div>
-          <div class="pos-btn" data-pos="bottom-right">↘ BR</div>
+          <div class="pos-btn active" data-pos="bottom-right">↘ BR</div>
         </div>
       </div>
       <div class="input-group">
@@ -239,68 +225,117 @@
     </div>
   </div>
 
-  <footer>© 2026 PixelPress — Client‑side, private, 100% offline</footer>
+  <footer>
+    <div class="footer-logo">
+      <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
+    <div class="footer-links">
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy-policy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+      <a href="./faq.html">FAQ</a>
+    </div>
+    <p>© 2026 ImgPDFTools — Client-side, private, 100% offline</p>
+  </footer>
+
+  <button class="manage-cookies" id="manageCookies" aria-label="Manage cookie preferences"><i class="fa-solid fa-cookie-bite"></i> Cookies</button>
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <div class="cookie-text">
+      <strong>🍪 We value your privacy</strong>
+      <p>We use cookies for analytics and ads to keep ImgPDFTools free. The images you process always stay in your browser.</p>
+    </div>
+    <div class="cookie-actions">
+      <button class="cbtn" id="cookieReject">Reject all</button>
+      <button class="cbtn" id="cookieCustomize">Customize</button>
+      <button class="cbtn solid" id="cookieAccept">Accept all</button>
+    </div>
+  </div>
+
+  <div class="cookie-overlay" id="cookieOverlay" role="dialog" aria-modal="true" aria-label="Cookie preferences">
+    <div class="cookie-modal">
+      <h3>Cookie preferences</h3>
+      <p>Manage how ImgPDFTools uses cookies. Necessary cookies are always on because the site cannot function without them.</p>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Necessary</strong><p>Theme and your consent choice.</p></div>
+        <label class="switch"><input type="checkbox" checked disabled /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Analytics</strong><p>Anonymous, aggregated usage statistics (Google Analytics).</p></div>
+        <label class="switch"><input type="checkbox" id="prefAnalytics" /><span class="slider"></span></label>
+      </div>
+      <div class="pref-row">
+        <div class="pref-info"><strong>Advertising</strong><p>Ads that help fund the free tools.</p></div>
+        <label class="switch"><input type="checkbox" id="prefAds" /><span class="slider"></span></label>
+      </div>
+      <div class="modal-actions">
+        <button class="cbtn" id="prefRejectAll">Reject all</button>
+        <button class="cbtn solid" id="prefSave">Save preferences</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     (function() {
-      // ---- Theme ----
+      const $ = id => document.getElementById(id);
+
+      /* ---- Theme ---- */
       function syncTheme() {
-        const saved = localStorage.getItem('pixelpress-theme');
+        const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
         const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
       }
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const curr = document.documentElement.getAttribute('data-theme');
-        const next = curr === 'dark' ? 'light' : 'dark';
+      $('themeToggle').addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
+        localStorage.setItem('imgpdftools-theme', next);
       });
+      syncTheme();
 
-      // ---- State ----
-      let baseImage = null;          // HTMLImageElement
-      let watermarkType = 'text';    // 'text' or 'image'
-      let watermarkImage = null;     // HTMLImageElement (for image watermark)
+      /* ---- State ---- */
+      let baseImage = null;
+      let watermarkType = 'text';
+      let watermarkImage = null;
       let selectedPosition = 'bottom-right';
       let offsetX = 0, offsetY = 0, rotation = 0, opacity = 0.5;
       let tileMode = 'none';
 
-      // ---- DOM Elements ----
-      const previewArea = document.getElementById('previewArea');
-      const previewImg = document.getElementById('previewImage');
-      const placeholder = document.getElementById('placeholder');
-      const downloadBtn = document.getElementById('downloadBtn');
-      const dynamicInputs = document.getElementById('dynamicInputs');
+      const previewArea = $('previewArea');
+      const previewImg = $('previewImage');
+      const placeholder = $('placeholder');
+      const downloadBtn = $('downloadBtn');
+      const dynamicInputs = $('dynamicInputs');
 
-      // ---- Upload main image ----
       function createUploadZone(accept, callback) {
         const zone = document.createElement('div');
         zone.className = 'upload-zone';
-        zone.innerHTML = `<i class="fa-solid fa-cloud-upload" style="font-size:2rem;color:var(--accent);"></i><p>Click or drag & drop</p>`;
+        zone.innerHTML = '<i class="fa-solid fa-cloud-arrow-up" style="font-size:2rem;color:var(--accent);"></i><p>Click or drag & drop</p>';
         zone.addEventListener('click', () => {
           const input = document.createElement('input');
           input.type = 'file';
           input.accept = accept;
-          input.onchange = (e) => { if (e.target.files[0]) callback(e.target.files[0]); };
+          input.addEventListener('change', (e) => { if (e.target.files[0]) callback(e.target.files[0]); });
           input.click();
         });
         zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor = 'var(--accent)'; });
-        zone.addEventListener('dragleave', e => { zone.style.borderColor = 'var(--border)'; });
+        zone.addEventListener('dragleave', () => { zone.style.borderColor = 'var(--border2)'; });
         zone.addEventListener('drop', e => {
           e.preventDefault();
-          zone.style.borderColor = 'var(--border)';
+          zone.style.borderColor = 'var(--border2)';
           if (e.dataTransfer.files[0]) callback(e.dataTransfer.files[0]);
         });
         return zone;
       }
 
       function loadMainImage(file) {
-        if (!file.type.startsWith('image/')) return alert('Only image files allowed');
+        if (!file.type.startsWith('image/')) { alert('Only image files are allowed.'); return; }
         const reader = new FileReader();
         reader.onload = (e) => {
           const img = new Image();
           img.onload = () => {
             baseImage = img;
-            previewImg.src = img.src;
             previewImg.style.display = 'block';
             placeholder.style.display = 'none';
             downloadBtn.disabled = false;
@@ -311,11 +346,9 @@
         reader.readAsDataURL(file);
       }
 
-      // Initial upload zone inside preview
       const initUploadZone = createUploadZone('image/*', loadMainImage);
       previewArea.appendChild(initUploadZone);
 
-      // ---- Tab Switching ----
       const typeTabs = document.querySelectorAll('#typeTabs .tab');
       typeTabs.forEach(tab => {
         tab.addEventListener('click', () => {
@@ -323,178 +356,86 @@
           tab.classList.add('active');
           watermarkType = tab.dataset.type;
           renderDynamicInputs();
+          applyLivePreview();
         });
       });
 
-      // ---- Dynamic Inputs based on type ----
       function renderDynamicInputs() {
-        let html = '';
         if (watermarkType === 'text') {
-          html = `
-            <div class="input-group">
-              <label>Watermark Text</label>
-              <input type="text" id="wmText" value="© PixelPress" />
-            </div>
-            <div class="input-group">
-              <label>Font Family</label>
-              <select id="wmFont">
-                <option value="Arial">Arial</option>
-                <option value="Verdana">Verdana</option>
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Courier New">Courier New</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Impact">Impact</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Font Size (px)</label>
-              <div class="range-row">
-                <input type="range" id="wmFontSize" min="10" max="200" value="60" />
-                <span id="wmFontSizeVal">60</span>
-              </div>
-            </div>
-            <div class="input-group">
-              <label>Text Color</label>
-              <input type="color" id="wmColor" value="#ffffff" />
-            </div>
-            <div class="input-group" style="display:flex; gap:8px;">
-              <label><input type="checkbox" id="wmBold" /> Bold</label>
-              <label><input type="checkbox" id="wmItalic" /> Italic</label>
-            </div>
-            <div class="input-group">
-              <label>Shadow</label>
-              <input type="color" id="wmShadowColor" value="#000000" />
-              <div class="range-row">
-                <input type="range" id="wmShadowBlur" min="0" max="20" value="5" />
-                <span id="wmShadowBlurVal">5</span>
-              </div>
-            </div>
-            <div class="input-group">
-              <label>Outline</label>
-              <input type="color" id="wmOutlineColor" value="#000000" />
-              <div class="range-row">
-                <input type="range" id="wmOutlineWidth" min="0" max="10" value="0" />
-                <span id="wmOutlineWidthVal">0</span>
-              </div>
-            </div>
-          `;
-        } else {
-          html = `
-            <div class="input-group">
-              <label>Upload Logo (PNG recommended)</label>
-              <div id="logoUploadZone"></div>
-              <input type="file" id="logoFileInput" accept="image/*" class="hidden-file" />
-            </div>
-            <div class="input-group">
-              <label>Scale (%)</label>
-              <div class="range-row">
-                <input type="range" id="logoScale" min="10" max="200" value="100" />
-                <span id="logoScaleVal">100%</span>
-              </div>
-            </div>
-          `;
-        }
-        dynamicInputs.innerHTML = html;
+          dynamicInputs.innerHTML = ''
+            + '<div class="input-group"><label>Watermark Text</label><input type="text" id="wmText" value="© ImgPDFTools" /></div>'
+            + '<div class="input-group"><label>Font Family</label><select id="wmFont"><option value="Arial">Arial</option><option value="Verdana">Verdana</option><option value="Times New Roman">Times New Roman</option><option value="Courier New">Courier New</option><option value="Georgia">Georgia</option><option value="Impact">Impact</option></select></div>'
+            + '<div class="input-group"><label>Font Size (px)</label><div class="range-row"><input type="range" id="wmFontSize" min="10" max="200" value="60" /><span id="wmFontSizeVal">60</span></div></div>'
+            + '<div class="input-group"><label>Text Color</label><input type="color" id="wmColor" value="#ffffff" /></div>'
+            + '<div class="input-group" style="display:flex; gap:14px;"><label><input type="checkbox" id="wmBold" style="width:auto;" /> Bold</label><label><input type="checkbox" id="wmItalic" style="width:auto;" /> Italic</label></div>'
+            + '<div class="input-group"><label>Shadow Color & Blur</label><input type="color" id="wmShadowColor" value="#000000" /><div class="range-row" style="margin-top:6px;"><input type="range" id="wmShadowBlur" min="0" max="20" value="5" /><span id="wmShadowBlurVal">5</span></div></div>'
+            + '<div class="input-group"><label>Outline Color & Width</label><input type="color" id="wmOutlineColor" value="#000000" /><div class="range-row" style="margin-top:6px;"><input type="range" id="wmOutlineWidth" min="0" max="10" value="0" /><span id="wmOutlineWidthVal">0</span></div></div>';
 
-        // Attach listeners
-        if (watermarkType === 'text') {
-          document.getElementById('wmText')?.addEventListener('input', applyLivePreview);
-          document.getElementById('wmFont')?.addEventListener('change', applyLivePreview);
-          document.getElementById('wmFontSize')?.addEventListener('input', function() {
-            document.getElementById('wmFontSizeVal').textContent = this.value;
-            applyLivePreview();
-          });
-          document.getElementById('wmColor')?.addEventListener('input', applyLivePreview);
-          document.getElementById('wmBold')?.addEventListener('change', applyLivePreview);
-          document.getElementById('wmItalic')?.addEventListener('change', applyLivePreview);
-          document.getElementById('wmShadowColor')?.addEventListener('input', applyLivePreview);
-          document.getElementById('wmShadowBlur')?.addEventListener('input', function() {
-            document.getElementById('wmShadowBlurVal').textContent = this.value;
-            applyLivePreview();
-          });
-          document.getElementById('wmOutlineColor')?.addEventListener('input', applyLivePreview);
-          document.getElementById('wmOutlineWidth')?.addEventListener('input', function() {
-            document.getElementById('wmOutlineWidthVal').textContent = this.value;
-            applyLivePreview();
-          });
+          $('wmText').addEventListener('input', applyLivePreview);
+          $('wmFont').addEventListener('change', applyLivePreview);
+          $('wmFontSize').addEventListener('input', function() { $('wmFontSizeVal').textContent = this.value; applyLivePreview(); });
+          $('wmColor').addEventListener('input', applyLivePreview);
+          $('wmBold').addEventListener('change', applyLivePreview);
+          $('wmItalic').addEventListener('change', applyLivePreview);
+          $('wmShadowColor').addEventListener('input', applyLivePreview);
+          $('wmShadowBlur').addEventListener('input', function() { $('wmShadowBlurVal').textContent = this.value; applyLivePreview(); });
+          $('wmOutlineColor').addEventListener('input', applyLivePreview);
+          $('wmOutlineWidth').addEventListener('input', function() { $('wmOutlineWidthVal').textContent = this.value; applyLivePreview(); });
         } else {
-          // Image watermark upload
-          const logoZone = document.getElementById('logoUploadZone');
+          dynamicInputs.innerHTML = ''
+            + '<div class="input-group"><label>Upload Logo (PNG recommended)</label><div id="logoUploadZone"></div></div>'
+            + '<div class="input-group"><label>Scale (%)</label><div class="range-row"><input type="range" id="logoScale" min="10" max="200" value="100" /><span id="logoScaleVal">100%</span></div></div>';
+
+          const logoZone = $('logoUploadZone');
           const newLogoZone = createUploadZone('image/*', (file) => {
+            if (!file.type.startsWith('image/')) { alert('Only image files are allowed.'); return; }
             const reader = new FileReader();
             reader.onload = (e) => {
               const img = new Image();
-              img.onload = () => {
-                watermarkImage = img;
-                applyLivePreview();
-              };
+              img.onload = () => { watermarkImage = img; applyLivePreview(); };
               img.src = e.target.result;
             };
             reader.readAsDataURL(file);
           });
           logoZone.appendChild(newLogoZone);
-
-          document.getElementById('logoScale')?.addEventListener('input', function() {
-            document.getElementById('logoScaleVal').textContent = this.value + '%';
-            applyLivePreview();
-          });
+          $('logoScale').addEventListener('input', function() { $('logoScaleVal').textContent = this.value + '%'; applyLivePreview(); });
         }
       }
 
-      // ---- Position Grid ----
-      document.getElementById('positionGrid').addEventListener('click', (e) => {
-        if (e.target.classList.contains('pos-btn')) {
-          document.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
-          e.target.classList.add('active');
-          selectedPosition = e.target.dataset.pos;
-          applyLivePreview();
-        }
-      });
-
-      // ---- Common Sliders ----
-      document.getElementById('offsetX').addEventListener('input', function() {
-        offsetX = parseInt(this.value);
-        document.getElementById('offsetXVal').textContent = offsetX;
-        applyLivePreview();
-      });
-      document.getElementById('offsetY').addEventListener('input', function() {
-        offsetY = parseInt(this.value);
-        document.getElementById('offsetYVal').textContent = offsetY;
-        applyLivePreview();
-      });
-      document.getElementById('rotation').addEventListener('input', function() {
-        rotation = parseInt(this.value);
-        document.getElementById('rotationVal').textContent = rotation + '°';
-        applyLivePreview();
-      });
-      document.getElementById('opacitySlider').addEventListener('input', function() {
-        opacity = parseInt(this.value) / 100;
-        document.getElementById('opacityVal').textContent = this.value + '%';
-        applyLivePreview();
-      });
-      document.getElementById('tileMode').addEventListener('change', function() {
-        tileMode = this.value;
+      $('positionGrid').addEventListener('click', (e) => {
+        const btn = e.target.closest('.pos-btn');
+        if (!btn) return;
+        document.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedPosition = btn.dataset.pos;
         applyLivePreview();
       });
 
-      // ---- Apply Live Preview (Canvas) ----
+      $('offsetX').addEventListener('input', function() { offsetX = parseInt(this.value, 10); $('offsetXVal').textContent = offsetX; applyLivePreview(); });
+      $('offsetY').addEventListener('input', function() { offsetY = parseInt(this.value, 10); $('offsetYVal').textContent = offsetY; applyLivePreview(); });
+      $('rotation').addEventListener('input', function() { rotation = parseInt(this.value, 10); $('rotationVal').textContent = rotation + '°'; applyLivePreview(); });
+      $('opacitySlider').addEventListener('input', function() { opacity = parseInt(this.value, 10) / 100; $('opacityVal').textContent = this.value + '%'; applyLivePreview(); });
+      $('tileMode').addEventListener('change', function() { tileMode = this.value; applyLivePreview(); });
+
+      function hexToRgba(hex, alpha) {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+      }
+
       function applyLivePreview() {
         if (!baseImage) return;
-
         const canvas = document.createElement('canvas');
         canvas.width = baseImage.width;
         canvas.height = baseImage.height;
         const ctx = canvas.getContext('2d');
-
-        // Draw original
         ctx.drawImage(baseImage, 0, 0);
 
-        // Calculate position for a single element (used as offset for tiling)
         const getPositionCoords = (elementWidth, elementHeight) => {
           const pad = 30;
           let x, y;
-          const w = canvas.width;
-          const h = canvas.height;
+          const w = canvas.width, h = canvas.height;
           switch (selectedPosition) {
             case 'top-left': x = pad; y = pad; break;
             case 'top-center': x = (w - elementWidth) / 2; y = pad; break;
@@ -507,55 +448,50 @@
             case 'bottom-right':
             default: x = w - elementWidth - pad; y = h - elementHeight - pad;
           }
-          x += offsetX;
-          y += offsetY;
-          return { x, y };
+          return { x: x + offsetX, y: y + offsetY };
         };
 
-        // Helper: draw the watermark element on context
-        const drawElement = (ctx, scale = 1) => {
+        const drawElement = () => {
           if (watermarkType === 'text') {
-            const text = document.getElementById('wmText')?.value.trim() || '© PixelPress';
-            const fontFamily = document.getElementById('wmFont')?.value || 'Arial';
-            const fontSize = parseInt(document.getElementById('wmFontSize')?.value) || 60;
-            const color = document.getElementById('wmColor')?.value || '#ffffff';
-            const bold = document.getElementById('wmBold')?.checked;
-            const italic = document.getElementById('wmItalic')?.checked;
-            const shadowColor = document.getElementById('wmShadowColor')?.value || '#000';
-            const shadowBlur = parseInt(document.getElementById('wmShadowBlur')?.value) || 5;
-            const outlineColor = document.getElementById('wmOutlineColor')?.value || '#000';
-            const outlineWidth = parseInt(document.getElementById('wmOutlineWidth')?.value) || 0;
+            const text = ($('wmText') ? $('wmText').value : '') || '© ImgPDFTools';
+            const fontFamily = $('wmFont') ? $('wmFont').value : 'Arial';
+            const fontSize = ($('wmFontSize') ? parseInt($('wmFontSize').value, 10) : 60) || 60;
+            const color = $('wmColor') ? $('wmColor').value : '#ffffff';
+            const bold = $('wmBold') ? $('wmBold').checked : false;
+            const italic = $('wmItalic') ? $('wmItalic').checked : false;
+            const shadowColor = $('wmShadowColor') ? $('wmShadowColor').value : '#000000';
+            const shadowBlur = ($('wmShadowBlur') ? parseInt($('wmShadowBlur').value, 10) : 5) || 0;
+            const outlineColor = $('wmOutlineColor') ? $('wmOutlineColor').value : '#000000';
+            const outlineWidth = ($('wmOutlineWidth') ? parseInt($('wmOutlineWidth').value, 10) : 0) || 0;
 
-            const style = `${italic ? 'italic ' : ''}${bold ? 'bold ' : ''}${fontSize * scale}px ${fontFamily}`;
-            ctx.font = style;
+            ctx.font = (italic ? 'italic ' : '') + (bold ? 'bold ' : '') + fontSize + 'px ' + fontFamily;
             ctx.fillStyle = hexToRgba(color, opacity);
             ctx.textBaseline = 'top';
             ctx.shadowColor = hexToRgba(shadowColor, opacity);
             ctx.shadowBlur = shadowBlur;
             ctx.shadowOffsetX = 2;
             ctx.shadowOffsetY = 2;
-
             const metrics = ctx.measureText(text);
-            const elementWidth = metrics.width;
-            const elementHeight = fontSize * scale;
-
-            return { elementWidth, elementHeight, draw: (x, y) => {
-              if (outlineWidth > 0) {
-                ctx.strokeStyle = hexToRgba(outlineColor, opacity);
-                ctx.lineWidth = outlineWidth;
-                ctx.strokeText(text, x, y);
+            return {
+              elementWidth: metrics.width,
+              elementHeight: fontSize,
+              draw: (x, y) => {
+                if (outlineWidth > 0) {
+                  ctx.strokeStyle = hexToRgba(outlineColor, opacity);
+                  ctx.lineWidth = outlineWidth;
+                  ctx.strokeText(text, x, y);
+                }
+                ctx.fillText(text, x, y);
               }
-              ctx.fillText(text, x, y);
-            }};
+            };
           } else {
             if (!watermarkImage) return null;
-            const scalePercent = parseInt(document.getElementById('logoScale')?.value) || 100;
-            const scaleFactor = (scalePercent / 100) * scale;
-            const elementWidth = watermarkImage.width * scaleFactor;
-            const elementHeight = watermarkImage.height * scaleFactor;
+            const scalePercent = ($('logoScale') ? parseInt($('logoScale').value, 10) : 100) || 100;
+            const sf = scalePercent / 100;
+            const elementWidth = watermarkImage.width * sf;
+            const elementHeight = watermarkImage.height * sf;
             return {
-              elementWidth,
-              elementHeight,
+              elementWidth, elementHeight,
               draw: (x, y) => {
                 ctx.globalAlpha = opacity;
                 ctx.drawImage(watermarkImage, x, y, elementWidth, elementHeight);
@@ -565,23 +501,17 @@
           }
         };
 
-        // Save context state and rotate around given point
-        const applyRotation = (ctx, x, y, w, h) => {
+        const applyRotation = (x, y, w, h) => {
           if (rotation !== 0) {
-            const cx = x + w / 2;
-            const cy = y + h / 2;
+            const cx = x + w / 2, cy = y + h / 2;
             ctx.translate(cx, cy);
             ctx.rotate(rotation * Math.PI / 180);
             ctx.translate(-cx, -cy);
           }
         };
 
-        const element = drawElement(ctx, 1);
-        if (!element) {
-          previewImg.src = baseImage.src;
-          return;
-        }
-
+        const element = drawElement();
+        if (!element) { previewImg.src = baseImage.src; return; }
         const { elementWidth, elementHeight, draw } = element;
 
         if (tileMode === 'grid') {
@@ -589,51 +519,54 @@
           const spacingY = elementHeight + 60;
           for (let x = -elementWidth; x < canvas.width + elementWidth; x += spacingX) {
             for (let y = -elementHeight; y < canvas.height + elementHeight; y += spacingY) {
-              ctx.save();
-              applyRotation(ctx, x, y, elementWidth, elementHeight);
-              draw(x, y);
-              ctx.restore();
+              ctx.save(); applyRotation(x, y, elementWidth, elementHeight); draw(x, y); ctx.restore();
             }
           }
         } else {
           const { x, y } = getPositionCoords(elementWidth, elementHeight);
-          ctx.save();
-          applyRotation(ctx, x, y, elementWidth, elementHeight);
-          draw(x, y);
-          ctx.restore();
+          ctx.save(); applyRotation(x, y, elementWidth, elementHeight); draw(x, y); ctx.restore();
         }
 
-        // Update preview
         const dataUrl = canvas.toDataURL('image/png');
         previewImg.src = dataUrl;
-
-        // Store for download
         previewImg.dataset.watermarkedDataUrl = dataUrl;
       }
 
-      // Helper
-      function hexToRgba(hex, alpha) {
-        const r = parseInt(hex.slice(1, 3), 16);
-        const g = parseInt(hex.slice(3, 5), 16);
-        const b = parseInt(hex.slice(5, 7), 16);
-        return `rgba(${r},${g},${b},${alpha})`;
-      }
-
-      // ---- Download ----
       downloadBtn.addEventListener('click', () => {
         const dataUrl = previewImg.dataset.watermarkedDataUrl;
         if (!dataUrl) return;
         const a = document.createElement('a');
         a.href = dataUrl;
-        a.download = `watermarked-${Date.now()}.png`;
+        a.download = 'imgpdftools-watermarked-' + Date.now() + '.png';
         a.click();
       });
 
-      // ---- Init ----
-      syncTheme();
+      $('applyLiveBtn').addEventListener('click', applyLivePreview);
       renderDynamicInputs();
-      // Apply live button (for manual refresh)
-      document.getElementById('applyLiveBtn').addEventListener('click', applyLivePreview);
+
+      /* ---------- Cookie consent (Google Consent Mode v2) ---------- */
+      const PREF_KEY = 'imgpdftools-consent-prefs';
+      function gtagSafe(){ if (typeof gtag === 'function') gtag.apply(null, arguments); }
+      function readPrefs(){ try { const p = JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); if (p && typeof p === 'object') return { analytics: !!p.analytics, ads: !!p.ads }; } catch(e){} return null; }
+      function applyConsent(prefs){ gtagSafe('consent','update',{ analytics_storage: prefs.analytics ? 'granted':'denied', ad_storage: prefs.ads ? 'granted':'denied', ad_user_data: prefs.ads ? 'granted':'denied', ad_personalization: prefs.ads ? 'granted':'denied' }); }
+      function savePrefs(prefs){ try { localStorage.setItem(PREF_KEY, JSON.stringify({ analytics: !!prefs.analytics, ads: !!prefs.ads, ts: Date.now() })); } catch(e){} applyConsent(prefs); }
+      const banner = $('cookieBanner'), overlay = $('cookieOverlay');
+      const prefAnalytics = $('prefAnalytics'), prefAds = $('prefAds');
+      function showBanner(){ banner.classList.add('show'); }
+      function hideBanner(){ banner.classList.remove('show'); }
+      function openModal(){ const cur = readPrefs() || { analytics:false, ads:false }; prefAnalytics.checked = cur.analytics; prefAds.checked = cur.ads; overlay.classList.add('show'); }
+      function closeModal(){ overlay.classList.remove('show'); }
+      const gpc = (navigator.globalPrivacyControl === true) || (navigator.doNotTrack === '1') || (window.doNotTrack === '1');
+      const existing = readPrefs();
+      if (existing) { applyConsent(existing); } else if (!gpc) { setTimeout(showBanner, 600); }
+      $('cookieAccept').addEventListener('click', () => { savePrefs({ analytics:true, ads:true }); hideBanner(); });
+      $('cookieReject').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); hideBanner(); });
+      $('cookieCustomize').addEventListener('click', openModal);
+      $('manageCookies').addEventListener('click', openModal);
+      $('prefSave').addEventListener('click', () => { savePrefs({ analytics: prefAnalytics.checked, ads: prefAds.checked }); closeModal(); hideBanner(); });
+      $('prefRejectAll').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); closeModal(); hideBanner(); });
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
     })();
   </script>
 </body>
