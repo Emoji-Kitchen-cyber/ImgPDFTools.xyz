@@ -182,7 +182,7 @@
     <div class="grid">
       <div class="card">
         <h2>📧 Send a message</h2>
-        <p class="muted">Fill in the form and we'll get back to you by email.</p>
+        <p class="muted">Fill in the form below and we'll get back to you as soon as we can.</p>
         <form id="contactForm" action="https://formspree.io/f/xbdbwdgl" method="POST" novalidate>
           <div class="field">
             <label for="name">Your name</label>
@@ -219,12 +219,12 @@
 
       <div>
         <div class="side-card">
-          <h3>📨 Email</h3>
-          <p><a href="mailto:imgpdftools@protonmail.com">imgpdftools@protonmail.com</a></p>
+          <h3>💡 Need a quick answer?</h3>
+          <p>Many common questions are answered instantly in our <a href="./faq.html">Help &amp; FAQ</a> — it's the fastest way to get unstuck before writing in.</p>
         </div>
         <div class="side-card">
-          <h3>💬 WhatsApp</h3>
-          <p><a href="https://wa.me/923432535207" target="_blank" rel="noopener noreferrer">+92 343 2535207</a></p>
+          <h3>🔒 Your privacy</h3>
+          <p>Every tool runs entirely in your browser — your files are never uploaded, so you can reach out with confidence.</p>
         </div>
         <div class="side-card">
           <h3>🐛 Reporting a bug?</h3>
@@ -345,10 +345,10 @@
         } else {
           let detail = '';
           try { const data = await res.json(); if(data && data.errors && data.errors.length) detail = ' ' + data.errors.map(x => x.message).join(', '); } catch(_){}
-          setStatus('Sorry, something went wrong.' + detail + ' Please email us directly.', 'err');
+          setStatus('Sorry, something went wrong.' + detail + ' Please try again in a moment.', 'err');
         }
       } catch(err){
-        setStatus('Network error — please check your connection or email us directly.', 'err');
+        setStatus('Network error — please check your connection and try again.', 'err');
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = original;
