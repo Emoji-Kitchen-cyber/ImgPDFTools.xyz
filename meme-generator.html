@@ -1,45 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+    analytics_storage: 'denied', functionality_storage: 'granted',
+    security_storage: 'granted', wait_for_update: 500
+  });
+  try {
+    var _sp = JSON.parse(localStorage.getItem('imgpdftools-consent-prefs') || 'null');
+    if (_sp) {
+      gtag('consent', 'update', {
+        ad_storage: _sp.ads ? 'granted' : 'denied',
+        ad_user_data: _sp.ads ? 'granted' : 'denied',
+        ad_personalization: _sp.ads ? 'granted' : 'denied',
+        analytics_storage: _sp.analytics ? 'granted' : 'denied'
+      });
+    }
+  } catch (e) {}
+  gtag('config', 'G-3P7QPQKV3K', { anonymize_ip: true });
 </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Meme Generator Pro — PixelPress</title>
+  <title>Meme Generator Pro — ImgPDFTools</title>
+  <meta name="description" content="Free online meme generator. Add text, emojis, stickers and image overlays to popular meme templates. 100% in your browser — private and fast." />
+  <meta name="theme-color" content="#6366f1" />
+  <link rel="canonical" href="https://imgpdftools.xyz/meme-generator.html" />
+  <meta property="og:title" content="Meme Generator Pro — ImgPDFTools" />
+  <meta property="og:description" content="Create memes in your browser with templates, text effects and layers. Private and free." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://imgpdftools.xyz/meme-generator.html" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
     :root {
-      --bg: #f5f5f7;
-      --surface: rgba(255,255,255,0.75);
+      --bg: #f8f8fc;
+      --bg2: #f0f0f8;
+      --surface: rgba(255,255,255,0.78);
       --card: #ffffff;
-      --border: rgba(0,0,0,0.06);
-      --text: #1d1d1f;
-      --muted: #6e6e73;
-      --accent: #ec4899;
-      --accent2: #a78bfa;
-      --glow: rgba(236,72,153,0.1);
-      --r: 16px;
-      --fhead: 'Syne', sans-serif;
-      --fbody: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --border: rgba(0,0,0,0.07);
+      --text: #14141f;
+      --muted: #6a6a78;
+      --accent: #6366f1;
+      --accent2: #8b5cf6;
+      --accent3: #06b6d4;
+      --glow: rgba(99,102,241,0.12);
+      --r: 18px;
+      --nav-h: 66px;
+      --fhead: 'Space Grotesk', sans-serif;
+      --fbody: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     }
-
     [data-theme="dark"] {
-      --bg: #09090e;
-      --surface: rgba(21,21,30,0.7);
-      --card: #15151e;
+      --bg: #0c0c14;
+      --bg2: #14141f;
+      --surface: rgba(22,22,42,0.72);
+      --card: #16162a;
       --border: rgba(255,255,255,0.08);
-      --text: #e8e8f0;
-      --muted: #86868b;
-      --glow: rgba(236,72,153,0.25);
+      --text: #e8e8f4;
+      --muted: #8a8aa0;
+      --glow: rgba(99,102,241,0.25);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -51,7 +76,7 @@
 
     nav {
       position: sticky; top:0; z-index:200; display:flex; align-items:center;
-      justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:64px;
+      justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h);
       background: var(--surface); backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
     }
@@ -63,14 +88,13 @@
       transition: all 0.2s;
     }
     .back-btn:hover { border-color: var(--accent); transform:scale(1.05); }
-    .nav-logo {
-      font-family: var(--fhead); font-weight:800; font-size:1.25rem;
-      text-transform:uppercase; text-decoration:none; color:inherit;
-    }
-    .nav-logo span {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-    }
+    .logo-link { display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit;
+      font-family: var(--fhead); font-weight:800; font-size:1.2rem; letter-spacing:-0.5px; }
+    .logo-icon { font-size:1.3rem; }
+    .logo-text-img { color: var(--text); }
+    .logo-text-pdf { background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text-tools { color: var(--text); }
 
     .main {
       max-width:1200px; margin:0 auto; width:100%; padding:2rem 20px 4rem;
@@ -78,10 +102,9 @@
     }
     @media (max-width: 950px) { .main { grid-template-columns:1fr; } }
 
-    /* Canvas Panel */
     .canvas-panel {
       background: var(--card); border:1px solid var(--border); border-radius: var(--r);
-      padding:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.02);
+      padding:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.03);
       display:flex; flex-direction:column; align-items:center;
     }
     .canvas-container {
@@ -110,25 +133,24 @@
     }
     .btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color:white; }
     .btn-primary:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
-    .btn-secondary { background: var(--bg); color: var(--text); border:1px solid var(--border); }
+    .btn-secondary { background: var(--bg2); color: var(--text); border:1px solid var(--border); }
     .btn-secondary:hover { border-color: var(--accent); }
     .btn-danger { background: #ef4444; color:white; }
     .btn-danger:hover { background: #dc2626; }
     .btn-sm { padding:6px 12px; font-size:12px; }
 
-    /* Sidebar */
     .sidebar-panel {
       background: var(--card); border:1px solid var(--border); border-radius: var(--r);
-      padding:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.02);
+      padding:1.5rem; box-shadow:0 4px 20px rgba(0,0,0,0.03);
       overflow-y:auto; max-height:calc(100vh - 140px); display:flex; flex-direction:column; gap:1.2rem;
     }
     .section-title {
-      font-family: var(--fhead); font-size:1rem; font-weight:800; display:flex;
+      font-family: var(--fhead); font-size:1rem; font-weight:700; display:flex;
       align-items:center; gap:8px; margin-bottom:0.5rem;
     }
     .tab-row { display:flex; gap:6px; flex-wrap:wrap; }
     .tab {
-      padding:7px 14px; border-radius:999px; background:var(--bg); border:1px solid var(--border);
+      padding:7px 14px; border-radius:999px; background:var(--bg2); border:1px solid var(--border);
       cursor:pointer; font-weight:500; font-size:12px; transition:all 0.2s;
     }
     .tab.active { background: var(--accent); color:white; border-color:var(--accent); }
@@ -139,7 +161,7 @@
     }
     .template-grid img {
       width:100%; border-radius:8px; cursor:pointer; border:2px solid transparent;
-      transition:all 0.2s; object-fit:cover; aspect-ratio:1;
+      transition:all 0.2s; object-fit:cover; aspect-ratio:1; background:var(--bg2);
     }
     .template-grid img:hover { border-color: var(--accent2); }
     .template-grid img.selected { border-color: var(--accent); box-shadow:0 0 0 3px var(--glow); }
@@ -148,18 +170,16 @@
     label { display:block; margin-bottom:4px; font-weight:600; font-size:0.8rem; color:var(--muted); }
     input, select, textarea {
       width:100%; padding:9px 11px; border:1px solid var(--border);
-      border-radius:8px; background:var(--bg); color:var(--text); font-size:13px;
+      border-radius:8px; background:var(--bg2); color:var(--text); font-size:13px;
     }
     input:focus, select:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); outline:none; }
-    .color-row { display:flex; gap:6px; align-items:center; }
-    .color-row input[type="color"] { width:36px; height:36px; padding:2px; border-radius:8px; }
     .range-row { display:flex; align-items:center; gap:8px; }
     .range-row input[type="range"] { flex:1; }
     .range-row span { min-width:30px; font-size:12px; }
 
     .layer-item {
       display:flex; align-items:center; justify-content:space-between;
-      padding:8px 10px; background:var(--bg); border-radius:8px;
+      padding:8px 10px; background:var(--bg2); border-radius:8px;
       border:1px solid var(--border); cursor:pointer; margin-bottom:4px;
       transition:all 0.2s; font-size:13px;
     }
@@ -169,19 +189,52 @@
       background:none; border:none; cursor:pointer; color:var(--muted); font-size:12px;
       padding:2px 5px; border-radius:4px;
     }
-    .layer-actions button:hover { color:var(--accent); background:var(--bg); }
+    .layer-actions button:hover { color:var(--accent); }
 
     .hidden { display:none !important; }
     footer { text-align:center; padding:2rem; color:var(--muted); font-size:0.9rem; border-top:1px solid var(--border); margin-top:auto; }
+    footer a { color:var(--accent); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    .footer-links { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:8px; }
+
+    /* Cookie consent */
+    .cookie-banner{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(180%);width:min(560px,calc(100% - 32px));background:var(--card);border:1px solid var(--border);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.28);padding:18px 20px;z-index:9000;transition:transform .45s cubic-bezier(.2,.8,.2,1);}
+    .cookie-banner.show{transform:translateX(-50%) translateY(0);}
+    .cookie-banner h3{font-family:var(--fhead);font-size:1rem;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+    .cookie-banner p{font-size:.82rem;color:var(--muted);line-height:1.5;margin-bottom:12px;}
+    .cookie-actions{display:flex;gap:8px;flex-wrap:wrap;}
+    .cookie-actions button{flex:1;min-width:120px;padding:10px 14px;border-radius:10px;font-weight:600;font-size:.82rem;cursor:pointer;border:1px solid var(--border);}
+    .ck-accept{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;}
+    .ck-reject{background:var(--bg2);color:var(--text);}
+    .ck-custom{background:transparent;color:var(--accent);border:1px solid var(--accent);}
+    .cookie-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);z-index:9001;display:none;align-items:center;justify-content:center;padding:16px;}
+    .cookie-overlay.show{display:flex;}
+    .cookie-modal{background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:460px;width:100%;padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.3);}
+    .cookie-modal h3{font-family:var(--fhead);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+    .ck-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+    .ck-row .ck-txt strong{display:block;font-size:.88rem;}
+    .ck-row .ck-txt span{font-size:.76rem;color:var(--muted);}
+    .ck-switch{position:relative;width:42px;height:24px;flex-shrink:0;}
+    .ck-switch input{opacity:0;width:0;height:0;}
+    .ck-slider{position:absolute;inset:0;background:var(--bg2);border:1px solid var(--border);border-radius:999px;cursor:pointer;transition:.2s;}
+    .ck-slider::before{content:'';position:absolute;width:18px;height:18px;left:2px;top:2px;background:#fff;border-radius:50%;transition:.2s;}
+    .ck-switch input:checked + .ck-slider{background:var(--accent);}
+    .ck-switch input:checked + .ck-slider::before{transform:translateX(18px);}
+    .ck-switch input:disabled + .ck-slider{opacity:.6;cursor:not-allowed;}
+    .ck-modal-actions{display:flex;gap:8px;margin-top:16px;}
+    .ck-modal-actions button{flex:1;padding:10px;border-radius:10px;font-weight:600;font-size:.82rem;cursor:pointer;border:1px solid var(--border);}
   </style>
 </head>
 <body>
   <nav>
     <div class="nav-left">
-      <a href="./index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+      <a href="./index.html" class="back-btn" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></a>
+      <a href="./index.html" class="logo-link">
+        <span class="logo-icon">🛠️</span>
+        <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+      </a>
     </div>
-    <button id="themeToggle" class="back-btn">🌓</button>
+    <button id="themeToggle" class="back-btn" aria-label="Toggle theme">🌓</button>
   </nav>
 
   <div class="main">
@@ -201,7 +254,7 @@
         <button id="undoBtn" class="btn btn-secondary" title="Ctrl+Z"><i class="fa-solid fa-undo"></i></button>
         <button id="redoBtn" class="btn btn-secondary" title="Ctrl+Y"><i class="fa-solid fa-redo"></i></button>
         <button id="deleteLayerBtn" class="btn btn-danger btn-sm" title="Delete selected layer"><i class="fa-solid fa-trash"></i></button>
-        <select id="exportFormat" style="padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:12px;">
+        <select id="exportFormat" style="padding:8px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-size:12px;">
           <option value="png">PNG</option>
           <option value="jpeg">JPEG</option>
           <option value="webp">WebP</option>
@@ -212,7 +265,6 @@
 
     <!-- Sidebar Panel -->
     <div class="sidebar-panel">
-      <!-- Template / Upload -->
       <div>
         <div class="section-title"><i class="fa-solid fa-images"></i> Source</div>
         <div class="tab-row" id="sourceTabs">
@@ -235,7 +287,6 @@
         </div>
       </div>
 
-      <!-- Canvas Settings -->
       <div>
         <div class="section-title"><i class="fa-solid fa-sliders"></i> Canvas</div>
         <div class="input-group">
@@ -249,7 +300,6 @@
         <button id="resizeCanvasBtn" class="btn btn-secondary btn-sm" style="width:100%;">Apply Resize</button>
       </div>
 
-      <!-- Selected Layer Properties -->
       <div id="layerProps" class="hidden">
         <div class="section-title"><i class="fa-solid fa-pen"></i> Layer Properties</div>
         <div class="input-group">
@@ -315,7 +365,6 @@
         <button id="duplicateLayerBtn" class="btn btn-secondary btn-sm" style="width:100%;"><i class="fa-solid fa-copy"></i> Duplicate Layer</button>
       </div>
 
-      <!-- Image Overlay Props (hidden when text layer selected) -->
       <div id="imageLayerProps" class="hidden">
         <div class="section-title"><i class="fa-solid fa-image"></i> Image Overlay</div>
         <div class="input-group">
@@ -341,7 +390,6 @@
         </div>
       </div>
 
-      <!-- Layers List -->
       <div>
         <div class="section-title"><i class="fa-solid fa-layer-group"></i> Layers</div>
         <div id="layerList" style="max-height:200px;overflow-y:auto;">
@@ -353,13 +401,57 @@
     </div>
   </div>
 
-  <footer>© 2026 PixelPress — Client‑side, 100% Private</footer>
+  <footer>
+    <div class="footer-links">
+      <a href="./about.html">About</a>
+      <a href="./contact.html">Contact</a>
+      <a href="./privacy-policy.html">Privacy</a>
+      <a href="./terms.html">Terms</a>
+      <a href="./faq.html">FAQ</a>
+      <a href="#" id="manageCookies">Cookie Settings</a>
+    </div>
+    © 2026 ImgPDFTools — Client-side, 100% Private
+  </footer>
+
+  <!-- Cookie banner -->
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-label="Cookie consent">
+    <h3>🍪 We value your privacy</h3>
+    <p>We use cookies for analytics and to show ads that keep this tool free. You can accept all, reject non-essential, or customize your choices. Essential cookies are always on.</p>
+    <div class="cookie-actions">
+      <button class="ck-accept" id="cookieAccept">Accept all</button>
+      <button class="ck-reject" id="cookieReject">Reject non-essential</button>
+      <button class="ck-custom" id="cookieCustomize">Customize</button>
+    </div>
+  </div>
+
+  <!-- Cookie preferences modal -->
+  <div class="cookie-overlay" id="cookieOverlay">
+    <div class="cookie-modal" role="dialog" aria-label="Cookie preferences">
+      <h3>🍪 Cookie preferences</h3>
+      <div class="ck-row">
+        <div class="ck-txt"><strong>Essential</strong><span>Required for the site to function. Always active.</span></div>
+        <label class="ck-switch"><input type="checkbox" checked disabled><span class="ck-slider"></span></label>
+      </div>
+      <div class="ck-row">
+        <div class="ck-txt"><strong>Analytics</strong><span>Helps us understand usage to improve the tools.</span></div>
+        <label class="ck-switch"><input type="checkbox" id="prefAnalytics"><span class="ck-slider"></span></label>
+      </div>
+      <div class="ck-row">
+        <div class="ck-txt"><strong>Advertising</strong><span>Used to show relevant ads that keep this tool free.</span></div>
+        <label class="ck-switch"><input type="checkbox" id="prefAds"><span class="ck-slider"></span></label>
+      </div>
+      <div class="ck-modal-actions">
+        <button class="ck-reject" id="prefRejectAll">Reject all</button>
+        <button class="ck-accept" id="prefSave">Save preferences</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     (function(){
       // ============ THEME SYNC ============
       function syncTheme(){
-        const saved = localStorage.getItem('pixelpress-theme');
+        const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
         const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
         document.documentElement.setAttribute('data-theme', theme);
       }
@@ -367,21 +459,20 @@
         const curr = document.documentElement.getAttribute('data-theme');
         const next = curr === 'dark' ? 'light' : 'dark';
         document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('pixelpress-theme', next);
+        localStorage.setItem('imgpdftools-theme', next);
       });
+      syncTheme();
 
       // ============ DOM REFS ============
       const canvas = document.getElementById('memeCanvas');
       const ctx = canvas.getContext('2d');
-      const canvasContainer = document.getElementById('canvasContainer');
       const placeholder = document.getElementById('placeholder');
       const templateGrid = document.getElementById('templateGrid');
-      const layerList = document.getElementById('layerList');
       const layerProps = document.getElementById('layerProps');
       const imageLayerProps = document.getElementById('imageLayerProps');
 
       // ============ STATE ============
-      let layers = []; // each: { type:'bg'|'text'|'image', ... }
+      let layers = [];
       let selectedLayerIndex = -1;
       let historyStack = [];
       let historyIndex = -1;
@@ -397,14 +488,13 @@
         const snap = layers.map(l => {
           const copy = {...l};
           if (l.type === 'bg' || l.type === 'image') {
-            copy.imageSrc = l.image?.src || l.imageSrc || null;
+            copy.imageSrc = (l.image && l.image.src) || l.imageSrc || null;
             delete copy.image;
           }
           return copy;
         });
         return JSON.stringify(snap);
       }
-
       function pushHistory(){
         const snap = snapshot();
         if (historyIndex < historyStack.length - 1) {
@@ -414,7 +504,6 @@
         if (historyStack.length > MAX_HISTORY) historyStack.shift();
         historyIndex = historyStack.length - 1;
       }
-
       async function restoreHistory(){
         if (historyIndex < 0 || historyIndex >= historyStack.length) return;
         const snap = JSON.parse(historyStack[historyIndex]);
@@ -425,6 +514,7 @@
             img.crossOrigin = 'Anonymous';
             await new Promise((resolve) => {
               img.onload = () => resolve();
+              img.onerror = () => resolve();
               img.src = l.imageSrc;
             });
             restored.push({...l, image: img, imageSrc: l.imageSrc});
@@ -437,13 +527,8 @@
         renderAll();
         updateUI();
       }
-
-      function undo(){
-        if (historyIndex > 0) { historyIndex--; restoreHistory(); }
-      }
-      function redo(){
-        if (historyIndex < historyStack.length - 1) { historyIndex++; restoreHistory(); }
-      }
+      function undo(){ if (historyIndex > 0) { historyIndex--; restoreHistory(); } }
+      function redo(){ if (historyIndex < historyStack.length - 1) { historyIndex++; restoreHistory(); } }
 
       // ============ RENDER ============
       function renderAll(){
@@ -454,13 +539,12 @@
         }
         canvas.classList.remove('hidden');
         placeholder.classList.add('hidden');
-
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         for (const layer of layers) {
           ctx.save();
           if (layer.type === 'bg' || layer.type === 'image') {
             const img = layer.image;
-            if (!img) continue;
+            if (!img) { ctx.restore(); continue; }
             const w = (layer.width || img.width) * (layer.scale || 1);
             const h = (layer.height || img.height) * (layer.scale || 1);
             const cx = layer.x + w / 2;
@@ -472,19 +556,17 @@
           } else if (layer.type === 'text') {
             const fontSize = layer.fontSize || 40;
             const fontFamily = layer.fontFamily || 'Impact';
-            ctx.font = `bold ${fontSize}px "${fontFamily}"`;
+            ctx.font = 'bold ' + fontSize + 'px "' + fontFamily + '"';
             ctx.textAlign = layer.align || 'center';
             ctx.textBaseline = 'top';
             const metrics = ctx.measureText(layer.text || '');
             const textWidth = metrics.width;
             const textHeight = fontSize;
-
             const cx = layer.x + textWidth / 2;
             const cy = layer.y + textHeight / 2;
             ctx.translate(cx, cy);
             if (layer.rotation) ctx.rotate(layer.rotation * Math.PI / 180);
             ctx.globalAlpha = (layer.opacity !== undefined ? layer.opacity : 1);
-
             if (layer.outlineWidth > 0) {
               ctx.strokeStyle = layer.outlineColor || '#000';
               ctx.lineWidth = layer.outlineWidth;
@@ -500,33 +582,38 @@
       }
 
       // ============ UI UPDATES ============
-      function updateUI(){
-        updateLayerListUI();
-        updatePropertiesPanel();
-      }
+      function updateUI(){ updateLayerListUI(); updatePropertiesPanel(); }
 
+      // SECURE: build the layer list with DOM nodes + textContent (no innerHTML for user text)
       function updateLayerListUI(){
         const container = document.getElementById('layerList');
+        container.textContent = '';
         if (layers.length === 0) {
-          container.innerHTML = '<p style="font-size:12px;color:var(--muted);">No layers yet. Add text or stickers!</p>';
+          const p = document.createElement('p');
+          p.style.cssText = 'font-size:12px;color:var(--muted);';
+          p.textContent = 'No layers yet. Add text or stickers!';
+          container.appendChild(p);
           return;
         }
-        container.innerHTML = layers.map((l, i) => {
-          const label = l.type === 'bg' ? '🖼️ Background' : l.type === 'image' ? '🖼️ Overlay' : `🔤 ${(l.text||'').substring(0,20)}`;
-          return `<div class="layer-item ${i === selectedLayerIndex ? 'active' : ''}" data-index="${i}">
-            <span>${label}</span>
-            <span class="layer-actions">
-              <button data-action="select" data-idx="${i}" title="Select"><i class="fa-solid fa-hand-pointer"></i></button>
-            </span>
-          </div>`;
-        }).join('');
-
-        container.querySelectorAll('.layer-item').forEach(el => {
-          el.addEventListener('click', (e) => {
-            const idx = parseInt(el.dataset.index);
-            selectedLayerIndex = idx;
-            updateUI();
-          });
+        layers.forEach((l, i) => {
+          const item = document.createElement('div');
+          item.className = 'layer-item' + (i === selectedLayerIndex ? ' active' : '');
+          item.dataset.index = String(i);
+          const span = document.createElement('span');
+          if (l.type === 'bg') span.textContent = '🖼️ Background';
+          else if (l.type === 'image') span.textContent = '🖼️ Overlay';
+          else span.textContent = '🔤 ' + ((l.text || '').substring(0, 20));
+          const actions = document.createElement('span');
+          actions.className = 'layer-actions';
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.title = 'Select';
+          btn.innerHTML = '<i class="fa-solid fa-hand-pointer"></i>';
+          actions.appendChild(btn);
+          item.appendChild(span);
+          item.appendChild(actions);
+          item.addEventListener('click', () => { selectedLayerIndex = i; updateUI(); });
+          container.appendChild(item);
         });
       }
 
@@ -571,78 +658,33 @@
       // ============ LAYER OPERATIONS ============
       function addTextLayer(){
         if (!baseImage && layers.length === 0) return alert('Please load a template or upload an image first.');
-        layers.push({
-          type: 'text',
-          text: 'Your Text',
-          fontSize: 40,
-          fontFamily: 'Impact',
-          color: '#ffffff',
-          outlineColor: '#000000',
-          outlineWidth: 3,
-          rotation: 0,
-          opacity: 1,
-          align: 'center',
-          x: canvas.width / 2,
-          y: canvas.height * 0.15,
-        });
+        layers.push({ type:'text', text:'Your Text', fontSize:40, fontFamily:'Impact', color:'#ffffff', outlineColor:'#000000', outlineWidth:3, rotation:0, opacity:1, align:'center', x:canvas.width/2, y:canvas.height*0.15 });
         selectedLayerIndex = layers.length - 1;
-        pushHistory();
-        renderAll();
-        updateUI();
+        pushHistory(); renderAll(); updateUI();
       }
-
       function addEmojiSticker(){
         if (!baseImage && layers.length === 0) return alert('Please load a template or upload an image first.');
         const emoji = prompt('Enter emoji (e.g., 😂🔥💀):', '😂');
         if (!emoji) return;
-        layers.push({
-          type: 'text',
-          text: emoji,
-          fontSize: 60,
-          fontFamily: 'Arial',
-          color: '#ffffff',
-          outlineColor: '#000000',
-          outlineWidth: 2,
-          rotation: 0,
-          opacity: 1,
-          align: 'center',
-          x: canvas.width / 2,
-          y: canvas.height / 2,
-        });
+        layers.push({ type:'text', text:emoji, fontSize:60, fontFamily:'Arial', color:'#ffffff', outlineColor:'#000000', outlineWidth:2, rotation:0, opacity:1, align:'center', x:canvas.width/2, y:canvas.height/2 });
         selectedLayerIndex = layers.length - 1;
-        pushHistory();
-        renderAll();
-        updateUI();
+        pushHistory(); renderAll(); updateUI();
       }
-
       function addImageOverlay(){
         if (!baseImage && layers.length === 0) return alert('Please load a template or upload an image first.');
         const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*';
+        input.type = 'file'; input.accept = 'image/*';
         input.onchange = (e) => {
           const file = e.target.files[0];
           if (!file) return;
+          if (!file.type.startsWith('image/')) return alert('Only image files allowed.');
           const reader = new FileReader();
           reader.onload = (ev) => {
             const img = new Image();
             img.onload = () => {
-              layers.push({
-                type: 'image',
-                image: img,
-                imageSrc: ev.target.result,
-                x: canvas.width / 2 - img.width / 2,
-                y: canvas.height / 2 - img.height / 2,
-                width: img.width,
-                height: img.height,
-                scale: 1,
-                rotation: 0,
-                opacity: 1,
-              });
+              layers.push({ type:'image', image:img, imageSrc:ev.target.result, x:canvas.width/2 - img.width/2, y:canvas.height/2 - img.height/2, width:img.width, height:img.height, scale:1, rotation:0, opacity:1 });
               selectedLayerIndex = layers.length - 1;
-              pushHistory();
-              renderAll();
-              updateUI();
+              pushHistory(); renderAll(); updateUI();
             };
             img.src = ev.target.result;
           };
@@ -650,105 +692,83 @@
         };
         input.click();
       }
-
       function deleteSelectedLayer(){
         if (selectedLayerIndex < 0) return;
         if (layers[selectedLayerIndex].type === 'bg') return alert('Cannot delete background.');
         layers.splice(selectedLayerIndex, 1);
         if (selectedLayerIndex >= layers.length) selectedLayerIndex = layers.length - 1;
-        pushHistory();
-        renderAll();
-        updateUI();
+        pushHistory(); renderAll(); updateUI();
       }
-
       function duplicateLayer(){
         if (selectedLayerIndex < 0) return;
         if (layers[selectedLayerIndex].type === 'bg') return alert('Cannot duplicate background.');
-        const copy = JSON.parse(JSON.stringify(layers[selectedLayerIndex]));
-        copy.x += 30;
-        copy.y += 30;
-        if (layers[selectedLayerIndex].type === 'image') {
-          copy.image = layers[selectedLayerIndex].image;
-          copy.imageSrc = layers[selectedLayerIndex].imageSrc;
-        }
+        const src = layers[selectedLayerIndex];
+        const copy = {...src};
+        copy.x = (src.x || 0) + 30;
+        copy.y = (src.y || 0) + 30;
+        if (src.type === 'image') { copy.image = src.image; copy.imageSrc = src.imageSrc; }
         layers.splice(selectedLayerIndex + 1, 0, copy);
         selectedLayerIndex++;
-        pushHistory();
-        renderAll();
-        updateUI();
+        pushHistory(); renderAll(); updateUI();
       }
-
       function moveLayer(up){
         if (selectedLayerIndex < 0) return;
         const idx = selectedLayerIndex;
-        if (up && idx > 0) {
-          [layers[idx], layers[idx-1]] = [layers[idx-1], layers[idx]];
-          selectedLayerIndex = idx - 1;
-        } else if (!up && idx < layers.length - 1) {
-          [layers[idx], layers[idx+1]] = [layers[idx+1], layers[idx]];
-          selectedLayerIndex = idx + 1;
-        }
-        pushHistory();
-        renderAll();
-        updateUI();
+        if (up && idx > 0) { [layers[idx], layers[idx-1]] = [layers[idx-1], layers[idx]]; selectedLayerIndex = idx - 1; }
+        else if (!up && idx < layers.length - 1) { [layers[idx], layers[idx+1]] = [layers[idx+1], layers[idx]]; selectedLayerIndex = idx + 1; }
+        pushHistory(); renderAll(); updateUI();
       }
 
-      // ============ TEMPLATES ============
+      // ============ TEMPLATES (SECURE) ============
       async function loadTemplates(){
-        templateGrid.innerHTML = '<p style="font-size:12px;color:var(--muted);">Loading...</p>';
+        templateGrid.textContent = '';
+        const loading = document.createElement('p');
+        loading.style.cssText = 'font-size:12px;color:var(--muted);';
+        loading.textContent = 'Loading…';
+        templateGrid.appendChild(loading);
         try {
           const res = await fetch(TEMPLATES_API);
           const templates = await res.json();
           const popular = templates.slice(0, 60);
-          templateGrid.innerHTML = popular.map(t => 
-            `<img src="${t.blank}" alt="${t.name}" data-src="${t.blank}" title="${t.name}" loading="lazy" />`
-          ).join('');
-          templateGrid.querySelectorAll('img').forEach(img => {
+          templateGrid.textContent = '';
+          popular.forEach(t => {
+            // SECURE: assign as properties so external names/URLs cannot inject HTML
+            const img = document.createElement('img');
+            img.src = t.blank;
+            img.alt = t.name || 'Template';
+            img.title = t.name || '';
+            img.loading = 'lazy';
             img.addEventListener('click', () => {
               templateGrid.querySelectorAll('img').forEach(i => i.classList.remove('selected'));
               img.classList.add('selected');
-              loadImageFromURL(img.dataset.src);
+              loadImageFromURL(t.blank);
             });
+            templateGrid.appendChild(img);
           });
         } catch (err) {
-          templateGrid.innerHTML = '<p style="font-size:12px;color:red;">Failed to load. Check connection.</p>';
+          templateGrid.textContent = '';
+          const p = document.createElement('p');
+          p.style.cssText = 'font-size:12px;color:#ef4444;';
+          p.textContent = 'Failed to load. Check connection.';
+          templateGrid.appendChild(p);
         }
       }
-
       function loadImageFromURL(src){
         const img = new Image();
         img.crossOrigin = 'Anonymous';
         img.onload = () => {
           baseImage = img;
-          canvas.width = img.width;
-          canvas.height = img.height;
+          canvas.width = img.width; canvas.height = img.height;
           document.getElementById('canvasWidth').value = img.width;
           document.getElementById('canvasHeight').value = img.height;
-          layers = [{
-            type: 'bg',
-            image: img,
-            imageSrc: src,
-            x: img.width / 2,
-            y: img.height / 2,
-            width: img.width,
-            height: img.height,
-            scale: 1,
-            rotation: 0,
-            opacity: 1,
-          }];
-          selectedLayerIndex = 0;
-          historyStack = [];
-          historyIndex = -1;
-          pushHistory();
-          renderAll();
-          updateUI();
-          canvas.classList.remove('hidden');
-          placeholder.classList.add('hidden');
+          layers = [{ type:'bg', image:img, imageSrc:src, x:0, y:0, width:img.width, height:img.height, scale:1, rotation:0, opacity:1 }];
+          selectedLayerIndex = 0; historyStack = []; historyIndex = -1;
+          pushHistory(); renderAll(); updateUI();
+          canvas.classList.remove('hidden'); placeholder.classList.add('hidden');
         };
         img.onerror = () => alert('Failed to load image. Try another template.');
         img.src = src;
       }
-
       function handleCustomUpload(file){
         if (!file || !file.type.startsWith('image/')) return alert('Only image files allowed.');
         const reader = new FileReader();
@@ -756,30 +776,13 @@
           const img = new Image();
           img.onload = () => {
             baseImage = img;
-            canvas.width = img.width;
-            canvas.height = img.height;
+            canvas.width = img.width; canvas.height = img.height;
             document.getElementById('canvasWidth').value = img.width;
             document.getElementById('canvasHeight').value = img.height;
-            layers = [{
-              type: 'bg',
-              image: img,
-              imageSrc: ev.target.result,
-              x: img.width / 2,
-              y: img.height / 2,
-              width: img.width,
-              height: img.height,
-              scale: 1,
-              rotation: 0,
-              opacity: 1,
-            }];
-            selectedLayerIndex = 0;
-            historyStack = [];
-            historyIndex = -1;
-            pushHistory();
-            renderAll();
-            updateUI();
-            canvas.classList.remove('hidden');
-            placeholder.classList.add('hidden');
+            layers = [{ type:'bg', image:img, imageSrc:ev.target.result, x:0, y:0, width:img.width, height:img.height, scale:1, rotation:0, opacity:1 }];
+            selectedLayerIndex = 0; historyStack = []; historyIndex = -1;
+            pushHistory(); renderAll(); updateUI();
+            canvas.classList.remove('hidden'); placeholder.classList.add('hidden');
           };
           img.src = ev.target.result;
         };
@@ -791,55 +794,40 @@
         const rect = canvas.getBoundingClientRect();
         const scaleX = canvas.width / rect.width;
         const scaleY = canvas.height / rect.height;
-        return {
-          x: (e.clientX - rect.left) * scaleX,
-          y: (e.clientY - rect.top) * scaleY,
-        };
+        return { x:(e.clientX - rect.left) * scaleX, y:(e.clientY - rect.top) * scaleY };
       }
-
       function hitTestLayer(pos){
         for (let i = layers.length - 1; i >= 0; i--) {
           const l = layers[i];
           if (l.type === 'bg') continue;
           if (l.type === 'text') {
             ctx.save();
-            ctx.font = `bold ${l.fontSize || 40}px "${l.fontFamily || 'Impact'}"`;
+            ctx.font = 'bold ' + (l.fontSize || 40) + 'px "' + (l.fontFamily || 'Impact') + '"';
             ctx.textAlign = l.align || 'center';
             const metrics = ctx.measureText(l.text || '');
-            const tw = metrics.width;
-            const th = l.fontSize || 40;
+            const tw = metrics.width; const th = l.fontSize || 40;
             ctx.restore();
-            const left = l.x - tw / 2;
-            const top = l.y - th / 2;
+            const left = l.x - tw / 2; const top = l.y - th / 2;
             if (pos.x >= left && pos.x <= left + tw && pos.y >= top && pos.y <= top + th) return i;
           } else if (l.type === 'image') {
             const w = (l.width || 50) * (l.scale || 1);
             const h = (l.height || 50) * (l.scale || 1);
-            const left = l.x - w / 2;
-            const top = l.y - h / 2;
+            const left = l.x - w / 2; const top = l.y - h / 2;
             if (pos.x >= left && pos.x <= left + w && pos.y >= top && pos.y <= top + h) return i;
           }
         }
         return -1;
       }
-
       canvas.addEventListener('mousedown', (e) => {
         const pos = getCanvasPos(e);
         const idx = hitTestLayer(pos);
         if (idx >= 0) {
-          dragLayerIndex = idx;
-          selectedLayerIndex = idx;
-          isDragging = true;
+          dragLayerIndex = idx; selectedLayerIndex = idx; isDragging = true;
           const l = layers[idx];
           dragOffset = { x: pos.x - l.x, y: pos.y - l.y };
-          canvas.style.cursor = 'grabbing';
-          updateUI();
-        } else {
-          selectedLayerIndex = -1;
-          updateUI();
-        }
+          canvas.style.cursor = 'grabbing'; updateUI();
+        } else { selectedLayerIndex = -1; updateUI(); }
       });
-
       canvas.addEventListener('mousemove', (e) => {
         if (!isDragging) {
           const pos = getCanvasPos(e);
@@ -852,48 +840,22 @@
         layers[dragLayerIndex].y = pos.y - dragOffset.y;
         renderAll();
       });
-
-      canvas.addEventListener('mouseup', () => {
-        if (isDragging) { pushHistory(); }
-        isDragging = false;
-        dragLayerIndex = -1;
-        canvas.style.cursor = 'default';
-      });
-      canvas.addEventListener('mouseleave', () => {
-        if (isDragging) { pushHistory(); }
-        isDragging = false;
-        dragLayerIndex = -1;
-        canvas.style.cursor = 'default';
-      });
-
-      // Touch events
+      canvas.addEventListener('mouseup', () => { if (isDragging) pushHistory(); isDragging = false; dragLayerIndex = -1; canvas.style.cursor = 'default'; });
+      canvas.addEventListener('mouseleave', () => { if (isDragging) pushHistory(); isDragging = false; dragLayerIndex = -1; canvas.style.cursor = 'default'; });
       canvas.addEventListener('touchstart', (e) => {
         e.preventDefault();
-        const touch = e.touches[0];
-        const pos = getCanvasPos(touch);
+        const touch = e.touches[0]; const pos = getCanvasPos(touch);
         const idx = hitTestLayer(pos);
-        if (idx >= 0) {
-          dragLayerIndex = idx;
-          selectedLayerIndex = idx;
-          isDragging = true;
-          const l = layers[idx];
-          dragOffset = { x: pos.x - l.x, y: pos.y - l.y };
-          updateUI();
-        }
+        if (idx >= 0) { dragLayerIndex = idx; selectedLayerIndex = idx; isDragging = true; const l = layers[idx]; dragOffset = { x: pos.x - l.x, y: pos.y - l.y }; updateUI(); }
       });
       canvas.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
+        if (!isDragging) return; e.preventDefault();
         const pos = getCanvasPos(e.touches[0]);
         layers[dragLayerIndex].x = pos.x - dragOffset.x;
         layers[dragLayerIndex].y = pos.y - dragOffset.y;
         renderAll();
       });
-      canvas.addEventListener('touchend', () => {
-        if (isDragging) { pushHistory(); }
-        isDragging = false;
-        dragLayerIndex = -1;
-      });
+      canvas.addEventListener('touchend', () => { if (isDragging) pushHistory(); isDragging = false; dragLayerIndex = -1; });
 
       // ============ PROPERTY BINDINGS ============
       function bindProp(id, prop, transform){
@@ -903,22 +865,11 @@
           if (selectedLayerIndex < 0 || selectedLayerIndex >= layers.length) return;
           const layer = layers[selectedLayerIndex];
           if (layer.type !== 'text' && layer.type !== 'image') return;
-          const val = transform ? transform(el.value) : el.value;
-          if (prop.includes('.')) {
-            const parts = prop.split('.');
-            layer[parts[0]] = layer[parts[0]] || {};
-            layer[parts[0]][parts[1]] = val;
-          } else {
-            layer[prop] = val;
-          }
+          layer[prop] = transform ? transform(el.value) : el.value;
           renderAll();
         });
-        el.addEventListener('change', () => {
-          pushHistory();
-        });
+        el.addEventListener('change', () => { pushHistory(); });
       }
-
-      // Text properties
       bindProp('layerText', 'text');
       bindProp('layerFont', 'fontFamily');
       bindProp('layerFontSize', 'fontSize', v => { document.getElementById('layerFontSizeVal').textContent = v; return parseInt(v); });
@@ -928,8 +879,6 @@
       bindProp('layerRotation', 'rotation', v => { document.getElementById('layerRotationVal').textContent = v + '°'; return parseInt(v); });
       bindProp('layerOpacity', 'opacity', v => { document.getElementById('layerOpacityVal').textContent = v + '%'; return parseInt(v) / 100; });
       bindProp('layerAlign', 'align');
-
-      // Image properties
       bindProp('imageScale', 'scale', v => { document.getElementById('imageScaleVal').textContent = v + '%'; return parseInt(v) / 100; });
       bindProp('imageRotation', 'rotation', v => { document.getElementById('imageRotationVal').textContent = v + '°'; return parseInt(v); });
       bindProp('imageOpacity', 'opacity', v => { document.getElementById('imageOpacityVal').textContent = v + '%'; return parseInt(v) / 100; });
@@ -945,34 +894,24 @@
       document.getElementById('moveUpBtn').addEventListener('click', () => moveLayer(true));
       document.getElementById('moveDownBtn').addEventListener('click', () => moveLayer(false));
       document.getElementById('loadTemplatesBtn').addEventListener('click', loadTemplates);
-      document.getElementById('customFileInput').addEventListener('change', (e) => { if(e.target.files[0]) handleCustomUpload(e.target.files[0]); });
+      document.getElementById('customFileInput').addEventListener('change', (e) => { if (e.target.files[0]) handleCustomUpload(e.target.files[0]); });
       document.getElementById('resizeCanvasBtn').addEventListener('click', () => {
         const w = parseInt(document.getElementById('canvasWidth').value);
         const h = parseInt(document.getElementById('canvasHeight').value);
-        if (w < 50 || h < 50) return alert('Minimum size: 50x50');
-        canvas.width = w;
-        canvas.height = h;
-        if (layers.length > 0 && layers[0].type === 'bg') {
-          layers[0].width = w;
-          layers[0].height = h;
-          layers[0].x = w / 2;
-          layers[0].y = h / 2;
-        }
-        pushHistory();
-        renderAll();
+        if (!w || !h || w < 50 || h < 50) return alert('Minimum size: 50x50');
+        canvas.width = w; canvas.height = h;
+        if (layers.length > 0 && layers[0].type === 'bg') { layers[0].width = w; layers[0].height = h; layers[0].x = 0; layers[0].y = 0; }
+        pushHistory(); renderAll();
       });
-
-      // Export
       document.getElementById('downloadMemeBtn').addEventListener('click', () => {
+        if (!baseImage && layers.length === 0) return alert('Nothing to export yet.');
         const format = document.getElementById('exportFormat').value;
         const mime = format === 'jpeg' ? 'image/jpeg' : format === 'webp' ? 'image/webp' : 'image/png';
         const link = document.createElement('a');
-        link.download = `meme-${Date.now()}.${format}`;
+        link.download = 'imgpdftools-meme-' + Date.now() + '.' + format;
         link.href = canvas.toDataURL(mime, 0.95);
         link.click();
       });
-
-      // Source tabs
       document.querySelectorAll('#sourceTabs .tab').forEach(tab => {
         tab.addEventListener('click', () => {
           document.querySelectorAll('#sourceTabs .tab').forEach(t => t.classList.remove('active'));
@@ -982,20 +921,61 @@
           document.getElementById('uploadPanel').classList.toggle('hidden', src !== 'upload');
         });
       });
-
-      // Keyboard shortcuts
       window.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo(); }
         if ((e.ctrlKey || e.metaKey) && e.key === 'y') { e.preventDefault(); redo(); }
         if (e.key === 'Delete' || e.key === 'Backspace') {
-          if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+          if (document.activeElement && (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA')) return;
           deleteSelectedLayer();
         }
       });
 
       // ============ INIT ============
-      syncTheme();
       loadTemplates();
+    })();
+
+    // ============ COOKIE CONSENT (Consent Mode v2) ============
+    (function(){
+      const PREF_KEY = 'imgpdftools-consent-prefs';
+      function gtagSafe(){ if (typeof gtag === 'function') gtag.apply(null, arguments); }
+      function readPrefs(){ try { return JSON.parse(localStorage.getItem(PREF_KEY) || 'null'); } catch (e) { return null; } }
+      function applyConsent(p){
+        gtagSafe('consent', 'update', {
+          ad_storage: p.ads ? 'granted' : 'denied',
+          ad_user_data: p.ads ? 'granted' : 'denied',
+          ad_personalization: p.ads ? 'granted' : 'denied',
+          analytics_storage: p.analytics ? 'granted' : 'denied'
+        });
+      }
+      function savePrefs(p){ p.ts = Date.now(); localStorage.setItem(PREF_KEY, JSON.stringify(p)); applyConsent(p); }
+
+      const banner = document.getElementById('cookieBanner');
+      const overlay = document.getElementById('cookieOverlay');
+      const prefAnalytics = document.getElementById('prefAnalytics');
+      const prefAds = document.getElementById('prefAds');
+
+      function hideBanner(){ banner.classList.remove('show'); }
+      function openModal(){
+        const p = readPrefs() || { analytics:false, ads:false };
+        prefAnalytics.checked = !!p.analytics;
+        prefAds.checked = !!p.ads;
+        overlay.classList.add('show');
+      }
+      function closeModal(){ overlay.classList.remove('show'); }
+
+      document.getElementById('cookieAccept').addEventListener('click', () => { savePrefs({ analytics:true, ads:true }); hideBanner(); });
+      document.getElementById('cookieReject').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); hideBanner(); });
+      document.getElementById('cookieCustomize').addEventListener('click', () => { openModal(); });
+      document.getElementById('prefSave').addEventListener('click', () => { savePrefs({ analytics: prefAnalytics.checked, ads: prefAds.checked }); closeModal(); hideBanner(); });
+      document.getElementById('prefRejectAll').addEventListener('click', () => { savePrefs({ analytics:false, ads:false }); closeModal(); hideBanner(); });
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+      document.getElementById('manageCookies').addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+
+      const gpc = (navigator.globalPrivacyControl === true) || (navigator.doNotTrack === '1') || (window.doNotTrack === '1');
+      const existing = readPrefs();
+      if (existing) { applyConsent(existing); }
+      else if (gpc) { savePrefs({ analytics:false, ads:false }); }
+      else { setTimeout(() => banner.classList.add('show'), 600); }
     })();
   </script>
 </body>
