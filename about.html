@@ -92,9 +92,11 @@
     .value-card h3 { font-family:var(--fhead); font-size:1rem; margin-bottom:.4rem; }
     .value-card p { font-size:.85rem; color:var(--muted); line-height:1.6; }
 
-    .tool-list { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); gap:8px; margin-top:1rem; padding:0; list-style:none; }
-    .tool-list li { background:var(--card); border:1.5px solid var(--border2); border-radius:10px; padding:10px 14px; font-size:.9rem; display:flex; align-items:center; gap:8px; }
-    .tool-list li i { color:var(--accent); width:20px; text-align:center; }
+    .tool-list { display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:8px; margin-top:1rem; padding:0; list-style:none; }
+    .tool-list li { display:flex; }
+    .tool-list a { background:var(--card); border:1.5px solid var(--border2); border-radius:10px; padding:10px 14px; font-size:.9rem; display:flex; align-items:center; gap:8px; width:100%; color:inherit; text-decoration:none; transition:transform .2s,border-color .2s,box-shadow .2s,color .2s; }
+    .tool-list a:hover { border-color:var(--accent); transform:translateY(-1px); box-shadow:0 6px 16px var(--glow); color:var(--accent); }
+    .tool-list a i { color:var(--accent); width:20px; text-align:center; }
 
     .cta { text-align:center; margin-top:2rem; }
     .btn-primary { padding:12px 28px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:.2s; box-shadow:0 4px 14px var(--glow); }
@@ -205,18 +207,33 @@
     <div class="section">
       <h2>What You Can Do</h2>
       <ul class="tool-list">
-        <li><i class="fa-solid fa-compress"></i> Compress Images</li>
-        <li><i class="fa-solid fa-expand"></i> Resize Images</li>
-        <li><i class="fa-solid fa-crop"></i> Crop Precisely</li>
-        <li><i class="fa-solid fa-rotate"></i> Convert Formats</li>
-        <li><i class="fa-solid fa-ghost"></i> Remove Backgrounds</li>
-        <li><i class="fa-solid fa-file-pdf"></i> Work with PDFs</li>
-        <li><i class="fa-solid fa-file-image"></i> PDF to JPG</li>
-        <li><i class="fa-solid fa-images"></i> JPG to PDF</li>
-        <li><i class="fa-solid fa-file-zipper"></i> Compress PDFs</li>
-        <li><i class="fa-solid fa-qrcode"></i> Generate QR Codes</li>
-        <li><i class="fa-solid fa-palette"></i> Pick &amp; Build Color Palettes</li>
-        <li><i class="fa-solid fa-ruler"></i> Unit Converter</li>
+        <li><a href="./compress.html"><i class="fa-solid fa-compress"></i> Compress Image</a></li>
+        <li><a href="./resize.html"><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Resize Image</a></li>
+        <li><a href="./photo-editor.html"><i class="fa-solid fa-wand-magic-sparkles"></i> Photo Editor</a></li>
+        <li><a href="./convert.html"><i class="fa-solid fa-right-left"></i> Convert Format</a></li>
+        <li><a href="./watermark.html"><i class="fa-solid fa-droplet"></i> Watermark Image</a></li>
+        <li><a href="./remove-bg.html"><i class="fa-solid fa-ghost"></i> Remove Background</a></li>
+        <li><a href="./meme-generator.html"><i class="fa-solid fa-face-laugh-squint"></i> Meme Generator</a></li>
+        <li><a href="./crop.html"><i class="fa-solid fa-crop-simple"></i> Advanced Crop</a></li>
+        <li><a href="./blur-face.html"><i class="fa-solid fa-user-shield"></i> Blur Face</a></li>
+        <li><a href="./thumbnail-maker.html"><i class="fa-solid fa-image"></i> Thumbnail Maker</a></li>
+        <li><a href="./screenshot-editor.html"><i class="fa-solid fa-laptop-code"></i> Screenshot Editor</a></li>
+        <li><a href="./favicon-generator.html"><i class="fa-solid fa-bullseye"></i> Favicon Generator</a></li>
+        <li><a href="./pdf-to-jpg.html"><i class="fa-solid fa-file-image"></i> PDF to JPG</a></li>
+        <li><a href="./jpg-to-pdf.html"><i class="fa-solid fa-images"></i> JPG to PDF</a></li>
+        <li><a href="./split-pdf.html"><i class="fa-solid fa-scissors"></i> Split PDF</a></li>
+        <li><a href="./merge-pdf.html"><i class="fa-solid fa-object-group"></i> Merge PDF</a></li>
+        <li><a href="./compress-pdf.html"><i class="fa-solid fa-file-zipper"></i> Compress PDF</a></li>
+        <li><a href="./pdf-annotator.html"><i class="fa-solid fa-pen-to-square"></i> PDF Annotator</a></li>
+        <li><a href="./qr-generator.html"><i class="fa-solid fa-qrcode"></i> QR Generator</a></li>
+        <li><a href="./password-generator.html"><i class="fa-solid fa-key"></i> Password Generator</a></li>
+        <li><a href="./json-formatter.html"><i class="fa-solid fa-code"></i> JSON Formatter</a></li>
+        <li><a href="./url-shortener.html"><i class="fa-solid fa-link"></i> URL Shortener</a></li>
+        <li><a href="./color-picker.html"><i class="fa-solid fa-eye-dropper"></i> Color Picker</a></li>
+        <li><a href="./palette-generator.html"><i class="fa-solid fa-palette"></i> Palette Generator</a></li>
+        <li><a href="./unit-converter.html"><i class="fa-solid fa-ruler"></i> Unit Converter</a></li>
+        <li><a href="./dxf-dwg-converter.html"><i class="fa-solid fa-compass-drafting"></i> CAD Converter (DXF/DWG)</a></li>
+        <li><a href="./ocr.html"><i class="fa-solid fa-file-lines"></i> OCR Scanner</a></li>
       </ul>
     </div>
 
