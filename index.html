@@ -883,8 +883,8 @@ function attachSmartLink() {
 
   function inject(slotId, key, height, width, src) {
     if (injected[slotId]) return;
-    // Skip empty / placeholder keys so the slot stays clean (reserved space remains -> CLS = 0)
-    if (!key || key.indexOf('PASTE_') === 0) return;
+    // Safety: skip empty/placeholder keys (reserved space stays -> CLS = 0)
+    if (!key || key.indexOf('PASTE_') === 0) { injected[slotId] = true; return; }
     injected[slotId] = true;
     var slot = document.getElementById(slotId);
     if (!slot) return;
@@ -950,7 +950,7 @@ function attachSmartLink() {
       if (!wasDismissed('tab_hero')) {
         var thWrap = document.getElementById('adTabletHeroWrap');
         if (thWrap) {
-          inject('adTabletHeroSlot', 'PASTE_TABLET_HERO_468x60_KEY', 60, 468, 'PASTE_TABLET_HERO_468x60_KEY');
+          inject('adTabletHeroSlot', '75f7d51ae703b7d2ebc57e040d7ad6c5', 60, 468, '75f7d51ae703b7d2ebc57e040d7ad6c5');
           fadeIn(thWrap);
           setupDismiss('adTabletHeroClose', document.getElementById('adTabletHero'), 'tab_hero');
         }
@@ -958,7 +958,7 @@ function attachSmartLink() {
       if (!wasDismissed('tab_rect')) {
         var trWrap = document.getElementById('adTabletRectWrap');
         if (trWrap) {
-          inject('adTabletRectSlot', 'PASTE_TABLET_RECT_300x250_KEY', 250, 300, 'PASTE_TABLET_RECT_300x250_KEY');
+          inject('adTabletRectSlot', '93a8bc2338daf962408f7f5ac06dc99e', 250, 300, '93a8bc2338daf962408f7f5ac06dc99e');
           fadeIn(trWrap);
           setupDismiss('adTabletRectClose', document.getElementById('adTabletRect'), 'tab_rect');
         }
@@ -968,7 +968,7 @@ function attachSmartLink() {
       if (!wasDismissed('desk_leader')) {
         var dlWrap = document.getElementById('adDesktopLeaderWrap');
         if (dlWrap) {
-          inject('adDesktopLeaderSlot', 'PASTE_DESKTOP_LEADER_728x90_KEY', 90, 728, 'PASTE_DESKTOP_LEADER_728x90_KEY');
+          inject('adDesktopLeaderSlot', '0b683192646e1d9ea7327ce3080d991c', 90, 728, '0b683192646e1d9ea7327ce3080d991c');
           fadeIn(dlWrap);
           setupDismiss('adDesktopLeaderClose', document.getElementById('adDesktopLeader'), 'desk_leader');
         }
@@ -976,7 +976,7 @@ function attachSmartLink() {
       if (!wasDismissed('desk_col')) {
         var dcWrap = document.getElementById('adDesktopColWrap');
         if (dcWrap) {
-          inject('adDesktopColSlot', 'PASTE_DESKTOP_COL_160x600_KEY', 600, 160, 'PASTE_DESKTOP_COL_160x600_KEY');
+          inject('adDesktopColSlot', '2fd4066fa8904c930baa995dca2d041a', 600, 160, '2fd4066fa8904c930baa995dca2d041a');
           fadeIn(dcWrap);
           setupDismiss('adDesktopColClose', document.getElementById('adDesktopCol'), 'desk_col');
         }
