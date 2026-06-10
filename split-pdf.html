@@ -1,180 +1,342 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) with Consent Mode v2 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  gtag('consent', 'default', {
+    ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied',
+    analytics_storage: 'denied', functionality_storage: 'granted',
+    security_storage: 'granted', wait_for_update: 500
+  });
   gtag('js', new Date());
-
-  gtag('config', 'G-3P7QPQKV3K');
+  gtag('config', 'G-3P7QPQKV3K', { anonymize_ip: true });
 </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Split PDF - PixelPress</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Split a PDF into separate pages or custom page ranges, right in your browser. 100% private — files never leave your device. By ImgPDFTools." />
+  <meta name="theme-color" content="#6366f1" />
+  <title>Split PDF — ImgPDFTools</title>
+  <link rel="canonical" href="https://imgpdftools.xyz/split-pdf.html" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: system-ui, sans-serif; background: #f5f5f7; color: #1d1d1f;
-      min-height: 100vh; display: flex; flex-direction: column;
+    :root {
+      --bg:#f6f7fb; --card:#ffffff; --surface:rgba(255,255,255,0.8);
+      --border:rgba(0,0,0,0.08); --text:#15151f; --muted:#6b6b7b;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4;
+      --danger:#ef4444; --ok:#10b981; --r:14px;
     }
-    [data-theme="dark"] body { background: #09090e; color: #e8e8f0; }
-    nav {
-      background: rgba(255,255,255,0.75); backdrop-filter: blur(20px);
-      padding: 0 2rem; height: 64px; display: flex; align-items: center;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+    [data-theme="dark"] {
+      --bg:#0c0c14; --card:#16162a; --surface:rgba(22,22,42,0.8);
+      --border:rgba(255,255,255,0.09); --text:#e9e9f4; --muted:#9a9ab0;
     }
-    [data-theme="dark"] nav { background: rgba(21,21,30,0.7); border-color: rgba(255,255,255,0.08); }
-    .nav-logo {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem;
-      text-transform: uppercase; text-decoration: none; color: inherit;
-    }
-    .nav-logo span {
-      background: linear-gradient(135deg, #ec4899, #a78bfa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .container { max-width: 800px; margin: 2rem auto; padding: 2rem; flex: 1; }
-    h1 {
-      font-size: 2rem; margin-bottom: 1rem;
-      background: linear-gradient(135deg, #ec4899, #a78bfa);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .upload-area {
-      border: 2px dashed #ddd; border-radius: 16px; padding: 3rem;
-      text-align: center; cursor: pointer; margin: 1.5rem 0;
-      transition: border-color 0.3s;
-    }
-    [data-theme="dark"] .upload-area { border-color: #333; }
-    .upload-area:hover { border-color: #ec4899; }
-    input[type="file"] { display: none; }
-    button {
-      background: #ec4899; color: white; border: none;
-      padding: 12px 24px; border-radius: 12px; font-weight: 600;
-      cursor: pointer; margin-top: 1rem; transition: transform 0.2s;
-    }
-    button:hover { transform: scale(1.05); }
-    button:disabled { opacity: 0.5; cursor: not-allowed; }
-    .download-links { margin-top: 1.5rem; }
-    .download-links a {
-      display: block; padding: 10px; background: white; margin-bottom: 8px;
-      border-radius: 10px; color: #ec4899; text-decoration: none;
-    }
-    [data-theme="dark"] .download-links a { background: #1e1e2e; }
-    .back-link { display: inline-block; margin-top: 1rem; color: #ec4899; text-decoration: none; font-weight: 600; }
-    .progress { color: #6e6e73; margin-top: 8px; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Plus Jakarta Sans',system-ui,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; display:flex; flex-direction:column; transition:background .3s,color .3s; }
+    nav { background:var(--surface); backdrop-filter:blur(20px); padding:0 1.5rem; height:64px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50; }
+    .logo { display:flex; align-items:center; gap:.55rem; text-decoration:none; color:inherit; }
+    .logo-icon { font-size:1.3rem; }
+    .logo-text { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.2rem; letter-spacing:-.02em; }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .logo-text-tools { color:var(--muted); }
+    .theme-btn { background:var(--card); border:1px solid var(--border); width:40px; height:40px; border-radius:50%; cursor:pointer; font-size:1.05rem; color:var(--text); display:flex; align-items:center; justify-content:center; }
+    .container { max-width:760px; width:100%; margin:2rem auto; padding:0 1.5rem 3rem; flex:1; }
+    h1 { font-family:'Space Grotesk',sans-serif; font-size:2.1rem; margin-bottom:.4rem; letter-spacing:-.02em; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .sub { color:var(--muted); margin-bottom:1.5rem; }
+    .upload-area { border:2px dashed var(--border); border-radius:var(--r); padding:2.6rem 1.5rem; text-align:center; cursor:pointer; transition:border-color .25s,background .25s; background:var(--card); }
+    .upload-area:hover, .upload-area.drag { border-color:var(--accent); background:color-mix(in srgb,var(--accent) 7%,var(--card)); }
+    .upload-area i { font-size:2.6rem; color:var(--accent); }
+    .upload-area p { margin-top:.7rem; color:var(--muted); }
+    .upload-area .hint { font-size:.8rem; opacity:.8; margin-top:.3rem; }
+    input[type="file"] { display:none; }
+    .panel { background:var(--card); border:1px solid var(--border); border-radius:var(--r); padding:1.2rem; margin-top:1.3rem; }
+    .panel.hidden { display:none; }
+    .file-head { display:flex; align-items:center; gap:10px; margin-bottom:1rem; }
+    .file-head .fn { font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .file-head .pg { color:var(--muted); font-size:.85rem; margin-left:auto; white-space:nowrap; }
+    .modes { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem; }
+    .mode { flex:1; min-width:150px; border:1px solid var(--border); border-radius:10px; padding:12px; cursor:pointer; transition:.15s; }
+    .mode.active { border-color:var(--accent); background:color-mix(in srgb,var(--accent) 8%,var(--card)); }
+    .mode strong { display:block; font-size:.92rem; }
+    .mode span { font-size:.78rem; color:var(--muted); }
+    .range-row { margin-bottom:1rem; }
+    .range-row.hidden { display:none; }
+    .range-row label { display:block; font-size:.85rem; color:var(--muted); margin-bottom:.4rem; }
+    .range-row input { width:100%; padding:11px 13px; border:1px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text); font-family:inherit; font-size:.95rem; }
+    .range-row input:focus { outline:none; border-color:var(--accent); }
+    .range-row .ex { font-size:.76rem; color:var(--muted); margin-top:.35rem; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+    button.primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; padding:13px 26px; border-radius:12px; font-weight:700; font-size:.95rem; cursor:pointer; font-family:inherit; transition:transform .15s; box-shadow:0 6px 18px rgba(99,102,241,.25); }
+    button.primary:hover:not(:disabled) { transform:translateY(-2px); }
+    button:disabled { opacity:.5; cursor:not-allowed; box-shadow:none; }
+    .bar { height:6px; background:var(--border); border-radius:99px; overflow:hidden; margin-top:1rem; display:none; }
+    .bar.show { display:block; }
+    .bar > i { display:block; height:100%; width:0; background:linear-gradient(90deg,var(--accent),var(--accent3)); transition:width .25s; }
+    .status { margin-top:1rem; min-height:22px; font-size:.92rem; color:var(--muted); }
+    .status.ok { color:var(--ok); }
+    .status.err { color:var(--danger); }
+    .downloads { margin-top:1.2rem; display:flex; flex-direction:column; gap:8px; }
+    .dl-item { display:flex; align-items:center; gap:10px; padding:11px 14px; background:var(--bg); border:1px solid var(--border); border-radius:10px; }
+    .dl-item .nm { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .dl-item a { color:var(--accent); text-decoration:none; font-weight:600; font-size:.85rem; white-space:nowrap; }
+    footer { text-align:center; padding:1.4rem; color:var(--muted); font-size:.82rem; border-top:1px solid var(--border); }
+    footer a { color:var(--accent); text-decoration:none; }
+    .ck-banner { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); width:min(680px,92vw); background:var(--card); border:1px solid var(--border); border-radius:16px; padding:16px 18px; box-shadow:0 12px 40px rgba(0,0,0,.18); z-index:200; display:none; gap:14px; align-items:center; flex-wrap:wrap; }
+    .ck-banner.show { display:flex; }
+    .ck-banner p { flex:1; min-width:200px; font-size:.86rem; color:var(--muted); }
+    .ck-banner a { color:var(--accent); text-decoration:none; }
+    .ck-actions { display:flex; gap:8px; flex-wrap:wrap; }
+    .ck-actions button { padding:9px 16px; border-radius:10px; font-weight:600; cursor:pointer; font-family:inherit; font-size:.85rem; border:1px solid var(--border); background:var(--card); color:var(--text); }
+    .ck-actions .accept { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; }
+    .manage-ck { position:fixed; left:14px; bottom:14px; z-index:150; width:40px; height:40px; border-radius:50%; border:1px solid var(--border); background:var(--card); color:var(--muted); cursor:pointer; display:none; align-items:center; justify-content:center; }
+    .manage-ck.show { display:flex; }
   </style>
 </head>
 <body>
   <nav>
-    <a href="./index.html" class="nav-logo">PIXEL<span>PRESS</span></a>
+    <a href="./index.html" class="logo" aria-label="ImgPDFTools home">
+      <span class="logo-icon">🛠️</span>
+      <span class="logo-text"><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </a>
+    <button id="themeToggle" class="theme-btn" aria-label="Toggle theme">🌓</button>
   </nav>
 
   <div class="container">
     <h1>Split PDF</h1>
-    <p>Upload a PDF and each page will be extracted as a separate PDF file.</p>
-    
-    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-      <i class="fa-solid fa-cloud-upload" style="font-size:3rem;color:#ec4899;"></i>
-      <p id="uploadText">Click to upload PDF or drag & drop</p>
+    <p class="sub">Extract every page separately, or pull out custom page ranges. Download individually or as a ZIP — all locally.</p>
+
+    <div class="upload-area" id="dropZone" role="button" tabindex="0">
+      <i class="fa-solid fa-cloud-arrow-up"></i>
+      <p id="uploadText">Click to upload a PDF or drag &amp; drop</p>
+      <p class="hint">Only .pdf files · processed 100% on your device</p>
     </div>
-    <input type="file" id="fileInput" accept=".pdf" onchange="handleFile(event)" />
-    
-    <button id="splitBtn" onclick="splitPDF()" disabled>Split PDF</button>
-    <div class="progress" id="progress"></div>
-    <div class="download-links" id="downloadLinks"></div>
-    <a href="./index.html" class="back-link">← Back to Tools</a>
+    <input type="file" id="fileInput" accept="application/pdf,.pdf" />
+
+    <div class="panel hidden" id="panel">
+      <div class="file-head">
+        <i class="fa-solid fa-file-pdf" style="color:var(--accent);font-size:1.3rem;"></i>
+        <span class="fn" id="fileNameEl"></span>
+        <span class="pg" id="pageCountEl"></span>
+      </div>
+      <div class="modes">
+        <div class="mode active" data-mode="all"><strong>Every page</strong><span>One PDF per page</span></div>
+        <div class="mode" data-mode="range"><strong>Custom ranges</strong><span>e.g. 1-3, 5, 8-10</span></div>
+      </div>
+      <div class="range-row hidden" id="rangeRow">
+        <label for="rangeInput">Page ranges</label>
+        <input type="text" id="rangeInput" placeholder="e.g. 1-3, 5, 8-10" inputmode="numeric" />
+        <div class="ex">Each range becomes one PDF. Separate with commas.</div>
+      </div>
+      <div class="actions">
+        <button class="primary" id="splitBtn"><i class="fa-solid fa-scissors"></i> Split PDF</button>
+        <button class="primary" id="zipBtn" style="background:linear-gradient(135deg,var(--accent3),var(--accent));"><i class="fa-solid fa-file-zipper"></i> Download ZIP</button>
+      </div>
+      <div class="bar" id="bar"><i id="barFill"></i></div>
+      <div class="status" id="status"></div>
+      <div class="downloads" id="downloads"></div>
+    </div>
   </div>
 
+  <footer>© 2026 <strong>ImgPDFTools</strong> · All processing happens locally — your files never leave your device. · <a href="./privacy-policy.html">Privacy</a></footer>
+
+  <div class="ck-banner" id="ckBanner" role="dialog" aria-live="polite">
+    <p>We use privacy-friendly analytics to improve ImgPDFTools. Your files are never uploaded. <a href="./privacy-policy.html">Learn more</a>.</p>
+    <div class="ck-actions">
+      <button id="ckReject">Reject</button>
+      <button class="accept" id="ckAccept">Accept</button>
+    </div>
+  </div>
+  <button class="manage-ck" id="manageCk" title="Cookie settings" aria-label="Cookie settings"><i class="fa-solid fa-cookie-bite"></i></button>
+
   <script>
-    let pdfBytes = null;
-    let fileName = '';
+    (function () {
+      'use strict';
+      const PREF_KEY = 'imgpdftools-consent-prefs';
+      const $ = (id) => document.getElementById(id);
+      function gtagSafe() { if (typeof gtag === 'function') gtag.apply(null, arguments); }
+      function migrateKey(o, n) { try { const v = localStorage.getItem(o); if (v !== null && localStorage.getItem(n) === null) localStorage.setItem(n, v); } catch (e) {} }
+      function safeGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+      function safeSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
-    function handleFile(event) {
-      const file = event.target.files[0];
-      if (!file || file.type !== 'application/pdf') {
-        alert('Please upload a PDF file');
-        return;
+      /* theme */
+      migrateKey('pixelpress-theme', 'imgpdftools-theme');
+      document.documentElement.setAttribute('data-theme', safeGet('imgpdftools-theme') || 'light');
+      $('themeToggle').addEventListener('click', () => {
+        const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        safeSet('imgpdftools-theme', next);
+      });
+
+      /* consent */
+      function readPrefs() { try { return JSON.parse(safeGet(PREF_KEY) || 'null'); } catch (e) { return null; } }
+      function applyConsent(p) { gtagSafe('consent', 'update', { analytics_storage: p.analytics ? 'granted' : 'denied' }); }
+      function gpcDenied() { return (navigator.globalPrivacyControl === true) || (navigator.doNotTrack === '1'); }
+      function savePrefs(p) {
+        const prefs = { analytics: !!p.analytics, ts: Date.now() };
+        safeSet(PREF_KEY, JSON.stringify(prefs));
+        applyConsent(prefs);
+        $('ckBanner').classList.remove('show');
+        $('manageCk').classList.add('show');
       }
-      fileName = file.name.replace('.pdf', '');
-      document.getElementById('uploadText').textContent = `Selected: ${file.name}`;
-      
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        pdfBytes = new Uint8Array(e.target.result);
-        document.getElementById('splitBtn').disabled = false;
-      };
-      reader.readAsArrayBuffer(file);
-    }
+      (function initConsent() {
+        const p = readPrefs();
+        if (p) { applyConsent(p); $('manageCk').classList.add('show'); return; }
+        if (gpcDenied()) { savePrefs({ analytics: false }); return; }
+        $('ckBanner').classList.add('show');
+      })();
+      $('ckAccept').addEventListener('click', () => savePrefs({ analytics: true }));
+      $('ckReject').addEventListener('click', () => savePrefs({ analytics: false }));
+      $('manageCk').addEventListener('click', () => $('ckBanner').classList.add('show'));
 
-    async function splitPDF() {
-      if (!pdfBytes) return;
-      
-      const btn = document.getElementById('splitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Processing...';
-      
-      try {
-        const pdfDoc = await PDFLib.PDFDocument.load(pdfBytes);
-        const totalPages = pdfDoc.getPageCount();
-        const downloadDiv = document.getElementById('downloadLinks');
-        downloadDiv.innerHTML = '';
-        
-        for (let i = 0; i < totalPages; i++) {
-          const newDoc = await PDFLib.PDFDocument.create();
-          const [copiedPage] = await newDoc.copyPages(pdfDoc, [i]);
-          newDoc.addPage(copiedPage);
-          
-          const pdfData = await newDoc.save();
-          const blob = new Blob([pdfData], { type: 'application/pdf' });
-          const url = URL.createObjectURL(blob);
-          
-          downloadDiv.innerHTML += `
-            <a href="${url}" download="${fileName}_page_${i + 1}.pdf">
-              📄 Page ${i + 1} — Download
-            </a>`;
-          
-          document.getElementById('progress').textContent = 
-            `Processed ${i + 1} of ${totalPages} pages...`;
+      /* split logic */
+      let pdfBytes = null, baseName = 'document', pageCount = 0, mode = 'all';
+      let lastUrls = [];
+      const fileInput = $('fileInput'), dropZone = $('dropZone');
+      const panel = $('panel'), statusEl = $('status'), downloadsEl = $('downloads');
+
+      function setStatus(m, t) { statusEl.textContent = m || ''; statusEl.className = 'status' + (t ? ' ' + t : ''); }
+      function revokeOld() { lastUrls.forEach(u => URL.revokeObjectURL(u)); lastUrls = []; }
+      function progress(pct) { $('bar').classList.add('show'); $('barFill').style.width = pct + '%'; }
+
+      async function loadFile(file) {
+        if (!file) return;
+        const isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+        if (!isPdf) { setStatus('Please upload a valid PDF file.', 'err'); return; }
+        baseName = file.name.replace(/\.pdf$/i, '') || 'document';
+        try {
+          const buf = await file.arrayBuffer();
+          pdfBytes = new Uint8Array(buf);
+          const doc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+          pageCount = doc.getPageCount();
+          $('fileNameEl').textContent = file.name; // SAFE
+          $('pageCountEl').textContent = pageCount + ' page' + (pageCount === 1 ? '' : 's');
+          panel.classList.remove('hidden');
+          $('uploadText').textContent = 'Selected: ' + file.name;
+          revokeOld(); downloadsEl.textContent = ''; setStatus(''); $('bar').classList.remove('show');
+        } catch (err) {
+          pdfBytes = null;
+          setStatus('Could not read this PDF: ' + (err && err.message ? err.message : 'unknown error'), 'err');
         }
-        
-        document.getElementById('progress').textContent = 
-          `✓ Successfully split ${totalPages} pages!`;
-      } catch (error) {
-        alert('Error splitting PDF: ' + error.message);
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Split PDF';
       }
-    }
 
-    // Drag and drop support
-    const uploadArea = document.querySelector('.upload-area');
-    uploadArea.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      uploadArea.style.borderColor = '#ec4899';
-    });
-    uploadArea.addEventListener('dragleave', () => {
-      uploadArea.style.borderColor = '#ddd';
-    });
-    uploadArea.addEventListener('drop', (e) => {
-      e.preventDefault();
-      uploadArea.style.borderColor = '#ddd';
-      const file = e.dataTransfer.files[0];
-      if (file) {
-        const input = document.getElementById('fileInput');
-        const dt = new DataTransfer();
-        dt.items.add(file);
-        input.files = dt.files;
-        handleEvent({ target: input });
+      // parse "1-3, 5, 8-10" -> [{label, indices:[0-based]}]
+      function parseRanges(str) {
+        const parts = str.split(',').map(s => s.trim()).filter(Boolean);
+        const out = [];
+        for (const part of parts) {
+          const m = part.match(/^(\d+)\s*-\s*(\d+)$/);
+          if (m) {
+            let a = parseInt(m[1], 10), b = parseInt(m[2], 10);
+            if (a > b) { const t = a; a = b; b = t; }
+            if (a < 1 || b > pageCount) throw new Error('Range ' + part + ' is out of bounds (1-' + pageCount + ').');
+            const idx = []; for (let i = a; i <= b; i++) idx.push(i - 1);
+            out.push({ label: a + '-' + b, indices: idx });
+          } else if (/^\d+$/.test(part)) {
+            const n = parseInt(part, 10);
+            if (n < 1 || n > pageCount) throw new Error('Page ' + n + ' is out of bounds (1-' + pageCount + ').');
+            out.push({ label: String(n), indices: [n - 1] });
+          } else {
+            throw new Error('Invalid range: "' + part + '". Use formats like 1-3, 5, 8-10.');
+          }
+        }
+        if (!out.length) throw new Error('Enter at least one page or range.');
+        return out;
       }
-    });
 
-    function handleEvent(e) { handleFile(e); }
+      function buildJobs() {
+        if (mode === 'range') {
+          const val = $('rangeInput').value.trim();
+          if (!val) throw new Error('Enter the page ranges you want to extract.');
+          return parseRanges(val);
+        }
+        const out = [];
+        for (let i = 0; i < pageCount; i++) out.push({ label: 'page-' + (i + 1), indices: [i] });
+        return out;
+      }
 
-    const theme = localStorage.getItem('pixelpress-theme') || 'light';
-    document.documentElement.setAttribute('data-theme', theme);
+      async function makePdf(job, srcDoc) {
+        const out = await PDFLib.PDFDocument.create();
+        const copied = await out.copyPages(srcDoc, job.indices);
+        copied.forEach(p => out.addPage(p));
+        return await out.save();
+      }
+
+      function addDownloadLink(name, bytes) {
+        const blob = new Blob([bytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        lastUrls.push(url);
+        const row = document.createElement('div');
+        row.className = 'dl-item';
+        const ic = document.createElement('i'); ic.className = 'fa-solid fa-file-pdf'; ic.style.color = 'var(--accent)';
+        const nm = document.createElement('span'); nm.className = 'nm'; nm.textContent = name; // SAFE
+        const a = document.createElement('a'); a.href = url; a.download = name; a.textContent = 'Download';
+        row.appendChild(ic); row.appendChild(nm); row.appendChild(a);
+        downloadsEl.appendChild(row);
+      }
+
+      async function runSplit(asZip) {
+        if (!pdfBytes) return;
+        let jobs;
+        try { jobs = buildJobs(); } catch (e) { setStatus(e.message, 'err'); return; }
+        const sBtn = $('splitBtn'), zBtn = $('zipBtn');
+        sBtn.disabled = true; zBtn.disabled = true;
+        revokeOld(); downloadsEl.textContent = ''; setStatus(''); progress(0);
+        try {
+          const srcDoc = await PDFLib.PDFDocument.load(pdfBytes, { ignoreEncryption: true });
+          const results = [];
+          for (let i = 0; i < jobs.length; i++) {
+            const bytes = await makePdf(jobs[i], srcDoc);
+            const name = 'imgpdftools-' + baseName + '-' + jobs[i].label + '.pdf';
+            results.push({ name, bytes });
+            progress(Math.round(((i + 1) / jobs.length) * 100));
+            setStatus('Processing ' + (i + 1) + ' of ' + jobs.length + '…');
+          }
+          if (asZip) {
+            const zip = new JSZip();
+            results.forEach(r => zip.file(r.name, r.bytes));
+            const content = await zip.generateAsync({ type: 'blob' }, (meta) => progress(Math.round(meta.percent)));
+            const url = URL.createObjectURL(content); lastUrls.push(url);
+            const a = document.createElement('a'); a.href = url; a.download = 'imgpdftools-' + baseName + '-split.zip';
+            document.body.appendChild(a); a.click(); a.remove();
+            setStatus('✓ Created ZIP with ' + results.length + ' PDF(s) — download started.', 'ok');
+          } else {
+            results.forEach(r => addDownloadLink(r.name, r.bytes));
+            setStatus('✓ Split into ' + results.length + ' PDF(s). Use the links below.', 'ok');
+          }
+          gtagSafe('event', 'split_pdf', { mode: mode, parts: results.length, zip: !!asZip });
+        } catch (err) {
+          setStatus('Error splitting PDF: ' + (err && err.message ? err.message : 'unknown error'), 'err');
+        } finally {
+          sBtn.disabled = false; zBtn.disabled = false;
+          setTimeout(() => $('bar').classList.remove('show'), 800);
+        }
+      }
+
+      /* events */
+      dropZone.addEventListener('click', () => fileInput.click());
+      dropZone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); } });
+      fileInput.addEventListener('change', (e) => { loadFile(e.target.files[0]); fileInput.value = ''; });
+      ['dragenter', 'dragover'].forEach(ev => dropZone.addEventListener(ev, (e) => { e.preventDefault(); dropZone.classList.add('drag'); }));
+      ['dragleave', 'drop'].forEach(ev => dropZone.addEventListener(ev, (e) => { e.preventDefault(); dropZone.classList.remove('drag'); }));
+      dropZone.addEventListener('drop', (e) => { if (e.dataTransfer && e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+
+      document.querySelectorAll('.mode').forEach(el => el.addEventListener('click', () => {
+        document.querySelectorAll('.mode').forEach(m => m.classList.remove('active'));
+        el.classList.add('active');
+        mode = el.dataset.mode;
+        $('rangeRow').classList.toggle('hidden', mode !== 'range');
+      }));
+
+      $('splitBtn').addEventListener('click', () => runSplit(false));
+      $('zipBtn').addEventListener('click', () => runSplit(true));
+    })();
   </script>
 </body>
 </html>
