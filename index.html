@@ -1,280 +1,1013 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
-window.dataLayer=window.dataLayer||[];
-function gtag(){dataLayer.push(arguments);}
-gtag("js",new Date());
-gtag("config","G-3P7QPQKV3K");
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3P7QPQKV3K');
 </script>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="google-site-verification" content="S_xtKI5JCRkkoHtqpOZ35xBeybTS056a9DXNtNMAUZ0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="google-site-verification" content="S_xtKI5JCRkkoHtqpOZ35xBeybTS056a9DXNtNMAUZ0" />
 <title id="siteTitle">ImgPDFTools — Free Online Image & PDF Toolkit</title>
-<meta name="description" content="Free online image & PDF tools: compress, resize, crop, convert, remove background, merge PDFs, and more. All processing happens in your browser – private and fast.">
-<meta name="keywords" content="image tools, pdf tools, compress image, resize image, convert image, remove background, merge pdf, split pdf, compress pdf, pdf to jpg, jpg to pdf, qr generator, ocr, free online tools">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="author" content="ImgPDFTools">
-<link rel="canonical" href="https://imgpdftools.xyz/">
+<meta name="description" content="Free online image & PDF tools: compress, resize, crop, convert, remove background, merge PDFs, and more. All processing happens in your browser – private and fast." />
+<meta name="keywords" content="image tools, pdf tools, compress image, resize image, convert image, remove background, merge pdf, split pdf, compress pdf, pdf to jpg, jpg to pdf, qr generator, ocr, free online tools" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<meta name="author" content="ImgPDFTools" />
+<link rel="canonical" href="https://imgpdftools.xyz/" />
+<meta property="og:title" content="ImgPDFTools — Free Online Image & PDF Toolkit" />
+<meta property="og:description" content="Free online image & PDF tools. All processing happens in your browser – private and fast." />
+<meta property="og:url" content="https://imgpdftools.xyz/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ImgPDFTools" />
+<meta property="og:image" content="https://imgpdftools.xyz/og-image.png" />
+<meta property="og:image:alt" content="ImgPDFTools — Free Online Image & PDF Toolkit" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ImgPDFTools — Free Online Image & PDF Toolkit" />
+<meta name="twitter:description" content="25+ free image & PDF tools that run 100% in your browser. Private, fast, no sign-up." />
+<meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png" />
 
-<meta property="og:title" content="ImgPDFTools — Free Online Image & PDF Toolkit">
-<meta property="og:description" content="Free online image & PDF tools. All processing happens in your browser – private and fast.">
-<meta property="og:url" content="https://imgpdftools.xyz/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="ImgPDFTools">
-<meta property="og:image" content="https://imgpdftools.xyz/og-image.png">
-<meta property="og:image:alt" content="ImgPDFTools — Free Online Image & PDF Toolkit">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ImgPDFTools — Free Online Image & PDF Toolkit">
-<meta name="twitter:description" content="25+ free image & PDF tools that run 100% in your browser. Private, fast, no sign-up.">
-<meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png">
+<meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com paviliongiddy.com *.paviliongiddy.com;
+               style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com;
+               font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
+               img-src 'self' data: blob: https:;
+               connect-src 'self' https: paviliongiddy.com *.paviliongiddy.com www.google-analytics.com;
+               frame-src https: paviliongiddy.com *.paviliongiddy.com;
+               object-src 'none';" />
 
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com paviliongiddy.com *.paviliongiddy.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' https: paviliongiddy.com *.paviliongiddy.com www.google-analytics.com; frame-src https: paviliongiddy.com *.paviliongiddy.com; object-src 'none'; base-uri 'self'; form-action 'self';">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" /></noscript>
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"></noscript>
-<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="theme-color" content="#6366f1" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="ImgPDFTools" />
 
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#6366f1">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="ImgPDFTools">
-
+<!-- SEO: Structured data -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"ImgPDFTools","url":"https://imgpdftools.xyz/","description":"Free online image and PDF tools that run in your browser.","potentialAction":{"@type":"SearchAction","target":"https://imgpdftools.xyz/?q={search_term_string}","query-input":"required name=search_term_string"}}
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "ImgPDFTools",
+  "url": "https://imgpdftools.xyz/",
+  "description": "Free online image & PDF tools: compress, resize, crop, convert, remove background, merge PDFs, and more. All processing happens in your browser."
+}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ItemList","name":"ImgPDFTools — Free Online Image & PDF Tools","itemListElement":[
-{"@type":"ListItem","position":1,"name":"Compress Image","url":"https://imgpdftools.xyz/compress.html"},{"@type":"ListItem","position":2,"name":"Resize Image","url":"https://imgpdftools.xyz/resize.html"},{"@type":"ListItem","position":3,"name":"Photo Editor","url":"https://imgpdftools.xyz/photo-editor.html"},{"@type":"ListItem","position":4,"name":"Convert Format","url":"https://imgpdftools.xyz/convert.html"},{"@type":"ListItem","position":5,"name":"Watermark Image","url":"https://imgpdftools.xyz/watermark.html"},{"@type":"ListItem","position":6,"name":"Remove Background","url":"https://imgpdftools.xyz/remove-bg.html"},{"@type":"ListItem","position":7,"name":"Meme Generator","url":"https://imgpdftools.xyz/meme-generator.html"},{"@type":"ListItem","position":8,"name":"Advanced Crop","url":"https://imgpdftools.xyz/crop.html"},{"@type":"ListItem","position":9,"name":"Blur Face","url":"https://imgpdftools.xyz/blur-face.html"},{"@type":"ListItem","position":10,"name":"Thumbnail Maker","url":"https://imgpdftools.xyz/thumbnail-maker.html"},{"@type":"ListItem","position":11,"name":"Screenshot Editor","url":"https://imgpdftools.xyz/screenshot-editor.html"},{"@type":"ListItem","position":12,"name":"Favicon Generator","url":"https://imgpdftools.xyz/favicon-generator.html"},{"@type":"ListItem","position":13,"name":"PDF to JPG","url":"https://imgpdftools.xyz/pdf-to-jpg.html"},{"@type":"ListItem","position":14,"name":"JPG to PDF","url":"https://imgpdftools.xyz/jpg-to-pdf.html"},{"@type":"ListItem","position":15,"name":"Split PDF","url":"https://imgpdftools.xyz/split-pdf.html"},{"@type":"ListItem","position":16,"name":"Merge PDF","url":"https://imgpdftools.xyz/merge-pdf.html"},{"@type":"ListItem","position":17,"name":"Compress PDF","url":"https://imgpdftools.xyz/compress-pdf.html"},{"@type":"ListItem","position":18,"name":"PDF Annotator","url":"https://imgpdftools.xyz/pdf-annotator.html"},{"@type":"ListItem","position":19,"name":"QR Generator","url":"https://imgpdftools.xyz/qr-generator.html"},{"@type":"ListItem","position":20,"name":"Password Generator","url":"https://imgpdftools.xyz/password-generator.html"},{"@type":"ListItem","position":21,"name":"JSON Formatter","url":"https://imgpdftools.xyz/json-formatter.html"},{"@type":"ListItem","position":22,"name":"URL Shortener","url":"https://imgpdftools.xyz/url-shortener.html"},{"@type":"ListItem","position":23,"name":"Color Picker","url":"https://imgpdftools.xyz/color-picker.html"},{"@type":"ListItem","position":24,"name":"Palette Generator","url":"https://imgpdftools.xyz/palette-generator.html"},{"@type":"ListItem","position":25,"name":"Unit Converter","url":"https://imgpdftools.xyz/unit-converter.html"},{"@type":"ListItem","position":26,"name":"CAD Converter","url":"https://imgpdftools.xyz/dxf-dwg-converter.html"},{"@type":"ListItem","position":27,"name":"OCR Scanner","url":"https://imgpdftools.xyz/ocr.html"}]}
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "ImgPDFTools — Free Online Image & PDF Tools",
+  "itemListElement": [
+    {"@type":"ListItem","position":1,"name":"Compress Image","url":"https://imgpdftools.xyz/compress.html"},
+    {"@type":"ListItem","position":2,"name":"Resize Image","url":"https://imgpdftools.xyz/resize.html"},
+    {"@type":"ListItem","position":3,"name":"Photo Editor","url":"https://imgpdftools.xyz/photo-editor.html"},
+    {"@type":"ListItem","position":4,"name":"Convert Format","url":"https://imgpdftools.xyz/convert.html"},
+    {"@type":"ListItem","position":5,"name":"Watermark Image","url":"https://imgpdftools.xyz/watermark.html"},
+    {"@type":"ListItem","position":6,"name":"Remove Background","url":"https://imgpdftools.xyz/remove-bg.html"},
+    {"@type":"ListItem","position":7,"name":"Meme Generator","url":"https://imgpdftools.xyz/meme-generator.html"},
+    {"@type":"ListItem","position":8,"name":"Advanced Crop","url":"https://imgpdftools.xyz/crop.html"},
+    {"@type":"ListItem","position":9,"name":"Blur Face","url":"https://imgpdftools.xyz/blur-face.html"},
+    {"@type":"ListItem","position":10,"name":"Thumbnail Maker","url":"https://imgpdftools.xyz/thumbnail-maker.html"},
+    {"@type":"ListItem","position":11,"name":"Screenshot Editor","url":"https://imgpdftools.xyz/screenshot-editor.html"},
+    {"@type":"ListItem","position":12,"name":"Favicon Generator","url":"https://imgpdftools.xyz/favicon-generator.html"},
+    {"@type":"ListItem","position":13,"name":"PDF to JPG","url":"https://imgpdftools.xyz/pdf-to-jpg.html"},
+    {"@type":"ListItem","position":14,"name":"JPG to PDF","url":"https://imgpdftools.xyz/jpg-to-pdf.html"},
+    {"@type":"ListItem","position":15,"name":"Split PDF","url":"https://imgpdftools.xyz/split-pdf.html"},
+    {"@type":"ListItem","position":16,"name":"Merge PDF","url":"https://imgpdftools.xyz/merge-pdf.html"},
+    {"@type":"ListItem","position":17,"name":"Compress PDF","url":"https://imgpdftools.xyz/compress-pdf.html"},
+    {"@type":"ListItem","position":18,"name":"PDF Annotator","url":"https://imgpdftools.xyz/pdf-annotator.html"},
+    {"@type":"ListItem","position":19,"name":"QR Generator","url":"https://imgpdftools.xyz/qr-generator.html"},
+    {"@type":"ListItem","position":20,"name":"Password Generator","url":"https://imgpdftools.xyz/password-generator.html"},
+    {"@type":"ListItem","position":21,"name":"JSON Formatter","url":"https://imgpdftools.xyz/json-formatter.html"},
+    {"@type":"ListItem","position":22,"name":"URL Shortener","url":"https://imgpdftools.xyz/url-shortener.html"},
+    {"@type":"ListItem","position":23,"name":"Color Picker","url":"https://imgpdftools.xyz/color-picker.html"},
+    {"@type":"ListItem","position":24,"name":"Palette Generator","url":"https://imgpdftools.xyz/palette-generator.html"},
+    {"@type":"ListItem","position":25,"name":"Unit Converter","url":"https://imgpdftools.xyz/unit-converter.html"},
+    {"@type":"ListItem","position":26,"name":"CAD Converter","url":"https://imgpdftools.xyz/dxf-dwg-converter.html"},
+    {"@type":"ListItem","position":27,"name":"OCR Scanner","url":"https://imgpdftools.xyz/ocr.html"}
+  ]
+}
 </script>
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
-{"@type":"Question","name":"Are these image and PDF tools free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool on ImgPDFTools is free with no sign-up."}},
-{"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. Processing happens locally in your browser, so your files stay on your device."}},
-{"@type":"Question","name":"Do I need to install anything?","acceptedAnswer":{"@type":"Answer","text":"No installation is needed. The tools work directly in modern browsers."}}]}
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Are these image and PDF tools free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool on ImgPDFTools is 100% free with no sign-up and no usage limits."}},
+    {"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens locally in your browser, so your images and PDFs never leave your device."}},
+    {"@type":"Question","name":"Do I need to install anything?","acceptedAnswer":{"@type":"Answer","text":"No installation is needed. The tools work directly in any modern browser, and many work offline too."}}
+  ]
+}
 </script>
 
 <style>
-:root{--bg:#f8f8fc;--bg2:#f0f0f8;--surface:rgba(255,255,255,.9);--card:#fff;--border:rgba(99,102,241,.1);--border2:rgba(0,0,0,.06);--text:#18181b;--muted:#71717a;--accent:#6366f1;--accent2:#8b5cf6;--accent3:#06b6d4;--glow:rgba(99,102,241,.14);--r:18px;--r-sm:12px;--fhead:'Space Grotesk',sans-serif;--fbody:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;--ad-col-w:220px;--nav-h:66px}
-[data-theme=dark]{--bg:#0c0c14;--bg2:#111120;--surface:rgba(18,18,30,.92);--card:#16162a;--border:rgba(99,102,241,.18);--border2:rgba(255,255,255,.07);--text:#e4e4f0;--muted:#8888aa;--glow:rgba(99,102,241,.28)}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;width:100%;max-width:100%;-webkit-font-smoothing:antialiased}
-body.rtl{direction:rtl}
-a{color:inherit;text-decoration:none}
-body::before{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.4}
-nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);padding:0 clamp(1rem,5vw,3rem);background:var(--surface);backdrop-filter:blur(28px) saturate(200%);-webkit-backdrop-filter:blur(28px) saturate(200%);border-bottom:1px solid var(--border)}
-.nav-left,.nav-actions,.nav-logo,.lang-pill-container{display:flex;align-items:center}
-.nav-left{gap:1.1rem}.nav-actions{gap:.9rem}.nav-logo{gap:8px;font-family:var(--fhead);font-weight:700;font-size:1.15rem;letter-spacing:-.3px}
-.logo-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 4px 14px var(--glow);flex-shrink:0}
-.logo-text-pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.logo-text-tools{color:var(--muted);font-weight:600}
-.menu-trigger{background:none;border:0;color:var(--text);font-size:1.2rem;cursor:pointer;padding:6px;border-radius:10px}.menu-trigger:hover{color:var(--accent);background:var(--glow)}
-.control-btn{background:var(--card);border:1px solid var(--border2);width:38px;height:38px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1rem}.control-btn:hover{transform:scale(1.08);border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
-.lang-pill-container{gap:8px}.lang-p-label{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase}
-.switch-p-btn{position:relative;width:48px;height:25px;background:#d4d4e8;border-radius:20px;cursor:pointer;border:1px solid var(--border2)}[data-theme=dark] .switch-p-btn{background:#2a2a42}.switch-p-btn::before{content:"";position:absolute;width:19px;height:19px;border-radius:50%;background:#fff;top:2px;left:2px;transition:.3s}.switch-p-btn.active{background:var(--accent)}.switch-p-btn.active::before{transform:translateX(23px)}
-.sidebar-overlay{position:fixed;inset:0;background:rgba(10,10,20,.25);backdrop-filter:blur(6px);z-index:299;display:none}.sidebar-overlay.show{display:block}
-.sidebar{position:fixed;top:0;left:-300px;width:300px;height:100%;background:var(--card);border-right:1px solid var(--border);z-index:300;padding:24px 18px;overflow-y:auto;transition:left .35s cubic-bezier(.4,0,.2,1)}.sidebar.open{left:0}body.rtl .sidebar{left:auto;right:-300px;border-right:0;border-left:1px solid var(--border);transition:right .35s cubic-bezier(.4,0,.2,1)}body.rtl .sidebar.open{right:0}
-.sidebar-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;padding-bottom:16px;border-bottom:1px solid var(--border)}.sidebar-close{background:var(--bg);border:1px solid var(--border2);color:var(--muted);cursor:pointer;width:32px;height:32px;border-radius:50%;font-size:1rem}.sidebar-links{display:flex;flex-direction:column;gap:3px}.sidebar-links a{padding:10px 13px;border-radius:11px;font-size:14px;display:flex;align-items:center;gap:11px;font-weight:500}.sidebar-links a i{width:18px;text-align:center;flex-shrink:0}.sidebar-links a:hover{background:var(--glow);color:var(--accent)}.menu-section-title{font-size:10.5px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px;padding:16px 13px 5px}
-.hero{position:relative;text-align:center;padding:clamp(2.8rem,7vw,5rem) 1rem 2.5rem;overflow:hidden}.hero::before{content:"";position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse at center,rgba(99,102,241,.12) 0%,transparent 70%);z-index:-1}.hero-badge{display:inline-flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);padding:6px 16px;border-radius:99px;font-size:12.5px;font-weight:700;color:var(--accent);margin-bottom:1.4rem;box-shadow:0 0 0 4px var(--glow)}.hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:pulse-dot 2s infinite}@keyframes pulse-dot{50%{opacity:.5;transform:scale(.7)}}.hero h1{font-family:var(--fhead);font-size:clamp(2rem,5vw,3.6rem);font-weight:700;line-height:1.15;letter-spacing:-.5px;margin-bottom:1rem}.h1-line2{display:block;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero-sub{font-size:16px;color:var(--muted);max-width:540px;margin:0 auto 2rem;line-height:1.6}.hero-stats{display:flex;justify-content:center;flex-wrap:wrap;gap:10px}.stat-pill{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border2);padding:8px 16px;border-radius:99px;font-size:13px;font-weight:600}.stat-num{font-family:var(--fhead);font-weight:700;color:var(--accent)}
-.page-outer{width:100%;flex:1;position:relative;z-index:1}.page-inner{max-width:1420px;margin:0 auto;padding:0 18px 5rem;display:flex;align-items:flex-start;gap:22px}.main-col{flex:1;min-width:0}
-.search-container{max-width:600px;margin:0 auto 2.2rem;position:relative}.search-bar{width:100%;padding:15px 22px 15px 50px;background:var(--card);border:1.5px solid var(--border2);border-radius:16px;color:var(--text);font-size:15px;outline:0;font-family:var(--fbody);box-shadow:0 2px 12px rgba(0,0,0,.04)}.search-bar:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow),0 2px 12px rgba(0,0,0,.04)}.search-icon{position:absolute;left:17px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}body.rtl .search-bar{padding:15px 50px 15px 22px}body.rtl .search-icon{left:auto;right:17px}
-.filter-row{display:flex;justify-content:center;gap:7px;margin-bottom:2.2rem;flex-wrap:wrap}.filter-pill{background:var(--card);border:1.5px solid var(--border2);color:var(--muted);padding:8px 20px;border-radius:99px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:var(--fbody)}.filter-pill:hover{border-color:var(--accent);color:var(--accent);background:var(--glow)}.filter-pill.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 14px var(--glow)}
-.ad-wrap{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);display:flex;flex-direction:column;align-items:center;position:relative;overflow:hidden}.ad-tag{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);opacity:.5;align-self:flex-start;padding:6px 10px 2px;flex-shrink:0}.ad-dismiss{position:absolute;top:4px;right:4px;width:20px;height:20px;background:var(--bg);border:1px solid var(--border2);border-radius:50%;color:var(--muted);font-size:8px;cursor:pointer;z-index:5}.ad-hidden{opacity:0;transition:opacity .5s}.ad-visible{opacity:1}.ad-slot{display:block;background:var(--bg)}
-.ad-mobile-bottom{display:none;position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:190;width:320px;max-width:100vw;border-radius:10px 10px 0 0;box-shadow:0 -2px 16px rgba(0,0,0,.08)}.ad-mobile-bottom .ad-slot{width:320px;max-width:100%;height:50px;overflow:hidden}
-.ad-tablet-hero{display:none;justify-content:center;margin-bottom:1.5rem;min-height:84px;align-items:center}.ad-tablet-hero .ad-wrap{padding-bottom:8px}.ad-tablet-hero .ad-slot{width:468px;height:60px;overflow:hidden;max-width:100%}
-.ad-tablet-rect{display:none;justify-content:center;margin-bottom:2rem;min-height:272px;align-items:center}.ad-tablet-rect .ad-wrap{padding-bottom:10px}.ad-tablet-rect .ad-slot{width:300px;height:250px;overflow:hidden}
-.ad-desktop-leader{display:none;justify-content:center;margin-bottom:1.5rem;min-height:112px;align-items:center}.ad-desktop-leader .ad-wrap{padding-bottom:10px}.ad-desktop-leader .ad-slot{width:728px;height:90px;overflow:hidden}
-.ad-desktop-col{display:none;flex-shrink:0;width:var(--ad-col-w);position:sticky;top:86px;align-self:flex-start}.ad-desktop-col .ad-wrap{padding:10px 10px 12px;border-radius:20px;box-shadow:0 4px 24px rgba(0,0,0,.05);gap:6px;min-height:632px}.ad-desktop-col .ad-slot{width:160px;height:600px;overflow:hidden;border-radius:12px}
-@media(max-width:767px){.ad-mobile-bottom{display:flex;flex-direction:column}body{padding-bottom:60px}}
-@media(min-width:768px) and (max-width:1139px){.ad-tablet-hero,.ad-tablet-rect{display:flex}}
-@media(min-width:1140px){.ad-desktop-leader{display:flex}.ad-desktop-col{display:block}}
-body.rtl .page-inner{flex-direction:row-reverse}
-.tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}@media(max-width:860px){.tools-grid{grid-template-columns:1fr}}@media(min-width:1100px){.tools-grid{grid-template-columns:repeat(3,1fr)}}.tool-link{display:block}.tool-link.hidden{display:none}.tool-card{background:var(--card);border:1.5px solid var(--border2);border-radius:20px;padding:20px;display:flex;align-items:flex-start;gap:15px;height:100%;position:relative;overflow:hidden;transition:.22s}.tool-card::after{content:"";position:absolute;inset:0;border-radius:20px;background:linear-gradient(135deg,var(--glow),transparent 60%);opacity:0;transition:.22s}.tool-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 16px 32px -6px var(--glow),0 4px 8px -2px rgba(0,0,0,.05)}.tool-card:hover::after{opacity:1}.tool-icon-wrapper{font-size:22px;background:linear-gradient(135deg,var(--bg2),var(--bg));border:1.5px solid var(--border2);padding:11px;border-radius:14px;min-width:50px;height:50px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}.tool-info-pane{position:relative;z-index:1;min-width:0}.tool-info-pane h3{font-size:14.5px;font-weight:700;margin-bottom:5px;font-family:var(--fhead)}.tool-info-pane p{font-size:13px;color:var(--muted);line-height:1.55}.tool-card-arrow{position:absolute;top:16px;right:16px;opacity:0;color:var(--accent);font-size:14px;z-index:2}.tool-card:hover .tool-card-arrow{opacity:1;transform:translate(2px,-2px)}body.rtl .tool-card-arrow{right:auto;left:16px}#noResults{text-align:center;color:var(--muted);padding:5rem 0;display:none;font-size:15px}
-.seo-section{max-width:1140px;margin:0 auto;padding:1.5rem 18px 4rem;position:relative;z-index:1}.seo-intro{margin-bottom:2rem}.seo-intro h2,.seo-why h2,.seo-faq h2{font-family:var(--fhead);font-weight:700;line-height:1.3;overflow-wrap:anywhere}.seo-intro h2{font-size:clamp(1.3rem,3vw,1.9rem);margin-bottom:.8rem}.seo-intro p,.seo-why p,.seo-faq details p{color:var(--muted);line-height:1.7;font-size:15px;overflow-wrap:anywhere}.seo-cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;align-items:start;margin-bottom:2.4rem}.seo-cat,.seo-why,.seo-faq details{background:var(--card);border:1px solid var(--border2);border-radius:var(--r);overflow:hidden}.seo-cat{padding:22px 20px}.seo-cat h3{display:flex;align-items:center;gap:9px;font-family:var(--fhead);font-size:1.02rem;font-weight:700;margin:0 0 1rem;padding-bottom:.8rem;border-bottom:1px solid var(--border2);line-height:1.3}.seo-cat h3 i{color:var(--accent);flex-shrink:0}.seo-links{display:flex;flex-direction:column;gap:2px}.seo-links a{display:block;padding:9px 12px;border-radius:var(--r-sm);font-size:14px;font-weight:500;line-height:1.4;overflow-wrap:anywhere}.seo-links a:hover{background:var(--glow);color:var(--accent)}.seo-why{padding:22px 20px;margin-bottom:2.4rem}.seo-why h2,.seo-faq h2{font-size:clamp(1.2rem,2.6vw,1.6rem);margin-bottom:.8rem}.seo-why strong{color:var(--text)}.seo-faq details{border-radius:var(--r-sm);margin-bottom:10px}.seo-faq summary{list-style:none;cursor:pointer;padding:16px 18px;font-weight:600;font-size:15px;display:flex;align-items:center;justify-content:space-between;gap:12px}.seo-faq summary::-webkit-details-marker{display:none}.seo-faq summary::after{content:"+";font-size:1.3rem;color:var(--accent);transition:.2s;flex-shrink:0}.seo-faq details[open] summary::after{transform:rotate(45deg)}.seo-faq details p{padding:0 18px 16px;font-size:14.5px}body.rtl .seo-section{text-align:right}
-footer{text-align:center;padding:36px 20px;font-size:13px;color:var(--muted);border-top:1px solid var(--border2);background:var(--card);position:relative;z-index:1}.footer-logo{display:inline-flex;align-items:center;gap:7px;margin-bottom:14px;font-family:var(--fhead);font-weight:700}.footer-links{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 18px;margin-bottom:14px}.footer-links a{color:var(--muted);font-weight:500}.footer-links a:hover{color:var(--accent)}.footer-divider{width:40px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;margin:0 auto 14px}
-@media(max-width:900px){.page-inner{padding:0 16px 4.5rem;gap:16px}.seo-section{padding:1.2rem 16px 3.5rem}}
-@media(max-width:600px){:root{--nav-h:58px}nav{padding:0 14px}.nav-left{gap:.7rem}.nav-logo{font-size:1rem;gap:6px}.logo-icon{width:28px;height:28px;font-size:14px;border-radius:8px}.nav-actions{gap:.55rem}.lang-p-label{display:none}.control-btn{width:34px;height:34px}.hero{padding:2.1rem 1rem 1.6rem}.hero-badge{font-size:11.5px;padding:5px 13px;margin-bottom:1.1rem}.hero-sub{font-size:14.5px;margin-bottom:1.5rem}.stat-pill{font-size:12px;padding:7px 13px}.page-inner{padding:0 14px 4.5rem}.search-container{margin-bottom:1.6rem}.search-bar{padding:13px 18px 13px 46px;font-size:14.5px}.filter-row{gap:6px;margin-bottom:1.6rem}.filter-pill{padding:7px 15px;font-size:12.5px}.tools-grid{gap:13px}.tool-card{padding:16px;gap:13px;border-radius:16px}.tool-icon-wrapper{min-width:44px;height:44px;font-size:19px;padding:9px}.tool-info-pane h3{font-size:14px}.tool-info-pane p{font-size:12.5px}.seo-section{padding:1rem 14px 3.5rem}.seo-cats{grid-template-columns:1fr;gap:14px}.seo-cat{padding:18px 16px}.sidebar{width:86vw;max-width:320px;left:-90vw}body.rtl .sidebar{right:-90vw;left:auto}footer{padding:30px 16px}}
-@media(max-width:360px){.hero-stats .stat-pill:nth-child(n+4){display:none}}
+:root {
+  --bg: #f8f8fc; --bg2: #f0f0f8; --surface: rgba(255,255,255,0.90); --card: #ffffff;
+  --border: rgba(99,102,241,0.10); --border2: rgba(0,0,0,0.06); --text: #18181b; --muted: #71717a;
+  --accent: #6366f1; --accent2: #8b5cf6; --accent3: #06b6d4; --glow: rgba(99,102,241,0.14); --glow2: rgba(139,92,246,0.10);
+  --r: 18px; --r-sm: 12px; --fhead: 'Space Grotesk', sans-serif;
+  --fbody: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif; --ad-col-w: 220px; --nav-h: 66px;
+}
+[data-theme="dark"] {
+  --bg: #0c0c14; --bg2: #111120; --surface: rgba(18,18,30,0.92); --card: #16162a;
+  --border: rgba(99,102,241,0.18); --border2: rgba(255,255,255,0.07); --text: #e4e4f0; --muted: #8888aa;
+  --glow: rgba(99,102,241,0.28); --glow2: rgba(139,92,246,0.20);
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; overflow-x:hidden; }
+body { background: var(--bg); color: var(--text); font-family: var(--fbody); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; overflow-x:hidden; width:100%; max-width:100%; }
+body.rtl { direction: rtl; }
+a { color: inherit; text-decoration: none; }
+body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; opacity: 0.4; }
+nav { position: sticky; top: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 0 clamp(1rem, 5vw, 3rem); height: var(--nav-h); background: var(--surface); backdrop-filter: blur(28px) saturate(200%); -webkit-backdrop-filter: blur(28px) saturate(200%); border-bottom: 1px solid var(--border); }
+.nav-left { display: flex; align-items: center; gap: 1.1rem; }
+.menu-trigger { background: none; border: none; color: var(--text); font-size: 1.2rem; cursor: pointer; padding: 6px; border-radius: 10px; transition: color 0.2s, background 0.2s; }
+.menu-trigger:hover { color: var(--accent); background: var(--glow); }
+.nav-logo { display: flex; align-items: center; gap: 8px; font-family: var(--fhead); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.3px; }
+.logo-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--accent), var(--accent2)); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; box-shadow: 0 4px 14px var(--glow); flex-shrink: 0; }
+.logo-text-img { color: var(--text); }
+.logo-text-pdf { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.logo-text-tools { color: var(--muted); font-weight: 600; }
+.nav-actions { display: flex; align-items: center; gap: 0.9rem; }
+.control-btn { background: var(--card); border: 1px solid var(--border2); width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 1rem; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.control-btn:hover { transform: scale(1.08); border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
+.lang-pill-container { display: flex; align-items: center; gap: 8px; }
+.lang-p-label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; }
+@media(max-width:600px) { .lang-p-label { display: none; } }
+.switch-p-btn { position: relative; width: 48px; height: 25px; background-color: #d4d4e8; border-radius: 20px; cursor: pointer; border: 1px solid var(--border2); transition: background-color 0.3s; }
+[data-theme="dark"] .switch-p-btn { background-color: #2a2a42; }
+.switch-p-btn::before { content: ''; position: absolute; width: 19px; height: 19px; border-radius: 50%; background: white; top: 2px; left: 2px; transition: transform 0.3s; }
+.switch-p-btn.active { background-color: var(--accent); }
+.switch-p-btn.active::before { transform: translateX(23px); }
+.sidebar-overlay { position: fixed; inset: 0; background: rgba(10,10,20,0.25); backdrop-filter: blur(6px); z-index: 299; display: none; }
+.sidebar-overlay.show { display: block; }
+.sidebar { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: var(--card); border-right: 1px solid var(--border); z-index: 300; padding: 24px 18px; overflow-y: auto; transition: left 0.35s cubic-bezier(0.4,0,0.2,1); }
+.sidebar.open { left: 0; }
+body.rtl .sidebar { left: auto; right: -300px; border-right: none; border-left: 1px solid var(--border); transition: right 0.35s cubic-bezier(0.4,0,0.2,1); }
+body.rtl .sidebar.open { right: 0; }
+.sidebar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
+.sidebar-close { background: var(--bg); border: 1px solid var(--border2); color: var(--muted); cursor: pointer; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: color 0.2s; }
+.sidebar-close:hover { color: var(--accent); }
+.sidebar-links { display: flex; flex-direction: column; gap: 3px; }
+.sidebar-links a { padding: 10px 13px; border-radius: 11px; font-size: 14px; color: var(--text); display: flex; align-items: center; gap: 11px; font-weight: 500; transition: background 0.15s, color 0.15s; }
+.sidebar-links a i { width: 18px; text-align: center; flex-shrink: 0; }
+.sidebar-links a:hover { background: var(--glow); color: var(--accent); }
+.menu-section-title { font-size: 10.5px; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; padding: 16px 13px 5px; }
+.hero { position: relative; text-align: center; padding: clamp(2.8rem,7vw,5rem) 1rem 2.5rem; overflow: hidden; }
+.hero::before { content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 700px; height: 400px; background: radial-gradient(ellipse at center, rgba(99,102,241,0.12) 0%, transparent 70%); pointer-events: none; z-index: -1; }
+.hero-badge { display: inline-flex; align-items: center; gap: 7px; background: var(--card); border: 1px solid var(--border); padding: 6px 16px; border-radius: 99px; font-size: 12.5px; font-weight: 700; color: var(--accent); margin-bottom: 1.4rem; box-shadow: 0 0 0 4px var(--glow); letter-spacing: 0.3px; }
+.hero-badge-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px var(--accent); animation: pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.7); } }
+.hero h1 { font-family: var(--fhead); font-size: clamp(2rem, 5vw, 3.6rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 1rem; }
+.hero h1 .h1-line2 { display: block; background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 50%, var(--accent3) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 16px; color: var(--muted); max-width: 540px; margin: 0 auto 2rem; line-height: 1.6; }
+.hero-stats { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 0.5rem; }
+.stat-pill { display: flex; align-items: center; gap: 7px; background: var(--card); border: 1px solid var(--border2); padding: 8px 16px; border-radius: 99px; font-size: 13px; font-weight: 600; color: var(--text); }
+.stat-pill .sp-icon { font-size: 15px; }
+.stat-num { font-family: var(--fhead); font-weight: 700; color: var(--accent); }
+.page-outer { width: 100%; flex: 1; position: relative; z-index: 1; }
+.page-inner { max-width: 1420px; margin: 0 auto; padding: 0 18px 5rem; display: flex; align-items: flex-start; gap: 22px; }
+.main-col { flex: 1; min-width: 0; }
+.search-container { max-width: 600px; margin: 0 auto 2.2rem; position: relative; }
+.search-bar { width: 100%; padding: 15px 22px 15px 50px; background: var(--card); border: 1.5px solid var(--border2); border-radius: 16px; color: var(--text); font-size: 15px; outline: none; font-family: var(--fbody); transition: border-color 0.2s, box-shadow 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.search-bar:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--glow), 0 2px 12px rgba(0,0,0,0.04); }
+.search-bar::placeholder { color: var(--muted); }
+.search-icon { position: absolute; left: 17px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; font-size: 1rem; }
+body.rtl .search-bar { padding: 15px 50px 15px 22px; }
+body.rtl .search-icon { left: auto; right: 17px; }
+.filter-row { display: flex; justify-content: center; gap: 7px; margin-bottom: 2.2rem; flex-wrap: wrap; }
+.filter-pill { background: var(--card); border: 1.5px solid var(--border2); color: var(--muted); padding: 8px 20px; border-radius: 99px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: var(--fbody); }
+.filter-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--glow); }
+.filter-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 14px var(--glow); }
+.ad-wrap { background: var(--card); border: 1px solid var(--border2); border-radius: var(--r); display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden; }
+.ad-tag { font-size: 9px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); opacity: 0.5; align-self: flex-start; padding: 6px 10px 2px; flex-shrink: 0; }
+.ad-dismiss { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; background: var(--bg); border: 1px solid var(--border2); border-radius: 50%; color: var(--muted); font-size: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.2s, border-color 0.2s; z-index: 5; }
+.ad-dismiss:hover { color: var(--accent); border-color: var(--accent); }
+.ad-hidden { opacity: 0; transition: opacity 0.5s ease; }
+.ad-visible { opacity: 1; }
+.ad-slot { display: block; background: var(--bg); }
+.ad-mobile-bottom { display: none; position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); z-index: 190; width: 320px; max-width: 100vw; padding: 0; border-radius: 10px 10px 0 0; box-shadow: 0 -2px 16px rgba(0,0,0,0.08); }
+.ad-mobile-bottom .ad-slot { width: 320px; max-width: 100%; height: 50px; overflow: hidden; }
+@media(max-width:767px) { .ad-mobile-bottom { display: flex; flex-direction: column; } body { padding-bottom: 60px; } }
+.ad-tablet-hero { display: none; justify-content: center; margin-bottom: 1.5rem; min-height: 84px; align-items: center; }
+.ad-tablet-hero .ad-wrap { padding-bottom: 8px; }
+.ad-tablet-hero .ad-slot { width: 468px; height: 60px; overflow: hidden; max-width: 100%; }
+@media(min-width:768px) and (max-width:1139px) { .ad-tablet-hero { display: flex; } }
+.ad-tablet-rect { display: none; justify-content: center; margin-bottom: 2rem; min-height: 272px; align-items: center; }
+.ad-tablet-rect .ad-wrap { padding-bottom: 10px; }
+.ad-tablet-rect .ad-slot { width: 300px; height: 250px; overflow: hidden; }
+@media(min-width:768px) and (max-width:1139px) { .ad-tablet-rect { display: flex; } }
+.ad-desktop-leader { display: none; justify-content: center; margin-bottom: 1.5rem; min-height: 112px; align-items: center; }
+.ad-desktop-leader .ad-wrap { padding-bottom: 10px; width: auto; }
+.ad-desktop-leader .ad-slot { width: 728px; height: 90px; overflow: hidden; }
+@media(min-width:1140px) { .ad-desktop-leader { display: flex; } }
+.ad-desktop-col { display: none; flex-shrink: 0; width: var(--ad-col-w); position: sticky; top: 86px; align-self: flex-start; }
+.ad-desktop-col .ad-wrap { padding: 10px 10px 12px; border-radius: 20px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); gap: 6px; min-height: 632px; }
+.ad-desktop-col .ad-slot { width: 160px; height: 600px; overflow: hidden; border-radius: 12px; background: var(--bg); }
+@media(min-width:1140px) { .ad-desktop-col { display: block; } }
+body.rtl .page-inner { flex-direction: row-reverse; }
+.tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media(max-width:860px) { .tools-grid { grid-template-columns: 1fr; } }
+@media(min-width:1100px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+.tool-link { display: block; }
+.tool-link.hidden { display: none; }
+.tool-card { background: var(--card); border: 1.5px solid var(--border2); border-radius: 20px; padding: 20px; display: flex; align-items: flex-start; gap: 15px; transition: transform 0.22s, border-color 0.22s, box-shadow 0.22s; height: 100%; position: relative; overflow: hidden; }
+.tool-card::after { content: ''; position: absolute; inset: 0; border-radius: 20px; background: linear-gradient(135deg, var(--glow) 0%, transparent 60%); opacity: 0; transition: opacity 0.22s; }
+.tool-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 16px 32px -6px var(--glow), 0 4px 8px -2px rgba(0,0,0,0.05); }
+.tool-card:hover::after { opacity: 1; }
+.tool-icon-wrapper { font-size: 22px; background: linear-gradient(135deg, var(--bg2), var(--bg)); border: 1.5px solid var(--border2); padding: 11px; border-radius: 14px; min-width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; z-index: 1; transition: transform 0.22s; }
+.tool-card:hover .tool-icon-wrapper { transform: scale(1.08); }
+.tool-info-pane { position: relative; z-index: 1; min-width: 0; }
+.tool-info-pane h3 { font-size: 14.5px; font-weight: 700; margin-bottom: 5px; letter-spacing: 0.1px; font-family: var(--fhead); }
+.tool-info-pane p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.tool-card-arrow { position: absolute; top: 16px; right: 16px; opacity: 0; color: var(--accent); font-size: 14px; transition: opacity 0.2s, transform 0.2s; z-index: 2; }
+body.rtl .tool-card-arrow { right: auto; left: 16px; }
+.tool-card:hover .tool-card-arrow { opacity: 1; transform: translate(2px, -2px); }
+#noResults { text-align: center; color: var(--muted); padding: 5rem 0; display: none; font-size: 15px; }
+.seo-section { max-width: 1100px; margin: 0 auto; padding: 1.5rem 18px 4rem; position: relative; z-index: 1; }
+.seo-section > h2 { font-family: var(--fhead); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -.3px; line-height: 1.3; margin: 2.6rem 0 1rem; overflow-wrap: anywhere; }
+.seo-section > h2:first-child { margin-top: 0; }
+.seo-section > p { color: var(--muted); line-height: 1.7; font-size: 15px; margin: 0 0 1.6rem; overflow-wrap: anywhere; }
+.seo-section > p strong { color: var(--text); }
+.seo-cat { display: block; clear: both; position: relative; width: 100%; margin: 0 0 2rem; }
+.seo-cat h3 { font-family: var(--fhead); font-size: 1.05rem; font-weight: 700; color: var(--accent); margin: 0 0 .9rem; line-height: 1.3; position: relative; clear: both; overflow-wrap: anywhere; }
+.seo-link-grid { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; margin: 0; padding: 0; list-style: none; }
+.seo-link-grid a { display: inline-flex; align-items: center; max-width: 100%; padding: 8px 15px; background: var(--card); border: 1px solid var(--border2); border-radius: 99px; color: var(--text); font-size: 13.5px; font-weight: 500; line-height: 1.2; overflow-wrap: anywhere; transition: border-color .15s, color .15s, background .15s; }
+.seo-link-grid a:hover { color: var(--accent); border-color: var(--accent); background: var(--glow); }
+.seo-faq { margin-top: 1.5rem; }
+.seo-faq h2 { font-family: var(--fhead); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700; letter-spacing: -.3px; margin: 0 0 1rem; }
+.seo-faq h3 { font-family: var(--fhead); font-size: 1.02rem; font-weight: 600; color: var(--accent); margin: 1.4rem 0 .4rem; }
+.seo-faq p { color: var(--muted); line-height: 1.7; font-size: 15px; margin-bottom: .6rem; }
+body.rtl .seo-section { text-align: right; }
+footer { text-align: center; padding: 36px 20px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--border2); background: var(--card); position: relative; z-index: 1; }
+.footer-logo { display: inline-flex; align-items: center; gap: 7px; margin-bottom: 14px; font-family: var(--fhead); font-weight: 700; font-size: 1rem; }
+.footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px 18px; margin-bottom: 14px; }
+.footer-links a { color: var(--muted); font-weight: 500; font-size: 13px; transition: color 0.2s; }
+.footer-links a:hover { color: var(--accent); }
+.footer-divider { width: 40px; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 2px; margin: 0 auto 14px; }
+
+/* ===== Responsive: tablets ===== */
+@media(max-width:900px) {
+  .page-inner { padding: 0 16px 4.5rem; gap: 16px; }
+  .seo-section { padding: 1.2rem 16px 3.5rem; }
+}
+/* ===== Responsive: phones ===== */
+@media(max-width:600px) {
+  :root { --nav-h: 58px; }
+  nav { padding: 0 14px; }
+  .nav-left { gap: 0.7rem; }
+  .nav-logo { font-size: 1rem; gap: 6px; }
+  .logo-icon { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; }
+  .nav-actions { gap: 0.55rem; }
+  .control-btn { width: 34px; height: 34px; font-size: 0.95rem; }
+  .hero { padding: 2.1rem 1rem 1.6rem; }
+  .hero-badge { font-size: 11.5px; padding: 5px 13px; margin-bottom: 1.1rem; }
+  .hero h1 { line-height: 1.18; margin-bottom: 0.8rem; }
+  .hero-sub { font-size: 14.5px; margin-bottom: 1.5rem; }
+  .hero-stats { gap: 8px; }
+  .stat-pill { font-size: 12px; padding: 7px 13px; }
+  .page-inner { padding: 0 14px 4.5rem; }
+  .search-container { margin-bottom: 1.6rem; }
+  .search-bar { padding: 13px 18px 13px 46px; font-size: 14.5px; }
+  .filter-row { gap: 6px; margin-bottom: 1.6rem; }
+  .filter-pill { padding: 7px 15px; font-size: 12.5px; }
+  .tools-grid { gap: 13px; }
+  .tool-card { padding: 16px; gap: 13px; border-radius: 16px; }
+  .tool-icon-wrapper { min-width: 44px; height: 44px; font-size: 19px; padding: 9px; }
+  .tool-info-pane h3 { font-size: 14px; }
+  .tool-info-pane p { font-size: 12.5px; }
+  .seo-section { padding: 1rem 14px 3.5rem; }
+  .seo-cat h3 { font-size: 1rem; }
+  .seo-link-grid a { padding: 7px 13px; font-size: 13px; }
+  .sidebar { width: 86vw; max-width: 320px; left: -90vw; }
+  body.rtl .sidebar { right: -90vw; left: auto; }
+  footer { padding: 30px 16px; }
+}
+@media(max-width:360px) {
+  .hero-stats .stat-pill:nth-child(n+4) { display: none; }
+}
 </style>
 
 <script>
-(function(){document.documentElement.setAttribute("data-theme",localStorage.getItem("imgpdftools-theme")||localStorage.getItem("pixelpress-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"));})();
-window.onerror=function(msg,src,line){try{var e=JSON.parse(localStorage.getItem("imgpdftools_errors")||"[]");e.push({msg:msg,src:src,line:line,time:new Date().toISOString()});if(e.length>30)e.shift();localStorage.setItem("imgpdftools_errors",JSON.stringify(e));}catch(_){}return false;};
+(function(){
+  document.documentElement.setAttribute('data-theme',
+    localStorage.getItem('imgpdftools-theme') ||
+    localStorage.getItem('pixelpress-theme') ||
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  );
+})();
+window.onerror = function(msg, src, line){
+  try {
+    var e = JSON.parse(localStorage.getItem('imgpdftools_errors') || '[]');
+    e.push({msg: msg, src: src, line: line, time: new Date().toISOString()});
+    if(e.length > 30) e.shift();
+    localStorage.setItem('imgpdftools_errors', JSON.stringify(e));
+  } catch(_) {}
+  return false;
+};
 </script>
 </head>
 
 <body>
-<div class="ad-mobile-bottom ad-hidden" id="adMobileBottom"><span class="ad-tag">Ad</span><button class="ad-dismiss" id="adMobileClose" aria-label="Close ad">✕</button><div class="ad-slot" id="adMobileSlot"></div></div>
+
+<div class="ad-mobile-bottom ad-hidden" id="adMobileBottom">
+  <span class="ad-tag">Ad</span>
+  <button class="ad-dismiss" id="adMobileClose" aria-label="Close ad">✕</button>
+  <div class="ad-slot" id="adMobileSlot"></div>
+</div>
 
 <div class="sidebar-overlay" id="menuOverlay" onclick="toggleMenu(false)"></div>
 <aside class="sidebar" id="sideMenu" aria-label="Navigation menu">
-<div class="sidebar-header"><div class="nav-logo"><div class="logo-icon">🛠️</div><span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span></div><button class="sidebar-close" onclick="toggleMenu(false)" aria-label="Close menu">✕</button></div>
-<div class="sidebar-links" id="sidebarLinks"></div>
+  <div class="sidebar-header">
+    <div class="nav-logo">
+      <div class="logo-icon">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </div>
+    <button class="sidebar-close" onclick="toggleMenu(false)" aria-label="Close menu">✕</button>
+  </div>
+  <div class="sidebar-links" id="sidebarLinks"></div>
 </aside>
 
 <nav role="navigation" aria-label="Main navigation">
-<div class="nav-left"><button class="menu-trigger" onclick="toggleMenu(true)" aria-label="Open navigation menu" aria-expanded="false" id="menuTrigger"><i class="fa-solid fa-bars"></i></button><a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home"><div class="logo-icon">🛠️</div><span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span></a></div>
-<div class="nav-actions"><div class="lang-pill-container"><span class="lang-p-label" id="langText">English</span><button class="switch-p-btn active" id="langToggleBtn" onclick="toggleLanguage()" aria-label="Switch language"></button></div><button class="control-btn" id="themeToggle" aria-label="Toggle dark/light theme">🌓</button></div>
+  <div class="nav-left">
+    <button class="menu-trigger" onclick="toggleMenu(true)" aria-label="Open navigation menu" aria-expanded="false" id="menuTrigger">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+    <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
+      <div class="logo-icon">🛠️</div>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+    </a>
+  </div>
+  <div class="nav-actions">
+    <div class="lang-pill-container">
+      <span class="lang-p-label" id="langText">English</span>
+      <button class="switch-p-btn active" id="langToggleBtn" onclick="toggleLanguage()" aria-label="Switch language"></button>
+    </div>
+    <button class="control-btn" id="themeToggle" aria-label="Toggle dark/light theme">🌓</button>
+  </div>
 </nav>
 
 <section class="hero">
-<div class="hero-badge"><span class="hero-badge-dot"></span><span>100% Free · No Upload · Private</span></div>
-<h1 id="heroTitle">Every Image &amp; PDF tool <span class="h1-line2" id="heroSpan">you'll ever need</span></h1>
-<p class="hero-sub" id="heroDesc">Process images and PDFs directly in your browser. No servers, no sign-up, no waiting — just instant results.</p>
-<div class="hero-stats"><div class="stat-pill"><span>🛠️</span><span class="stat-num">25+</span> Tools</div><div class="stat-pill"><span>🔒</span>100% Private</div><div class="stat-pill"><span>⚡</span>Instant</div><div class="stat-pill"><span>🌐</span>Works Offline</div></div>
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    <span>100% Free · No Upload · Private</span>
+  </div>
+  <h1 id="heroTitle">Every Image &amp; PDF tool <span class="h1-line2" id="heroSpan">you'll ever need</span></h1>
+  <p class="hero-sub" id="heroDesc">Process images and PDFs directly in your browser. No servers, no sign-up, no waiting — just instant results.</p>
+  <div class="hero-stats">
+    <div class="stat-pill"><span class="sp-icon">🛠️</span> <span class="stat-num">25+</span> Tools</div>
+    <div class="stat-pill"><span class="sp-icon">🔒</span> 100% Private</div>
+    <div class="stat-pill"><span class="sp-icon">⚡</span> Instant</div>
+    <div class="stat-pill"><span class="sp-icon">🌐</span> Works Offline</div>
+  </div>
 </section>
 
-<div class="ad-tablet-hero" id="adTabletHero"><div class="ad-wrap ad-hidden" id="adTabletHeroWrap"><span class="ad-tag">Ad</span><button class="ad-dismiss" id="adTabletHeroClose" aria-label="Close ad">✕</button><div class="ad-slot" id="adTabletHeroSlot"></div></div></div>
-<div class="ad-desktop-leader" id="adDesktopLeader"><div class="ad-wrap ad-hidden" id="adDesktopLeaderWrap"><span class="ad-tag">Ad</span><button class="ad-dismiss" id="adDesktopLeaderClose" aria-label="Close ad">✕</button><div class="ad-slot" id="adDesktopLeaderSlot"></div></div></div>
-
-<div class="page-outer"><div class="page-inner"><div class="main-col">
-<div class="search-container"><span class="search-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span><input type="search" class="search-bar" id="toolSearch" placeholder="Search tools…" autocomplete="off" aria-label="Search tools"></div>
-<div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
-<div class="ad-tablet-rect" id="adTabletRect"><div class="ad-wrap ad-hidden" id="adTabletRectWrap"><span class="ad-tag">Ad</span><button class="ad-dismiss" id="adTabletRectClose" aria-label="Close ad">✕</button><div class="ad-slot" id="adTabletRectSlot"></div></div></div>
-<section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
-<div id="noResults" role="status" aria-live="polite">No results found.</div>
+<div class="ad-tablet-hero" id="adTabletHero">
+  <div class="ad-wrap ad-hidden" id="adTabletHeroWrap">
+    <span class="ad-tag">Ad</span>
+    <button class="ad-dismiss" id="adTabletHeroClose" aria-label="Close ad">✕</button>
+    <div class="ad-slot" id="adTabletHeroSlot"></div>
+  </div>
 </div>
-<aside class="ad-desktop-col" id="adDesktopCol" role="complementary" aria-label="Advertisement"><div class="ad-wrap ad-hidden" id="adDesktopColWrap"><span class="ad-tag">Ad</span><button class="ad-dismiss" id="adDesktopColClose" aria-label="Close ad">✕</button><div class="ad-slot" id="adDesktopColSlot"></div></div></aside>
-</div></div>
+
+<div class="ad-desktop-leader" id="adDesktopLeader">
+  <div class="ad-wrap ad-hidden" id="adDesktopLeaderWrap">
+    <span class="ad-tag">Ad</span>
+    <button class="ad-dismiss" id="adDesktopLeaderClose" aria-label="Close ad">✕</button>
+    <div class="ad-slot" id="adDesktopLeaderSlot"></div>
+  </div>
+</div>
+
+<div class="page-outer">
+  <div class="page-inner">
+    <div class="main-col">
+      <div class="search-container">
+        <span class="search-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
+        <input type="search" class="search-bar" id="toolSearch" placeholder="Search tools…" autocomplete="off" aria-label="Search tools" />
+      </div>
+      <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
+      <div class="ad-tablet-rect" id="adTabletRect">
+        <div class="ad-wrap ad-hidden" id="adTabletRectWrap">
+          <span class="ad-tag">Ad</span>
+          <button class="ad-dismiss" id="adTabletRectClose" aria-label="Close ad">✕</button>
+          <div class="ad-slot" id="adTabletRectSlot"></div>
+        </div>
+      </div>
+      <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
+      <div id="noResults" role="status" aria-live="polite">No results found.</div>
+    </div>
+    <aside class="ad-desktop-col" id="adDesktopCol" role="complementary" aria-label="Advertisement">
+      <div class="ad-wrap ad-hidden" id="adDesktopColWrap">
+        <span class="ad-tag">Ad</span>
+        <button class="ad-dismiss" id="adDesktopColClose" aria-label="Close ad">✕</button>
+        <div class="ad-slot" id="adDesktopColSlot"></div>
+      </div>
+    </aside>
+  </div>
+</div>
 
 <section class="seo-section" aria-label="About ImgPDFTools and tool directory">
-<div class="seo-intro"><h2>Free Online Image &amp; PDF Tools — Right in Your Browser</h2><p>ImgPDFTools is a collection of 25+ free, privacy-first tools to compress, resize, convert, and edit images, plus PDF utilities like merge, split, compress, and annotate. Everything runs in your browser — your files are never uploaded.</p></div>
-<div class="seo-cats">
-<div class="seo-cat"><h3><i class="fa-solid fa-image"></i> Image Tools</h3><nav class="seo-links" aria-label="Image tools"><a href="./compress.html">Compress Image</a><a href="./resize.html">Resize Image</a><a href="./photo-editor.html">Photo Editor</a><a href="./convert.html">Convert Image Format</a><a href="./watermark.html">Watermark Image</a><a href="./remove-bg.html">Remove Background</a><a href="./meme-generator.html">Meme Generator</a><a href="./crop.html">Advanced Crop</a><a href="./blur-face.html">Blur Face</a><a href="./thumbnail-maker.html">Thumbnail Maker</a><a href="./screenshot-editor.html">Screenshot Editor</a><a href="./favicon-generator.html">Favicon Generator</a></nav></div>
-<div class="seo-cat"><h3><i class="fa-solid fa-file-pdf"></i> PDF &amp; Document Tools</h3><nav class="seo-links" aria-label="PDF and document tools"><a href="./pdf-to-jpg.html">PDF to JPG</a><a href="./jpg-to-pdf.html">JPG to PDF</a><a href="./split-pdf.html">Split PDF</a><a href="./merge-pdf.html">Merge PDF</a><a href="./compress-pdf.html">Compress PDF</a><a href="./pdf-annotator.html">PDF Annotator</a></nav></div>
-<div class="seo-cat"><h3><i class="fa-solid fa-code"></i> Developer &amp; Utility Tools</h3><nav class="seo-links" aria-label="Developer and utility tools"><a href="./qr-generator.html">QR Code Generator</a><a href="./password-generator.html">Password Generator</a><a href="./json-formatter.html">JSON Formatter</a><a href="./url-shortener.html">URL Shortener</a><a href="./color-picker.html">Color Picker</a><a href="./palette-generator.html">Palette Generator</a><a href="./unit-converter.html">Unit Converter</a><a href="./dxf-dwg-converter.html">CAD Converter (DXF/DWG)</a><a href="./ocr.html">OCR Scanner</a></nav></div>
-</div>
-<div class="seo-why"><h2>Why use ImgPDFTools?</h2><p><strong>100% private:</strong> Files are processed on your device, never uploaded. <strong>No sign-up:</strong> Open a tool and start instantly. <strong>Fast &amp; offline-ready:</strong> Most tools keep working even without an internet connection.</p></div>
-<div class="seo-faq"><h2>Frequently Asked Questions</h2><toggle>Are these tools really free?<p>Yes — every tool is free with no account and no watermark.</p></toggle><toggle>Are my files uploaded anywhere?<p>No. All processing happens locally in your browser.</p></toggle><toggle>Do I need to install anything?<p>No installation required. The tools run in modern browsers.</p></toggle></div>
+  <h2 id="seoH2Main">Free Online Image &amp; PDF Tools — Right in Your Browser</h2>
+  <p id="seoIntro">ImgPDFTools is a collection of 25+ free, privacy-first tools to compress, resize, convert, and edit images, plus a full set of PDF utilities like merge, split, compress, and annotate. Everything runs entirely in your browser — your files are never uploaded to a server, so your work stays private and fast.</p>
+  <div class="seo-cat">
+    <h3 id="seoCat1">Image Tools</h3>
+    <nav class="seo-link-grid" aria-label="Image tools">
+      <a href="./compress.html">Compress Image</a>
+      <a href="./resize.html">Resize Image</a>
+      <a href="./photo-editor.html">Photo Editor</a>
+      <a href="./convert.html">Convert Image Format</a>
+      <a href="./watermark.html">Watermark Image</a>
+      <a href="./remove-bg.html">Remove Background</a>
+      <a href="./meme-generator.html">Meme Generator</a>
+      <a href="./crop.html">Advanced Crop</a>
+      <a href="./blur-face.html">Blur Face</a>
+      <a href="./thumbnail-maker.html">Thumbnail Maker</a>
+      <a href="./screenshot-editor.html">Screenshot Editor</a>
+      <a href="./favicon-generator.html">Favicon Generator</a>
+    </nav>
+  </div>
+  <div class="seo-cat">
+    <h3 id="seoCat2">PDF &amp; Document Tools</h3>
+    <nav class="seo-link-grid" aria-label="PDF and document tools">
+      <a href="./pdf-to-jpg.html">PDF to JPG</a>
+      <a href="./jpg-to-pdf.html">JPG to PDF</a>
+      <a href="./split-pdf.html">Split PDF</a>
+      <a href="./merge-pdf.html">Merge PDF</a>
+      <a href="./compress-pdf.html">Compress PDF</a>
+      <a href="./pdf-annotator.html">PDF Annotator</a>
+    </nav>
+  </div>
+  <div class="seo-cat">
+    <h3 id="seoCat3">Developer &amp; Utility Tools</h3>
+    <nav class="seo-link-grid" aria-label="Developer and utility tools">
+      <a href="./qr-generator.html">QR Code Generator</a>
+      <a href="./password-generator.html">Password Generator</a>
+      <a href="./json-formatter.html">JSON Formatter</a>
+      <a href="./url-shortener.html">URL Shortener</a>
+      <a href="./color-picker.html">Color Picker</a>
+      <a href="./palette-generator.html">Palette Generator</a>
+      <a href="./unit-converter.html">Unit Converter</a>
+      <a href="./dxf-dwg-converter.html">CAD Converter (DXF/DWG)</a>
+      <a href="./ocr.html">OCR Scanner</a>
+    </nav>
+  </div>
+  <h2 id="seoWhyH2">Why use ImgPDFTools?</h2>
+  <p id="seoWhyP"><strong>100% private:</strong> Files are processed on your device, never uploaded. <strong>No sign-up:</strong> Open a tool and start instantly. <strong>Fast &amp; offline-ready:</strong> Most tools keep working even without an internet connection.</p>
+  <div class="seo-faq">
+    <h2 id="seoFaqH2">Frequently Asked Questions</h2>
+    <h3 id="seoFaqQ1">Are these tools really free?</h3>
+    <p id="seoFaqA1">Yes — every tool is completely free with no account, no watermarks, and no limits.</p>
+    <h3 id="seoFaqQ2">Are my files uploaded anywhere?</h3>
+    <p id="seoFaqA2">No. All processing happens locally in your browser, so your images and PDFs never leave your device.</p>
+    <h3 id="seoFaqQ3">Do I need to install anything?</h3>
+    <p id="seoFaqA3">No installation required. The tools run in any modern browser, and many work offline as well.</p>
+  </div>
 </section>
 
-<footer role="contentinfo"><div class="footer-logo"><div class="logo-icon" style="width:26px;height:26px;font-size:13px">🛠️</div><span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span></div><div class="footer-divider"></div><div class="footer-links" id="footerLinks"></div><p id="footerCopyright">© 2026 ImgPDFTools — All Rights Reserved</p></footer>
+<footer role="contentinfo">
+  <div class="footer-logo">
+    <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
+    <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
+  </div>
+  <div class="footer-divider"></div>
+  <div class="footer-links" id="footerLinks"></div>
+  <p id="footerCopyright">© 2026 ImgPDFTools — All Rights Reserved</p>
+</footer>
 
 <script>
-const commonTools=[
-["./index.html","fa-house","Home","home","","","",false],
-["./compress.html","fa-box","Compress Image","image","optimize","📦","Compress JPG, PNG, and WEBP while saving space.",true],
-["./resize.html","fa-up-right-and-down-left-from-center","Resize Image","image","edit","📐","Define dimensions by percent or pixel.",true],
-["./photo-editor.html","fa-wand-magic-sparkles","Photo Editor","image","edit create","✨","Edit photos with filters, brightness, contrast.",true],
-["./convert.html","fa-rotate","Convert Format","image","convert","🔄","Transform images into JPG, PNG, or WEBP.",true],
-["./watermark.html","fa-droplet","Watermark Image","image","security create","💧","Stamp text or image over your photos.",true],
-["./remove-bg.html","fa-eraser","Remove Background","image","edit create","🫥","AI-powered background remover.",true],
-["./meme-generator.html","fa-face-laugh-squint","Meme Generator","image","create","😂","Create memes with templates and text.",true],
-["./crop.html","fa-scissors","Advanced Crop","image","edit","✂️","Precise cropping with aspect ratios.",true],
-["./blur-face.html","fa-user-shield","Blur Face","image","security edit","👤","Auto-detect and blur faces for privacy.",true],
-["./thumbnail-maker.html","fa-image","Thumbnail Maker","image","create","🖼️","Generate streaming & social media cards.",true],
-["./screenshot-editor.html","fa-desktop","Screenshot Editor","image","edit create","💻","Wrap captures in beautiful device frames.",true],
-["./favicon-generator.html","fa-icons","Favicon Generator","image","create convert","🎯","Convert assets into multi-size .ico files.",true],
-["./pdf-to-jpg.html","fa-file-pdf","PDF to JPG","doc","convert doc","📄","Extract pages from PDF as JPG images.",true],
-["./jpg-to-pdf.html","fa-file-image","JPG to PDF","doc","convert doc","🖼️","Convert images into a single PDF document.",true],
-["./split-pdf.html","fa-scissors","Split PDF","doc","doc","✂️","Extract page ranges or split every page.",true],
-["./merge-pdf.html","fa-object-group","Merge PDF","doc","doc","🗂️","Combine multiple PDFs into one file.",true],
-["./compress-pdf.html","fa-compress","Compress PDF","doc","optimize doc","📉","Shrink PDF file size dynamically.",true],
-["./pdf-annotator.html","fa-pen-ruler","PDF Annotator","doc","edit doc","🖊️","Add text, draw, highlight, sign PDFs.",true],
-["./qr-generator.html","fa-qrcode","QR Generator","utility","create utility","📱","Generate custom vector QR codes instantly.",true],
-["./password-generator.html","fa-key","Password Generator","utility","security utility","🔑","Create cryptographically secure passwords.",true],
-["./json-formatter.html","fa-code","JSON Formatter","utility","utility","💻","Parse, format, and validate JSON data.",true],
-["./url-shortener.html","fa-link","URL Shortener","utility","utility","🔗","Minify lengthy URLs into short links.",true],
-["./color-picker.html","fa-eye-dropper","Color Picker","utility","utility edit","🎨","Advanced color inspection and HEX copying.",true],
-["./palette-generator.html","fa-palette","Palette Generator","utility","utility create","🌈","Algorithmic color scheme generator.",true],
-["./unit-converter.html","fa-calculator","Unit Converter","utility","utility","📏","High performance digital metrics calculator.",true],
-["./dxf-dwg-converter.html","fa-compass-drafting","CAD Converter","utility","utility convert","📐","DXF & DWG structural CAD utility.",true],
-["./ocr.html","fa-file-lines","OCR Scanner","utility","utility","📝","Extract text from images with 100+ languages.",true],
-["./about.html","fa-circle-info","About Us","info","","","",false],
-["./contact.html","fa-envelope","Contact","info","","","",false],
-["./faq.html","fa-circle-question","FAQ","info","","","",false],
-["./blog/","fa-pen-to-square","Blog","info","","","",false],
-["./privacy-policy.html","fa-shield-halved","Privacy Policy","info","","","",false],
-["./terms.html","fa-file-contract","Terms of Service","info","","","",false],
-["./disclaimer.html","fa-triangle-exclamation","Disclaimer","info","","","",false]
-].map(t=>({href:t[0],icon:t[1],text:t[2],section:t[3],cat:t[4],emoji:t[5],title:t[2],desc:t[6],isUtilityCard:t[7]}));
-
-const languageData={
-en:{title:"ImgPDFTools — Free Online Image & PDF Toolkit",labelText:"English",heroTitle:"Every Image & PDF tool",heroSpan:"you'll ever need",heroDesc:"Process images and PDFs directly in your browser. No servers, no sign-up, no waiting — just instant results.",copyright:"© 2026 ImgPDFTools — All Rights Reserved",searchPlaceholder:"Search tools…",noResultsText:"No results found.",filters:[["all","All"],["optimize","Optimize"],["create","Create"],["edit","Edit"],["convert","Convert"],["security","Security"],["doc","PDF & Docs"],["utility","Utilities"]],sidebarTitles:{image:"Image Tools",doc:"PDF & Document Tools",utility:"Dev & Utility Tools",info:"Info & Pages"},toolsRegistry:commonTools,footer:[["./about.html","About"],["./contact.html","Contact"],["./faq.html","FAQ"],["./blog/","Blog"],["./privacy-policy.html","Privacy"],["./terms.html","Terms"],["./disclaimer.html","Disclaimer"]]},
-ar:{title:"ImgPDFTools — أدوات مجانية لتعديل الصور وملفات PDF",labelText:"العربية",heroTitle:"كل أدوات الصور و PDF",heroSpan:"في مكان واحد",heroDesc:"معالجة الصور وملفات PDF مباشرة في متصفحك. لا خوادم، لا تسجيل، لا انتظار.",copyright:"© 2026 ImgPDFTools — جميع الحقوق محفوظة",searchPlaceholder:"البحث عن الأدوات...",noResultsText:"لم يتم العثور على نتائج.",filters:[["all","الكل"],["optimize","تحسين"],["create","إنشاء"],["edit","تعديل"],["convert","تحويل"],["security","أمان"],["doc","PDF ومستندات"],["utility","أدوات"]],sidebarTitles:{image:"أدوات الصور",doc:"أدوات PDF والمستندات",utility:"أدوات المطورين",info:"معلومات"},toolsRegistry:commonTools,footer:[["./about.html","من نحن"],["./contact.html","اتصل بنا"],["./faq.html","الأسئلة الشائعة"],["./blog/","المدونة"],["./privacy-policy.html","الخصوصية"],["./terms.html","الشروط"],["./disclaimer.html","إخلاء المسؤولية"]]}
+const languageData = {
+  en: {
+    title: "ImgPDFTools — Free Online Image & PDF Toolkit",
+    labelText: "English",
+    heroTitle: "Every Image & PDF tool",
+    heroSpan: "you'll ever need",
+    heroDesc: "Process images and PDFs directly in your browser. No servers, no sign-up, no waiting — just instant results.",
+    copyright: "© 2026 ImgPDFTools — All Rights Reserved",
+    searchPlaceholder: "Search tools…",
+    noResultsText: "No results found.",
+    filters: [
+      {id:'all',text:'All'},{id:'optimize',text:'Optimize'},{id:'create',text:'Create'},
+      {id:'edit',text:'Edit'},{id:'convert',text:'Convert'},{id:'security',text:'Security'},
+      {id:'doc',text:'PDF & Docs'},{id:'utility',text:'Utilities'}
+    ],
+    sidebarTitles: {image:"Image Tools", doc:"PDF & Document Tools", utility:"Dev & Utility Tools", info:"Info & Pages"},
+    seo: {
+      mainH2: "Free Online Image & PDF Tools — Right in Your Browser",
+      intro: "ImgPDFTools is a collection of 25+ free, privacy-first tools to compress, resize, convert, and edit images, plus a full set of PDF utilities like merge, split, compress, and annotate. Everything runs entirely in your browser — your files are never uploaded to a server, so your work stays private and fast.",
+      cat1: "Image Tools",
+      cat2: "PDF & Document Tools",
+      cat3: "Developer & Utility Tools",
+      whyH2: "Why use ImgPDFTools?",
+      whyP: "<strong>100% private:</strong> Files are processed on your device, never uploaded. <strong>No sign-up:</strong> Open a tool and start instantly. <strong>Fast &amp; offline-ready:</strong> Most tools keep working even without an internet connection.",
+      faqH2: "Frequently Asked Questions",
+      q1: "Are these tools really free?",
+      a1: "Yes — every tool is completely free with no account, no watermarks, and no limits.",
+      q2: "Are my files uploaded anywhere?",
+      a2: "No. All processing happens locally in your browser, so your images and PDFs never leave your device.",
+      q3: "Do I need to install anything?",
+      a3: "No installation required. The tools run in any modern browser, and many work offline as well."
+    },
+    toolsRegistry: [
+      {href:"./index.html",icon:"fa-house",text:"Home",section:"home",isUtilityCard:false},
+      {href:"./compress.html",icon:"fa-box",text:"Compress Image",section:"image",cat:"optimize",emoji:"📦",title:"Compress Image",desc:"Compress JPG, PNG, and WEBP while saving space.",isUtilityCard:true},
+      {href:"./resize.html",icon:"fa-up-right-and-down-left-from-center",text:"Resize Image",section:"image",cat:"edit",emoji:"📐",title:"Resize Image",desc:"Define dimensions by percent or pixel.",isUtilityCard:true},
+      {href:"./photo-editor.html",icon:"fa-wand-magic-sparkles",text:"Photo Editor",section:"image",cat:"edit create",emoji:"✨",title:"Photo Editor",desc:"Edit photos with filters, brightness, contrast.",isUtilityCard:true},
+      {href:"./convert.html",icon:"fa-rotate",text:"Convert Format",section:"image",cat:"convert",emoji:"🔄",title:"Convert Format",desc:"Transform images into JPG, PNG, or WEBP.",isUtilityCard:true},
+      {href:"./watermark.html",icon:"fa-droplet",text:"Watermark Image",section:"image",cat:"security create",emoji:"💧",title:"Watermark Image",desc:"Stamp text or image over your photos.",isUtilityCard:true},
+      {href:"./remove-bg.html",icon:"fa-eraser",text:"Remove Background",section:"image",cat:"edit create",emoji:"🫥",title:"Remove Background",desc:"AI-powered background remover.",isUtilityCard:true},
+      {href:"./meme-generator.html",icon:"fa-face-laugh-squint",text:"Meme Generator",section:"image",cat:"create",emoji:"😂",title:"Meme Generator",desc:"Create memes with templates and text.",isUtilityCard:true},
+      {href:"./crop.html",icon:"fa-scissors",text:"Advanced Crop",section:"image",cat:"edit",emoji:"✂️",title:"Advanced Crop",desc:"Precise cropping with aspect ratios.",isUtilityCard:true},
+      {href:"./blur-face.html",icon:"fa-user-shield",text:"Blur Face",section:"image",cat:"security edit",emoji:"👤",title:"Blur Face",desc:"Auto-detect and blur faces for privacy.",isUtilityCard:true},
+      {href:"./thumbnail-maker.html",icon:"fa-image",text:"Thumbnail Maker",section:"image",cat:"create",emoji:"🖼️",title:"Thumbnail Maker",desc:"Generate streaming & social media cards.",isUtilityCard:true},
+      {href:"./screenshot-editor.html",icon:"fa-desktop",text:"Screenshot Editor",section:"image",cat:"edit create",emoji:"💻",title:"Screenshot Editor",desc:"Wrap captures in beautiful device frames.",isUtilityCard:true},
+      {href:"./favicon-generator.html",icon:"fa-icons",text:"Favicon Generator",section:"image",cat:"create convert",emoji:"🎯",title:"Favicon Generator",desc:"Convert assets into multi-size .ico files.",isUtilityCard:true},
+      {href:"./pdf-to-jpg.html",icon:"fa-file-pdf",text:"PDF to JPG",section:"doc",cat:"convert doc",emoji:"📄",title:"PDF to JPG",desc:"Extract pages from PDF as JPG images.",isUtilityCard:true},
+      {href:"./jpg-to-pdf.html",icon:"fa-file-image",text:"JPG to PDF",section:"doc",cat:"convert doc",emoji:"🖼️",title:"JPG to PDF",desc:"Convert images into a single PDF document.",isUtilityCard:true},
+      {href:"./split-pdf.html",icon:"fa-scissors",text:"Split PDF",section:"doc",cat:"doc",emoji:"✂️",title:"Split PDF",desc:"Extract page ranges or split every page.",isUtilityCard:true},
+      {href:"./merge-pdf.html",icon:"fa-object-group",text:"Merge PDF",section:"doc",cat:"doc",emoji:"🗂️",title:"Merge PDF",desc:"Combine multiple PDFs into one file.",isUtilityCard:true},
+      {href:"./compress-pdf.html",icon:"fa-compress",text:"Compress PDF",section:"doc",cat:"optimize doc",emoji:"📉",title:"Compress PDF",desc:"Shrink PDF file size dynamically.",isUtilityCard:true},
+      {href:"./pdf-annotator.html",icon:"fa-pen-ruler",text:"PDF Annotator",section:"doc",cat:"edit doc",emoji:"🖊️",title:"PDF Annotator",desc:"Add text, draw, highlight, sign PDFs.",isUtilityCard:true},
+      {href:"./qr-generator.html",icon:"fa-qrcode",text:"QR Generator",section:"utility",cat:"create utility",emoji:"📱",title:"QR Generator",desc:"Generate custom vector QR codes instantly.",isUtilityCard:true},
+      {href:"./password-generator.html",icon:"fa-key",text:"Password Generator",section:"utility",cat:"security utility",emoji:"🔑",title:"Password Generator",desc:"Create cryptographically secure passwords.",isUtilityCard:true},
+      {href:"./json-formatter.html",icon:"fa-code",text:"JSON Formatter",section:"utility",cat:"utility",emoji:"💻",title:"JSON Formatter",desc:"Parse, format, and validate JSON data.",isUtilityCard:true},
+      {href:"./url-shortener.html",icon:"fa-link",text:"URL Shortener",section:"utility",cat:"utility",emoji:"🔗",title:"URL Shortener",desc:"Minify lengthy URLs into short links.",isUtilityCard:true},
+      {href:"./color-picker.html",icon:"fa-eye-dropper",text:"Color Picker",section:"utility",cat:"utility edit",emoji:"🎨",title:"Color Picker",desc:"Advanced color inspection and HEX copying.",isUtilityCard:true},
+      {href:"./palette-generator.html",icon:"fa-palette",text:"Palette Generator",section:"utility",cat:"utility create",emoji:"🌈",title:"Palette Generator",desc:"Algorithmic color scheme generator.",isUtilityCard:true},
+      {href:"./unit-converter.html",icon:"fa-calculator",text:"Unit Converter",section:"utility",cat:"utility",emoji:"📏",title:"Unit Converter",desc:"High performance digital metrics calculator.",isUtilityCard:true},
+      {href:"./dxf-dwg-converter.html",icon:"fa-compass-drafting",text:"CAD Converter",section:"utility",cat:"utility convert",emoji:"📐",title:"CAD Converter",desc:"DXF & DWG structural CAD utility.",isUtilityCard:true},
+      {href:"./ocr.html",icon:"fa-file-lines",text:"OCR Scanner",section:"utility",cat:"utility",emoji:"📝",title:"OCR Scanner",desc:"Extract text from images with 100+ languages.",isUtilityCard:true},
+      {href:"./about.html",icon:"fa-circle-info",text:"About Us",section:"info",isUtilityCard:false},
+      {href:"./contact.html",icon:"fa-envelope",text:"Contact",section:"info",isUtilityCard:false},
+      {href:"./faq.html",icon:"fa-circle-question",text:"FAQ",section:"info",isUtilityCard:false},
+      {href:"./blog/",icon:"fa-pen-to-square",text:"Blog",section:"info",isUtilityCard:false},
+      {href:"./privacy-policy.html",icon:"fa-shield-halved",text:"Privacy Policy",section:"info",isUtilityCard:false},
+      {href:"./terms.html",icon:"fa-file-contract",text:"Terms of Service",section:"info",isUtilityCard:false},
+      {href:"./disclaimer.html",icon:"fa-triangle-exclamation",text:"Disclaimer",section:"info",isUtilityCard:false}
+    ],
+    footer: [
+      {href:"./about.html",text:"About"},{href:"./contact.html",text:"Contact"},
+      {href:"./faq.html",text:"FAQ"},{href:"./blog/",text:"Blog"},
+      {href:"./privacy-policy.html",text:"Privacy"},{href:"./terms.html",text:"Terms"},
+      {href:"./disclaimer.html",text:"Disclaimer"}
+    ]
+  },
+  ar: {
+    title: "ImgPDFTools — أدوات مجانية لتعديل الصور وملفات PDF",
+    labelText: "العربية",
+    heroTitle: "كل أدوات الصور و PDF",
+    heroSpan: "في مكان واحد",
+    heroDesc: "معالجة الصور وملفات PDF مباشرة في متصفحك. لا خوادم، لا تسجيل، لا انتظار.",
+    copyright: "© 2026 ImgPDFTools — جميع الحقوق محفوظة",
+    searchPlaceholder: "البحث عن الأدوات...",
+    noResultsText: "لم يتم العثور على نتائج.",
+    filters: [
+      {id:'all',text:'الكل'},{id:'optimize',text:'تحسين'},{id:'create',text:'إنشاء'},
+      {id:'edit',text:'تعديل'},{id:'convert',text:'تحويل'},{id:'security',text:'أمان'},
+      {id:'doc',text:'PDF ومستندات'},{id:'utility',text:'أدوات'}
+    ],
+    sidebarTitles: {image:"أدوات الصور", doc:"أدوات PDF والمستندات", utility:"أدوات المطورين", info:"معلومات"},
+    seo: {
+      mainH2: "أدوات مجانية للصور وملفات PDF — مباشرة في متصفحك",
+      intro: "ImgPDFTools مجموعة من أكثر من 25 أداة مجانية تركّز على الخصوصية لضغط وتغيير حجم وتحويل وتعديل الصور، بالإضافة إلى أدوات PDF كاملة مثل الدمج والتقسيم والضغط والتعليق. كل شيء يعمل بالكامل في متصفحك — ملفاتك لا تُرفع أبداً إلى أي خادم، لذا يبقى عملك خاصاً وسريعاً.",
+      cat1: "أدوات الصور",
+      cat2: "أدوات PDF والمستندات",
+      cat3: "أدوات المطورين والأدوات المساعدة",
+      whyH2: "لماذا تستخدم ImgPDFTools؟",
+      whyP: "<strong>خصوصية 100%:</strong> تتم معالجة الملفات على جهازك ولا تُرفع أبداً. <strong>بدون تسجيل:</strong> افتح أي أداة وابدأ فوراً. <strong>سريع وجاهز للعمل دون اتصال:</strong> معظم الأدوات تعمل حتى بدون اتصال بالإنترنت.",
+      faqH2: "الأسئلة الشائعة",
+      q1: "هل هذه الأدوات مجانية حقاً؟",
+      a1: "نعم — كل أداة مجانية تماماً بدون حساب وبدون علامات مائية وبدون حدود.",
+      q2: "هل تُرفع ملفاتي إلى أي مكان؟",
+      a2: "لا. تتم كل المعالجة محلياً في متصفحك، لذا لا تغادر صورك وملفات PDF جهازك أبداً.",
+      q3: "هل أحتاج إلى تثبيت أي شيء؟",
+      a3: "لا حاجة للتثبيت. تعمل الأدوات في أي متصفح حديث، وكثير منها يعمل دون اتصال أيضاً."
+    },
+    toolsRegistry: [
+      {href:"./index.html",icon:"fa-house",text:"الرئيسية",section:"home",isUtilityCard:false},
+      {href:"./compress.html",icon:"fa-box",text:"ضغط الصور",section:"image",cat:"optimize",emoji:"📦",title:"ضغط الصور",desc:"ضغط JPG و PNG و WEBP.",isUtilityCard:true},
+      {href:"./resize.html",icon:"fa-up-right-and-down-left-from-center",text:"تغيير الحجم",section:"image",cat:"edit",emoji:"📐",title:"تغيير الحجم",desc:"تحديد الأبعاد بالبكسل أو النسبة.",isUtilityCard:true},
+      {href:"./photo-editor.html",icon:"fa-wand-magic-sparkles",text:"محرر الصور",section:"image",cat:"edit create",emoji:"✨",title:"محرر الصور",desc:"تعديل الصور بالفلاتر والسطوع.",isUtilityCard:true},
+      {href:"./convert.html",icon:"fa-rotate",text:"تحويل الصيغة",section:"image",cat:"convert",emoji:"🔄",title:"تحويل الصيغة",desc:"تحويل الصور إلى JPG أو PNG أو WEBP.",isUtilityCard:true},
+      {href:"./watermark.html",icon:"fa-droplet",text:"علامة مائية",section:"image",cat:"security create",emoji:"💧",title:"علامة مائية",desc:"ختم نص أو صورة على صورك.",isUtilityCard:true},
+      {href:"./remove-bg.html",icon:"fa-eraser",text:"إزالة الخلفية",section:"image",cat:"edit create",emoji:"🫥",title:"إزالة الخلفية",desc:"مزيل خلفية بالذكاء الاصطناعي.",isUtilityCard:true},
+      {href:"./meme-generator.html",icon:"fa-face-laugh-squint",text:"صانع الميمز",section:"image",cat:"create",emoji:"😂",title:"صانع الميمز",desc:"إنشاء ميمز مع قوالب ونصوص.",isUtilityCard:true},
+      {href:"./crop.html",icon:"fa-scissors",text:"قص الصور",section:"image",cat:"edit",emoji:"✂️",title:"قص الصور",desc:"قص دقيق مع نسب أبعاد.",isUtilityCard:true},
+      {href:"./blur-face.html",icon:"fa-user-shield",text:"تغبيش الوجوه",section:"image",cat:"security edit",emoji:"👤",title:"تغبيش الوجوه",desc:"اكتشاف وتغبيش الوجوه تلقائياً.",isUtilityCard:true},
+      {href:"./thumbnail-maker.html",icon:"fa-image",text:"صانع الصور المصغرة",section:"image",cat:"create",emoji:"🖼️",title:"صانع الصور المصغرة",desc:"بطاقات بث ووسائط اجتماعية.",isUtilityCard:true},
+      {href:"./screenshot-editor.html",icon:"fa-desktop",text:"محرر لقطات الشاشة",section:"image",cat:"edit create",emoji:"💻",title:"محرر لقطات الشاشة",desc:"إطارات أجهزة وتدرجات لونية.",isUtilityCard:true},
+      {href:"./favicon-generator.html",icon:"fa-icons",text:"مولد الأيقونات",section:"image",cat:"create convert",emoji:"🎯",title:"مولد الأيقونات",desc:"تحويل الأصول إلى ملفات .ico.",isUtilityCard:true},
+      {href:"./pdf-to-jpg.html",icon:"fa-file-pdf",text:"PDF إلى JPG",section:"doc",cat:"convert doc",emoji:"📄",title:"PDF إلى JPG",desc:"استخراج صفحات PDF كصور JPG.",isUtilityCard:true},
+      {href:"./jpg-to-pdf.html",icon:"fa-file-image",text:"JPG إلى PDF",section:"doc",cat:"convert doc",emoji:"🖼️",title:"JPG إلى PDF",desc:"تحويل الصور إلى مستند PDF واحد.",isUtilityCard:true},
+      {href:"./split-pdf.html",icon:"fa-scissors",text:"تقسيم PDF",section:"doc",cat:"doc",emoji:"✂️",title:"تقسيم PDF",desc:"استخراج نطاقات الصفحات.",isUtilityCard:true},
+      {href:"./merge-pdf.html",icon:"fa-object-group",text:"دمج PDF",section:"doc",cat:"doc",emoji:"🗂️",title:"دمج PDF",desc:"دمج عدة PDFs في ملف واحد.",isUtilityCard:true},
+      {href:"./compress-pdf.html",icon:"fa-compress",text:"ضغط PDF",section:"doc",cat:"optimize doc",emoji:"📉",title:"ضغط PDF",desc:"تقليل حجم ملف PDF.",isUtilityCard:true},
+      {href:"./pdf-annotator.html",icon:"fa-pen-ruler",text:"محرر PDF",section:"doc",cat:"edit doc",emoji:"🖊️",title:"محرر PDF",desc:"أضف نصاً ورسومات وتوقيعات.",isUtilityCard:true},
+      {href:"./qr-generator.html",icon:"fa-qrcode",text:"مولد QR",section:"utility",cat:"create utility",emoji:"📱",title:"مولد QR",desc:"إنشاء رموز QR مخصصة.",isUtilityCard:true},
+      {href:"./password-generator.html",icon:"fa-key",text:"مولد كلمات المرور",section:"utility",cat:"security utility",emoji:"🔑",title:"مولد كلمات المرور",desc:"كلمات مرور آمنة تشفيراً.",isUtilityCard:true},
+      {href:"./json-formatter.html",icon:"fa-code",text:"منسق JSON",section:"utility",cat:"utility",emoji:"💻",title:"منسق JSON",desc:"تحليل وتنسيق JSON.",isUtilityCard:true},
+      {href:"./url-shortener.html",icon:"fa-link",text:"مختصر الروابط",section:"utility",cat:"utility",emoji:"🔗",title:"مختصر الروابط",desc:"تقصير الروابط الطويلة.",isUtilityCard:true},
+      {href:"./color-picker.html",icon:"fa-eye-dropper",text:"منتقي الألوان",section:"utility",cat:"utility edit",emoji:"🎨",title:"منتقي الألوان",desc:"فحص متقدم للألوان.",isUtilityCard:true},
+      {href:"./palette-generator.html",icon:"fa-palette",text:"مولد لوحة الألوان",section:"utility",cat:"utility create",emoji:"🌈",title:"مولد لوحة الألوان",desc:"مولد أنظمة الألوان.",isUtilityCard:true},
+      {href:"./unit-converter.html",icon:"fa-calculator",text:"محول الوحدات",section:"utility",cat:"utility",emoji:"📏",title:"محول الوحدات",desc:"حاسبة مقاييس رقمية.",isUtilityCard:true},
+      {href:"./dxf-dwg-converter.html",icon:"fa-compass-drafting",text:"محول CAD",section:"utility",cat:"utility convert",emoji:"📐",title:"محول CAD",desc:"أداة DXF و DWG.",isUtilityCard:true},
+      {href:"./ocr.html",icon:"fa-file-lines",text:"OCR",section:"utility",cat:"utility",emoji:"📝",title:"OCR Scanner",desc:"استخراج النص من الصور.",isUtilityCard:true},
+      {href:"./about.html",icon:"fa-circle-info",text:"من نحن",section:"info",isUtilityCard:false},
+      {href:"./contact.html",icon:"fa-envelope",text:"اتصل بنا",section:"info",isUtilityCard:false},
+      {href:"./faq.html",icon:"fa-circle-question",text:"الأسئلة الشائعة",section:"info",isUtilityCard:false},
+      {href:"./blog/",icon:"fa-pen-to-square",text:"المدونة",section:"info",isUtilityCard:false},
+      {href:"./privacy-policy.html",icon:"fa-shield-halved",text:"الخصوصية",section:"info",isUtilityCard:false},
+      {href:"./terms.html",icon:"fa-file-contract",text:"الشروط",section:"info",isUtilityCard:false},
+      {href:"./disclaimer.html",icon:"fa-triangle-exclamation",text:"إخلاء المسؤولية",section:"info",isUtilityCard:false}
+    ],
+    footer: [
+      {href:"./about.html",text:"من نحن"},{href:"./contact.html",text:"اتصل بنا"},
+      {href:"./faq.html",text:"الأسئلة الشائعة"},{href:"./blog/",text:"المدونة"},
+      {href:"./privacy-policy.html",text:"الخصوصية"},{href:"./terms.html",text:"الشروط"},
+      {href:"./disclaimer.html",text:"إخلاء المسؤولية"}
+    ]
+  }
 };
-let currentLang="en";
 
-function renderUI(){
-const data=languageData[currentLang];
-document.getElementById("siteTitle").textContent=data.title;
-document.getElementById("langText").textContent=data.labelText;
-document.getElementById("heroTitle").childNodes[0].textContent=data.heroTitle+" ";
-document.getElementById("heroSpan").textContent=data.heroSpan;
-document.getElementById("heroDesc").textContent=data.heroDesc;
-document.getElementById("footerCopyright").textContent=data.copyright;
-document.getElementById("noResults").textContent=data.noResultsText;
-document.getElementById("toolSearch").placeholder=data.searchPlaceholder;
+let currentLang = 'en';
 
-const filterBox=document.getElementById("filterContainer");filterBox.innerHTML="";
-data.filters.forEach((f,i)=>{const b=document.createElement("button");b.className="filter-pill"+(i===0?" active":"");b.textContent=f[1];b.dataset.target=f[0];b.setAttribute("aria-pressed",i===0?"true":"false");b.onclick=function(){filterCategory(f[0],this)};filterBox.appendChild(b);});
+function renderUI() {
+  const data = languageData[currentLang];
+  document.getElementById('siteTitle').textContent = data.title;
+  document.getElementById('langText').textContent = data.labelText;
+  document.getElementById('heroTitle').childNodes[0].textContent = data.heroTitle + ' ';
+  document.getElementById('heroSpan').textContent = data.heroSpan;
+  document.getElementById('heroDesc').textContent = data.heroDesc;
+  document.getElementById('footerCopyright').textContent = data.copyright;
+  document.getElementById('noResults').textContent = data.noResultsText;
+  document.getElementById('toolSearch').placeholder = data.searchPlaceholder;
 
-const toolsGrid=document.getElementById("toolsList");toolsGrid.innerHTML="";
-const frag=document.createDocumentFragment();
-data.toolsRegistry.filter(t=>t.isUtilityCard).forEach(t=>{const a=document.createElement("a");a.href=t.href;a.className="tool-link";a.dataset.category=t.cat;const card=document.createElement("div");card.className="tool-card";const icon=document.createElement("div");icon.className="tool-icon-wrapper";icon.setAttribute("aria-hidden","true");icon.textContent=t.emoji;const info=document.createElement("div");info.className="tool-info-pane";const h=document.createElement("h3");h.textContent=t.title;const p=document.createElement("p");p.textContent=t.desc;info.append(h,p);const ar=document.createElement("span");ar.className="tool-card-arrow";ar.innerHTML='<i class="fa-solid fa-arrow-up-right" aria-hidden="true"></i>';card.append(icon,info,ar);a.appendChild(card);frag.appendChild(a);});
-toolsGrid.appendChild(frag);
+  const filterBox = document.getElementById('filterContainer');
+  filterBox.innerHTML = '';
+  data.filters.forEach((f, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-pill' + (i === 0 ? ' active' : '');
+    btn.textContent = f.text;
+    btn.setAttribute('data-target', f.id);
+    btn.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+    btn.addEventListener('click', function() { filterCategory(f.id, this); });
+    filterBox.appendChild(btn);
+  });
 
-const footerBox=document.getElementById("footerLinks");footerBox.innerHTML="";
-data.footer.forEach(item=>{const a=document.createElement("a");a.href=item[0];a.textContent=item[1];footerBox.appendChild(a);});
+  const toolsGrid = document.getElementById('toolsList');
+  toolsGrid.innerHTML = '';
+  const fragment = document.createDocumentFragment();
+  data.toolsRegistry.filter(t => t.isUtilityCard).forEach(t => {
+    const a = document.createElement('a');
+    a.href = t.href;
+    a.className = 'tool-link';
+    a.setAttribute('data-category', t.cat);
+    const card = document.createElement('div');
+    card.className = 'tool-card';
+    const iconWrap = document.createElement('div');
+    iconWrap.className = 'tool-icon-wrapper';
+    iconWrap.setAttribute('aria-hidden', 'true');
+    iconWrap.textContent = t.emoji;
+    const infoPane = document.createElement('div');
+    infoPane.className = 'tool-info-pane';
+    const h3 = document.createElement('h3');
+    h3.textContent = t.title;
+    const p = document.createElement('p');
+    p.textContent = t.desc;
+    infoPane.appendChild(h3);
+    infoPane.appendChild(p);
+    const arrow = document.createElement('span');
+    arrow.className = 'tool-card-arrow';
+    const arrowIcon = document.createElement('i');
+    arrowIcon.className = 'fa-solid fa-arrow-up-right';
+    arrowIcon.setAttribute('aria-hidden', 'true');
+    arrow.appendChild(arrowIcon);
+    card.appendChild(iconWrap);
+    card.appendChild(infoPane);
+    card.appendChild(arrow);
+    a.appendChild(card);
+    fragment.appendChild(a);
+  });
+  toolsGrid.appendChild(fragment);
 
-const sidebarBox=document.getElementById("sidebarLinks");sidebarBox.innerHTML="";
-const sf=document.createDocumentFragment();
-function link(t){const a=document.createElement("a");a.href=t.href;const i=document.createElement("i");i.className="fa-solid "+t.icon;i.setAttribute("aria-hidden","true");a.append(i,document.createTextNode(" "+t.text));return a;}
-const home=data.toolsRegistry.find(t=>t.section==="home");if(home)sf.appendChild(link(home));
-["image","doc","utility"].forEach(sec=>{const title=document.createElement("div");title.className="menu-section-title";title.textContent=data.sidebarTitles[sec];sf.appendChild(title);data.toolsRegistry.filter(t=>t.section===sec).forEach(t=>sf.appendChild(link(t)));});
-const hr=document.createElement("div");hr.style.cssText="height:1px;background:var(--border2);margin:10px 0";sf.appendChild(hr);
-const it=document.createElement("div");it.className="menu-section-title";it.textContent=data.sidebarTitles.info;sf.appendChild(it);
-data.toolsRegistry.filter(t=>t.section==="info").forEach(t=>sf.appendChild(link(t)));
-sidebarBox.appendChild(sf);
-evaluateLiveSearchFilters();
+  const footerBox = document.getElementById('footerLinks');
+  footerBox.innerHTML = '';
+  data.footer.forEach(item => {
+    const a = document.createElement('a');
+    a.href = item.href;
+    a.textContent = item.text;
+    footerBox.appendChild(a);
+  });
+
+  const sidebarBox = document.getElementById('sidebarLinks');
+  sidebarBox.innerHTML = '';
+  const sf = document.createDocumentFragment();
+  function makeSidebarLink(t) {
+    const a = document.createElement('a');
+    a.href = t.href;
+    const i = document.createElement('i');
+    i.className = 'fa-solid ' + t.icon;
+    i.setAttribute('aria-hidden', 'true');
+    a.appendChild(i);
+    a.appendChild(document.createTextNode(' ' + t.text));
+    return a;
+  }
+  const homeLink = data.toolsRegistry.find(t => t.section === 'home');
+  if (homeLink) sf.appendChild(makeSidebarLink(homeLink));
+  ['image','doc','utility'].forEach(sec => {
+    const title = document.createElement('div');
+    title.className = 'menu-section-title';
+    title.textContent = data.sidebarTitles[sec];
+    sf.appendChild(title);
+    data.toolsRegistry.filter(t => t.section === sec).forEach(t => sf.appendChild(makeSidebarLink(t)));
+  });
+  const hr = document.createElement('div');
+  hr.style.cssText = 'height:1px;background:var(--border2);margin:10px 0;';
+  sf.appendChild(hr);
+  const infoTitle = document.createElement('div');
+  infoTitle.className = 'menu-section-title';
+  infoTitle.textContent = data.sidebarTitles.info;
+  sf.appendChild(infoTitle);
+  data.toolsRegistry.filter(t => t.section === 'info').forEach(t => sf.appendChild(makeSidebarLink(t)));
+  sidebarBox.appendChild(sf);
+
+  renderSeoSection(data);
+  evaluateLiveSearchFilters();
 }
 
-function toggleLanguage(){currentLang=currentLang==="en"?"ar":"en";const isAr=currentLang==="ar";document.body.classList.toggle("rtl",isAr);document.getElementById("langToggleBtn").classList.toggle("active",!isAr);document.documentElement.lang=currentLang;document.documentElement.dir=isAr?"rtl":"ltr";renderUI();}
-function evaluateLiveSearchFilters(){const q=document.getElementById("toolSearch").value.toLowerCase().trim();const active=document.querySelector(".filter-pill.active");const cat=active?active.dataset.target:"all";let count=0;document.querySelectorAll(".tool-link").forEach(l=>{const h=l.querySelector("h3").textContent.toLowerCase();const p=l.querySelector("p").textContent.toLowerCase();const cats=(l.dataset.category||"").split(" ");const ok=(h.includes(q)||p.includes(q))&&(cat==="all"||cats.includes(cat));l.classList.toggle("hidden",!ok);if(ok)count++;});document.getElementById("noResults").style.display=count===0?"block":"none";}
-function filterCategory(category,el){document.querySelectorAll(".filter-pill").forEach(b=>{b.classList.remove("active");b.setAttribute("aria-pressed","false")});el.classList.add("active");el.setAttribute("aria-pressed","true");evaluateLiveSearchFilters();}
-function toggleMenu(show){document.getElementById("sideMenu").classList.toggle("open",show);document.getElementById("menuOverlay").classList.toggle("show",show);const trigger=document.getElementById("menuTrigger");if(trigger)trigger.setAttribute("aria-expanded",show?"true":"false");}
+function renderSeoSection(data) {
+  var s = data.seo;
+  if (!s) return;
+  var set = function(id, val){ var el = document.getElementById(id); if (el) el.textContent = val; };
+  var setHtml = function(id, val){ var el = document.getElementById(id); if (el) el.innerHTML = val; };
+  set('seoH2Main', s.mainH2);
+  set('seoIntro', s.intro);
+  set('seoCat1', s.cat1);
+  set('seoCat2', s.cat2);
+  set('seoCat3', s.cat3);
+  set('seoWhyH2', s.whyH2);
+  setHtml('seoWhyP', s.whyP);
+  set('seoFaqH2', s.faqH2);
+  set('seoFaqQ1', s.q1); set('seoFaqA1', s.a1);
+  set('seoFaqQ2', s.q2); set('seoFaqA2', s.a2);
+  set('seoFaqQ3', s.q3); set('seoFaqA3', s.a3);
+}
 
-document.getElementById("themeToggle").addEventListener("click",()=>{const next=document.documentElement.getAttribute("data-theme")==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",next);localStorage.setItem("imgpdftools-theme",next);});
-document.addEventListener("keydown",e=>{if(e.key==="Escape")toggleMenu(false);if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==="k"){e.preventDefault();document.getElementById("toolSearch").focus();}});
-document.getElementById("toolSearch").addEventListener("input",evaluateLiveSearchFilters);
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'ar' : 'en';
+  const isAr = currentLang === 'ar';
+  document.body.classList.toggle('rtl', isAr);
+  document.getElementById('langToggleBtn').classList.toggle('active', !isAr);
+  document.documentElement.lang = currentLang;
+  document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+  renderUI();
+}
 
-(function(){function safe(u){try{const p=new URL(u,location.origin);return p.protocol==="http:"||p.protocol==="https:"}catch(e){return false}}function err(m){const box=document.createElement("div");box.style.cssText="text-align:center;padding:4rem;font-family:sans-serif";const h=document.createElement("h2");h.textContent=m;const a=document.createElement("a");a.href="./index.html";a.textContent="Go Home";box.append(h,a);document.body.innerHTML="";document.body.appendChild(box)}const hash=location.hash;if(hash.indexOf("#/s/")!==0)return;const id=hash.replace("#/s/","").split("?")[0];if(!id)return err("URL Not Found");const stored=localStorage.getItem("redirect_"+id);if(!stored)return err("URL Not Found");let entry;try{entry=JSON.parse(stored)}catch(e){return err("URL Not Found")}if(!entry||typeof entry.long!=="string"||!safe(entry.long))return err("Invalid Link");if(entry.expiry&&Date.now()>entry.expiry)return err("Link Expired");entry.clicks=(entry.clicks||0)+1;try{localStorage.setItem("redirect_"+id,JSON.stringify(entry))}catch(e){}location.replace(entry.long);})();
+function evaluateLiveSearchFilters() {
+  const query = document.getElementById('toolSearch').value.toLowerCase().trim();
+  const activePill = document.querySelector('.filter-pill.active');
+  const targetCat = activePill ? activePill.getAttribute('data-target') : 'all';
+  let count = 0;
+  document.querySelectorAll('.tool-link').forEach(link => {
+    const h3 = link.querySelector('h3').textContent.toLowerCase();
+    const p = link.querySelector('p').textContent.toLowerCase();
+    const cats = (link.getAttribute('data-category') || '').split(' ');
+    const match = (h3.includes(query) || p.includes(query)) && (targetCat === 'all' || cats.includes(targetCat));
+    link.classList.toggle('hidden', !match);
+    if (match) count++;
+  });
+  document.getElementById('noResults').style.display = count === 0 ? 'block' : 'none';
+}
 
-if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("/sw.js").catch(err=>console.warn("SW registration failed:",err)));}
+function filterCategory(category, element) {
+  document.querySelectorAll('.filter-pill').forEach(btn => {
+    btn.classList.remove('active');
+    btn.setAttribute('aria-pressed', 'false');
+  });
+  element.classList.add('active');
+  element.setAttribute('aria-pressed', 'true');
+  evaluateLiveSearchFilters();
+}
+
+function toggleMenu(show) {
+  document.getElementById('sideMenu').classList.toggle('open', show);
+  document.getElementById('menuOverlay').classList.toggle('show', show);
+  const trigger = document.getElementById('menuTrigger');
+  if (trigger) trigger.setAttribute('aria-expanded', show ? 'true' : 'false');
+  if (show) {
+    const esc = function(e) {
+      if (e.key === 'Escape') { toggleMenu(false); document.removeEventListener('keydown', esc); }
+    };
+    document.addEventListener('keydown', esc);
+  }
+}
+
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('imgpdftools-theme', next);
+});
+
+document.addEventListener('keydown', e => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('toolSearch').focus();
+  }
+});
+
+document.getElementById('toolSearch').addEventListener('input', evaluateLiveSearchFilters);
+
+(function() {
+  function isSafeUrl(u) {
+    try {
+      var p = new URL(u, window.location.origin);
+      return p.protocol === 'http:' || p.protocol === 'https:';
+    } catch (e) { return false; }
+  }
+  function showError(msg) {
+    var box = document.createElement('div');
+    box.style.cssText = 'text-align:center;padding:4rem;font-family:sans-serif';
+    var h = document.createElement('h2');
+    h.textContent = msg;
+    var a = document.createElement('a');
+    a.href = './index.html';
+    a.textContent = 'Go Home';
+    box.appendChild(h);
+    box.appendChild(a);
+    document.body.innerHTML = '';
+    document.body.appendChild(box);
+  }
+  var hash = window.location.hash;
+  if (hash.indexOf('#/s/') !== 0) return;
+  var shortId = hash.replace('#/s/', '').split('?')[0];
+  if (!shortId) { showError('URL Not Found'); return; }
+  var stored = localStorage.getItem('redirect_' + shortId);
+  if (!stored) { showError('URL Not Found'); return; }
+  var entry;
+  try { entry = JSON.parse(stored); } catch (e) { showError('URL Not Found'); return; }
+  if (!entry || typeof entry.long !== 'string' || !isSafeUrl(entry.long)) { showError('Invalid Link'); return; }
+  if (entry.expiry && Date.now() > entry.expiry) { showError('Link Expired'); return; }
+  entry.clicks = (entry.clicks || 0) + 1;
+  try { localStorage.setItem('redirect_' + shortId, JSON.stringify(entry)); } catch (e) {}
+  window.location.replace(entry.long);
+})();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').catch(function(err) {
+      console.warn('SW registration failed:', err);
+    });
+  });
+}
+
 renderUI();
 </script>
 
-<script src="https://paviliongiddy.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js" async></script>
-<script src="https://paviliongiddy.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js" async></script>
+<script src="https://paviliongiddy.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js"></script>
+<script src="https://paviliongiddy.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
 
 <script>
 (function(){
-var DK="pp_ads_v4",DELAY=2500,injected={},started=false;
-function vw(){return window.innerWidth||document.documentElement.clientWidth}
-function inject(slotId,key,h,w,src){if(injected[slotId])return;injected[slotId]=true;var slot=document.getElementById(slotId);if(!slot||!key)return;var cfg=document.createElement("script");cfg.text="atOptions={'key':'"+key+"','format':'iframe','height':"+h+",'width':"+w+",'params':{}};";slot.appendChild(cfg);var s=document.createElement("script");s.src="https://paviliongiddy.com/"+src+"/invoke.js";s.async=true;s.onerror=function(){var mob=slot.closest(".ad-mobile-bottom");if(mob)mob.style.display="none"};slot.appendChild(s)}
-function fade(el){if(!el)return;requestAnimationFrame(()=>requestAnimationFrame(()=>{el.classList.remove("ad-hidden");el.classList.add("ad-visible")}))}
-function dismissed(k){try{var d=JSON.parse(localStorage.getItem(DK)||"{}");return d[k]&&(Date.now()-d[k])<86400000}catch(e){return false}}
-function dismiss(btnId,container,k){var b=document.getElementById(btnId);if(!b||!container)return;b.addEventListener("click",()=>{container.style.opacity="0";container.style.pointerEvents="none";setTimeout(()=>container.style.display="none",400);try{var d=JSON.parse(localStorage.getItem(DK)||"{}");d[k]=Date.now();localStorage.setItem(DK,JSON.stringify(d))}catch(e){}})}
-function init(){if(started)return;started=true;var w=vw();
-if(w<768){if(!dismissed("mob")){var m=document.getElementById("adMobileBottom");inject("adMobileSlot","e38b52a60ad311de99bed655307c86a8",50,320,"e38b52a60ad311de99bed655307c86a8");fade(m);dismiss("adMobileClose",m,"mob")}}
-else if(w<1140){if(!dismissed("tab_hero")){inject("adTabletHeroSlot","75f7d51ae703b7d2ebc57e040d7ad6c5",60,468,"75f7d51ae703b7d2ebc57e040d7ad6c5");fade(document.getElementById("adTabletHeroWrap"));dismiss("adTabletHeroClose",document.getElementById("adTabletHero"),"tab_hero")}if(!dismissed("tab_rect")){inject("adTabletRectSlot","93a8bc2338daf962408f7f5ac06dc99e",250,300,"93a8bc2338daf962408f7f5ac06dc99e");fade(document.getElementById("adTabletRectWrap"));dismiss("adTabletRectClose",document.getElementById("adTabletRect"),"tab_rect")}}
-else{if(!dismissed("desk_leader")){inject("adDesktopLeaderSlot","0b683192646e1d9ea7327ce3080d991c",90,728,"0b683192646e1d9ea7327ce3080d991c");fade(document.getElementById("adDesktopLeaderWrap"));dismiss("adDesktopLeaderClose",document.getElementById("adDesktopLeader"),"desk_leader")}if(!dismissed("desk_col")){inject("adDesktopColSlot","2fd4066fa8904c930baa995dca2d041a",600,160,"2fd4066fa8904c930baa995dca2d041a");fade(document.getElementById("adDesktopColWrap"));dismiss("adDesktopColClose",document.getElementById("adDesktopCol"),"desk_col")}}
-}
-function schedule(){setTimeout(init,DELAY);var once=function(){init();removeEventListener("scroll",once);removeEventListener("touchstart",once)};addEventListener("scroll",once,{passive:true});addEventListener("touchstart",once,{passive:true})}
-document.readyState==="complete"?schedule():addEventListener("load",schedule);
+  var DK = 'pp_ads_v3';
+  var DELAY = 2500;
+  var injected = {};
+  var started = false;
+
+  function vw() { return window.innerWidth || document.documentElement.clientWidth; }
+
+  function inject(slotId, key, height, width, src) {
+    if (injected[slotId]) return;
+    // Skip empty / placeholder keys so the slot stays clean (reserved space remains -> CLS = 0)
+    if (!key || key.indexOf('PASTE_') === 0) return;
+    injected[slotId] = true;
+    var slot = document.getElementById(slotId);
+    if (!slot) return;
+    var cfg = document.createElement('script');
+    cfg.text = "atOptions={'key':'" + key + "','format':'iframe','height':" + height + ",'width':" + width + ",'params':{}};";
+    slot.appendChild(cfg);
+    var s = document.createElement('script');
+    s.src = 'https://paviliongiddy.com/' + src + '/invoke.js';
+    s.async = true;
+    s.onerror = function() {
+      var mob = slot.closest('.ad-mobile-bottom');
+      if (mob) mob.style.display = 'none';
+    };
+    slot.appendChild(s);
+  }
+
+  function fadeIn(el) {
+    if (!el) return;
+    requestAnimationFrame(function() { requestAnimationFrame(function() {
+      el.classList.remove('ad-hidden');
+      el.classList.add('ad-visible');
+    }); });
+  }
+
+  function setupDismiss(btnId, containerEl, storageKey) {
+    var btn = document.getElementById(btnId);
+    if (!btn || !containerEl) return;
+    btn.addEventListener('click', function() {
+      containerEl.style.opacity = '0';
+      containerEl.style.pointerEvents = 'none';
+      setTimeout(function() { containerEl.style.display = 'none'; }, 400);
+      var d;
+      try { d = JSON.parse(localStorage.getItem(DK) || '{}'); } catch(e) { d = {}; }
+      d[storageKey] = Date.now();
+      try { localStorage.setItem(DK, JSON.stringify(d)); } catch(e) {}
+    });
+  }
+
+  function wasDismissed(storageKey) {
+    try {
+      var d = JSON.parse(localStorage.getItem(DK) || '{}');
+      return d[storageKey] && (Date.now() - d[storageKey]) < 86400000;
+    } catch(e) { return false; }
+  }
+
+  function initAds() {
+    if (started) return;
+    started = true;
+    var w = vw();
+
+    if (w < 768) {
+      // MOBILE: sticky bottom 320x50 (real key already set)
+      if (!wasDismissed('mob')) {
+        var mob = document.getElementById('adMobileBottom');
+        if (mob) {
+          inject('adMobileSlot', 'e38b52a60ad311de99bed655307c86a8', 50, 320, 'e38b52a60ad311de99bed655307c86a8');
+          fadeIn(mob);
+          setupDismiss('adMobileClose', mob, 'mob');
+        }
+      }
+    } else if (w < 1140) {
+      // TABLET: hero banner 468x60 + rectangle 300x250
+      if (!wasDismissed('tab_hero')) {
+        var thWrap = document.getElementById('adTabletHeroWrap');
+        if (thWrap) {
+          inject('adTabletHeroSlot', 'PASTE_TABLET_HERO_468x60_KEY', 60, 468, 'PASTE_TABLET_HERO_468x60_KEY');
+          fadeIn(thWrap);
+          setupDismiss('adTabletHeroClose', document.getElementById('adTabletHero'), 'tab_hero');
+        }
+      }
+      if (!wasDismissed('tab_rect')) {
+        var trWrap = document.getElementById('adTabletRectWrap');
+        if (trWrap) {
+          inject('adTabletRectSlot', 'PASTE_TABLET_RECT_300x250_KEY', 250, 300, 'PASTE_TABLET_RECT_300x250_KEY');
+          fadeIn(trWrap);
+          setupDismiss('adTabletRectClose', document.getElementById('adTabletRect'), 'tab_rect');
+        }
+      }
+    } else {
+      // DESKTOP: leaderboard 728x90 + sidebar 160x600
+      if (!wasDismissed('desk_leader')) {
+        var dlWrap = document.getElementById('adDesktopLeaderWrap');
+        if (dlWrap) {
+          inject('adDesktopLeaderSlot', 'PASTE_DESKTOP_LEADER_728x90_KEY', 90, 728, 'PASTE_DESKTOP_LEADER_728x90_KEY');
+          fadeIn(dlWrap);
+          setupDismiss('adDesktopLeaderClose', document.getElementById('adDesktopLeader'), 'desk_leader');
+        }
+      }
+      if (!wasDismissed('desk_col')) {
+        var dcWrap = document.getElementById('adDesktopColWrap');
+        if (dcWrap) {
+          inject('adDesktopColSlot', 'PASTE_DESKTOP_COL_160x600_KEY', 600, 160, 'PASTE_DESKTOP_COL_160x600_KEY');
+          fadeIn(dcWrap);
+          setupDismiss('adDesktopColClose', document.getElementById('adDesktopCol'), 'desk_col');
+        }
+      }
+    }
+  }
+
+  function schedule() {
+    setTimeout(initAds, DELAY);
+    var onInteract = function() {
+      initAds();
+      window.removeEventListener('scroll', onInteract);
+      window.removeEventListener('touchstart', onInteract);
+    };
+    window.addEventListener('scroll', onInteract, { passive: true });
+    window.addEventListener('touchstart', onInteract, { passive: true });
+  }
+  if (document.readyState === 'complete') { schedule(); }
+  else { window.addEventListener('load', schedule); }
 })();
 </script>
 </body>
