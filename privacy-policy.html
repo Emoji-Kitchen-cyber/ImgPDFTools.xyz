@@ -82,14 +82,13 @@
       background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
     .hero p { color:var(--muted); margin-top:.5rem; }
 
-    .toc { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.2rem 1.4rem; margin-bottom:2rem; }
-    .toc h2 { font-family:var(--fhead); font-size:1rem; margin-bottom:.8rem; }
-    /* Responsive grid — auto-fits 1/2/3 columns to any screen, no overflow */
-    .toc ol { list-style:none; counter-reset:toc; display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:.1rem 1.4rem; padding:0; margin:0; }
-    .toc li { counter-increment:toc; margin:0; min-width:0; }
-    .toc a { display:flex; gap:.5rem; align-items:baseline; color:var(--accent); text-decoration:none; font-size:.9rem; font-weight:500; padding:.32rem 0; line-height:1.45; word-break:break-word; }
-    .toc a::before { content:counter(toc) "."; color:var(--muted); font-weight:600; flex-shrink:0; min-width:1.1rem; }
-    .toc a:hover { text-decoration:underline; }
+    .toc { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.2rem 1.4rem; margin:0 0 2rem; }
+    .toc h2 { font-family:var(--fhead); font-size:1rem; margin-bottom:.9rem; }
+    /* Bulletproof flex-wrap grid: tiles auto-wrap to fit ANY screen width — overflow impossible */
+    .toc-grid { display:flex; flex-wrap:wrap; gap:.55rem; }
+    .toc-grid a { display:flex; align-items:center; gap:.6rem; flex:1 1 200px; min-width:0; background:var(--bg2); border:1px solid var(--border2); border-radius:12px; padding:.6rem .8rem; color:var(--text); text-decoration:none; font-size:.88rem; font-weight:500; line-height:1.35; transition:border-color .2s, color .2s, transform .15s; }
+    .toc-grid a:hover { border-color:var(--accent); color:var(--accent); transform:translateY(-1px); }
+    .toc-num { flex-shrink:0; width:1.55rem; height:1.55rem; display:inline-flex; align-items:center; justify-content:center; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:.72rem; font-weight:700; border-radius:8px; }
 
     .highlight-box { background:linear-gradient(135deg, rgba(99,102,241,0.10), rgba(139,92,246,0.10));
       border:1.5px solid var(--accent); border-radius:var(--r); padding:1.3rem; margin:1.5rem 0; }
@@ -178,29 +177,29 @@
       <p>Last updated: June 10, 2026</p>
     </div>
 
+    <nav class="toc" aria-label="Table of contents">
+      <h2>📑 On this page</h2>
+      <div class="toc-grid">
+        <a href="#scope"><span class="toc-num">1</span> Scope &amp; consent</a>
+        <a href="#collect"><span class="toc-num">2</span> Information we collect</a>
+        <a href="#use"><span class="toc-num">3</span> How we use information</a>
+        <a href="#legal"><span class="toc-num">4</span> Legal bases (GDPR)</a>
+        <a href="#cookies"><span class="toc-num">5</span> Cookies &amp; tracking</a>
+        <a href="#third"><span class="toc-num">6</span> Third-party services</a>
+        <a href="#retention"><span class="toc-num">7</span> Data retention</a>
+        <a href="#transfers"><span class="toc-num">8</span> International transfers</a>
+        <a href="#rights"><span class="toc-num">9</span> Your privacy rights</a>
+        <a href="#dnt"><span class="toc-num">10</span> Do Not Track &amp; GPC</a>
+        <a href="#security"><span class="toc-num">11</span> Data security</a>
+        <a href="#children"><span class="toc-num">12</span> Children's privacy</a>
+        <a href="#changes"><span class="toc-num">13</span> Changes to this policy</a>
+        <a href="#contact"><span class="toc-num">14</span> Contact us</a>
+      </div>
+    </nav>
+
     <div class="highlight-box">
       <strong>🔒 Our core promise:</strong> ImgPDFTools processes <strong>all your files directly inside your browser</strong>. Your images, PDFs and documents <strong>never leave your device</strong> and are <strong>never uploaded to any server</strong>.
     </div>
-
-    <nav class="toc" aria-label="Table of contents">
-      <h2>On this page</h2>
-      <ol>
-        <li><a href="#scope">Scope &amp; consent</a></li>
-        <li><a href="#collect">Information we collect</a></li>
-        <li><a href="#use">How we use information</a></li>
-        <li><a href="#legal">Legal bases (GDPR)</a></li>
-        <li><a href="#cookies">Cookies &amp; tracking</a></li>
-        <li><a href="#third">Third-party services</a></li>
-        <li><a href="#retention">Data retention</a></li>
-        <li><a href="#transfers">International transfers</a></li>
-        <li><a href="#rights">Your privacy rights</a></li>
-        <li><a href="#dnt">Do Not Track &amp; GPC</a></li>
-        <li><a href="#security">Data security</a></li>
-        <li><a href="#children">Children's privacy</a></li>
-        <li><a href="#changes">Changes to this policy</a></li>
-        <li><a href="#contact">Contact us</a></li>
-      </ol>
-    </nav>
 
     <div class="section" id="scope">
       <h2>1. Scope &amp; consent</h2>
