@@ -1,87 +1,324 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' www.google-analytics.com; object-src 'none'; base-uri 'self';" />
+<title>URL Shortener Guide – Shorten Links Free | ImgPDFTools</title>
+<meta name="description" content="Shorten long URLs instantly in your browser with click tracking, expiry dates, and custom slugs — all free and client-side." />
+<meta name="keywords" content="url shortener, shorten link, link shortener free, custom short url, url shortener with tracking, short link generator" />
+<meta name="author" content="Muhammad Jahangir" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#6366f1" />
+<link rel="canonical" href="https://imgpdftools.xyz/blog/url-shortener-guide.html" />
+<link rel="icon" href="/favicon.ico" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="ImgPDFTools" />
+<meta property="og:title" content="URL Shortener Guide – Shorten Links Free" />
+<meta property="og:description" content="Shorten long URLs instantly with click tracking, expiry, and custom slugs — all free." />
+<meta property="og:url" content="https://imgpdftools.xyz/blog/url-shortener-guide.html" />
+<meta property="og:image" content="https://imgpdftools.xyz/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="URL Shortener Guide – Shorten Links Free" />
+<meta name="twitter:description" content="Create short links with tracking and expiry in your browser." />
+<meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png" />
+<script>
+  (function(){try{var t=localStorage.getItem('imgpdftools-theme')||localStorage.getItem('pixelpress-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-3P7QPQKV3K');
 </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>URL Shortener Guide — Create Short Links with QR Codes | PixelPress Blog</title>
-  <meta name="description" content="Complete guide to shortening URLs online. Learn how to create custom short links, generate QR codes, track clicks, and manage your link history.">
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/blog/url-shortener-guide.html">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-    :root{--bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#22222e;--accent:#ec4899;--accent2:#a78bfa;--text:#e8e8f0;--muted:#6b6b80;--radius:14px;--fhead:'Syne',sans-serif;--fbody:'DM Sans',sans-serif;--fmono:'JetBrains Mono',monospace}
-    [data-theme="light"]{--bg:#f5f5f7;--surface:#fff;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;line-height:1.7;transition:0.3s}
-    a{color:inherit;text-decoration:none}
-    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:rgba(10,10,15,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .nav-logo{font-family:var(--fhead);font-weight:800;font-size:1.15rem;letter-spacing:.05em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .progress-bar{position:fixed;top:64px;left:0;height:3px;background:var(--accent);z-index:101;transition:width .1s}
-    .main{max-width:860px;margin:0 auto;padding:2rem 20px 4rem}
-    .hero{text-align:center;padding:2rem 0}
-    .badge{display:inline-block;padding:4px 14px;background:rgba(236,72,153,.1);border:1px solid var(--accent);border-radius:999px;font-size:.75rem;color:var(--accent);text-transform:uppercase;margin-bottom:1rem}
-    .hero h1{font-family:var(--fhead);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;line-height:1.3;margin-bottom:.8rem}
-    .meta{color:var(--muted);font-size:.85rem}
-    .toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:2rem 0;position:sticky;top:80px}
-    .toc h3{font-family:var(--fhead);margin-bottom:.8rem}
-    .toc ol{padding-left:20px;color:var(--muted)}
-    .toc li{margin-bottom:4px}
-    .toc a{color:var(--accent);font-weight:500}
-    .section{margin:2.5rem 0}
-    .section h2{font-family:var(--fhead);font-size:1.5rem;font-weight:700;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
-    .section p{color:var(--muted);line-height:1.9;margin-bottom:1rem}
-    .section ul,.section ol{padding-left:24px;color:var(--muted);line-height:1.9;margin-bottom:1rem}
-    .table-wrap{overflow-x:auto;margin:1rem 0}
-    table{width:100%;border-collapse:collapse;font-size:.9rem}
-    th,td{padding:10px 14px;border:1px solid var(--border);text-align:left}
-    th{background:var(--card);color:var(--accent);font-weight:600}
-    td{color:var(--muted)}
-    .cta{background:linear-gradient(135deg,rgba(236,72,153,.12),rgba(167,139,250,.08));border:1px solid var(--accent);border-radius:var(--radius);padding:2.5rem;text-align:center;margin:3rem 0}
-    .cta h3{font-family:var(--fhead);font-size:1.3rem;margin-bottom:.5rem}
-    .cta p{color:var(--muted);margin-bottom:1.5rem}
-    .btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-weight:600;font-size:1rem;transition:.2s;text-decoration:none}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,.3)}
-    .faq{margin:3rem 0}
-    .faq h2{font-family:var(--fhead);margin-bottom:1rem}
-    .faq-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
-    .faq-q{width:100%;padding:16px 20px;background:var(--card);border:none;text-align:left;font-weight:600;font-size:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
-    .faq-a{max-height:0;overflow:hidden;transition:.3s;color:var(--muted);line-height:1.8;padding:0 20px}
-    .faq-item.open .faq-a{max-height:500px;padding:0 20px 20px}
-    footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border);font-size:.85rem;margin-top:3rem}
-    @media(max-width:600px){.main{padding:1rem 14px}.hero h1{font-size:1.6rem}}
-  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "URL Shortener Guide – Shorten Links Free",
+      "description": "Shorten long URLs with click tracking, expiry, and custom slugs — all client-side.",
+      "author": { "@type": "Person", "name": "Muhammad Jahangir" },
+      "publisher": { "@type": "Organization", "name": "ImgPDFTools" },
+      "mainEntityOfPage": "https://imgpdftools.xyz/blog/url-shortener-guide.html",
+      "datePublished": "2026-05-01",
+      "image": "https://imgpdftools.xyz/og-image.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://imgpdftools.xyz/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://imgpdftools.xyz/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "URL Shortener", "item": "https://imgpdftools.xyz/blog/url-shortener-guide.html" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are my shortened links stored on a server?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. ImgPDFTools stores shortened links in your browser's localStorage. They work only on the device where they were created and are never sent to any external server." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I set an expiry date on a short link?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Set an expiry date when creating the link. After that date, visiting the short link will show an expired message instead of redirecting." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#f8f8fc;--surface:rgba(255,255,255,0.90);--card:#ffffff;--border:rgba(99,102,241,0.10);--text:#18181b;--muted:#71717a;--accent:#6366f1;--accent2:#8b5cf6;--glow:rgba(99,102,241,0.14);--tag-bg:#f0f0f8;--radius:14px;--fhead:'Space Grotesk',sans-serif;--fbody:'Plus Jakarta Sans',system-ui,sans-serif;--fmono:'JetBrains Mono',monospace;}
+[data-theme="dark"]{--bg:#0c0c14;--surface:rgba(18,18,30,0.92);--card:#16162a;--border:rgba(99,102,241,0.18);--text:#e4e4f0;--muted:#8888aa;--glow:rgba(99,102,241,0.28);--tag-bg:#1a1a2e;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;transition:.3s;}
+a{color:inherit;text-decoration:none;}
+.progress-container{position:fixed;top:0;left:0;width:100%;height:3px;background:transparent;z-index:200;}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .1s linear;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:.55rem;font-family:var(--fhead);font-weight:800;font-size:1.2rem;}
+.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.logo-text .pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-text .tools{color:var(--muted);}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-links{display:flex;gap:1.6rem;list-style:none;}
+.nav-links a{font-size:.875rem;font-weight:500;color:var(--muted);transition:.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.theme-toggle{background:var(--card);border:1px solid var(--border);width:40px;height:40px;border-radius:50%;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.2s;}
+.theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);}
+.layout{max-width:1120px;width:100%;margin:0 auto;padding:2rem clamp(1rem,5vw,3rem) 3rem;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2.5rem;}
+.breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.5rem;}
+.breadcrumbs a:hover{color:var(--accent);}
+.breadcrumbs i{font-size:9px;}
+.cat-badge{display:inline-block;font-family:var(--fmono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:var(--tag-bg);border:1px solid var(--border);padding:.3rem .8rem;border-radius:999px;margin-bottom:1rem;}
+.article-header h1{font-family:var(--fhead);font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;}
+.article-meta{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.82rem;color:var(--muted);padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;}
+.article-meta span{display:inline-flex;align-items:center;gap:.4rem;}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-bottom:2rem;}
+.toc h3{font-family:var(--fhead);font-size:.95rem;margin-bottom:.7rem;}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.toc a{font-size:.875rem;color:var(--muted);transition:.2s;}
+.toc a:hover{color:var(--accent);}
+.content h2{font-family:var(--fhead);font-size:1.35rem;font-weight:700;margin:2rem 0 .9rem;scroll-margin-top:80px;}
+.content p{font-size:1rem;line-height:1.8;color:var(--text);margin-bottom:1.1rem;}
+.content ul{margin:0 0 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+.content li{font-size:1rem;line-height:1.7;}
+.callout{background:var(--tag-bg);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:1rem 1.2rem;margin:1.5rem 0;font-size:.95rem;color:var(--text);}
+.faq-block{margin-top:2.5rem;}
+.faq-block>h2{font-family:var(--fhead);font-size:1.35rem;margin-bottom:1rem;}
+.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:.8rem;overflow:hidden;background:var(--card);}
+.faq-trigger{width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--fbody);font-size:.98rem;font-weight:600;padding:1rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.faq-trigger i{transition:transform .25s;color:var(--accent);}
+.faq-trigger[aria-expanded="true"] i{transform:rotate(180deg);}
+.faq-content{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-content p{padding:0 1.2rem 1.1rem;font-size:.92rem;line-height:1.7;color:var(--muted);margin:0;}
+.share-row{display:flex;align-items:center;gap:.7rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);flex-wrap:wrap;}
+.share-row span{font-size:.85rem;color:var(--muted);}
+.share-btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:var(--fbody);font-size:.82rem;font-weight:600;padding:.5rem .9rem;border-radius:8px;cursor:pointer;transition:.2s;}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);}
+aside.sidebar{display:flex;flex-direction:column;gap:1.5rem;}
+.side-sticky{position:sticky;top:88px;display:flex;flex-direction:column;gap:1.5rem;}
+.tool-card{background:linear-gradient(135deg,var(--glow),rgba(139,92,246,0.08));border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;}
+.tool-card h4{font-family:var(--fhead);font-size:1.05rem;margin-bottom:.5rem;}
+.tool-card p{font-size:.86rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.tool-btn{display:inline-flex;align-items:center;gap:.5rem;width:100%;justify-content:center;padding:.7rem 1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:9px;font-weight:600;font-size:.88rem;transition:.2s;}
+.tool-btn:hover{opacity:.9;transform:translateY(-1px);}
+.related-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;}
+.related-card h4{font-family:var(--fhead);font-size:1rem;margin-bottom:.9rem;}
+.related-card a{display:block;font-size:.88rem;color:var(--muted);padding:.45rem 0;border-bottom:1px solid var(--border);transition:.2s;}
+.related-card a:last-child{border-bottom:none;}
+.related-card a:hover{color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:2rem clamp(1rem,5vw,3rem);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:auto;}
+footer .logo{font-family:var(--fhead);font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+footer p{font-size:.8rem;color:var(--muted);}
+.footer-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.footer-links a{font-size:.8rem;color:var(--muted);}
+.footer-links a:hover{color:var(--accent);}
+#backTop{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 8px 24px var(--glow);z-index:120;}
+#backTop.show{opacity:1;pointer-events:auto;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.side-sticky{position:static;}.nav-links{display:none;}}
+</style>
 </head>
 <body>
-  <div class="progress-bar" id="progressBar"></div>
-  <nav><a href="../index.html" class="nav-logo">PIXELPRESS</a><a href="./index.html" style="color:var(--muted);font-size:.9rem">← Blog</a></nav>
-  <main class="main">
-    <div class="hero"><div class="badge">LINK TOOLS</div><h1>URL Shortener — Create Short Links, QR Codes & Track Clicks</h1><div class="meta">📅 June 2026 &nbsp;|&nbsp; ⏱ 7 Min Read &nbsp;|&nbsp; ✍️ Muhammad Jahangir</div></div>
-    <nav class="toc"><h3>📋 Table of Contents</h3><ol><li><a href="#s1">What is URL Shortening?</a></li><li><a href="#s2">Why Use Short URLs?</a></li><li><a href="#s3">PixelPress URL Shortener Features</a></li><li><a href="#s4">Custom Aliases & Expiry</a></li><li><a href="#s5">Tracking & History</a></li><li><a href="#s6">Batch Shortening</a></li><li><a href="#faq">Frequently Asked Questions</a></li></ol></nav>
-    <div class="section" id="s1"><h2>1. What is URL Shortening?</h2><p>URL shortening converts a long, complex web address into a compact, easy‑to‑share link. For example, <strong>https://example.com/very/long/path?param=value</strong> becomes <strong>https://pxl.to/abc123</strong>. Short links are cleaner for social media, SMS, QR codes, and printed materials.</p></div>
-    <div class="section" id="s2"><h2>2. Why Use Short URLs?</h2><div class="table-wrap"><table><tr><th>Benefit</th><th>Example</th></tr><tr><td>Character limit</td><td>Twitter/X: 280 characters — save space</td></tr><tr><td>Clean appearance</td><td>Marketing materials look professional</td></tr><tr><td>QR code optimization</td><td>Shorter URLs create simpler, more scannable QR codes</td></tr><tr><td>Trackability</td><td>Count clicks and analyze engagement</td></tr><tr><td>Memorability</td><td>Custom aliases like /sale or /offer</td></tr></table></div></div>
-    <div class="section" id="s3"><h2>3. PixelPress URL Shortener Features</h2><ul><li><strong>Instant Shortening:</strong> Paste a long URL and get a short link in milliseconds</li><li><strong>Custom Aliases:</strong> Create branded links like /your‑name</li><li><strong>Expiry Dates:</strong> Set links to expire after 1 hour, 24 hours, 7 days, or 30 days</li><li><strong>QR Code Generation:</strong> Every short link gets an automatic QR code</li><li><strong>Click Tracking:</strong> See how many times each link has been clicked</li><li><strong>Batch Shortening:</strong> Paste multiple URLs at once</li><li><strong>Export/Import:</strong> Save your link history as JSON and reload later</li></ul></div>
-    <div class="section" id="s4"><h2>4. Custom Aliases & Expiry</h2><p>With custom aliases, you can create memorable links like <strong>/summer‑sale</strong> or <strong>/contact</strong>. Set an expiry date to automatically disable links after a certain period — perfect for limited‑time offers or event registrations.</p></div>
-    <div class="section" id="s5"><h2>5. Tracking & History</h2><p>PixelPress URL Shortener stores your last 50 links in your browser's local storage. Each link shows the original URL, short URL, creation date, expiry status, and click count. Links work via hash‑based routing — no server required.</p></div>
-    <div class="section" id="s6"><h2>6. Batch Shortening</h2><p>Need to shorten 10 URLs at once? Paste them all (one per line) into the batch input area. All URLs are shortened simultaneously and added to your history.</p></div>
-    <div class="cta"><h3>🔗 Shorten Your First URL Now</h3><p>Create short links with QR codes — free, instant, no sign‑up.</p><a href="../url-shortener.html" class="btn">Launch URL Shortener <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a></div>
-    <div class="faq" id="faq"><h2>❓ Frequently Asked Questions</h2>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do short links expire? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Only if you set an expiry date. Otherwise, links persist in your browser's storage indefinitely.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I track who clicked my link? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">The tool tracks click counts, but not individual user data — keeping it privacy‑friendly.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the tool free? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes — 100% free, unlimited use, no sign‑up.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">How do short links work without a server? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Links use hash‑based routing (#/s/...) and localStorage — the main index.html handles redirects.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I use my own domain? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Currently, links use your PixelPress domain. Custom domain support may come in the future.</div></div>
+<div class="progress-container"><div class="progress-bar" id="readingProgress"></div></div>
+<nav>
+  <a href="../index.html" class="nav-logo"><span class="logo-icon">🛠️</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Blog</a></li>
+      <li><a href="../index.html#tools">All Tools</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌓</button>
+  </div>
+</nav>
+<main class="layout">
+  <article>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> <i class="fa-solid fa-chevron-right"></i>
+      <a href="./index.html">Blog</a> <i class="fa-solid fa-chevron-right"></i>
+      <span>Utilities</span>
+    </nav>
+    <span class="cat-badge">Links</span>
+    <header class="article-header">
+      <h1>URL Shortener Guide – Shorten Links Free</h1>
+      <div class="article-meta">
+        <span><i class="fa-regular fa-calendar"></i> May 2026</span>
+        <span><i class="fa-regular fa-user"></i> Muhammad Jahangir</span>
+        <span><i class="fa-regular fa-clock"></i> 5 min read</span>
+      </div>
+    </header>
+    <nav class="toc" aria-label="Table of contents">
+      <h3>On this page</h3>
+      <ul>
+        <li><a href="#section1">1. Why Shorten URLs</a></li>
+        <li><a href="#section2">2. Features</a></li>
+        <li><a href="#section3">3. Step by Step</a></li>
+        <li><a href="#section4">4. Tips</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <div class="content">
+      <p>Long URLs are hard to type, ugly in print, and impossible to fit in a tweet or SMS. A URL shortener converts any link into a clean, compact short URL that is easier to share — without tracking your data on a third-party server.</p>
+
+      <h2 id="section1">1. Why Shorten URLs</h2>
+      <p>Short links improve click-through rates in marketing materials, make URLs readable in printed documents, fit within character limits on social platforms, and reduce errors when people type a link manually. A browser-based shortener lets you create these links with no account and no data leaving your device, since the redirect mapping is stored in your browser's localStorage.</p>
+      <div class="callout">💡 Tip: Short links generated by ImgPDFTools work only on the device and browser where they were created, since the mapping is stored locally. For links you need to share across devices, use a cloud-based shortener instead.</div>
+
+      <h2 id="section2">2. Features</h2>
+      <ul>
+        <li><strong>Instant shortening</strong> — paste any URL and get a short link in one click.</li>
+        <li><strong>Click tracking</strong> — see how many times each short link has been clicked.</li>
+        <li><strong>Expiry dates</strong> — set a date after which the link expires and no longer redirects.</li>
+        <li><strong>Custom slugs</strong> — replace the random short code with a custom word or phrase.</li>
+        <li><strong>Link management</strong> — view, edit, and delete all your short links from one dashboard.</li>
+      </ul>
+
+      <h2 id="section3">3. Step by Step</h2>
+      <ul>
+        <li><strong>Open the URL shortener</strong> — no sign-up needed.</li>
+        <li><strong>Paste your long URL</strong> — enter the destination you want to shorten.</li>
+        <li><strong>Set options</strong> — add a custom slug or expiry date if needed.</li>
+        <li><strong>Generate</strong> — click to create the short link instantly.</li>
+        <li><strong>Copy and share</strong> — use the copy button to grab the short URL for sharing.</li>
+      </ul>
+      <p>All data is stored in your browser's localStorage. No link is ever sent to an external server.</p>
+
+      <h2 id="section4">4. Tips</h2>
+      <ul>
+        <li><strong>Use descriptive slugs</strong> — a link like <em>/docs</em> is more trustworthy to click than a random string of characters.</li>
+        <li><strong>Set expiry for time-limited offers</strong> — promotional links that expire prevent confusion after a campaign ends.</li>
+        <li><strong>Check click counts regularly</strong> — use the dashboard to see which links get the most traffic.</li>
+        <li><strong>Back up your links</strong> — clearing browser data deletes all stored short links; export them periodically if they are important.</li>
+      </ul>
+
+      <section class="faq-block" id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">Are my shortened links stored on a server? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>No. ImgPDFTools stores shortened links in your browser's localStorage. They work only on the device where they were created and are never sent to any external server.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">Can I set an expiry date on a short link? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>Yes. Set an expiry date when creating the link. After that date, visiting the short link will show an expired message instead of redirecting.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">Can I use a custom word in the short link? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>Yes. Enter a custom slug when creating the link to replace the random code with a word or phrase of your choice.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">What happens if I clear my browser data? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>Clearing browser data removes all stored short links from localStorage. Export or record important links before clearing your browser history or cache.</p></div>
+        </div>
+      </section>
+      <div class="share-row">
+        <span>Share this guide:</span>
+        <button class="share-btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+        <button class="share-btn" id="copyBtn"><i class="fa-solid fa-link"></i> Copy link</button>
+      </div>
     </div>
-  </main>
-  <footer>© 2026 PixelPress. All rights reserved. <a href="../privacy-policy.html" style="color:var(--accent);margin-left:1rem">Privacy</a></footer>
-  <script>window.addEventListener('scroll',()=>{const s=document.body.scrollTop||document.documentElement.scrollTop;const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progressBar').style.width=(h>0?(s/h)*100:0)+'%'});document.addEventListener('DOMContentLoaded',()=>{document.documentElement.setAttribute('data-theme',localStorage.getItem('pixelpress-theme')||'dark')});</script>
+  </article>
+  <aside class="sidebar">
+    <div class="side-sticky">
+      <div class="tool-card">
+        <h4>URL Shortener Free</h4>
+        <p>Shorten long links with custom slugs, click tracking, and expiry dates — all stored locally in your browser.</p>
+        <a href="../url-shortener.html" class="tool-btn">Open URL Shortener <i class="fa-solid fa-bolt"></i></a>
+      </div>
+      <div class="related-card">
+        <h4>Related Guides</h4>
+        <a href="./qr-guide.html">QR Code Generator Guide</a>
+        <a href="./password-guide.html">Password Generator Guide</a>
+        <a href="./json-formatter-guide.html">JSON Formatter Guide</a>
+      </div>
+    </div>
+  </aside>
+</main>
+<footer>
+  <span class="logo">ImgPDFTools</span>
+  <div class="footer-links">
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../privacy-policy.html">Privacy</a>
+    <a href="../disclaimer.html">Disclaimer</a>
+  </div>
+  <p>© 2026 ImgPDFTools — Client-side tools for speed, privacy & creativity.</p>
+</footer>
+<button id="backTop" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  $('themeToggle').addEventListener('click', function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var next=cur==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('imgpdftools-theme',next);}catch(e){}
+  });
+  var bar=$('readingProgress');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var total=h.scrollHeight-h.clientHeight;
+    var pct=total>0?(h.scrollTop/total)*100:0;
+    bar.style.width=pct+'%';
+  },{passive:true});
+  document.querySelectorAll('.faq-trigger').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded',open?'false':'true');
+      var content=btn.nextElementSibling;
+      content.style.maxHeight=open?null:content.scrollHeight+'px';
+    });
+  });
+  var url=window.location.href;
+  var shareBtn=$('shareBtn'), copyBtn=$('copyBtn');
+  shareBtn.addEventListener('click',function(){
+    if(navigator.share){navigator.share({title:document.title,url:url}).catch(function(){});}
+    else{copyLink();}
+  });
+  copyBtn.addEventListener('click',copyLink);
+  function copyLink(){
+    if(navigator.clipboard){navigator.clipboard.writeText(url).then(flash).catch(function(){});}
+  }
+  function flash(){
+    var old=copyBtn.innerHTML;
+    copyBtn.innerHTML='<i class="fa-solid fa-check"></i> Copied';
+    setTimeout(function(){copyBtn.innerHTML=old;},1600);
+  }
+  var backTop=$('backTop');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){backTop.classList.add('show');}else{backTop.classList.remove('show');}
+  },{passive:true});
+  backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
 </body>
 </html>
