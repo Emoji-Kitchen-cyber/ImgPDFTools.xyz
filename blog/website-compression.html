@@ -23,49 +23,49 @@
 <meta name="twitter:description" content="Compress website images for faster load times and better SEO." />
 <meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png" />
 <script>
-  (function(){try{var t=localStorage.getItem('imgpdftools-theme')||localStorage.getItem('pixelpress-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+(function(){try{var t=localStorage.getItem('imgpdftools-theme')||localStorage.getItem('pixelpress-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})(  );
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-3P7QPQKV3K');
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-3P7QPQKV3K');
 </script>
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@graph": [
+  "@context":"https://schema.org",
+  "@graph":[
     {
-      "@type": "TechArticle",
-      "headline": "Website Image Compression Guide – Faster Load Times",
-      "description": "Compress images for your website to improve page speed, Core Web Vitals, and SEO.",
-      "author": { "@type": "Person", "name": "Muhammad Jahangir" },
-      "publisher": { "@type": "Organization", "name": "ImgPDFTools" },
-      "mainEntityOfPage": "https://imgpdftools.xyz/blog/website-compression.html",
-      "datePublished": "2026-05-01",
-      "image": "https://imgpdftools.xyz/og-image.png"
+      "@type":"TechArticle",
+      "headline":"Website Image Compression Guide – Faster Load Times",
+      "description":"Compress images for your website to improve page speed, Core Web Vitals, and SEO.",
+      "author":{"@type":"Person","name":"Muhammad Jahangir"},
+      "publisher":{"@type":"Organization","name":"ImgPDFTools"},
+      "mainEntityOfPage":"https://imgpdftools.xyz/blog/website-compression.html",
+      "datePublished":"2026-05-01",
+      "image":"https://imgpdftools.xyz/og-image.png"
     },
     {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://imgpdftools.xyz/" },
-        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://imgpdftools.xyz/blog/" },
-        { "@type": "ListItem", "position": 3, "name": "Website Compression", "item": "https://imgpdftools.xyz/blog/website-compression.html" }
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://imgpdftools.xyz/"},
+        {"@type":"ListItem","position":2,"name":"Blog","item":"https://imgpdftools.xyz/blog/"},
+        {"@type":"ListItem","position":3,"name":"Website Compression","item":"https://imgpdftools.xyz/blog/website-compression.html"}
       ]
     },
     {
-      "@type": "FAQPage",
-      "mainEntity": [
+      "@type":"FAQPage",
+      "mainEntity":[
         {
-          "@type": "Question",
-          "name": "What is the best image format for websites?",
-          "acceptedAnswer": { "@type": "Answer", "text": "WebP is the best format for most web images — it is 25-35% smaller than JPEG at the same visual quality and is supported by all modern browsers. Use PNG only for images that require transparency." }
+          "@type":"Question",
+          "name":"What is the best image format for websites?",
+          "acceptedAnswer":{"@type":"Answer","text":"WebP is the best format for most web images — it is 25-35% smaller than JPEG at the same visual quality and is supported by all modern browsers. Use PNG only for images that require transparency."}
         },
         {
-          "@type": "Question",
-          "name": "How much can image compression improve page speed?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Images typically account for 50-70% of a web page's total byte weight. Compressing images can reduce page load time by 1-3 seconds on a typical connection, directly improving Core Web Vitals scores." }
+          "@type":"Question",
+          "name":"How much can image compression improve page speed?",
+          "acceptedAnswer":{"@type":"Answer","text":"Images typically account for 50-70% of a web page's total byte weight. Compressing images can reduce page load time by 1-3 seconds on a typical connection, directly improving Core Web Vitals scores."}
         }
       ]
     }
@@ -75,5 +75,320 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-:root{--bg:#f8f8fc;--surface:rgba(255,255,255,0.90);--card:#ffffff;--border:rgba(99,102,241,0.10);--text:#18181b;--muted:#71717a;--accent:#6366f1;--accent2:#8b5cf6;--glow:rgba(99,102,241,0.14);--tag-bg:#f0f0f8;--radius:14px;--fhead:'Space Grotesk',sans-serif;--fbody:'Plus Jakarta Sans',system-ui,sans-serif;--fmono:'JetBrains Mono',monospace;}
-[
+:root{
+  --bg:#f8f8fc;--surface:rgba(255,255,255,0.90);--card:#ffffff;
+  --border:rgba(99,102,241,0.10);--text:#18181b;--muted:#71717a;
+  --accent:#6366f1;--accent2:#8b5cf6;--glow:rgba(99,102,241,0.14);
+  --tag-bg:#f0f0f8;--radius:14px;
+  --fhead:'Space Grotesk',sans-serif;
+  --fbody:'Plus Jakarta Sans',system-ui,sans-serif;
+  --fmono:'JetBrains Mono',monospace;
+}
+[data-theme="dark"]{
+  --bg:#0c0c14;--surface:rgba(18,18,30,0.92);--card:#16162a;
+  --border:rgba(99,102,241,0.18);--text:#e4e4f0;--muted:#8888aa;
+  --glow:rgba(99,102,241,0.28);--tag-bg:#1a1a2e;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;transition:.3s;}
+a{color:inherit;text-decoration:none;}
+.progress-container{position:fixed;top:0;left:0;width:100%;height:3px;background:transparent;z-index:200;}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .1s linear;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:.55rem;font-family:var(--fhead);font-weight:800;font-size:1.2rem;}
+.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.logo-text .pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-text .tools{color:var(--muted);}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-links{display:flex;gap:1.6rem;list-style:none;}
+.nav-links a{font-size:.875rem;font-weight:500;color:var(--muted);transition:.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.theme-toggle{background:var(--card);border:1px solid var(--border);width:40px;height:40px;border-radius:50%;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.2s;}
+.theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);}
+.layout{max-width:1120px;width:100%;margin:0 auto;padding:2rem clamp(1rem,5vw,3rem) 3rem;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2.5rem;}
+.breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.5rem;}
+.breadcrumbs a:hover{color:var(--accent);}
+.breadcrumbs i{font-size:9px;}
+.cat-badge{display:inline-block;font-family:var(--fmono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:var(--tag-bg);border:1px solid var(--border);padding:.3rem .8rem;border-radius:999px;margin-bottom:1rem;}
+.article-header h1{font-family:var(--fhead);font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;}
+.article-meta{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.82rem;color:var(--muted);padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;}
+.article-meta span{display:inline-flex;align-items:center;gap:.4rem;}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-bottom:2rem;}
+.toc h3{font-family:var(--fhead);font-size:.95rem;margin-bottom:.7rem;}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.toc a{font-size:.875rem;color:var(--muted);transition:.2s;}
+.toc a:hover{color:var(--accent);}
+.content h2{font-family:var(--fhead);font-size:1.35rem;font-weight:700;margin:2rem 0 .9rem;scroll-margin-top:80px;}
+.content p{font-size:1rem;line-height:1.8;color:var(--text);margin-bottom:1.1rem;}
+.content ul{margin:0 0 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+.content li{font-size:1rem;line-height:1.7;}
+.callout{background:var(--tag-bg);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:1rem 1.2rem;margin:1.5rem 0;font-size:.95rem;color:var(--text);}
+.faq-block{margin-top:2.5rem;}
+.faq-block>h2{font-family:var(--fhead);font-size:1.35rem;margin-bottom:1rem;}
+.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:.8rem;overflow:hidden;background:var(--card);}
+.faq-trigger{width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--fbody);font-size:.98rem;font-weight:600;padding:1rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.faq-trigger i{transition:transform .25s;color:var(--accent);}
+.faq-trigger[aria-expanded="true"] i{transform:rotate(180deg);}
+.faq-content{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-content p{padding:0 1.2rem 1.1rem;font-size:.92rem;line-height:1.7;color:var(--muted);margin:0;}
+.share-row{display:flex;align-items:center;gap:.7rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);flex-wrap:wrap;}
+.share-row span{font-size:.85rem;color:var(--muted);}
+.share-btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:var(--fbody);font-size:.82rem;font-weight:600;padding:.5rem .9rem;border-radius:8px;cursor:pointer;transition:.2s;}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);}
+aside.sidebar{display:flex;flex-direction:column;gap:1.5rem;}
+.side-sticky{position:sticky;top:88px;display:flex;flex-direction:column;gap:1.5rem;}
+.tool-card{background:linear-gradient(135deg,var(--glow),rgba(139,92,246,0.08));border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;}
+.tool-card h4{font-family:var(--fhead);font-size:1.05rem;margin-bottom:.5rem;}
+.tool-card p{font-size:.86rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.tool-btn{display:inline-flex;align-items:center;gap:.5rem;width:100%;justify-content:center;padding:.7rem 1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:9px;font-weight:600;font-size:.88rem;transition:.2s;}
+.tool-btn:hover{opacity:.9;transform:translateY(-1px);}
+.related-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;}
+.related-card h4{font-family:var(--fhead);font-size:1rem;margin-bottom:.9rem;}
+.related-card a{display:block;font-size:.88rem;color:var(--muted);padding:.45rem 0;border-bottom:1px solid var(--border);transition:.2s;}
+.related-card a:last-child{border-bottom:none;}
+.related-card a:hover{color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:2rem clamp(1rem,5vw,3rem);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:auto;}
+footer .logo{font-family:var(--fhead);font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+footer p{font-size:.8rem;color:var(--muted);}
+.footer-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.footer-links a{font-size:.8rem;color:var(--muted);}
+.footer-links a:hover{color:var(--accent);}
+#backTop{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 8px 24px var(--glow);z-index:120;}
+#backTop.show{opacity:1;pointer-events:auto;}
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;}
+  .side-sticky{position:static;}
+  .nav-links{display:none;}
+}
+</style>
+</head>
+<body>
+<div class="progress-container"><div class="progress-bar" id="readingProgress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <span class="logo-icon">🛠️</span>
+    <span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Blog</a></li>
+      <li><a href="../index.html#tools">All Tools</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌓</button>
+  </div>
+</nav>
+
+<main class="layout">
+  <article>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <a href="./index.html">Blog</a>
+      <i class="fa-solid fa-chevron-right"></i>
+      <span>Image Tools</span>
+    </nav>
+
+    <span class="cat-badge">Performance</span>
+
+    <header class="article-header">
+      <h1>Website Image Compression – Faster Load Times &amp; Better SEO</h1>
+      <div class="article-meta">
+        <span><i class="fa-regular fa-calendar"></i> May 2026</span>
+        <span><i class="fa-regular fa-user"></i> Muhammad Jahangir</span>
+        <span><i class="fa-regular fa-clock"></i> 7 min read</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h3>On this page</h3>
+      <ul>
+        <li><a href="#section1">1. Why Image Size Affects Page Speed</a></li>
+        <li><a href="#section2">2. Best Formats for Web Images</a></li>
+        <li><a href="#section3">3. Step by Step</a></li>
+        <li><a href="#section4">4. Tips for Maximum Compression</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      <p>Images are the heaviest assets on most web pages — often accounting for more than half of total page weight. Compressing them before upload is the single most impactful thing you can do to improve page speed, Core Web Vitals scores, and search rankings, with no visible quality loss for visitors.</p>
+
+      <h2 id="section1">1. Why Image Size Affects Page Speed</h2>
+      <p>Google's Core Web Vitals — particularly Largest Contentful Paint (LCP) — are directly affected by how quickly the main image on a page loads. A hero image that is 3 MB instead of 200 KB can add 2–4 seconds to LCP on a mobile connection, which pushes the score into a failing range. Search engines use page speed as a ranking factor, so slow-loading images directly cost you organic traffic.</p>
+      <div class="callout">💡 <strong>Tip:</strong> Target under 200 KB for hero images, under 100 KB for content images, and under 50 KB for thumbnails and icons. Use Google PageSpeed Insights to identify which images are causing the most impact.</div>
+
+      <h2 id="section2">2. Best Formats for Web Images</h2>
+      <ul>
+        <li><strong>WebP</strong> — best overall choice. 25–35% smaller than JPEG at the same visual quality. Supported by all modern browsers. Use for photos, banners, and product images.</li>
+        <li><strong>JPEG</strong> — best compatibility. Use for photographs when WebP is not an option. Quality 75–85% is usually indistinguishable from the original.</li>
+        <li><strong>PNG</strong> — use only when transparency is required (logos, icons with transparent backgrounds). PNG files are larger than JPEG for photographs.</li>
+        <li><strong>SVG</strong> — use for logos, icons, and illustrations. Scales perfectly at any size with tiny file sizes.</li>
+        <li><strong>AVIF</strong> — next-generation format, even smaller than WebP but browser support is still growing.</li>
+      </ul>
+
+      <h2 id="section3">3. Step by Step</h2>
+      <ul>
+        <li><strong>Upload your image</strong> — drag and drop a JPG or PNG into the compressor.</li>
+        <li><strong>Set quality level</strong> — start at 80% and preview the result. Reduce further if file size is still too large.</li>
+        <li><strong>Choose output format</strong> — select WebP for the best size-to-quality ratio on modern sites.</li>
+        <li><strong>Compare</strong> — use the before/after preview to confirm no visible quality loss.</li>
+        <li><strong>Download</strong> — save the compressed file and replace it on your website.</li>
+      </ul>
+      <p>All compression runs in your browser using the Canvas API. Your images are never uploaded to any server.</p>
+
+      <h2 id="section4">4. Tips for Maximum Compression</h2>
+      <ul>
+        <li><strong>Resize before compressing</strong> — never serve a 4000 px wide image in an 800 px column. Resize to the display size first, then compress.</li>
+        <li><strong>Strip metadata</strong> — EXIF data (camera model, GPS location, timestamps) adds kilobytes to every photo and is invisible to visitors.</li>
+        <li><strong>Use lazy loading</strong> — add <code>loading="lazy"</code> to images below the fold so they only load when the user scrolls to them.</li>
+        <li><strong>Serve responsive images</strong> — use the HTML <code>srcset</code> attribute to serve different sizes to different screen resolutions.</li>
+        <li><strong>Compress every image before upload</strong> — CMS platforms like WordPress recompress images on upload, but starting with an already-optimised file produces a better result.</li>
+      </ul>
+
+      <section class="faq-block" id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            What is the best image format for websites?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-content">
+            <p>WebP is the best format for most web images — it is 25–35% smaller than JPEG at the same visual quality and is supported by all modern browsers. Use PNG only for images that require transparency.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            How much can image compression improve page speed?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-content">
+            <p>Images typically account for 50–70% of a web page's total byte weight. Compressing images can reduce page load time by 1–3 seconds on a typical connection, directly improving Core Web Vitals scores.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            Will compression make my images look worse?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-content">
+            <p>At quality 75–85%, most viewers cannot tell the difference between a compressed and uncompressed image. Use the before/after preview in the compressor to confirm quality before downloading.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">
+            Are my images uploaded to a server when I compress them?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-content">
+            <p>No. ImgPDFTools compresses images entirely in your browser using the Canvas API. Your files never leave your device.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="share-row">
+        <span>Share this guide:</span>
+        <button class="share-btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+        <button class="share-btn" id="copyBtn"><i class="fa-solid fa-link"></i> Copy link</button>
+      </div>
+    </div>
+  </article>
+
+  <aside class="sidebar">
+    <div class="side-sticky">
+      <div class="tool-card">
+        <h4>Compress Image Free</h4>
+        <p>Compress JPG, PNG, and WebP images for your website — reduce file size without visible quality loss, all in your browser.</p>
+        <a href="../compress.html" class="tool-btn">Open Image Compressor <i class="fa-solid fa-bolt"></i></a>
+      </div>
+      <div class="related-card">
+        <h4>Related Guides</h4>
+        <a href="./images-to-pdf.html">Convert Images to PDF</a>
+        <a href="./whatsapp-resize.html">Resize Images for WhatsApp</a>
+        <a href="./photo-editing-tools.html">Photo Editing Tools Guide</a>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <span class="logo">ImgPDFTools</span>
+  <div class="footer-links">
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../privacy-policy.html">Privacy</a>
+    <a href="../disclaimer.html">Disclaimer</a>
+  </div>
+  <p>© 2026 ImgPDFTools — Client-side tools for speed, privacy &amp; creativity.</p>
+</footer>
+
+<button id="backTop" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+
+  // Theme toggle
+  $('themeToggle').addEventListener('click',function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var next=cur==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('imgpdftools-theme',next);}catch(e){}
+  });
+
+  // Reading progress bar
+  var bar=$('readingProgress');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var total=h.scrollHeight-h.clientHeight;
+    var pct=total>0?(h.scrollTop/total)*100:0;
+    bar.style.width=pct+'%';
+  },{passive:true});
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-trigger').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded',open?'false':'true');
+      var content=btn.nextElementSibling;
+      content.style.maxHeight=open?null:content.scrollHeight+'px';
+    });
+  });
+
+  // Share / Copy
+  var url=window.location.href;
+  $('shareBtn').addEventListener('click',function(){
+    if(navigator.share){
+      navigator.share({title:document.title,url:url}).catch(function(){});
+    } else {
+      copyLink();
+    }
+  });
+  $('copyBtn').addEventListener('click',copyLink);
+  function copyLink(){
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(url).then(flash).catch(function(){});
+    }
+  }
+  function flash(){
+    var btn=$('copyBtn');
+    var old=btn.innerHTML;
+    btn.innerHTML='<i class="fa-solid fa-check"></i> Copied';
+    setTimeout(function(){btn.innerHTML=old;},1600);
+  }
+
+  // Back to top
+  var backTop=$('backTop');
+  window.addEventListener('scroll',function(){
+    backTop.classList.toggle('show',window.scrollY>400);
+  },{passive:true});
+  backTop.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>
