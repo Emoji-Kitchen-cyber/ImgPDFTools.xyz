@@ -6,9 +6,20 @@
 
 **25+ free online tools to compress, resize, convert, and edit images, plus a full set of PDF utilities. Everything runs entirely in your browser — your files never leave your device.**
 
-**🌐 [Live Site](https://pixelpress-cyy.pages.dev)** · **100% Client-Side** · **No Signup** · **PWA Ready**
+[![Website](https://img.shields.io/badge/🌐_Live_Site-Visit_Now-6366f1?style=for-the-badge)](https://pixelpress-cyy.pages.dev)
+[![Privacy](https://img.shields.io/badge/Privacy-100%25_Client_Side-22c55e?style=for-the-badge)](#-privacy-promise)
+[![Signup](https://img.shields.io/badge/Signup-Not_Required-10b981?style=for-the-badge)](#)
+[![PWA](https://img.shields.io/badge/PWA-Offline_Ready-3b82f6?style=for-the-badge)](#)
+[![Tools](https://img.shields.io/badge/Tools-25%2B-a855f7?style=for-the-badge)](#%EF%B8%8F-available-tools-25)
+[![License](https://img.shields.io/badge/License-All_Rights_Reserved-ef4444?style=for-the-badge)](#-license)
 
-[🚀 Try it Live](https://pixelpress-cyy.pages.dev) · [🐛 Report an Issue](https://github.com/Emoji-Kitchen-cyber/ImgPDFTools.xyz/issues)
+![GitHub Repo stars](https://img.shields.io/github/stars/Emoji-Kitchen-cyber/ImgPDFTools.xyz?style=social)
+![GitHub last commit](https://img.shields.io/github/last-commit/Emoji-Kitchen-cyber/ImgPDFTools.xyz?style=flat-square&color=blue)
+![GitHub language count](https://img.shields.io/github/languages/count/Emoji-Kitchen-cyber/ImgPDFTools.xyz?style=flat-square&color=orange)
+![GitHub top language](https://img.shields.io/github/languages/top/Emoji-Kitchen-cyber/ImgPDFTools.xyz?style=flat-square&color=yellow)
+![GitHub repo size](https://img.shields.io/github/repo-size/Emoji-Kitchen-cyber/ImgPDFTools.xyz?style=flat-square&color=green)
+
+[🚀 Try it Live](https://pixelpress-cyy.pages.dev) · [🐛 Report an Issue](https://github.com/Emoji-Kitchen-cyber/ImgPDFTools.xyz/issues) · [⭐ Star this Repo](https://github.com/Emoji-Kitchen-cyber/ImgPDFTools.xyz)
 
 </div>
 
@@ -66,6 +77,15 @@
 ---
 
 ## 🚀 Tech Stack
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![PWA](https://img.shields.io/badge/PWA-5A0FC8?style=for-the-badge&logo=pwa&logoColor=white)
+![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)
+![Font Awesome](https://img.shields.io/badge/Font_Awesome-528DD7?style=for-the-badge&logo=fontawesome&logoColor=white)
+![Google Fonts](https://img.shields.io/badge/Google_Fonts-4285F4?style=for-the-badge&logo=google&logoColor=white)
+![Service Worker](https://img.shields.io/badge/Service_Worker-FF6F00?style=for-the-badge&logo=googlechrome&logoColor=white)
 
 - **Frontend:** Vanilla HTML5, CSS3, JavaScript (ES6+)
 - **Fonts:** Plus Jakarta Sans, Space Grotesk (Google Fonts)
