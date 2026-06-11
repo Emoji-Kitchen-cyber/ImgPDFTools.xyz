@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' cdn.jsdelivr.net cdnjs.cloudflare.com www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' www.google-analytics.com; object-src 'none'; base-uri 'self';" />
+<title>DXF / DWG CAD Converter — ImgPDFTools</title>
+<meta name="description" content="Free online DXF viewer and CAD converter. Open DXF drawings, inspect layers and entities, then export to SVG, PDF or JSON — 100% in your browser." />
+<link rel="canonical" href="https://imgpdftools.xyz/dxf-dwg-converter.html" />
+<meta name="theme-color" content="#6366f1" />
+<meta property="og:title" content="DXF / DWG CAD Converter — ImgPDFTools" />
+<meta property="og:description" content="View DXF drawings and export to SVG, PDF or JSON in your browser." />
+<link rel="icon" href="/favicon.ico" />
+<!-- Pre-paint theme (prevents flash) -->
+<script>
+  (function(){
+    try{
+      var t = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    }catch(e){}
+  })();
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-3P7QPQKV3K');
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/dxf-parser@1.1.2/dist/dxf-parser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+:root{
+  --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+  --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06); --text:#18181b; --muted:#71717a;
+  --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+  --green:#10b981; --red:#ef4444; --yellow:#f59e0b;
+  --r:16px; --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+[data-theme="dark"]{
+  --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+  --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07); --text:#e4e4f0; --muted:#8888aa;
+  --glow:rgba(99,102,241,0.28);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;transition:.3s;}
+nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-left{display:flex;align-items:center;gap:1rem;}
+.back-btn{background:var(--card);border:1px solid var(--border);width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.1rem;cursor:pointer;text-decoration:none;transition:.2s;}
+.back-btn:hover{border-color:var(--accent);transform:scale(1.05);}
+.nav-logo{display:flex;align-items:center;gap:.55rem;font-family:var(--fhead);font-weight:800;font-size:1.2rem;text-decoration:none;color:inherit;}
+.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.logo-text .pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-text .tools{color:var(--muted);}
+.main{flex:1;max-width:1200px;margin:0 auto;width:100%;padding:1.5rem 20px;}
+.hero{margin-bottom:1rem;}
+.hero h1{font-family:var(--fhead);font-size:clamp(1.6rem,4vw,2.3rem);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero p{color:var(--muted);font-size:.9rem;margin-top:.3rem;}
+.upload-area{border:2px dashed var(--border);border-radius:var(--r);padding:2.5rem 2rem;text-align:center;cursor:pointer;background:var(--card);margin-bottom:1.5rem;transition:.2s;}
+.upload-area:hover,.upload-area.drag{border-color:var(--accent);background:var(--glow);}
+.upload-area i{font-size:2.5rem;color:var(--accent);}
+.upload-area h2{font-family:var(--fhead);margin-top:.6rem;font-size:1.1rem;}
+.upload-area input{display:none;}
+.workspace{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.canvas-panel{flex:2;min-width:300px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem;display:flex;flex-direction:column;align-items:center;gap:1rem;}
+canvas{border:1px solid var(--border);border-radius:8px;background:#ffffff;max-width:100%;touch-action:none;}
+.info-panel{flex:1;min-width:250px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;}
+.info-panel h3{font-family:var(--fhead);font-size:1rem;}
+.btn{padding:9px 15px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text);font-weight:600;font-size:.84rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:.18s;font-family:var(--fbody);}
+.btn:hover{border-color:var(--accent);color:var(--accent);}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;}
+.btn-primary:hover{opacity:.92;color:#fff;}
+.btn:disabled{opacity:.45;pointer-events:none;}
+.stat{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:.88rem;}
+.stat span:last-child{color:var(--muted);text-align:right;word-break:break-word;}
+.layer-list{max-height:200px;overflow-y:auto;}
+.layer-item{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:.84rem;}
+.swatch{display:inline-block;width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1px solid var(--border2);}
+.notice{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:var(--yellow);border-radius:10px;padding:10px 12px;font-size:.82rem;}
+footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;border-top:1px solid var(--border);margin-top:auto;line-height:1.8;}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-left">
+    <a href="./index.html" class="back-btn" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></a>
+    <a href="./index.html" class="nav-logo"><span class="logo-icon">\uD83D\uDEE0\uFE0F</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
+  </div>
+  <button id="themeToggle" class="back-btn" title="Toggle theme" aria-label="Toggle theme">\uD83C\uDF13</button>
+</nav>
+
+<div class="main">
+  <div class="hero">
+    <h1>DXF / DWG CAD Converter</h1>
+    <p>View DXF drawings, inspect layers & entities, then export to SVG, PDF or JSON \u2014 100% in your browser.</p>
+  </div>
+
+  <div class="upload-area" id="uploadZone">
+    <i class="fa-solid fa-file-arrow-up"></i>
+    <h2>Upload DXF / DWG</h2>
+    <p style="color:var(--muted);">DXF fully supported \u2022 DWG metadata only</p>
+    <input type="file" id="cadInput" accept=".dxf,.dwg" />
+  </div>
+
+  <div class="workspace" id="workspace" style="display:none;">
+    <div class="canvas-panel">
+      <canvas id="cadCanvas" width="640" height="440"></canvas>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;">
+        <button class="btn" id="zoomInBtn" title="Zoom in"><i class="fa-solid fa-plus"></i></button>
+        <button class="btn" id="zoomOutBtn" title="Zoom out"><i class="fa-solid fa-minus"></i></button>
+        <button class="btn" id="fitBtn"><i class="fa-solid fa-expand"></i> Fit</button>
+        <button class="btn btn-primary" id="exportSvgBtn"><i class="fa-solid fa-file-code"></i> SVG</button>
+        <button class="btn btn-primary" id="exportPdfBtn"><i class="fa-solid fa-file-pdf"></i> PDF</button>
+        <button class="btn btn-primary" id="exportJsonBtn"><i class="fa-solid fa-file-export"></i> JSON</button>
+      </div>
+      <p style="color:var(--muted);font-size:.76rem;">Tip: drag to pan \u2022 scroll to zoom</p>
+    </div>
+
+    <div class="info-panel">
+      <div>
+        <h3>File Info</h3>
+        <div class="stat"><span>Name:</span><span id="fileName">-</span></div>
+        <div class="stat"><span>Type:</span><span id="fileType">-</span></div>
+        <div class="stat"><span>Entities:</span><span id="entityCount">-</span></div>
+        <div class="stat"><span>Layers:</span><span id="layerCount">-</span></div>
+        <div class="stat"><span>Bounds:</span><span id="bounds">-</span></div>
+      </div>
+      <div id="dwgNotice" class="notice" style="display:none;">DWG is a closed binary format and cannot be rendered in the browser. Only basic metadata is shown. Convert DWG \u2192 DXF in your CAD app for full viewing.</div>
+      <div>
+        <h3>Layers</h3>
+        <div class="layer-list" id="layerList"></div>
+      </div>
+      <button class="btn" id="resetBtn"><i class="fa-solid fa-rotate"></i> New File</button>
+    </div>
+  </div>
+</div>
+
+<footer>\u00A9 2026 ImgPDFTools \u2014 CAD Converter &nbsp;\u00B7&nbsp; <strong>Files never leave your device</strong></footer>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+
+  // THEME
+  $('themeToggle').addEventListener('click', function(){
+    var n = document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme', n);
+    try{ localStorage.setItem('imgpdftools-theme', n); }catch(e){}
+  });
+
+  var uploadZone=$('uploadZone'), cadInput=$('cadInput'), workspace=$('workspace');
+  var canvas=$('cadCanvas'), ctx=canvas.getContext('2d');
+  var parsedData=null, bbox=null, userZoom=1, panX=0, panY=0;
+  var isPanning=false, panStart={x:0,y:0};
+  var parser = (typeof DxfParser!=='undefined') ? new DxfParser() : null;
+
+  uploadZone.addEventListener('click', function(){ cadInput.click(); });
+  cadInput.addEventListener('change', function(e){ if(e.target.files[0]) handleFile(e.target.files[0]); });
+  uploadZone.addEventListener('dragover', function(e){ e.preventDefault(); uploadZone.classList.add('drag'); });
+  uploadZone.addEventListener('dragleave', function(){ uploadZone.classList.remove('drag'); });
+  uploadZone.addEventListener('drop', function(e){ e.preventDefault(); uploadZone.classList.remove('drag'); if(e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+
+  function handleFile(file){
+    if(!file) return;
+    var ext=(file.name.split('.').pop()||'').toLowerCase();
+    $('fileName').textContent=file.name;
+    if(ext==='dwg'){
+      $('fileType').textContent='DWG (limited support)';
+      $('entityCount').textContent='N/A'; $('layerCount').textContent='N/A'; $('bounds').textContent='N/A';
+      $('layerList').innerHTML=''; $('dwgNotice').style.display='block';
+      parsedData=null; ctx.clearRect(0,0,canvas.width,canvas.height);
+      workspace.style.display='flex'; uploadZone.style.display='none';
+      return;
+    }
+    if(!parser){ alert('DXF parser failed to load. Check your connection and retry.'); return; }
+    $('dwgNotice').style.display='none';
+    var reader=new FileReader();
+    reader.onerror=function(){ alert('Could not read the file.'); };
+    reader.onload=function(ev){
+      try{
+        parsedData=parser.parseSync(ev.target.result);
+        if(!parsedData || !Array.isArray(parsedData.entities)) throw new Error('No drawing entities found.');
+        renderInfo();
+        fitView();
+        workspace.style.display='flex'; uploadZone.style.display='none';
+      }catch(err){ alert('Failed to parse DXF: ' + (err.message||err)); }
+    };
+    reader.readAsText(file);
+  }
+
+  function computeBounds(){
+    var minX=Infinity,minY=Infinity,maxX=-Infinity,maxY=-Infinity;
+    function pt(x,y){ if(typeof x!=='number'||typeof y!=='number')return; minX=Math.min(minX,x);minY=Math.min(minY,y);maxX=Math.max(maxX,x);maxY=Math.max(maxY,y); }
+    parsedData.entities.forEach(function(e){
+      if(e.type==='LINE'){ if(e.vertices){ e.vertices.forEach(function(v){pt(v.x,v.y);}); } else { pt(e.startPoint&&e.startPoint.x,e.startPoint&&e.startPoint.y); pt(e.endPoint&&e.endPoint.x,e.endPoint&&e.endPoint.y);} }
+      else if((e.type==='CIRCLE'||e.type==='ARC')&&e.center){ pt(e.center.x-e.radius,e.center.y-e.radius); pt(e.center.x+e.radius,e.center.y+e.radius); }
+      else if((e.type==='LWPOLYLINE'||e.type==='POLYLINE')&&e.vertices){ e.vertices.forEach(function(v){pt(v.x,v.y);}); }
+      else if((e.type==='TEXT'||e.type==='MTEXT')&&e.startPoint){ pt(e.startPoint.x,e.startPoint.y); }
+      else if(e.type==='POINT'&&e.position){ pt(e.position.x,e.position.y); }
+    });
+    if(minX===Infinity){ minX=0;minY=0;maxX=100;maxY=100; }
+    return {minX:minX,minY:minY,maxX:maxX,maxY:maxY};
+  }
+
+  function renderInfo(){
+    $('fileType').textContent='DXF';
+    $('entityCount').textContent=parsedData.entities.length.toLocaleString();
+    var layers=(parsedData.tables&&parsedData.tables.layer&&parsedData.tables.layer.layers)||{};
+    var layerKeys=Object.keys(layers);
+    $('layerCount').textContent=layerKeys.length||'0';
+    bbox=computeBounds();
+    $('bounds').textContent='X '+bbox.minX.toFixed(1)+'\u2192'+bbox.maxX.toFixed(1)+'  Y '+bbox.minY.toFixed(1)+'\u2192'+bbox.maxY.toFixed(1);
+    var ll=$('layerList');
+    ll.innerHTML = layerKeys.length ? layerKeys.map(function(name){
+      var a=layers[name]||{};
+      var col=aciColor(a.colorIndex!=null?a.colorIndex:a.color);
+      return '<div class="layer-item"><span class="swatch" style="background:'+col+'"></span>'+escHtml(name)+'</div>';
+    }).join('') : '<p style="color:var(--muted);font-size:.82rem;">No named layers</p>';
+  }
+
+  // AutoCAD Color Index (ACI) -> hex, 1-based standard colors
+  function aciColor(i){
+    var map={1:'#FF0000',2:'#FFFF00',3:'#00FF00',4:'#00FFFF',5:'#0000FF',6:'#FF00FF',7:'#000000',8:'#808080',9:'#C0C0C0'};
+    return map[i] || '#888888';
+  }
+  function escHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // Build world->screen transform from bbox + zoom + pan
+  function getTransform(){
+    var pad=40;
+    var gw=canvas.width-pad*2, gh=canvas.height-pad*2;
+    var rx=(bbox.maxX-bbox.minX)||1, ry=(bbox.maxY-bbox.minY)||1;
+    var base=Math.min(gw/rx, gh/ry);
+    var scale=base*userZoom;
+    var cx=(bbox.minX+bbox.maxX)/2, cy=(bbox.minY+bbox.maxY)/2;
+    var ox=canvas.width/2 - cx*scale + panX;
+    var oy=canvas.height/2 + cy*scale + panY; // flip Y
+    return {scale:scale, ox:ox, oy:oy};
+  }
+
+  function draw(){
+    if(!parsedData || !bbox) return;
+    var t=getTransform();
+    function tx(x){ return t.ox + x*t.scale; }
+    function ty(y){ return t.oy - y*t.scale; }
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.lineWidth=1; ctx.strokeStyle='#1d1d1f';
+    parsedData.entities.forEach(function(e){
+      ctx.beginPath();
+      if(e.type==='LINE'){
+        var sp=e.startPoint||(e.vertices&&e.vertices[0]); var ep=e.endPoint||(e.vertices&&e.vertices[1]);
+        if(sp&&ep){ ctx.moveTo(tx(sp.x),ty(sp.y)); ctx.lineTo(tx(ep.x),ty(ep.y)); }
+      } else if(e.type==='CIRCLE'&&e.center){
+        ctx.arc(tx(e.center.x),ty(e.center.y),e.radius*t.scale,0,Math.PI*2);
+      } else if(e.type==='ARC'&&e.center){
+        var s=(e.startAngle||0)*Math.PI/180, en=(e.endAngle||0)*Math.PI/180;
+        ctx.arc(tx(e.center.x),ty(e.center.y),e.radius*t.scale,-en,-s);
+      } else if((e.type==='LWPOLYLINE'||e.type==='POLYLINE')&&e.vertices&&e.vertices.length){
+        ctx.moveTo(tx(e.vertices[0].x),ty(e.vertices[0].y));
+        for(var i=1;i<e.vertices.length;i++){ ctx.lineTo(tx(e.vertices[i].x),ty(e.vertices[i].y)); }
+        if(e.shape||e.closed) ctx.closePath();
+      }
+      ctx.stroke();
+    });
+  }
+
+  function fitView(){ userZoom=1; panX=0; panY=0; draw(); }
+
+  // Build a real SVG from entities
+  function buildSVG(){
+    var w=(bbox.maxX-bbox.minX)||1, h=(bbox.maxY-bbox.minY)||1, pad=w*0.05+1;
+    var parts=[];
+    parts.push('<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+(bbox.minX-pad)+' '+(-(bbox.maxY)-pad)+' '+(w+pad*2)+' '+(h+pad*2)+'" stroke="#000" stroke-width="'+(Math.max(w,h)/600)+'" fill="none">');
+    parsedData.entities.forEach(function(e){
+      if(e.type==='LINE'){
+        var sp=e.startPoint||(e.vertices&&e.vertices[0]); var ep=e.endPoint||(e.vertices&&e.vertices[1]);
+        if(sp&&ep) parts.push('<line x1="'+sp.x+'" y1="'+(-sp.y)+'" x2="'+ep.x+'" y2="'+(-ep.y)+'"/>');
+      } else if(e.type==='CIRCLE'&&e.center){
+        parts.push('<circle cx="'+e.center.x+'" cy="'+(-e.center.y)+'" r="'+e.radius+'"/>');
+      } else if(e.type==='ARC'&&e.center){
+        var s=(e.startAngle||0)*Math.PI/180, en=(e.endAngle||0)*Math.PI/180;
+        var x1=e.center.x+e.radius*Math.cos(s), y1=e.center.y+e.radius*Math.sin(s);
+        var x2=e.center.x+e.radius*Math.cos(en), y2=e.center.y+e.radius*Math.sin(en);
+        var large=((en-s+2*Math.PI)%(2*Math.PI))>Math.PI?1:0;
+        parts.push('<path d="M '+x1+' '+(-y1)+' A '+e.radius+' '+e.radius+' 0 '+large+' 0 '+x2+' '+(-y2)+'"/>');
+      } else if((e.type==='LWPOLYLINE'||e.type==='POLYLINE')&&e.vertices&&e.vertices.length){
+        var d='M '+e.vertices.map(function(v){return v.x+' '+(-v.y);}).join(' L ');
+        if(e.shape||e.closed) d+=' Z';
+        parts.push('<path d="'+d+'"/>');
+      }
+    });
+    parts.push('</svg>');
+    return parts.join('');
+  }
+
+  function downloadBlob(blob,name){
+    var a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; a.click();
+    setTimeout(function(){ URL.revokeObjectURL(a.href); },5000);
+  }
+
+  $('exportSvgBtn').addEventListener('click', function(){ if(!parsedData)return; downloadBlob(new Blob([buildSVG()],{type:'image/svg+xml'}),'imgpdftools-cad.svg'); });
+  $('exportPdfBtn').addEventListener('click', function(){
+    if(!parsedData)return;
+    try{ var jsPDF=window.jspdf.jsPDF; var pdf=new jsPDF('l','mm','a4'); pdf.addImage(canvas.toDataURL('image/png'),'PNG',10,10,277,190); pdf.save('imgpdftools-cad.pdf'); }
+    catch(err){ alert('PDF export failed: '+(err.message||err)); }
+  });
+  $('exportJsonBtn').addEventListener('click', function(){ if(!parsedData)return; downloadBlob(new Blob([JSON.stringify(parsedData,null,2)],{type:'application/json'}),'imgpdftools-cad.json'); });
+
+  $('resetBtn').addEventListener('click', function(){
+    parsedData=null; bbox=null; workspace.style.display='none'; uploadZone.style.display='block';
+    cadInput.value=''; ctx.clearRect(0,0,canvas.width,canvas.height); $('dwgNotice').style.display='none';
+  });
+
+  $('zoomInBtn').addEventListener('click', function(){ userZoom*=1.2; draw(); });
+  $('zoomOutBtn').addEventListener('click', function(){ userZoom/=1.2; draw(); });
+  $('fitBtn').addEventListener('click', fitView);
+
+  // Scroll zoom + drag pan
+  canvas.addEventListener('wheel', function(e){ if(!parsedData)return; e.preventDefault(); userZoom *= (e.deltaY<0?1.1:1/1.1); draw(); }, {passive:false});
+  canvas.addEventListener('mousedown', function(e){ if(!parsedData)return; isPanning=true; panStart={x:e.clientX,y:e.clientY}; });
+  window.addEventListener('mousemove', function(e){ if(!isPanning)return; panX+=(e.clientX-panStart.x); panY+=(e.clientY-panStart.y); panStart={x:e.clientX,y:e.clientY}; draw(); });
+  window.addEventListener('mouseup', function(){ isPanning=false; });
+})();
+</script>
+</body>
+</html>
