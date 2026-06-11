@@ -1,14 +1,14 @@
-// Service Worker for ImgPDFTools / PixelPress
+// Service Worker for ImgPDFTools.xyz
 // Strategy: Network-first for HTML, stale-while-revalidate for assets
-// On install: PURANE saare caches forcefully delete (fixes stale homepage bug)
+// On install: forcefully delete ALL old caches (fixes stale homepage bug)
 
-const CACHE_NAME = 'pixelpress-cache-v6';
+const CACHE_NAME = 'imgpdftools-cache-v6';
 const ASSETS_TO_CACHE = [
   '/offline.html',
   '/site.webmanifest'
 ];
 
-// Install: PURANE saare caches delete + naye assets precache + turant activate
+// Install: delete all old caches + precache new assets + activate immediately
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.keys()
@@ -21,7 +21,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate: double-safety + control le lo
+// Activate: double-safety cleanup + take control of all clients
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
@@ -32,7 +32,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Page se 'SKIP_WAITING' message aaye to naya SW turant chalu kar do
+// When the page sends a 'SKIP_WAITING' message, activate the new SW immediately
 self.addEventListener('message', event => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
@@ -43,14 +43,14 @@ self.addEventListener('fetch', event => {
   if (!req.url.startsWith(self.location.origin)) return;
   if (!req.url.startsWith('http')) return;
 
-  // sw.js / manifest ko kabhi cache se serve nahi karna — hamesha fresh
+  // Never serve sw.js or manifest from cache — always fresh
   const url = new URL(req.url);
   if (url.pathname === '/sw.js' || url.pathname === '/site.webmanifest') {
     event.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.match(req)));
     return;
   }
 
-  // HTML / navigation requests => HAMESHA network se fresh
+  // HTML / navigation requests => ALWAYS fresh from network (no-store)
   const isHTML = req.mode === 'navigate' ||
     (req.headers.get('accept') || '').includes('text/html');
 
@@ -69,7 +69,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Baaki assets (css/js/img/font) => stale-while-revalidate
+  // Other assets (css/js/img/font) => stale-while-revalidate
   event.respondWith(
     caches.match(req).then(cached => {
       const networkFetch = fetch(req).then(res => {
