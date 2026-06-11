@@ -1,91 +1,336 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' www.google-analytics.com; object-src 'none'; base-uri 'self';" />
+<title>Best Online Photo Editing Tools (Free, In Your Browser) | ImgPDFTools</title>
+<meta name="description" content="Edit photos with filters, brightness, contrast, and crop tools — all free and 100% client-side in your browser. No Photoshop needed." />
+<meta name="keywords" content="online photo editor, free photo editing, edit photos browser, photo filters online, brightness contrast tool, crop photo free" />
+<meta name="author" content="Muhammad Jahangir" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#6366f1" />
+<link rel="canonical" href="https://imgpdftools.xyz/blog/photo-editing-tools.html" />
+<link rel="icon" href="/favicon.ico" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="ImgPDFTools" />
+<meta property="og:title" content="Best Online Photo Editing Tools (Free, In Your Browser)" />
+<meta property="og:description" content="Edit photos with filters, brightness, contrast, and crop tools — all free and client-side." />
+<meta property="og:url" content="https://imgpdftools.xyz/blog/photo-editing-tools.html" />
+<meta property="og:image" content="https://imgpdftools.xyz/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Best Online Photo Editing Tools (Free)" />
+<meta name="twitter:description" content="Edit photos with filters and adjustments in your browser." />
+<meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png" />
+<script>
+  (function(){try{var t=localStorage.getItem('imgpdftools-theme')||localStorage.getItem('pixelpress-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
-
 <script>
   window.dataLayer = window.dataLayer || [];
-
-  function gtag(){
-    dataLayer.push(arguments);
-  }
-
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-3P7QPQKV3K');
 </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Best Online Photo Editing Tools: Hardware Driven Render Engines</title>
-  <meta name="description" content="Discover how client-side canvas transformations and color space filter matrices replace desktop image editors inside web browsers.">
-  <link rel="canonical" href="https://pixelpress.com/blog/photo-editing-tools.html">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Best Online Photo Editing Tools",
-    "description": "Discover how client-side canvas transformations and color space filter matrices replace desktop image editors inside web browsers.",
-    "author": {"@type": "Person", "name": "Muhammad Jahangir"},
-    "publisher": {"@type": "Organization", "name": "PixelPress"},
-    "mainEntityOfPage": "https://pixelpress.com/blog/photo-editing-tools.html"
-  }
-  </script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="../css/blog.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "Best Online Photo Editing Tools (Free, In Your Browser)",
+      "description": "Edit photos with filters, brightness, contrast, and crop tools — all free and client-side.",
+      "author": { "@type": "Person", "name": "Muhammad Jahangir" },
+      "publisher": { "@type": "Organization", "name": "ImgPDFTools" },
+      "mainEntityOfPage": "https://imgpdftools.xyz/blog/photo-editing-tools.html",
+      "datePublished": "2026-05-01",
+      "image": "https://imgpdftools.xyz/og-image.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://imgpdftools.xyz/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://imgpdftools.xyz/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "Photo Editing Tools", "item": "https://imgpdftools.xyz/blog/photo-editing-tools.html" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Can I edit photos without installing software?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. ImgPDFTools Photo Editor runs entirely in your browser. Upload your image, apply adjustments, and download the result — no installation required." }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my photos uploaded to a server?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. All edits are applied locally using the Canvas API. Your photos never leave your device." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#f8f8fc;--surface:rgba(255,255,255,0.90);--card:#ffffff;--border:rgba(99,102,241,0.10);--text:#18181b;--muted:#71717a;--accent:#6366f1;--accent2:#8b5cf6;--glow:rgba(99,102,241,0.14);--tag-bg:#f0f0f8;--radius:14px;--fhead:'Space Grotesk',sans-serif;--fbody:'Plus Jakarta Sans',system-ui,sans-serif;--fmono:'JetBrains Mono',monospace;}
+[data-theme="dark"]{--bg:#0c0c14;--surface:rgba(18,18,30,0.92);--card:#16162a;--border:rgba(99,102,241,0.18);--text:#e4e4f0;--muted:#8888aa;--glow:rgba(99,102,241,0.28);--tag-bg:#1a1a2e;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;transition:.3s;}
+a{color:inherit;text-decoration:none;}
+.progress-container{position:fixed;top:0;left:0;width:100%;height:3px;background:transparent;z-index:200;}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .1s linear;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:.55rem;font-family:var(--fhead);font-weight:800;font-size:1.2rem;}
+.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.logo-text .pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-text .tools{color:var(--muted);}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-links{display:flex;gap:1.6rem;list-style:none;}
+.nav-links a{font-size:.875rem;font-weight:500;color:var(--muted);transition:.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.theme-toggle{background:var(--card);border:1px solid var(--border);width:40px;height:40px;border-radius:50%;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.2s;}
+.theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);}
+.layout{max-width:1120px;width:100%;margin:0 auto;padding:2rem clamp(1rem,5vw,3rem) 3rem;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2.5rem;}
+.breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.5rem;}
+.breadcrumbs a:hover{color:var(--accent);}
+.breadcrumbs i{font-size:9px;}
+.cat-badge{display:inline-block;font-family:var(--fmono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:var(--tag-bg);border:1px solid var(--border);padding:.3rem .8rem;border-radius:999px;margin-bottom:1rem;}
+.article-header h1{font-family:var(--fhead);font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;}
+.article-meta{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.82rem;color:var(--muted);padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;}
+.article-meta span{display:inline-flex;align-items:center;gap:.4rem;}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-bottom:2rem;}
+.toc h3{font-family:var(--fhead);font-size:.95rem;margin-bottom:.7rem;}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.toc a{font-size:.875rem;color:var(--muted);transition:.2s;}
+.toc a:hover{color:var(--accent);}
+.content h2{font-family:var(--fhead);font-size:1.35rem;font-weight:700;margin:2rem 0 .9rem;scroll-margin-top:80px;}
+.content p{font-size:1rem;line-height:1.8;color:var(--text);margin-bottom:1.1rem;}
+.content ul{margin:0 0 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+.content li{font-size:1rem;line-height:1.7;}
+.callout{background:var(--tag-bg);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:1rem 1.2rem;margin:1.5rem 0;font-size:.95rem;color:var(--text);}
+.faq-block{margin-top:2.5rem;}
+.faq-block>h2{font-family:var(--fhead);font-size:1.35rem;margin-bottom:1rem;}
+.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:.8rem;overflow:hidden;background:var(--card);}
+.faq-trigger{width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--fbody);font-size:.98rem;font-weight:600;padding:1rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.faq-trigger i{transition:transform .25s;color:var(--accent);}
+.faq-trigger[aria-expanded="true"] i{transform:rotate(180deg);}
+.faq-content{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-content p{padding:0 1.2rem 1.1rem;font-size:.92rem;line-height:1.7;color:var(--muted);margin:0;}
+.share-row{display:flex;align-items:center;gap:.7rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);flex-wrap:wrap;}
+.share-row span{font-size:.85rem;color:var(--muted);}
+.share-btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:var(--fbody);font-size:.82rem;font-weight:600;padding:.5rem .9rem;border-radius:8px;cursor:pointer;transition:.2s;}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);}
+aside.sidebar{display:flex;flex-direction:column;gap:1.5rem;}
+.side-sticky{position:sticky;top:88px;display:flex;flex-direction:column;gap:1.5rem;}
+.tool-card{background:linear-gradient(135deg,var(--glow),rgba(139,92,246,0.08));border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;}
+.tool-card h4{font-family:var(--fhead);font-size:1.05rem;margin-bottom:.5rem;}
+.tool-card p{font-size:.86rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.tool-btn{display:inline-flex;align-items:center;gap:.5rem;width:100%;justify-content:center;padding:.7rem 1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:9px;font-weight:600;font-size:.88rem;transition:.2s;}
+.tool-btn:hover{opacity:.9;transform:translateY(-1px);}
+.related-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;}
+.related-card h4{font-family:var(--fhead);font-size:1rem;margin-bottom:.9rem;}
+.related-card a{display:block;font-size:.88rem;color:var(--muted);padding:.45rem 0;border-bottom:1px solid var(--border);transition:.2s;}
+.related-card a:last-child{border-bottom:none;}
+.related-card a:hover{color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:2rem clamp(1rem,5vw,3rem);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:auto;}
+footer .logo{font-family:var(--fhead);font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+footer p{font-size:.8rem;color:var(--muted);}
+.footer-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.footer-links a{font-size:.8rem;color:var(--muted);}
+.footer-links a:hover{color:var(--accent);}
+#backTop{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 8px 24px var(--glow);z-index:120;}
+#backTop.show{opacity:1;pointer-events:auto;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.side-sticky{position:static;}.nav-links{display:none;}}
+</style>
 </head>
-<body class="blog-body-wrapper">
-  <div class="progress-container"><div class="progress-bar" id="readingProgressIndicator"></div></div>
-  <header class="blog-header">
-    <div class="blog-container blog-nav">
-      <a href="../index.html" class="blog-logo"><i class="fa-solid fa-cubes-blur"></i> PIXEL<span>PRESS</span></a>
-      <button class="lang-btn" id="langSwitcherBtn"><i class="fa-solid fa-globe"></i> العربية</button>
+<body>
+<div class="progress-container"><div class="progress-bar" id="readingProgress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo"><span class="logo-icon">🛠️</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Blog</a></li>
+      <li><a href="../index.html#tools">All Tools</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌓</button>
+  </div>
+</nav>
+
+<main class="layout">
+  <article>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> <i class="fa-solid fa-chevron-right"></i>
+      <a href="./index.html">Blog</a> <i class="fa-solid fa-chevron-right"></i>
+      <span>Image Tools</span>
+    </nav>
+
+    <span class="cat-badge">Editing</span>
+    <header class="article-header">
+      <h1>Best Online Photo Editing Tools Free in Your Browser</h1>
+      <div class="article-meta">
+        <span><i class="fa-regular fa-calendar"></i> May 2026</span>
+        <span><i class="fa-regular fa-user"></i> Muhammad Jahangir</span>
+        <span><i class="fa-regular fa-clock"></i> 9 min read</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h3>On this page</h3>
+      <ul>
+        <li><a href="#section1">1. Why Use a Browser-Based Photo Editor</a></li>
+        <li><a href="#section2">2. What the Editor Offers</a></li>
+        <li><a href="#section3">3. Step by Step</a></li>
+        <li><a href="#section4">4. Tips for Better Results</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      <p>Professional photo editing used to mean expensive software and a steep learning curve. Today, a modern browser is all you need — adjust brightness, apply filters, crop, and export in seconds, with no install, no subscription, and no file upload.</p>
+
+      <h2 id="section1">1. Why Use a Browser-Based Photo Editor</h2>
+      <p>Desktop editors like Photoshop are powerful but overkill for everyday tasks. A browser-based editor handles the most common adjustments — color correction, cropping, filters, and exposure — in a fraction of the time. Because everything runs on your device via the Canvas API, your photos stay private and edits are applied instantly with no waiting for server round-trips.</p>
+      <div class="callout">💡 Tip: For batch resizing or compression, combine the photo editor with the Compress Image or Resize Image tools for a complete workflow.</div>
+
+      <h2 id="section2">2. What the Editor Offers</h2>
+      <ul>
+        <li><strong>Brightness & contrast</strong> — correct underexposed or flat-looking photos with simple sliders.</li>
+        <li><strong>Saturation & hue</strong> — boost colors for social media or desaturate for a classic look.</li>
+        <li><strong>Filters</strong> — apply one-click presets such as warm, cool, vintage, and black-and-white.</li>
+        <li><strong>Crop & rotate</strong> — remove unwanted edges or straighten a tilted horizon.</li>
+        <li><strong>Flip</strong> — mirror the image horizontally or vertically in one click.</li>
+        <li><strong>Sharpness</strong> — enhance fine detail on slightly soft images.</li>
+      </ul>
+
+      <h2 id="section3">3. Step by Step</h2>
+      <ul>
+        <li><strong>Upload your photo</strong> — drag and drop a JPG, PNG, or WebP file.</li>
+        <li><strong>Apply adjustments</strong> — use the sliders for brightness, contrast, saturation, and sharpness.</li>
+        <li><strong>Choose a filter</strong> — click a preset to preview its effect instantly.</li>
+        <li><strong>Crop if needed</strong> — drag the crop handles to remove unwanted areas.</li>
+        <li><strong>Download</strong> — export as JPG or PNG at your chosen quality level.</li>
+      </ul>
+      <p>Every edit is non-destructive until you download — you can reset sliders or switch filters freely before saving the final result.</p>
+
+      <h2 id="section4">4. Tips for Better Results</h2>
+      <ul>
+        <li><strong>Edit in order</strong> — fix exposure first, then color, then apply filters last.</li>
+        <li><strong>Don't over-sharpen</strong> — too much sharpness introduces a crunchy halo around edges.</li>
+        <li><strong>Use filters subtly</strong> — a filter at 50% strength often looks more natural than full intensity.</li>
+        <li><strong>Crop before you adjust</strong> — removing distractions first helps you judge brightness and color more accurately.</li>
+        <li><strong>Export as PNG for graphics</strong> — use PNG when the image contains text or sharp lines to avoid JPEG compression artefacts.</li>
+      </ul>
+
+      <section class="faq-block" id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">Can I edit photos without installing software? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>Yes. ImgPDFTools Photo Editor runs entirely in your browser. Upload your image, apply adjustments, and download the result — no installation required.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">Are my photos uploaded to a server? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>No. All edits are applied locally using the Canvas API. Your photos never leave your device.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">Can I undo edits before downloading? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>Yes. All adjustments are live and non-destructive. You can reset any slider or filter before exporting the final image.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">What image formats are supported? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>You can upload JPG, PNG, and WebP images. The edited result can be downloaded as JPG or PNG.</p></div>
+        </div>
+      </section>
+
+      <div class="share-row">
+        <span>Share this guide:</span>
+        <button class="share-btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+        <button class="share-btn" id="copyBtn"><i class="fa-solid fa-link"></i> Copy link</button>
+      </div>
     </div>
-  </header>
+  </article>
 
-  <main class="blog-container blog-main-grid" style="margin-top: 24px;">
-    <article class="article-wrapper">
-      <nav class="breadcrumbs">
-        <a href="../index.html">Home</a> <i class="fa-solid fa-chevron-right" style="font-size:10px; align-self:center;"></i>
-        <a href="./index.html">Blog</a> <i class="fa-solid fa-chevron-right" style="font-size:10px; align-self:center;"></i>
-        <span>Canvas Processing Engines</span>
-      </nav>
-
-      <header class="article-header">
-        <div class="card-meta"><span><i class="fa-regular fa-calendar"></i> May 2026</span><span><i class="fa-regular fa-user"></i> Muhammad Jahangir</span></div>
-        <h1>Best Online Photo Editing Tools: The Rise of Browser-Native Canvas Transformations</h1>
-      </header>
-
-      <div class="main-article-content">
-        <p>Online photo editing platforms have advanced significantly from simple cropping tools into sophisticated web suites capable of managing complex image changes. Thanks to high-performance JavaScript engines and modern browser standards, web applications can execute pixel adjustments directly on your computer, eliminating the need for heavy desktop software. This guide covers how modern browser-native systems power advanced image editing tools.</p>
-        
-        <h2 id="section1">1. Leveraging HTML5 Canvas Elements and Core JavaScript Pipelines</h2>
-        <p>At the center of browser-native graphic editing applications lies the HTML5 `<canvas>` element and its associated 2D context tracking models. This programming interface allows web scripts to manipulate raw image data matrices directly at the individual pixel level, enabling precise control over every coordinate.</p>
-        <p>When you modify filter properties like contrast, exposure, or color balance, the application runs loop routines across large pixel arrays to update red, green, and blue values in real time. These localized operations allow for instant visual updates on your screen without requiring slow network calls to remote processing servers.</p>
-
-        <h2 id="section2">2. Processing Multi-Layer Adjustment Stacks Natively</h2>
-        <p>A key structural component of professional image editing platforms is managing multiple adjustment layers without slowing down system performance. Complex workflows need to keep original image data safe while applying multiple dynamic modifications, such as text overlays, translucent watermarks, and color adjustments.</p>
-        <p>To do this efficiently, advanced web platforms use a multi-canvas layout architecture. The application keeps your original source photo safe in an isolated background canvas buffer, while applying active filters and graphics onto separate transparent overlay sheets. The system then merges these layers into a final output image when you export, keeping your editing pipeline fast and responsive.</p>
-
-        <section class="faq-block" id="faq">
-          <h2>Frequently Asked Questions Matrix</h2>
-          <div class="faq-item">
-            <button class="faq-trigger" data-target="faq1">Are online browser image tools capable of processing raw camera profiles? <i class="fa-solid fa-chevron-down"></i></button>
-            <div class="faq-content" id="faq1">Yes. Modern web tools can parse raw sensor data files by converting the uncompressed image streams into standardized 16-bit array buffers directly inside your browser tab, bringing high-end editing capabilities to the web.</div>
-          </div>
-        </section>
+  <aside class="sidebar">
+    <div class="side-sticky">
+      <div class="tool-card">
+        <h4>Photo Editor Free</h4>
+        <p>Edit photos with filters, brightness, contrast, crop, and more — all in your browser, no sign-up needed.</p>
+        <a href="../photo-editor.html" class="tool-btn">Open Photo Editor <i class="fa-solid fa-bolt"></i></a>
       </div>
-    </article>
-
-    <aside class="blog-sidebar">
-      <div class="tool-recommend-card">
-        <h4>Edit Images Instantly</h4>
-        <p>Adjust image colors, configure layers, and apply crisp filters natively using our local editing pipeline.</p>
-        <a href="../photo-editor.html" class="tool-btn">Open Photo Editor <i class="fa-solid fa-bolt" style="margin-left:6px;"></i></a>
+      <div class="related-card">
+        <h4>Related Guides</h4>
+        <a href="./compress-guide.html">Compress Images Without Quality Loss</a>
+        <a href="./bg-remover-guide.html">Best Free Background Remover</a>
+        <a href="./jpg-vs-png.html">JPG vs PNG Explained</a>
       </div>
-    </aside>
-  </main>
+    </div>
+  </aside>
+</main>
 
-  <script src="../js/blog.js"></script>
+<footer>
+  <span class="logo">ImgPDFTools</span>
+  <div class="footer-links">
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../privacy-policy.html">Privacy</a>
+    <a href="../disclaimer.html">Disclaimer</a>
+  </div>
+  <p>© 2026 ImgPDFTools — Client-side tools for speed, privacy & creativity.</p>
+</footer>
+
+<button id="backTop" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+  $('themeToggle').addEventListener('click', function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var next=cur==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('imgpdftools-theme',next);}catch(e){}
+  });
+  var bar=$('readingProgress');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var total=h.scrollHeight-h.clientHeight;
+    var pct=total>0?(h.scrollTop/total)*100:0;
+    bar.style.width=pct+'%';
+  },{passive:true});
+  document.querySelectorAll('.faq-trigger').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded',open?'false':'true');
+      var content=btn.nextElementSibling;
+      content.style.maxHeight=open?null:content.scrollHeight+'px';
+    });
+  });
+  var url=window.location.href;
+  var shareBtn=$('shareBtn'), copyBtn=$('copyBtn');
+  shareBtn.addEventListener('click',function(){
+    if(navigator.share){navigator.share({title:document.title,url:url}).catch(function(){});}
+    else{copyLink();}
+  });
+  copyBtn.addEventListener('click',copyLink);
+  function copyLink(){
+    if(navigator.clipboard){navigator.clipboard.writeText(url).then(flash).catch(function(){});}
+  }
+  function flash(){
+    var old=copyBtn.innerHTML;
+    copyBtn.innerHTML='<i class="fa-solid fa-check"></i> Copied';
+    setTimeout(function(){copyBtn.innerHTML=old;},1600);
+  }
+  var backTop=$('backTop');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){backTop.classList.add('show');}else{backTop.classList.remove('show');}
+  },{passive:true});
+  backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
 </body>
 </html>
