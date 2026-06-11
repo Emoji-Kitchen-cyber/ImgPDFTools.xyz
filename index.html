@@ -386,7 +386,6 @@ nav {
   padding: 24px 18px;
   overflow-y: auto;
   transition: left 0.35s cubic-bezier(0.4,0,0.2,1);
-  /* FIX: ensure sidebar is always above everything */
   -webkit-overflow-scrolling: touch;
 }
 
@@ -474,7 +473,6 @@ body.rtl .sidebar.open { right: 0; }
   text-align: center;
   padding: clamp(2.8rem, 7vw, 5rem) 1rem 2.5rem;
   overflow: hidden;
-  /* FIX: ensure hero stays in flow above seo-section */
   z-index: 1;
 }
 
@@ -593,7 +591,6 @@ body.rtl .sidebar.open { right: 0; }
 .main-col {
   flex: 1;
   min-width: 0;
-  /* FIX: prevent content from overflowing on mobile */
   overflow: hidden;
 }
 
@@ -649,7 +646,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
   gap: 7px;
   margin-bottom: 2.2rem;
   flex-wrap: wrap;
-  /* FIX: prevent filter pills from creating stacking context issues */
   position: relative;
   z-index: 1;
 }
@@ -665,7 +661,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
   cursor: pointer;
   transition: all 0.2s;
   font-family: var(--fbody);
-  /* FIX: ensure text doesn't wrap awkwardly */
   white-space: nowrap;
 }
 
@@ -737,7 +732,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
   background: var(--bg);
 }
 
-/* Mobile bottom sticky ad */
 .ad-mobile-bottom {
   display: none;
   position: fixed;
@@ -761,11 +755,9 @@ body.rtl .search-icon { left: auto; right: 17px; }
 
 @media(max-width: 767px) {
   .ad-mobile-bottom { display: flex; flex-direction: column; }
-  /* FIX: use padding-bottom instead of body padding-bottom to avoid layout issues */
   body { padding-bottom: 60px; }
 }
 
-/* Tablet hero banner */
 .ad-tablet-hero {
   display: none;
   justify-content: center;
@@ -787,7 +779,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
   .ad-tablet-hero { display: flex; }
 }
 
-/* Tablet rectangle ad */
 .ad-tablet-rect {
   display: none;
   justify-content: center;
@@ -808,7 +799,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
   .ad-tablet-rect { display: flex; }
 }
 
-/* Desktop leaderboard */
 .ad-desktop-leader {
   display: none;
   justify-content: center;
@@ -829,7 +819,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
   .ad-desktop-leader { display: flex; }
 }
 
-/* Desktop sidebar column ad */
 .ad-desktop-col {
   display: none;
   flex-shrink: 0;
@@ -862,46 +851,34 @@ body.rtl .search-icon { left: auto; right: 17px; }
 body.rtl .page-inner { flex-direction: row-reverse; }
 
 /* ============================================================
-   TOOLS GRID — FIX: proper 2-col mobile, 3-col desktop
+   TOOLS GRID
    ============================================================ */
 .tools-grid {
   display: grid;
-  /* FIX: use minmax so cards never overflow on narrow phones */
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-  /* FIX: establish stacking context to prevent SEO section bleed */
   position: relative;
   z-index: 1;
 }
 
 @media(max-width: 480px) {
-  /* FIX: on very small phones, single column to prevent overflow */
-  .tools-grid {
-    grid-template-columns: 1fr;
-  }
+  .tools-grid { grid-template-columns: 1fr; }
 }
 
 @media(min-width: 481px) and (max-width: 860px) {
-  .tools-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media(min-width: 861px) and (max-width: 1099px) {
-  .tools-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+  .tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media(min-width: 1100px) {
-  .tools-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
+  .tools-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 .tool-link {
   display: block;
-  /* FIX: ensure links don't overflow their grid cell */
   min-width: 0;
 }
 
@@ -946,7 +923,6 @@ body.rtl .page-inner { flex-direction: row-reverse; }
   border: 1.5px solid var(--border2);
   padding: 11px;
   border-radius: 14px;
-  /* FIX: use fixed dimensions, not min-width, to prevent overflow */
   width: 50px;
   height: 50px;
   min-width: 50px;
@@ -964,7 +940,6 @@ body.rtl .page-inner { flex-direction: row-reverse; }
 .tool-info-pane {
   position: relative;
   z-index: 1;
-  /* FIX: critical — this prevents text overflow from title/desc */
   min-width: 0;
   flex: 1;
 }
@@ -975,7 +950,6 @@ body.rtl .page-inner { flex-direction: row-reverse; }
   margin-bottom: 5px;
   letter-spacing: 0.1px;
   font-family: var(--fhead);
-  /* FIX: prevent long titles from breaking layout */
   overflow-wrap: break-word;
   word-break: break-word;
 }
@@ -984,7 +958,6 @@ body.rtl .page-inner { flex-direction: row-reverse; }
   font-size: 13px;
   color: var(--muted);
   line-height: 1.55;
-  /* FIX: prevent long descriptions from breaking layout */
   overflow-wrap: break-word;
   word-break: break-word;
 }
@@ -1003,37 +976,30 @@ body.rtl .page-inner { flex-direction: row-reverse; }
 body.rtl .tool-card-arrow { right: auto; left: 16px; }
 .tool-card:hover .tool-card-arrow { opacity: 1; transform: translate(2px, -2px); }
 
-/* ============================================================
-   NO RESULTS
-   ============================================================ */
 #noResults {
   text-align: center;
   color: var(--muted);
   padding: 5rem 0;
   display: none;
   font-size: 15px;
-  /* FIX: establish stacking context */
   position: relative;
   z-index: 1;
 }
 
 /* ============================================================
-   SEO SECTION — FIX: complete isolation from tool grid
+   SEO SECTION
    ============================================================ */
 .seo-section {
   max-width: 1100px;
   margin: 0 auto;
-  /* FIX: increase top padding so section clearly starts below tool grid */
   padding: 3rem 18px 4rem;
   position: relative;
   z-index: 1;
-  /* FIX: clear any floats and establish block formatting context */
   display: block;
   clear: both;
   overflow: hidden;
 }
 
-/* FIX: add a visible top border to separate SEO section from tool grid */
 .seo-section-inner {
   border-top: 1px solid var(--border2);
   padding-top: 2.5rem;
@@ -1063,14 +1029,11 @@ body.rtl .tool-card-arrow { right: auto; left: 16px; }
 
 .seo-section > p strong { color: var(--text); }
 
-/* FIX: seo-cat — complete block formatting context, no floats */
 .seo-cat {
   display: block;
   position: relative;
   width: 100%;
-  /* FIX: use margin-bottom only, not float-based clear */
   margin: 0 0 2.5rem;
-  /* FIX: establish BFC to contain children */
   overflow: hidden;
 }
 
@@ -1079,16 +1042,13 @@ body.rtl .tool-card-arrow { right: auto; left: 16px; }
   font-size: 1.05rem;
   font-weight: 700;
   color: var(--accent);
-  /* FIX: use margin-bottom instead of float-adjacent styles */
   margin: 0 0 1rem;
   line-height: 1.3;
   overflow-wrap: break-word;
   word-break: break-word;
-  /* FIX: no position:relative or float that would cause bleed */
   display: block;
 }
 
-/* FIX: seo-link-grid — proper flex layout that doesn't bleed into neighboring elements */
 .seo-link-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1097,7 +1057,6 @@ body.rtl .tool-card-arrow { right: auto; left: 16px; }
   margin: 0;
   padding: 0;
   list-style: none;
-  /* FIX: establish own stacking context */
   position: relative;
   z-index: 0;
 }
@@ -1117,7 +1076,6 @@ body.rtl .tool-card-arrow { right: auto; left: 16px; }
   overflow-wrap: break-word;
   word-break: break-word;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
-  /* FIX: prevent links from being taller than needed */
   white-space: nowrap;
 }
 
@@ -1204,17 +1162,13 @@ footer {
 }
 
 /* ============================================================
-   RESPONSIVE — TABLETS (768px – 900px)
+   RESPONSIVE
    ============================================================ */
 @media(max-width: 900px) {
   .page-inner { padding: 0 16px 4.5rem; gap: 16px; }
   .seo-section { padding: 2rem 16px 3.5rem; }
 }
 
-/* ============================================================
-   RESPONSIVE — PHONES (≤ 600px)
-   FIX: comprehensive mobile fixes
-   ============================================================ */
 @media(max-width: 600px) {
   :root { --nav-h: 58px; }
 
@@ -1240,13 +1194,11 @@ footer {
   .filter-row {
     gap: 6px;
     margin-bottom: 1.6rem;
-    /* FIX: allow filter row to scroll horizontally if too many pills */
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     flex-wrap: nowrap;
     justify-content: flex-start;
     padding-bottom: 4px;
-    /* FIX: hide scrollbar visually but keep functionality */
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -1254,14 +1206,9 @@ footer {
 
   .filter-pill { padding: 7px 15px; font-size: 12.5px; flex-shrink: 0; }
 
-  /* FIX: tools grid on mobile — 2 columns with proper sizing */
   .tools-grid { gap: 10px; }
 
-  .tool-card {
-    padding: 14px;
-    gap: 12px;
-    border-radius: 16px;
-  }
+  .tool-card { padding: 14px; gap: 12px; border-radius: 16px; }
 
   .tool-icon-wrapper {
     min-width: 42px;
@@ -1275,7 +1222,6 @@ footer {
   .tool-info-pane h3 { font-size: 13px; margin-bottom: 3px; }
   .tool-info-pane p { font-size: 12px; line-height: 1.45; }
 
-  /* FIX: SEO section on mobile */
   .seo-section { padding: 1.5rem 12px 3rem; }
   .seo-section-inner { padding-top: 1.5rem; }
   .seo-cat { margin-bottom: 2rem; }
@@ -1289,7 +1235,6 @@ footer {
   footer { padding: 30px 16px; }
 }
 
-/* FIX: hide extra stat pills on very small screens */
 @media(max-width: 360px) {
   .hero-stats .stat-pill:nth-child(n+4) { display: none; }
   .tool-info-pane p { display: none; }
@@ -1406,16 +1351,13 @@ window.onerror = function(msg, src, line){
 <div class="page-outer">
   <div class="page-inner">
     <div class="main-col">
-      <!-- Search bar -->
       <div class="search-container">
         <span class="search-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
         <input type="search" class="search-bar" id="toolSearch" placeholder="Search tools…" autocomplete="off" aria-label="Search tools" />
       </div>
 
-      <!-- Category filter pills -->
       <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
 
-      <!-- Tablet rectangle ad -->
       <div class="ad-tablet-rect" id="adTabletRect">
         <div class="ad-wrap ad-hidden" id="adTabletRectWrap">
           <span class="ad-tag">Ad</span>
@@ -1424,14 +1366,11 @@ window.onerror = function(msg, src, line){
         </div>
       </div>
 
-      <!-- Tools grid -->
       <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
 
-      <!-- No results message -->
       <div id="noResults" role="status" aria-live="polite">No results found.</div>
     </div>
 
-    <!-- Desktop sidebar ad -->
     <aside class="ad-desktop-col" id="adDesktopCol" role="complementary" aria-label="Advertisement">
       <div class="ad-wrap ad-hidden" id="adDesktopColWrap">
         <span class="ad-tag">Ad</span>
@@ -1442,7 +1381,6 @@ window.onerror = function(msg, src, line){
   </div>
 </div>
 
-<!-- SEO section — FIX: wrapped in seo-section-inner for proper top border separation -->
 <section class="seo-section" aria-label="About ImgPDFTools and tool directory">
   <div class="seo-section-inner">
     <h2 id="seoH2Main">Free Online Image &amp; PDF Tools — Right in Your Browser</h2>
@@ -1508,7 +1446,6 @@ window.onerror = function(msg, src, line){
   </div>
 </section>
 
-<!-- Footer -->
 <footer role="contentinfo">
   <div class="footer-logo">
     <div class="logo-icon" style="width:26px;height:26px;font-size:13px;">🛠️</div>
@@ -1520,11 +1457,7 @@ window.onerror = function(msg, src, line){
   <div class="footer-links" id="footerLinks"></div>
   <p id="footerCopyright">© 2026 ImgPDFTools — All Rights Reserved</p>
 </footer>
-
 <script>
-/* ============================================================
-   LANGUAGE DATA
-   ============================================================ */
 const languageData = {
   en: {
     title: "ImgPDFTools — Free Online Image & PDF Toolkit",
@@ -1678,34 +1611,20 @@ const languageData = {
   }
 };
 
-/* ============================================================
-   STATE
-   ============================================================ */
 let currentLang = 'en';
 
-/* ============================================================
-   RENDER UI
-   ============================================================ */
 function renderUI() {
   var data = languageData[currentLang];
-
-  /* Page metadata */
   document.getElementById('siteTitle').textContent = data.title;
   document.getElementById('langText').textContent = data.labelText;
-
-  /* Hero */
   var heroTitleEl = document.getElementById('heroTitle');
-  /* Safely update just the text node, keep the span child */
   heroTitleEl.childNodes[0].nodeValue = data.heroTitle + ' ';
   document.getElementById('heroSpan').textContent = data.heroSpan;
   document.getElementById('heroDesc').textContent = data.heroDesc;
-
-  /* Misc */
   document.getElementById('footerCopyright').textContent = data.copyright;
   document.getElementById('noResults').textContent = data.noResultsText;
   document.getElementById('toolSearch').placeholder = data.searchPlaceholder;
 
-  /* Filter pills */
   var filterBox = document.getElementById('filterContainer');
   filterBox.innerHTML = '';
   var filterFrag = document.createDocumentFragment();
@@ -1720,7 +1639,6 @@ function renderUI() {
   });
   filterBox.appendChild(filterFrag);
 
-  /* Tools grid */
   var toolsGrid = document.getElementById('toolsList');
   toolsGrid.innerHTML = '';
   var toolsFrag = document.createDocumentFragment();
@@ -1729,34 +1647,26 @@ function renderUI() {
     a.href = t.href;
     a.className = 'tool-link';
     a.setAttribute('data-category', t.cat || '');
-
     var card = document.createElement('div');
     card.className = 'tool-card';
-
     var iconWrap = document.createElement('div');
     iconWrap.className = 'tool-icon-wrapper';
     iconWrap.setAttribute('aria-hidden', 'true');
     iconWrap.textContent = t.emoji;
-
     var infoPane = document.createElement('div');
     infoPane.className = 'tool-info-pane';
-
     var h3 = document.createElement('h3');
     h3.textContent = t.title;
-
     var p = document.createElement('p');
     p.textContent = t.desc;
-
     infoPane.appendChild(h3);
     infoPane.appendChild(p);
-
     var arrow = document.createElement('span');
     arrow.className = 'tool-card-arrow';
     arrow.setAttribute('aria-hidden', 'true');
     var arrowIcon = document.createElement('i');
     arrowIcon.className = 'fa-solid fa-arrow-up-right';
     arrow.appendChild(arrowIcon);
-
     card.appendChild(iconWrap);
     card.appendChild(infoPane);
     card.appendChild(arrow);
@@ -1765,7 +1675,6 @@ function renderUI() {
   });
   toolsGrid.appendChild(toolsFrag);
 
-  /* Footer links */
   var footerBox = document.getElementById('footerLinks');
   footerBox.innerHTML = '';
   var footerFrag = document.createDocumentFragment();
@@ -1777,11 +1686,9 @@ function renderUI() {
   });
   footerBox.appendChild(footerFrag);
 
-  /* Sidebar links */
   var sidebarBox = document.getElementById('sidebarLinks');
   sidebarBox.innerHTML = '';
   var sf = document.createDocumentFragment();
-
   function makeSidebarLink(t) {
     var a = document.createElement('a');
     a.href = t.href;
@@ -1789,13 +1696,11 @@ function renderUI() {
     icon.className = 'fa-solid ' + t.icon;
     icon.setAttribute('aria-hidden', 'true');
     a.appendChild(icon);
-    a.appendChild(document.createTextNode('\u00a0' + t.text));
+    a.appendChild(document.createTextNode(' ' + t.text));
     return a;
   }
-
   var homeLink = data.toolsRegistry.find(function(t) { return t.section === 'home'; });
   if (homeLink) sf.appendChild(makeSidebarLink(homeLink));
-
   ['image', 'doc', 'utility'].forEach(function(sec) {
     var title = document.createElement('div');
     title.className = 'menu-section-title';
@@ -1805,11 +1710,9 @@ function renderUI() {
       sf.appendChild(makeSidebarLink(t));
     });
   });
-
   var hr = document.createElement('div');
   hr.style.cssText = 'height:1px;background:var(--border2);margin:10px 0;';
   sf.appendChild(hr);
-
   var infoTitle = document.createElement('div');
   infoTitle.className = 'menu-section-title';
   infoTitle.textContent = data.sidebarTitles.info;
@@ -1817,19 +1720,12 @@ function renderUI() {
   data.toolsRegistry.filter(function(t) { return t.section === 'info'; }).forEach(function(t) {
     sf.appendChild(makeSidebarLink(t));
   });
-
   sidebarBox.appendChild(sf);
 
-  /* SEO section text */
   renderSeoSection(data);
-
-  /* Re-apply current search/filter state */
   evaluateLiveSearchFilters();
 }
 
-/* ============================================================
-   SEO SECTION TEXT UPDATE
-   ============================================================ */
 function renderSeoSection(data) {
   if (!data.seo) return;
   var s = data.seo;
@@ -1848,9 +1744,6 @@ function renderSeoSection(data) {
   set('seoFaqQ3', s.q3); set('seoFaqA3', s.a3);
 }
 
-/* ============================================================
-   LANGUAGE TOGGLE
-   ============================================================ */
 function toggleLanguage() {
   currentLang = currentLang === 'en' ? 'ar' : 'en';
   var isAr = currentLang === 'ar';
@@ -1861,15 +1754,11 @@ function toggleLanguage() {
   renderUI();
 }
 
-/* ============================================================
-   SEARCH & FILTER
-   ============================================================ */
 function evaluateLiveSearchFilters() {
   var query = (document.getElementById('toolSearch').value || '').toLowerCase().trim();
   var activePill = document.querySelector('.filter-pill.active');
   var targetCat = activePill ? activePill.getAttribute('data-target') : 'all';
   var count = 0;
-
   document.querySelectorAll('.tool-link').forEach(function(link) {
     var h3El = link.querySelector('h3');
     var pEl = link.querySelector('p');
@@ -1886,7 +1775,6 @@ function evaluateLiveSearchFilters() {
       link.classList.add('hidden');
     }
   });
-
   var noResults = document.getElementById('noResults');
   noResults.style.display = count === 0 ? 'block' : 'none';
 }
@@ -1901,15 +1789,11 @@ function filterCategory(category, element) {
   evaluateLiveSearchFilters();
 }
 
-/* ============================================================
-   MENU / SIDEBAR
-   ============================================================ */
 function toggleMenu(show) {
   document.getElementById('sideMenu').classList.toggle('open', show);
   document.getElementById('menuOverlay').classList.toggle('show', show);
   var trigger = document.getElementById('menuTrigger');
   if (trigger) trigger.setAttribute('aria-expanded', show ? 'true' : 'false');
-
   if (show) {
     var escHandler = function(e) {
       if (e.key === 'Escape') {
@@ -1921,18 +1805,12 @@ function toggleMenu(show) {
   }
 }
 
-/* ============================================================
-   THEME TOGGLE
-   ============================================================ */
 document.getElementById('themeToggle').addEventListener('click', function() {
   var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', next);
   localStorage.setItem('imgpdftools-theme', next);
 });
 
-/* ============================================================
-   KEYBOARD SHORTCUT: Cmd/Ctrl+K to focus search
-   ============================================================ */
 document.addEventListener('keydown', function(e) {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
@@ -1940,14 +1818,8 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-/* ============================================================
-   SEARCH INPUT LISTENER
-   ============================================================ */
 document.getElementById('toolSearch').addEventListener('input', evaluateLiveSearchFilters);
 
-/* ============================================================
-   URL SHORTENER: handle hash-based redirects
-   ============================================================ */
 (function() {
   function isSafeUrl(u) {
     try {
@@ -1955,7 +1827,6 @@ document.getElementById('toolSearch').addEventListener('input', evaluateLiveSear
       return p.protocol === 'http:' || p.protocol === 'https:';
     } catch(e) { return false; }
   }
-
   function showError(msg) {
     var box = document.createElement('div');
     box.style.cssText = 'text-align:center;padding:4rem;font-family:sans-serif';
@@ -1969,46 +1840,43 @@ document.getElementById('toolSearch').addEventListener('input', evaluateLiveSear
     document.body.innerHTML = '';
     document.body.appendChild(box);
   }
-
   var hash = window.location.hash;
   if (hash.indexOf('#/s/') !== 0) return;
-
   var shortId = hash.replace('#/s/', '').split('?')[0];
   if (!shortId) { showError('URL Not Found'); return; }
-
   var stored = localStorage.getItem('redirect_' + shortId);
   if (!stored) { showError('URL Not Found'); return; }
-
   var entry;
   try { entry = JSON.parse(stored); } catch(e) { showError('URL Not Found'); return; }
-
   if (!entry || typeof entry.long !== 'string' || !isSafeUrl(entry.long)) {
     showError('Invalid Link');
     return;
   }
-
   if (entry.expiry && Date.now() > entry.expiry) { showError('Link Expired'); return; }
-
   entry.clicks = (entry.clicks || 0) + 1;
   try { localStorage.setItem('redirect_' + shortId, JSON.stringify(entry)); } catch(e) {}
-
   window.location.replace(entry.long);
 })();
 
 /* ============================================================
-   SERVICE WORKER
+   SERVICE WORKER — UPDATED with auto-reload on new SW install
    ============================================================ */
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').catch(function(err) {
-      console.warn('SW registration failed:', err);
-    });
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      reg.addEventListener('updatefound', function() {
+        var nw = reg.installing;
+        if (nw) nw.addEventListener('statechange', function() {
+          if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+            nw.postMessage('SKIP_WAITING');
+            window.location.reload();
+          }
+        });
+      });
+    }).catch(function(err) { console.warn('SW registration failed:', err); });
   });
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
 renderUI();
 </script>
 
@@ -2016,9 +1884,6 @@ renderUI();
 <script src="https://paviliongiddy.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
 
 <script>
-/* ============================================================
-   AD INJECTION — delayed for performance
-   ============================================================ */
 (function(){
   var DK = 'pp_ads_v3';
   var DELAY = 2500;
@@ -2029,7 +1894,6 @@ renderUI();
 
   function inject(slotId, key, height, width, src) {
     if (injected[slotId]) return;
-    /* Skip placeholder keys */
     if (!key || key.indexOf('PASTE_') === 0) return;
     injected[slotId] = true;
     var slot = document.getElementById(slotId);
@@ -2084,7 +1948,6 @@ renderUI();
     var w = vw();
 
     if (w < 768) {
-      /* MOBILE: sticky bottom 320×50 */
       if (!wasDismissed('mob')) {
         var mob = document.getElementById('adMobileBottom');
         if (mob) {
@@ -2094,7 +1957,6 @@ renderUI();
         }
       }
     } else if (w < 1140) {
-      /* TABLET: hero 468×60 + rect 300×250 */
       if (!wasDismissed('tab_hero')) {
         var thWrap = document.getElementById('adTabletHeroWrap');
         if (thWrap) {
@@ -2112,7 +1974,6 @@ renderUI();
         }
       }
     } else {
-      /* DESKTOP: leaderboard 728×90 + sidebar 160×600 */
       if (!wasDismissed('desk_leader')) {
         var dlWrap = document.getElementById('adDesktopLeaderWrap');
         if (dlWrap) {
