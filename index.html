@@ -33,12 +33,12 @@
 
 <meta http-equiv="Content-Security-Policy"
       content="default-src 'self';
-               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com paviliongiddy.com *.paviliongiddy.com;
+               script-src 'self' 'unsafe-inline' 'unsafe-eval' cdnjs.cloudflare.com unpkg.com cdn.jsdelivr.net www.googletagmanager.com www.google-analytics.com;
                style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com;
                font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com;
                img-src 'self' data: blob: https:;
-               connect-src 'self' https: paviliongiddy.com *.paviliongiddy.com www.google-analytics.com;
-               frame-src https: paviliongiddy.com *.paviliongiddy.com;
+               connect-src 'self' https: www.google-analytics.com;
+               frame-src https:;
                object-src 'none';" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -141,7 +141,6 @@
   --r-sm: 12px;
   --fhead: 'Space Grotesk', sans-serif;
   --fbody: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --ad-col-w: 220px;
   --nav-h: 66px;
 }
 
@@ -677,177 +676,6 @@ body.rtl .search-icon { left: auto; right: 17px; }
   box-shadow: 0 4px 14px var(--glow);
 }
 
-/* ============================================================
-   AD COMPONENTS
-   ============================================================ */
-.ad-wrap {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  border-radius: var(--r);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.ad-tag {
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--muted);
-  opacity: 0.5;
-  align-self: flex-start;
-  padding: 6px 10px 2px;
-  flex-shrink: 0;
-}
-
-.ad-dismiss {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 20px;
-  height: 20px;
-  background: var(--bg);
-  border: 1px solid var(--border2);
-  border-radius: 50%;
-  color: var(--muted);
-  font-size: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s, border-color 0.2s;
-  z-index: 5;
-}
-
-.ad-dismiss:hover { color: var(--accent); border-color: var(--accent); }
-
-.ad-hidden { opacity: 0; transition: opacity 0.5s ease; }
-.ad-visible { opacity: 1; }
-
-.ad-slot {
-  display: block;
-  background: var(--bg);
-}
-
-.ad-mobile-bottom {
-  display: none;
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 190;
-  width: 320px;
-  max-width: 100vw;
-  padding: 0;
-  border-radius: 10px 10px 0 0;
-  box-shadow: 0 -2px 16px rgba(0,0,0,0.08);
-}
-
-.ad-mobile-bottom .ad-slot {
-  width: 320px;
-  max-width: 100%;
-  height: 50px;
-  overflow: hidden;
-}
-
-@media(max-width: 767px) {
-  .ad-mobile-bottom { display: flex; flex-direction: column; }
-  body { padding-bottom: 60px; }
-}
-
-.ad-tablet-hero {
-  display: none;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  min-height: 84px;
-  align-items: center;
-}
-
-.ad-tablet-hero .ad-wrap { padding-bottom: 8px; }
-
-.ad-tablet-hero .ad-slot {
-  width: 468px;
-  height: 60px;
-  overflow: hidden;
-  max-width: 100%;
-}
-
-@media(min-width: 768px) and (max-width: 1139px) {
-  .ad-tablet-hero { display: flex; }
-}
-
-.ad-tablet-rect {
-  display: none;
-  justify-content: center;
-  margin-bottom: 2rem;
-  min-height: 272px;
-  align-items: center;
-}
-
-.ad-tablet-rect .ad-wrap { padding-bottom: 10px; }
-
-.ad-tablet-rect .ad-slot {
-  width: 300px;
-  height: 250px;
-  overflow: hidden;
-}
-
-@media(min-width: 768px) and (max-width: 1139px) {
-  .ad-tablet-rect { display: flex; }
-}
-
-.ad-desktop-leader {
-  display: none;
-  justify-content: center;
-  margin-bottom: 1.5rem;
-  min-height: 112px;
-  align-items: center;
-}
-
-.ad-desktop-leader .ad-wrap { padding-bottom: 10px; width: auto; }
-
-.ad-desktop-leader .ad-slot {
-  width: 728px;
-  height: 90px;
-  overflow: hidden;
-}
-
-@media(min-width: 1140px) {
-  .ad-desktop-leader { display: flex; }
-}
-
-.ad-desktop-col {
-  display: none;
-  flex-shrink: 0;
-  width: var(--ad-col-w);
-  position: sticky;
-  top: 86px;
-  align-self: flex-start;
-}
-
-.ad-desktop-col .ad-wrap {
-  padding: 10px 10px 12px;
-  border-radius: 20px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
-  gap: 6px;
-  min-height: 632px;
-}
-
-.ad-desktop-col .ad-slot {
-  width: 160px;
-  height: 600px;
-  overflow: hidden;
-  border-radius: 12px;
-  background: var(--bg);
-}
-
-@media(min-width: 1140px) {
-  .ad-desktop-col { display: block; }
-}
-
 body.rtl .page-inner { flex-direction: row-reverse; }
 
 /* ============================================================
@@ -1247,7 +1075,6 @@ footer {
 (function(){
   document.documentElement.setAttribute('data-theme',
     localStorage.getItem('imgpdftools-theme') ||
-    localStorage.getItem('pixelpress-theme') ||
     (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
   );
 })();
@@ -1266,13 +1093,6 @@ window.onerror = function(msg, src, line){
 </head>
 
 <body>
-
-<!-- Mobile bottom sticky ad -->
-<div class="ad-mobile-bottom ad-hidden" id="adMobileBottom">
-  <span class="ad-tag">Ad</span>
-  <button class="ad-dismiss" id="adMobileClose" aria-label="Close ad">✕</button>
-  <div class="ad-slot" id="adMobileSlot"></div>
-</div>
 
 <!-- Sidebar overlay -->
 <div class="sidebar-overlay" id="menuOverlay" onclick="toggleMenu(false)"></div>
@@ -1329,24 +1149,6 @@ window.onerror = function(msg, src, line){
   </div>
 </section>
 
-<!-- Tablet hero ad -->
-<div class="ad-tablet-hero" id="adTabletHero">
-  <div class="ad-wrap ad-hidden" id="adTabletHeroWrap">
-    <span class="ad-tag">Ad</span>
-    <button class="ad-dismiss" id="adTabletHeroClose" aria-label="Close ad">✕</button>
-    <div class="ad-slot" id="adTabletHeroSlot"></div>
-  </div>
-</div>
-
-<!-- Desktop leaderboard ad -->
-<div class="ad-desktop-leader" id="adDesktopLeader">
-  <div class="ad-wrap ad-hidden" id="adDesktopLeaderWrap">
-    <span class="ad-tag">Ad</span>
-    <button class="ad-dismiss" id="adDesktopLeaderClose" aria-label="Close ad">✕</button>
-    <div class="ad-slot" id="adDesktopLeaderSlot"></div>
-  </div>
-</div>
-
 <!-- Main page content -->
 <div class="page-outer">
   <div class="page-inner">
@@ -1358,26 +1160,201 @@ window.onerror = function(msg, src, line){
 
       <div class="filter-row" id="filterContainer" role="group" aria-label="Filter tools by category"></div>
 
-      <div class="ad-tablet-rect" id="adTabletRect">
-        <div class="ad-wrap ad-hidden" id="adTabletRectWrap">
-          <span class="ad-tag">Ad</span>
-          <button class="ad-dismiss" id="adTabletRectClose" aria-label="Close ad">✕</button>
-          <div class="ad-slot" id="adTabletRectSlot"></div>
-        </div>
-      </div>
-
-      <section class="tools-grid" id="toolsList" aria-label="Available tools"></section>
+      <!-- Static tool cards (fallback if JS fails; renderUI() overwrites on load) -->
+      <section class="tools-grid" id="toolsList" aria-label="Available tools">
+        <a href="./compress.html" class="tool-link" data-category="optimize">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📦</div>
+            <div class="tool-info-pane"><h3>Compress Image</h3><p>Compress JPG, PNG, and WEBP while saving space.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./resize.html" class="tool-link" data-category="edit">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📐</div>
+            <div class="tool-info-pane"><h3>Resize Image</h3><p>Define dimensions by percent or pixel.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./photo-editor.html" class="tool-link" data-category="edit create">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">✨</div>
+            <div class="tool-info-pane"><h3>Photo Editor</h3><p>Edit photos with filters, brightness, contrast.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./convert.html" class="tool-link" data-category="convert">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🔄</div>
+            <div class="tool-info-pane"><h3>Convert Format</h3><p>Transform images into JPG, PNG, or WEBP.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./watermark.html" class="tool-link" data-category="security create">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">💧</div>
+            <div class="tool-info-pane"><h3>Watermark Image</h3><p>Stamp text or image over your photos.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./remove-bg.html" class="tool-link" data-category="edit create">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🫥</div>
+            <div class="tool-info-pane"><h3>Remove Background</h3><p>AI-powered background remover.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./meme-generator.html" class="tool-link" data-category="create">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">😂</div>
+            <div class="tool-info-pane"><h3>Meme Generator</h3><p>Create memes with templates and text.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./crop.html" class="tool-link" data-category="edit">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">✂️</div>
+            <div class="tool-info-pane"><h3>Advanced Crop</h3><p>Precise cropping with aspect ratios.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./blur-face.html" class="tool-link" data-category="security edit">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">👤</div>
+            <div class="tool-info-pane"><h3>Blur Face</h3><p>Auto-detect and blur faces for privacy.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./thumbnail-maker.html" class="tool-link" data-category="create">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🖼️</div>
+            <div class="tool-info-pane"><h3>Thumbnail Maker</h3><p>Generate streaming &amp; social media cards.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./screenshot-editor.html" class="tool-link" data-category="edit create">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">💻</div>
+            <div class="tool-info-pane"><h3>Screenshot Editor</h3><p>Wrap captures in beautiful device frames.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./favicon-generator.html" class="tool-link" data-category="create convert">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🎯</div>
+            <div class="tool-info-pane"><h3>Favicon Generator</h3><p>Convert assets into multi-size .ico files.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./pdf-to-jpg.html" class="tool-link" data-category="convert doc">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📄</div>
+            <div class="tool-info-pane"><h3>PDF to JPG</h3><p>Extract pages from PDF as JPG images.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./jpg-to-pdf.html" class="tool-link" data-category="convert doc">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🖼️</div>
+            <div class="tool-info-pane"><h3>JPG to PDF</h3><p>Convert images into a single PDF document.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./split-pdf.html" class="tool-link" data-category="doc">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">✂️</div>
+            <div class="tool-info-pane"><h3>Split PDF</h3><p>Extract page ranges or split every page.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./merge-pdf.html" class="tool-link" data-category="doc">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🗂️</div>
+            <div class="tool-info-pane"><h3>Merge PDF</h3><p>Combine multiple PDFs into one file.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./compress-pdf.html" class="tool-link" data-category="optimize doc">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📉</div>
+            <div class="tool-info-pane"><h3>Compress PDF</h3><p>Shrink PDF file size dynamically.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./pdf-annotator.html" class="tool-link" data-category="edit doc">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🖊️</div>
+            <div class="tool-info-pane"><h3>PDF Annotator</h3><p>Add text, draw, highlight, sign PDFs.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./qr-generator.html" class="tool-link" data-category="create utility">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📱</div>
+            <div class="tool-info-pane"><h3>QR Generator</h3><p>Generate custom vector QR codes instantly.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./password-generator.html" class="tool-link" data-category="security utility">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🔑</div>
+            <div class="tool-info-pane"><h3>Password Generator</h3><p>Create cryptographically secure passwords.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./json-formatter.html" class="tool-link" data-category="utility">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">💻</div>
+            <div class="tool-info-pane"><h3>JSON Formatter</h3><p>Parse, format, and validate JSON data.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./url-shortener.html" class="tool-link" data-category="utility">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🔗</div>
+            <div class="tool-info-pane"><h3>URL Shortener</h3><p>Minify lengthy URLs into short links.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./color-picker.html" class="tool-link" data-category="utility edit">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🎨</div>
+            <div class="tool-info-pane"><h3>Color Picker</h3><p>Advanced color inspection and HEX copying.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./palette-generator.html" class="tool-link" data-category="utility create">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">🌈</div>
+            <div class="tool-info-pane"><h3>Palette Generator</h3><p>Algorithmic color scheme generator.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./unit-converter.html" class="tool-link" data-category="utility">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📏</div>
+            <div class="tool-info-pane"><h3>Unit Converter</h3><p>High performance digital metrics calculator.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./dxf-dwg-converter.html" class="tool-link" data-category="utility convert">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📐</div>
+            <div class="tool-info-pane"><h3>CAD Converter</h3><p>DXF &amp; DWG structural CAD utility.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+        <a href="./ocr.html" class="tool-link" data-category="utility">
+          <div class="tool-card">
+            <div class="tool-icon-wrapper" aria-hidden="true">📝</div>
+            <div class="tool-info-pane"><h3>OCR Scanner</h3><p>Extract text from images with 100+ languages.</p></div>
+            <span class="tool-card-arrow" aria-hidden="true"><i class="fa-solid fa-arrow-up-right"></i></span>
+          </div>
+        </a>
+      </section>
 
       <div id="noResults" role="status" aria-live="polite">No results found.</div>
     </div>
-
-    <aside class="ad-desktop-col" id="adDesktopCol" role="complementary" aria-label="Advertisement">
-      <div class="ad-wrap ad-hidden" id="adDesktopColWrap">
-        <span class="ad-tag">Ad</span>
-        <button class="ad-dismiss" id="adDesktopColClose" aria-label="Close ad">✕</button>
-        <div class="ad-slot" id="adDesktopColSlot"></div>
-      </div>
-    </aside>
   </div>
 </div>
 
@@ -1696,7 +1673,7 @@ function renderUI() {
     icon.className = 'fa-solid ' + t.icon;
     icon.setAttribute('aria-hidden', 'true');
     a.appendChild(icon);
-    a.appendChild(document.createTextNode(' ' + t.text));
+    a.appendChild(document.createTextNode(' ' + t.text));
     return a;
   }
   var homeLink = data.toolsRegistry.find(function(t) { return t.section === 'home'; });
@@ -1844,7 +1821,7 @@ document.getElementById('toolSearch').addEventListener('input', evaluateLiveSear
   if (hash.indexOf('#/s/') !== 0) return;
   var shortId = hash.replace('#/s/', '').split('?')[0];
   if (!shortId) { showError('URL Not Found'); return; }
-  var stored = localStorage.getItem('redirect_' + shortId);
+var stored = localStorage.getItem('redirect_' + shortId);
   if (!stored) { showError('URL Not Found'); return; }
   var entry;
   try { entry = JSON.parse(stored); } catch(e) { showError('URL Not Found'); return; }
@@ -1878,138 +1855,6 @@ if ('serviceWorker' in navigator) {
 }
 
 renderUI();
-</script>
-
-<script src="https://paviliongiddy.com/9c/07/16/9c0716b10c3fc3b4df13651d0f4d7ff7.js"></script>
-<script src="https://paviliongiddy.com/d2/b3/e3/d2b3e3a23e8044def145af75300fc660.js"></script>
-
-<script>
-(function(){
-  var DK = 'pp_ads_v3';
-  var DELAY = 2500;
-  var injected = {};
-  var started = false;
-
-  function vw() { return window.innerWidth || document.documentElement.clientWidth; }
-
-  function inject(slotId, key, height, width, src) {
-    if (injected[slotId]) return;
-    if (!key || key.indexOf('PASTE_') === 0) return;
-    injected[slotId] = true;
-    var slot = document.getElementById(slotId);
-    if (!slot) return;
-    var cfg = document.createElement('script');
-    cfg.text = "atOptions={'key':'" + key + "','format':'iframe','height':" + height + ",'width':" + width + ",'params':{}};";
-    slot.appendChild(cfg);
-    var s = document.createElement('script');
-    s.src = 'https://paviliongiddy.com/' + src + '/invoke.js';
-    s.async = true;
-    s.onerror = function() {
-      var mob = slot.closest('.ad-mobile-bottom');
-      if (mob) mob.style.display = 'none';
-    };
-    slot.appendChild(s);
-  }
-
-  function fadeIn(el) {
-    if (!el) return;
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        el.classList.remove('ad-hidden');
-        el.classList.add('ad-visible');
-      });
-    });
-  }
-
-  function setupDismiss(btnId, containerEl, storageKey) {
-    var btn = document.getElementById(btnId);
-    if (!btn || !containerEl) return;
-    btn.addEventListener('click', function() {
-      containerEl.style.opacity = '0';
-      containerEl.style.pointerEvents = 'none';
-      setTimeout(function() { containerEl.style.display = 'none'; }, 400);
-      var d;
-      try { d = JSON.parse(localStorage.getItem(DK) || '{}'); } catch(e) { d = {}; }
-      d[storageKey] = Date.now();
-      try { localStorage.setItem(DK, JSON.stringify(d)); } catch(e) {}
-    });
-  }
-
-  function wasDismissed(storageKey) {
-    try {
-      var d = JSON.parse(localStorage.getItem(DK) || '{}');
-      return d[storageKey] && (Date.now() - d[storageKey]) < 86400000;
-    } catch(e) { return false; }
-  }
-
-  function initAds() {
-    if (started) return;
-    started = true;
-    var w = vw();
-
-    if (w < 768) {
-      if (!wasDismissed('mob')) {
-        var mob = document.getElementById('adMobileBottom');
-        if (mob) {
-          inject('adMobileSlot', 'e38b52a60ad311de99bed655307c86a8', 50, 320, 'e38b52a60ad311de99bed655307c86a8');
-          fadeIn(mob);
-          setupDismiss('adMobileClose', mob, 'mob');
-        }
-      }
-    } else if (w < 1140) {
-      if (!wasDismissed('tab_hero')) {
-        var thWrap = document.getElementById('adTabletHeroWrap');
-        if (thWrap) {
-          inject('adTabletHeroSlot', 'PASTE_TABLET_HERO_468x60_KEY', 60, 468, 'PASTE_TABLET_HERO_468x60_KEY');
-          fadeIn(thWrap);
-          setupDismiss('adTabletHeroClose', document.getElementById('adTabletHero'), 'tab_hero');
-        }
-      }
-      if (!wasDismissed('tab_rect')) {
-        var trWrap = document.getElementById('adTabletRectWrap');
-        if (trWrap) {
-          inject('adTabletRectSlot', 'PASTE_TABLET_RECT_300x250_KEY', 250, 300, 'PASTE_TABLET_RECT_300x250_KEY');
-          fadeIn(trWrap);
-          setupDismiss('adTabletRectClose', document.getElementById('adTabletRect'), 'tab_rect');
-        }
-      }
-    } else {
-      if (!wasDismissed('desk_leader')) {
-        var dlWrap = document.getElementById('adDesktopLeaderWrap');
-        if (dlWrap) {
-          inject('adDesktopLeaderSlot', 'PASTE_DESKTOP_LEADER_728x90_KEY', 90, 728, 'PASTE_DESKTOP_LEADER_728x90_KEY');
-          fadeIn(dlWrap);
-          setupDismiss('adDesktopLeaderClose', document.getElementById('adDesktopLeader'), 'desk_leader');
-        }
-      }
-      if (!wasDismissed('desk_col')) {
-        var dcWrap = document.getElementById('adDesktopColWrap');
-        if (dcWrap) {
-          inject('adDesktopColSlot', 'PASTE_DESKTOP_COL_160x600_KEY', 600, 160, 'PASTE_DESKTOP_COL_160x600_KEY');
-          fadeIn(dcWrap);
-          setupDismiss('adDesktopColClose', document.getElementById('adDesktopCol'), 'desk_col');
-        }
-      }
-    }
-  }
-
-  function schedule() {
-    setTimeout(initAds, DELAY);
-    var onInteract = function() {
-      initAds();
-      window.removeEventListener('scroll', onInteract);
-      window.removeEventListener('touchstart', onInteract);
-    };
-    window.addEventListener('scroll', onInteract, { passive: true });
-    window.addEventListener('touchstart', onInteract, { passive: true });
-  }
-
-  if (document.readyState === 'complete') {
-    schedule();
-  } else {
-    window.addEventListener('load', schedule);
-  }
-})();
 </script>
 
 </body>
