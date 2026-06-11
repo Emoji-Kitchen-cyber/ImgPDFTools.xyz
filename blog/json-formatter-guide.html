@@ -1,88 +1,324 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
-<!-- Google tag (gtag.js) -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' www.google-analytics.com; object-src 'none'; base-uri 'self';" />
+<title>JSON Formatter Guide: Beautify, Validate & Minify JSON | ImgPDFTools</title>
+<meta name="description" content="Learn how to format, validate, and minify JSON — fix common syntax errors and understand JSON structure. Free, private, 100% in-browser JSON formatter." />
+<meta name="keywords" content="json formatter, beautify json, validate json, minify json, json syntax error, format json online" />
+<meta name="author" content="Muhammad Jahangir" />
+<meta name="robots" content="index, follow" />
+<meta name="theme-color" content="#6366f1" />
+<link rel="canonical" href="https://imgpdftools.xyz/blog/json-formatter-guide.html" />
+<link rel="icon" href="/favicon.ico" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="ImgPDFTools" />
+<meta property="og:title" content="JSON Formatter Guide: Beautify, Validate & Minify JSON" />
+<meta property="og:description" content="Format, validate, and minify JSON, and fix common syntax errors." />
+<meta property="og:url" content="https://imgpdftools.xyz/blog/json-formatter-guide.html" />
+<meta property="og:image" content="https://imgpdftools.xyz/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="JSON Formatter Guide: Beautify, Validate & Minify" />
+<meta name="twitter:description" content="Format, validate, and minify JSON in your browser." />
+<meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png" />
+<script>
+  (function(){try{var t=localStorage.getItem('imgpdftools-theme')||localStorage.getItem('pixelpress-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-3P7QPQKV3K');
 </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSON Formatter Guide — Format, Validate & Beautify JSON | PixelPress Blog</title>
-  <meta name="description" content="Complete guide to formatting, validating, and beautifying JSON data. Learn how to use PixelPress JSON Formatter for error‑free JSON processing.">
-  <link rel="canonical" href="https://pixelpress-smoky.vercel.app/blog/json-formatter-guide.html">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-    :root{--bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#22222e;--accent:#ec4899;--accent2:#a78bfa;--text:#e8e8f0;--muted:#6b6b80;--radius:14px;--fhead:'Syne',sans-serif;--fbody:'DM Sans',sans-serif;--fmono:'JetBrains Mono',monospace}
-    [data-theme="light"]{--bg:#f5f5f7;--surface:#fff;--card:#fff;--border:rgba(0,0,0,0.06);--text:#1d1d1f;--muted:#6e6e73}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;line-height:1.7;transition:0.3s}
-    a{color:inherit;text-decoration:none}
-    nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:rgba(10,10,15,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-    .nav-logo{font-family:var(--fhead);font-weight:800;font-size:1.15rem;letter-spacing:.05em;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .progress-bar{position:fixed;top:64px;left:0;height:3px;background:var(--accent);z-index:101;transition:width .1s}
-    .main{max-width:860px;margin:0 auto;padding:2rem 20px 4rem}
-    .hero{text-align:center;padding:2rem 0}
-    .badge{display:inline-block;padding:4px 14px;background:rgba(236,72,153,.1);border:1px solid var(--accent);border-radius:999px;font-size:.75rem;color:var(--accent);text-transform:uppercase;margin-bottom:1rem}
-    .hero h1{font-family:var(--fhead);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:800;line-height:1.3;margin-bottom:.8rem}
-    .meta{color:var(--muted);font-size:.85rem}
-    .toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin:2rem 0;position:sticky;top:80px}
-    .toc h3{font-family:var(--fhead);margin-bottom:.8rem}
-    .toc ol{padding-left:20px;color:var(--muted)}
-    .toc li{margin-bottom:4px}
-    .toc a{color:var(--accent);font-weight:500}
-    .section{margin:2.5rem 0}
-    .section h2{font-family:var(--fhead);font-size:1.5rem;font-weight:700;margin-bottom:1rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
-    .section p{color:var(--muted);line-height:1.9;margin-bottom:1rem}
-    .section ul,.section ol{padding-left:24px;color:var(--muted);line-height:1.9;margin-bottom:1rem}
-    .section li{margin-bottom:6px}
-    .table-wrap{overflow-x:auto;margin:1rem 0}
-    table{width:100%;border-collapse:collapse;font-size:.9rem}
-    th,td{padding:10px 14px;border:1px solid var(--border);text-align:left}
-    th{background:var(--card);color:var(--accent);font-weight:600}
-    td{color:var(--muted)}
-    .code{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:1rem;font-family:var(--fmono);font-size:.85rem;color:var(--accent2);overflow-x:auto;margin:1rem 0}
-    .cta{background:linear-gradient(135deg,rgba(236,72,153,.12),rgba(167,139,250,.08));border:1px solid var(--accent);border-radius:var(--radius);padding:2.5rem;text-align:center;margin:3rem 0}
-    .cta h3{font-family:var(--fhead);font-size:1.3rem;margin-bottom:.5rem}
-    .cta p{color:var(--muted);margin-bottom:1.5rem}
-    .btn{display:inline-block;padding:14px 32px;background:var(--accent);color:#fff;border-radius:10px;font-weight:600;font-size:1rem;transition:.2s;text-decoration:none}
-    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(236,72,153,.3)}
-    .faq{margin:3rem 0}
-    .faq h2{font-family:var(--fhead);margin-bottom:1rem}
-    .faq-item{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
-    .faq-q{width:100%;padding:16px 20px;background:var(--card);border:none;text-align:left;font-weight:600;font-size:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text)}
-    .faq-a{max-height:0;overflow:hidden;transition:.3s;color:var(--muted);line-height:1.8;padding:0 20px}
-    .faq-item.open .faq-a{max-height:500px;padding:0 20px 20px}
-    footer{text-align:center;padding:2rem;color:var(--muted);border-top:1px solid var(--border);font-size:.85rem;margin-top:3rem}
-    @media(max-width:600px){.main{padding:1rem 14px}.hero h1{font-size:1.6rem}}
-  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "headline": "JSON Formatter Guide: Beautify, Validate & Minify JSON",
+      "description": "How to format, validate, and minify JSON and fix common syntax errors, all client-side.",
+      "author": { "@type": "Person", "name": "Muhammad Jahangir" },
+      "publisher": { "@type": "Organization", "name": "ImgPDFTools" },
+      "mainEntityOfPage": "https://imgpdftools.xyz/blog/json-formatter-guide.html",
+      "datePublished": "2026-05-01",
+      "image": "https://imgpdftools.xyz/og-image.png"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://imgpdftools.xyz/" },
+        { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://imgpdftools.xyz/blog/" },
+        { "@type": "ListItem", "position": 3, "name": "JSON Formatter Guide", "item": "https://imgpdftools.xyz/blog/json-formatter-guide.html" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does formatting JSON do?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Formatting adds consistent indentation and line breaks so nested objects and arrays are easy to read, without changing the data itself." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does my JSON show an error?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The most common causes are trailing commas, single quotes instead of double quotes, missing brackets, or unquoted keys. A validator points to the exact position of the problem." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+:root{--bg:#f8f8fc;--surface:rgba(255,255,255,0.90);--card:#ffffff;--border:rgba(99,102,241,0.10);--text:#18181b;--muted:#71717a;--accent:#6366f1;--accent2:#8b5cf6;--glow:rgba(99,102,241,0.14);--tag-bg:#f0f0f8;--radius:14px;--fhead:'Space Grotesk',sans-serif;--fbody:'Plus Jakarta Sans',system-ui,sans-serif;--fmono:'JetBrains Mono',monospace;}
+[data-theme="dark"]{--bg:#0c0c14;--surface:rgba(18,18,30,0.92);--card:#16162a;--border:rgba(99,102,241,0.18);--text:#e4e4f0;--muted:#8888aa;--glow:rgba(99,102,241,0.28);--tag-bg:#1a1a2e;}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fbody);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased;transition:.3s;}
+a{color:inherit;text-decoration:none;}
+.progress-container{position:fixed;top:0;left:0;width:100%;height:3px;background:transparent;z-index:200;}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .1s linear;}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,5vw,3rem);height:64px;background:var(--surface);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{display:flex;align-items:center;gap:.55rem;font-family:var(--fhead);font-weight:800;font-size:1.2rem;}
+.logo-icon{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.logo-text .pdf{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.logo-text .tools{color:var(--muted);}
+.nav-right{display:flex;align-items:center;gap:1.5rem;}
+.nav-links{display:flex;gap:1.6rem;list-style:none;}
+.nav-links a{font-size:.875rem;font-weight:500;color:var(--muted);transition:.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--accent);}
+.theme-toggle{background:var(--card);border:1px solid var(--border);width:40px;height:40px;border-radius:50%;cursor:pointer;color:var(--text);display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.2s;}
+.theme-toggle:hover{border-color:var(--accent);transform:scale(1.05);}
+.layout{max-width:1120px;width:100%;margin:0 auto;padding:2rem clamp(1rem,5vw,3rem) 3rem;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:2.5rem;}
+.breadcrumbs{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;font-size:.8rem;color:var(--muted);margin-bottom:1.5rem;}
+.breadcrumbs a:hover{color:var(--accent);}
+.breadcrumbs i{font-size:9px;}
+.cat-badge{display:inline-block;font-family:var(--fmono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);background:var(--tag-bg);border:1px solid var(--border);padding:.3rem .8rem;border-radius:999px;margin-bottom:1rem;}
+.article-header h1{font-family:var(--fhead);font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;line-height:1.15;letter-spacing:-.02em;margin-bottom:1rem;}
+.article-meta{display:flex;flex-wrap:wrap;gap:1.2rem;font-size:.82rem;color:var(--muted);padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:1.5rem;}
+.article-meta span{display:inline-flex;align-items:center;gap:.4rem;}
+.toc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem 1.4rem;margin-bottom:2rem;}
+.toc h3{font-family:var(--fhead);font-size:.95rem;margin-bottom:.7rem;}
+.toc ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;}
+.toc a{font-size:.875rem;color:var(--muted);transition:.2s;}
+.toc a:hover{color:var(--accent);}
+.content h2{font-family:var(--fhead);font-size:1.35rem;font-weight:700;margin:2rem 0 .9rem;scroll-margin-top:80px;}
+.content p{font-size:1rem;line-height:1.8;color:var(--text);margin-bottom:1.1rem;}
+.content ul{margin:0 0 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;}
+.content li{font-size:1rem;line-height:1.7;}
+.content pre{background:var(--tag-bg);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;overflow-x:auto;font-family:var(--fmono);font-size:.85rem;line-height:1.6;margin:1.2rem 0;}
+.content code{font-family:var(--fmono);font-size:.88em;background:var(--tag-bg);padding:.1rem .35rem;border-radius:5px;}
+.content pre code{background:none;padding:0;}
+.callout{background:var(--tag-bg);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:1rem 1.2rem;margin:1.5rem 0;font-size:.95rem;color:var(--text);}
+.faq-block{margin-top:2.5rem;}
+.faq-block>h2{font-family:var(--fhead);font-size:1.35rem;margin-bottom:1rem;}
+.faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:.8rem;overflow:hidden;background:var(--card);}
+.faq-trigger{width:100%;text-align:left;background:none;border:none;color:var(--text);font-family:var(--fbody);font-size:.98rem;font-weight:600;padding:1rem 1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.faq-trigger i{transition:transform .25s;color:var(--accent);}
+.faq-trigger[aria-expanded="true"] i{transform:rotate(180deg);}
+.faq-content{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+.faq-content p{padding:0 1.2rem 1.1rem;font-size:.92rem;line-height:1.7;color:var(--muted);margin:0;}
+.share-row{display:flex;align-items:center;gap:.7rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border);flex-wrap:wrap;}
+.share-row span{font-size:.85rem;color:var(--muted);}
+.share-btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--border);background:var(--card);color:var(--text);font-family:var(--fbody);font-size:.82rem;font-weight:600;padding:.5rem .9rem;border-radius:8px;cursor:pointer;transition:.2s;}
+.share-btn:hover{border-color:var(--accent);color:var(--accent);}
+aside.sidebar{display:flex;flex-direction:column;gap:1.5rem;}
+.side-sticky{position:sticky;top:88px;display:flex;flex-direction:column;gap:1.5rem;}
+.tool-card{background:linear-gradient(135deg,var(--glow),rgba(139,92,246,0.08));border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;}
+.tool-card h4{font-family:var(--fhead);font-size:1.05rem;margin-bottom:.5rem;}
+.tool-card p{font-size:.86rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.tool-btn{display:inline-flex;align-items:center;gap:.5rem;width:100%;justify-content:center;padding:.7rem 1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:9px;font-weight:600;font-size:.88rem;transition:.2s;}
+.tool-btn:hover{opacity:.9;transform:translateY(-1px);}
+.related-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;}
+.related-card h4{font-family:var(--fhead);font-size:1rem;margin-bottom:.9rem;}
+.related-card a{display:block;font-size:.88rem;color:var(--muted);padding:.45rem 0;border-bottom:1px solid var(--border);transition:.2s;}
+.related-card a:last-child{border-bottom:none;}
+.related-card a:hover{color:var(--accent);}
+footer{border-top:1px solid var(--border);padding:2rem clamp(1rem,5vw,3rem);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-top:auto;}
+footer .logo{font-family:var(--fhead);font-weight:800;font-size:1rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+footer p{font-size:.8rem;color:var(--muted);}
+.footer-links{display:flex;gap:1.2rem;flex-wrap:wrap;}
+.footer-links a{font-size:.8rem;color:var(--muted);}
+.footer-links a:hover{color:var(--accent);}
+#backTop{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:1rem;cursor:pointer;opacity:0;pointer-events:none;transition:.25s;box-shadow:0 8px 24px var(--glow);z-index:120;}
+#backTop.show{opacity:1;pointer-events:auto;}
+@media(max-width:900px){.layout{grid-template-columns:1fr;}.side-sticky{position:static;}.nav-links{display:none;}}
+</style>
 </head>
 <body>
-  <div class="progress-bar" id="progressBar"></div>
-  <nav><a href="../index.html" class="nav-logo">PIXELPRESS</a><a href="./index.html" style="color:var(--muted);font-size:.9rem">← Blog</a></nav>
-  <main class="main">
-    <div class="hero"><div class="badge">DEVELOPER TOOLS</div><h1>JSON Formatter & Validator — Format, Beautify & Debug JSON Data</h1><div class="meta">📅 June 2026 &nbsp;|&nbsp; ⏱ 6 Min Read &nbsp;|&nbsp; ✍️ Muhammad Jahangir</div></div>
-    <nav class="toc"><h3>📋 Table of Contents</h3><ol><li><a href="#s1">What is JSON Formatting?</a></li><li><a href="#s2">Why Validate JSON?</a></li><li><a href="#s3">Common JSON Errors</a></li><li><a href="#s4">How to Use PixelPress JSON Formatter</a></li><li><a href="#s5">Features Breakdown</a></li><li><a href="#faq">Frequently Asked Questions</a></li></ol></nav>
-    <div class="section" id="s1"><h2>1. What is JSON Formatting?</h2><p><strong>JSON (JavaScript Object Notation)</strong> is the universal data format for APIs, configuration files, and data exchange. JSON formatting (also called "beautifying" or "prettifying") transforms compressed, minified JSON into a readable, indented structure — making it easy to understand, debug, and edit. PixelPress JSON Formatter does this instantly, 100% client‑side.</p></div>
-    <div class="section" id="s2"><h2>2. Why Validate JSON?</h2><p>Invalid JSON breaks applications. A single missing comma, trailing comma, or unquoted key can crash an entire API response. Validation catches these errors before they cause problems in production. PixelPress validates your JSON in real‑time and shows the exact line and column of any error.</p></div>
-    <div class="section" id="s3"><h2>3. Common JSON Errors</h2><div class="table-wrap"><table><tr><th>Error</th><th>Example</th><th>Fix</th></tr><tr><td>Trailing comma</td><td>{"name": "John",}</td><td>Remove last comma</td></tr><tr><td>Missing quotes</td><td>{name: "John"}</td><td>Add quotes: "name"</td></tr><tr><td>Single quotes</td><td>{'name': 'John'}</td><td>Use double quotes</td></tr><tr><td>Unclosed bracket</td><td>{"name": "John"</td><td>Add closing }</td></tr><tr><td>Comments</td><td>// this is a comment</td><td>JSON doesn't support comments</td></tr></table></div></div>
-    <div class="section" id="s4"><h2>4. How to Use PixelPress JSON Formatter</h2><ol><li><strong>Paste your JSON</strong> — Copy raw JSON into the left input panel</li><li><strong>Click "Format / Prettify"</strong> — Instantly see beautified JSON on the right</li><li><strong>Click "Minify"</strong> — Compress JSON to a single line for production</li><li><strong>Click "Validate"</strong> — Check for syntax errors with line‑by‑line feedback</li><li><strong>Copy or download</strong> — Copy formatted JSON or download as .json file</li></ol></div>
-    <div class="section" id="s5"><h2>5. Features Breakdown</h2><ul><li><strong>Dual‑pane editor:</strong> Input on left, formatted output on right</li><li><strong>Format / Prettify:</strong> Add indentation (2 spaces) for readability</li><li><strong>Minify:</strong> Remove all whitespace for compact storage</li><li><strong>Validate:</strong> Real‑time syntax checking with error messages</li><li><strong>Clear All:</strong> Reset both panes instantly</li><li><strong>History:</strong> Previously formatted JSON saved in your browser</li></ul></div>
-    <div class="cta"><h3>💻 Format Your JSON Now</h3><p>Beautify, validate, and debug JSON instantly — free, no sign‑up required.</p><a href="../json-formatter.html" class="btn">Launch JSON Formatter <i class="fa-solid fa-arrow-right" style="margin-left:8px;"></i></a></div>
-    <div class="faq" id="faq"><h2>❓ Frequently Asked Questions</h2>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is my JSON data secure? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes — 100% client‑side processing. Your data never leaves your browser.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I format very large JSON files? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes — files up to 5MB are handled smoothly. Larger files may take a few seconds.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the tool free? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes — 100% free, unlimited use, no sign‑up.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Does it support JSON5 or JSONC? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Currently, strict JSON (RFC 8259) is supported. Comments and trailing commas will show errors.</div></div>
-      <div class="faq-item"><button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I download the formatted JSON? <i class="fa-solid fa-chevron-down"></i></button><div class="faq-a">Yes! Use the download button to save formatted or minified JSON as a .json file.</div></div>
+<div class="progress-container"><div class="progress-bar" id="readingProgress"></div></div>
+
+<nav>
+  <a href="../index.html" class="nav-logo"><span class="logo-icon">🛠️</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="./index.html">Blog</a></li>
+      <li><a href="../index.html#tools">All Tools</a></li>
+    </ul>
+    <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle theme">🌓</button>
+  </div>
+</nav>
+
+<main class="layout">
+  <article>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">Home</a> <i class="fa-solid fa-chevron-right"></i>
+      <a href="./index.html">Blog</a> <i class="fa-solid fa-chevron-right"></i>
+      <span>Developer Tools</span>
+    </nav>
+
+    <span class="cat-badge">Developer Tools</span>
+    <header class="article-header">
+      <h1>JSON Formatter Guide: Beautify, Validate and Minify JSON</h1>
+      <div class="article-meta">
+        <span><i class="fa-regular fa-calendar"></i> May 2026</span>
+        <span><i class="fa-regular fa-user"></i> Muhammad Jahangir</span>
+        <span><i class="fa-regular fa-clock"></i> 7 min read</span>
+      </div>
+    </header>
+
+    <nav class="toc" aria-label="Table of contents">
+      <h3>On this page</h3>
+      <ul>
+        <li><a href="#section1">1. What JSON Formatting Does</a></li>
+        <li><a href="#section2">2. Common Syntax Errors</a></li>
+        <li><a href="#section3">3. Beautify vs Minify</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <div class="content">
+      <p>JSON is the language of APIs and config files, but raw JSON from a server often arrives as one unreadable line. A formatter makes it readable, a validator catches mistakes, and a minifier shrinks it for production. This guide explains all three.</p>
+
+      <h2 id="section1">1. What JSON Formatting Does</h2>
+      <p>Formatting (or "beautifying") adds consistent indentation and line breaks so the structure of nested objects and arrays becomes obvious. It does not change the data — only how it is laid out. Compare a compact line to its formatted version:</p>
+      <pre><code>{"name":"Ali","tools":["jpg","pdf"],"active":true}</code></pre>
+      <pre><code>{
+  "name": "Ali",
+  "tools": ["jpg", "pdf"],
+  "active": true
+}</code></pre>
+      <div class="callout">💡 Tip: Two-space indentation is the most common style and keeps files compact while staying readable.</div>
+
+      <h2 id="section2">2. Common Syntax Errors and How to Fix Them</h2>
+      <ul>
+        <li><strong>Trailing commas</strong> — JSON does not allow a comma after the last item in an object or array.</li>
+        <li><strong>Single quotes</strong> — keys and strings must use double quotes, not single.</li>
+        <li><strong>Unquoted keys</strong> — every key must be a quoted string.</li>
+        <li><strong>Missing brackets</strong> — every <code>{</code> and <code>[</code> needs a matching close.</li>
+      </ul>
+      <p>A validator parses the text and points to the exact line and character where parsing failed, so you fix the real problem instead of guessing.</p>
+
+      <h2 id="section3">3. Beautify vs Minify</h2>
+      <p>Beautifying is for humans — use it while reading, debugging, or documenting. Minifying strips every space and line break to produce the smallest possible payload, which is what you ship to production so APIs and pages load faster. The same tool should do both with one click and let you copy or download the result.</p>
+
+      <section class="faq-block" id="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">What does formatting JSON do? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>Formatting adds consistent indentation and line breaks so nested objects and arrays are easy to read, without changing the data itself.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-trigger" aria-expanded="false">Why does my JSON show an error? <i class="fa-solid fa-chevron-down"></i></button>
+          <div class="faq-content"><p>The most common causes are trailing commas, single quotes instead of double quotes, missing brackets, or unquoted keys. A validator points to the exact position of the problem.</p></div>
+        </div>
+      </section>
+
+      <div class="share-row">
+        <span>Share this guide:</span>
+        <button class="share-btn" id="shareBtn"><i class="fa-solid fa-share-nodes"></i> Share</button>
+        <button class="share-btn" id="copyBtn"><i class="fa-solid fa-link"></i> Copy link</button>
+      </div>
     </div>
-  </main>
-  <footer>© 2026 PixelPress. All rights reserved. <a href="../privacy-policy.html" style="color:var(--accent);margin-left:1rem">Privacy</a></footer>
-  <script>window.addEventListener('scroll',()=>{const s=document.body.scrollTop||document.documentElement.scrollTop;const h=document.documentElement.scrollHeight-document.documentElement.clientHeight;document.getElementById('progressBar').style.width=(h>0?(s/h)*100:0)+'%'});document.addEventListener('DOMContentLoaded',()=>{document.documentElement.setAttribute('data-theme',localStorage.getItem('pixelpress-theme')||'dark')});</script>
+  </article>
+
+  <aside class="sidebar">
+    <div class="side-sticky">
+      <div class="tool-card">
+        <h4>Format JSON Free</h4>
+        <p>Paste JSON to beautify, validate, or minify instantly — with error highlighting, copy, and download, all in your browser.</p>
+        <a href="../json-formatter.html" class="tool-btn">Open JSON Formatter <i class="fa-solid fa-bolt"></i></a>
+      </div>
+      <div class="related-card">
+        <h4>Related Guides</h4>
+        <a href="./cad-converter-guide.html">CAD Converter: DXF to SVG, PDF, JSON</a>
+        <a href="./compress-guide.html">Compress Images Without Quality Loss</a>
+        <a href="./images-to-pdf.html">Convert Images to PDF Easily</a>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<footer>
+  <span class="logo">ImgPDFTools</span>
+  <div class="footer-links">
+    <a href="../about.html">About</a>
+    <a href="../contact.html">Contact</a>
+    <a href="../privacy-policy.html">Privacy</a>
+    <a href="../disclaimer.html">Disclaimer</a>
+  </div>
+  <p>© 2026 ImgPDFTools — Client-side tools for speed, privacy & creativity.</p>
+</footer>
+
+<button id="backTop" title="Back to top" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id);};
+
+  $('themeToggle').addEventListener('click', function(){
+    var cur=document.documentElement.getAttribute('data-theme');
+    var next=cur==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',next);
+    try{localStorage.setItem('imgpdftools-theme',next);}catch(e){}
+  });
+
+  var bar=$('readingProgress');
+  window.addEventListener('scroll',function(){
+    var h=document.documentElement;
+    var total=h.scrollHeight-h.clientHeight;
+    var pct=total>0?(h.scrollTop/total)*100:0;
+    bar.style.width=pct+'%';
+  },{passive:true});
+
+  document.querySelectorAll('.faq-trigger').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var open=btn.getAttribute('aria-expanded')==='true';
+      btn.setAttribute('aria-expanded',open?'false':'true');
+      var content=btn.nextElementSibling;
+      content.style.maxHeight=open?null:content.scrollHeight+'px';
+    });
+  });
+
+  var url=window.location.href;
+  var shareBtn=$('shareBtn'), copyBtn=$('copyBtn');
+  shareBtn.addEventListener('click',function(){
+    if(navigator.share){navigator.share({title:document.title,url:url}).catch(function(){});}
+    else{copyLink();}
+  });
+  copyBtn.addEventListener('click',copyLink);
+  function copyLink(){
+    if(navigator.clipboard){navigator.clipboard.writeText(url).then(flash).catch(function(){});}
+  }
+  function flash(){
+    var old=copyBtn.innerHTML;
+    copyBtn.innerHTML='<i class="fa-solid fa-check"></i> Copied';
+    setTimeout(function(){copyBtn.innerHTML=old;},1600);
+  }
+
+  var backTop=$('backTop');
+  window.addEventListener('scroll',function(){
+    if(window.scrollY>400){backTop.classList.add('show');}else{backTop.classList.remove('show');}
+  },{passive:true});
+  backTop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+})();
+</script>
 </body>
 </html>
