@@ -87,21 +87,21 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
 <nav>
   <div class="nav-left">
     <a href="./index.html" class="back-btn" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></a>
-    <a href="./index.html" class="nav-logo"><span class="logo-icon">\uD83D\uDEE0\uFE0F</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
+    <a href="./index.html" class="nav-logo"><span class="logo-icon">🛠️</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
   </div>
-  <button id="themeToggle" class="back-btn" title="Toggle theme" aria-label="Toggle theme">\uD83C\uDF13</button>
+  <button id="themeToggle" class="back-btn" title="Toggle theme" aria-label="Toggle theme">🌓</button>
 </nav>
 
 <div class="main">
   <div class="hero">
     <h1>DXF / DWG CAD Converter</h1>
-    <p>View DXF drawings, inspect layers & entities, then export to SVG, PDF or JSON \u2014 100% in your browser.</p>
+    <p>View DXF drawings, inspect layers & entities, then export to SVG, PDF or JSON — 100% in your browser.</p>
   </div>
 
   <div class="upload-area" id="uploadZone">
     <i class="fa-solid fa-file-arrow-up"></i>
     <h2>Upload DXF / DWG</h2>
-    <p style="color:var(--muted);">DXF fully supported \u2022 DWG metadata only</p>
+    <p style="color:var(--muted);">DXF fully supported • DWG metadata only</p>
     <input type="file" id="cadInput" accept=".dxf,.dwg" />
   </div>
 
@@ -116,7 +116,7 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
         <button class="btn btn-primary" id="exportPdfBtn"><i class="fa-solid fa-file-pdf"></i> PDF</button>
         <button class="btn btn-primary" id="exportJsonBtn"><i class="fa-solid fa-file-export"></i> JSON</button>
       </div>
-      <p style="color:var(--muted);font-size:.76rem;">Tip: drag to pan \u2022 scroll to zoom</p>
+      <p style="color:var(--muted);font-size:.76rem;">Tip: drag to pan • scroll to zoom</p>
     </div>
 
     <div class="info-panel">
@@ -128,7 +128,7 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
         <div class="stat"><span>Layers:</span><span id="layerCount">-</span></div>
         <div class="stat"><span>Bounds:</span><span id="bounds">-</span></div>
       </div>
-      <div id="dwgNotice" class="notice" style="display:none;">DWG is a closed binary format and cannot be rendered in the browser. Only basic metadata is shown. Convert DWG \u2192 DXF in your CAD app for full viewing.</div>
+      <div id="dwgNotice" class="notice" style="display:none;">DWG is a closed binary format and cannot be rendered in the browser. Only basic metadata is shown. Convert DWG → DXF in your CAD app for full viewing.</div>
       <div>
         <h3>Layers</h3>
         <div class="layer-list" id="layerList"></div>
@@ -138,7 +138,7 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
   </div>
 </div>
 
-<footer>\u00A9 2026 ImgPDFTools \u2014 CAD Converter &nbsp;\u00B7&nbsp; <strong>Files never leave your device</strong></footer>
+<footer>© 2026 ImgPDFTools — CAD Converter &nbsp;·&nbsp; <strong>Files never leave your device</strong></footer>
 
 <script>
 (function(){
