@@ -1,16 +1,19 @@
-const CACHE_NAME = 'pixelpress-cache-v5';
+// Service Worker for ImgPDFTools / PixelPress
+// Strategy: Network-first for HTML, stale-while-revalidate for assets
+// On install: PURANE saare caches forcefully delete (fixes stale homepage bug)
 
-// Sirf offline fallback + manifest pre-cache karte hain.
-// HTML pages cache nahi karte taa-ke hamesha fresh milein.
+const CACHE_NAME = 'pixelpress-cache-v6';
 const ASSETS_TO_CACHE = [
   '/offline.html',
   '/site.webmanifest'
 ];
 
-// Install: core fallback cache karo aur turant activate ho jao
+// Install: PURANE saare caches delete + naye assets precache + turant activate
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    caches.keys()
+      .then(keys => Promise.all(keys.map(k => caches.delete(k))))
+      .then(() => caches.open(CACHE_NAME))
       .then(cache => cache.addAll(
         ASSETS_TO_CACHE.map(url => new Request(url, { cache: 'reload' }))
       ))
@@ -18,7 +21,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate: SAARE purane caches delete karo, foran control le lo
+// Activate: double-safety + control le lo
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
@@ -40,8 +43,14 @@ self.addEventListener('fetch', event => {
   if (!req.url.startsWith(self.location.origin)) return;
   if (!req.url.startsWith('http')) return;
 
-  // HTML / navigation requests => HAMESHA network se fresh (no-store)
-  // Isse purana index.html kabhi serve nahi hoga jab online ho.
+  // sw.js / manifest ko kabhi cache se serve nahi karna — hamesha fresh
+  const url = new URL(req.url);
+  if (url.pathname === '/sw.js' || url.pathname === '/site.webmanifest') {
+    event.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.match(req)));
+    return;
+  }
+
+  // HTML / navigation requests => HAMESHA network se fresh
   const isHTML = req.mode === 'navigate' ||
     (req.headers.get('accept') || '').includes('text/html');
 
@@ -60,7 +69,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Baaki assets (css/js/img) => stale-while-revalidate (fast + background update)
+  // Baaki assets (css/js/img/font) => stale-while-revalidate
   event.respondWith(
     caches.match(req).then(cached => {
       const networkFetch = fetch(req).then(res => {
