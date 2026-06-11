@@ -103,9 +103,9 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
 <nav>
   <div class="nav-left">
     <a href="./index.html" class="back-btn" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></a>
-    <a href="./index.html" class="nav-logo"><span class="logo-icon">\uD83D\uDEE0\uFE0F</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
+    <a href="./index.html" class="nav-logo"><span class="logo-icon">🛠️</span><span class="logo-text">Img<span class="pdf">PDF</span><span class="tools">Tools</span></span></a>
   </div>
-  <button id="themeToggle" class="back-btn" title="Toggle theme" aria-label="Toggle theme">\uD83C\uDF13</button>
+  <button id="themeToggle" class="back-btn" title="Toggle theme" aria-label="Toggle theme">🌓</button>
 </nav>
 
 <div class="container">
@@ -160,7 +160,7 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
     <a href="./terms.html">Terms</a>
     <a href="./disclaimer.html">Disclaimer</a>
   </div>
-  \u00A9 2026 ImgPDFTools \u2014 <strong>Nothing leaves your device</strong> &nbsp;\u00B7&nbsp; Powered by native JSON
+  © 2026 ImgPDFTools — <strong>Nothing leaves your device</strong> &nbsp;·&nbsp; Powered by native JSON
 </footer>
 
 <script>
@@ -263,11 +263,11 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
     clearMessage();
     if(!input){ showMessage('Please enter JSON data', 'error'); return; }
     var r = parseWithPos(input);
-    if(!r.ok){ setValid(false); setOutput('', false); showMessage('\u2717 Invalid JSON: ' + r.error, 'error'); statusbar.innerHTML=''; return; }
+    if(!r.ok){ setValid(false); setOutput('', false); showMessage('✗ Invalid JSON: ' + r.error, 'error'); statusbar.innerHTML=''; return; }
     lastValid = r.value;
     var pretty = JSON.stringify(r.value, null, getIndent());
     setOutput(pretty, true); setValid(true);
-    showMessage('\u2713 JSON formatted successfully', 'success');
+    showMessage('✓ JSON formatted successfully', 'success');
     showStats(r.value, pretty);
     if(treeMode) renderTree(r.value);
   }
@@ -276,11 +276,11 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
     clearMessage();
     if(!input){ showMessage('Please enter JSON data', 'error'); return; }
     var r = parseWithPos(input);
-    if(!r.ok){ setValid(false); setOutput('', false); showMessage('\u2717 Invalid JSON: ' + r.error, 'error'); statusbar.innerHTML=''; return; }
+    if(!r.ok){ setValid(false); setOutput('', false); showMessage('✗ Invalid JSON: ' + r.error, 'error'); statusbar.innerHTML=''; return; }
     lastValid = r.value;
     var min = JSON.stringify(r.value);
     setOutput(min, true); setValid(true);
-    showMessage('\u2713 JSON minified successfully', 'success');
+    showMessage('✓ JSON minified successfully', 'success');
     showStats(r.value, min);
     if(treeMode) renderTree(r.value);
   }
@@ -289,8 +289,8 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
     clearMessage();
     if(!input){ showMessage('Please enter JSON data', 'error'); return; }
     var r = parseWithPos(input);
-    if(r.ok){ setValid(true); lastValid=r.value; showMessage('\u2713 Valid JSON structure', 'success'); showStats(r.value, input); }
-    else { setValid(false); showMessage('\u2717 Invalid JSON: ' + r.error, 'error'); statusbar.innerHTML=''; }
+    if(r.ok){ setValid(true); lastValid=r.value; showMessage('✓ Valid JSON structure', 'success'); showStats(r.value, input); }
+    else { setValid(false); showMessage('✗ Invalid JSON: ' + r.error, 'error'); statusbar.innerHTML=''; }
   }
   function sortKeysDeep(v){
     if(Array.isArray(v)) return v.map(sortKeysDeep);
@@ -307,11 +307,11 @@ footer{text-align:center;padding:1.5rem;color:var(--muted);font-size:.82rem;bord
     var input=inputEl.value.trim(); clearMessage();
     if(!input){ showMessage('Please enter JSON data','error'); return; }
     var r=parseWithPos(input);
-    if(!r.ok){ setValid(false); showMessage('\u2717 Invalid JSON: '+r.error,'error'); return; }
+    if(!r.ok){ setValid(false); showMessage('✗ Invalid JSON: '+r.error,'error'); return; }
     var sorted=sortKeysDeep(r.value); lastValid=sorted;
     inputEl.value=JSON.stringify(sorted,null,getIndent()); updateInMeta();
     var pretty=JSON.stringify(sorted,null,getIndent()); setOutput(pretty,true); setValid(true);
-    showMessage('\u2713 Keys sorted alphabetically (deep)','success'); showStats(sorted,pretty);
+    showMessage('✓ Keys sorted alphabetically (deep)','success'); showStats(sorted,pretty);
     if(treeMode) renderTree(sorted);
   });
   $('treeBtn').addEventListener('click', function(){ toggleTree(); });
