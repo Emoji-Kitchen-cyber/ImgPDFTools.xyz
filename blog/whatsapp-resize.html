@@ -60,12 +60,12 @@
         {
           "@type": "Question",
           "name": "What is the best image size for a WhatsApp profile picture?",
-          "acceptedAnswer": { "@type": "Answer", "text": "WhatsApp displays profile pictures as a circle cropped from a square. The recommended size is 500×500 px, though 640×640 px gives sharper results on high-DPI screens." }
+          "acceptedAnswer": { "@type": "Answer", "text": "WhatsApp displays profile pictures as a circle cropped from a square. The recommended size is 500x500 px, though 640x640 px gives sharper results on high-DPI screens." }
         },
         {
           "@type": "Question",
           "name": "Will resizing reduce my photo quality?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Downscaling slightly reduces detail, but using a high-quality resize algorithm (like Lanczos) keeps edges sharp. ImgPDFTools resizes entirely in your browser so you can preview the result before saving." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Downscaling slightly reduces detail, but using a high-quality resize algorithm keeps edges sharp. ImgPDFTools resizes entirely in your browser so you can preview the result before saving." }
         }
       ]
     }
@@ -112,10 +112,6 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .content ul{margin:0 0 1.1rem 1.2rem;display:flex;flex-direction:column;gap:.5rem;}
 .content li{font-size:1rem;line-height:1.7;}
 .callout{background:var(--tag-bg);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:10px;padding:1rem 1.2rem;margin:1.5rem 0;font-size:.95rem;color:var(--text);}
-.size-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.9rem;}
-.size-table th{background:var(--tag-bg);color:var(--text);font-family:var(--fhead);font-weight:700;padding:.7rem 1rem;text-align:left;border:1px solid var(--border);}
-.size-table td{padding:.65rem 1rem;border:1px solid var(--border);color:var(--muted);}
-.size-table tr:hover td{background:var(--tag-bg);color:var(--text);}
 .faq-block{margin-top:2.5rem;}
 .faq-block>h2{font-family:var(--fhead);font-size:1.35rem;margin-bottom:1rem;}
 .faq-item{border:1px solid var(--border);border-radius:12px;margin-bottom:.8rem;overflow:hidden;background:var(--card);}
@@ -176,7 +172,7 @@ footer p{font-size:.8rem;color:var(--muted);}
 
     <span class="cat-badge">Resizing</span>
     <header class="article-header">
-      <h1>Resize Images for WhatsApp Free in Your Browser</h1>
+      <h1>How to Resize Images for WhatsApp Free in Your Browser</h1>
       <div class="article-meta">
         <span><i class="fa-regular fa-calendar"></i> May 2026</span>
         <span><i class="fa-regular fa-user"></i> Muhammad Jahangir</span>
@@ -188,8 +184,8 @@ footer p{font-size:.8rem;color:var(--muted);}
       <h3>On this page</h3>
       <ul>
         <li><a href="#section1">1. Why Image Size Matters on WhatsApp</a></li>
-        <li><a href="#section2">2. WhatsApp Image Dimensions Cheat Sheet</a></li>
-        <li><a href="#section3">3. Step-by-Step: Resize in Your Browser</a></li>
+        <li><a href="#section2">2. WhatsApp Image Dimensions</a></li>
+        <li><a href="#section3">3. Step by Step</a></li>
         <li><a href="#section4">4. Tips to Avoid Blurry Photos</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
@@ -202,57 +198,21 @@ footer p{font-size:.8rem;color:var(--muted);}
       <p>WhatsApp applies aggressive lossy compression to images larger than its internal thresholds — typically reducing a 5 MB photo to under 200 KB. The result is visible banding, soft edges, and muddy colors. By pre-resizing your image to the target dimensions and keeping the file size reasonable, you give WhatsApp a head-start and the final image reaches the recipient looking exactly as you intended.</p>
       <div class="callout">💡 Tip: Send images as a <strong>document</strong> (tap the paperclip → Document) instead of as a photo to bypass WhatsApp's compression entirely and deliver the original file.</div>
 
-      <h2 id="section2">2. WhatsApp Image Dimensions Cheat Sheet</h2>
-      <p>Use the table below to quickly find the right target size for your image type:</p>
+      <h2 id="section2">2. WhatsApp Image Dimensions</h2>
+      <p>Use these recommended sizes depending on where your image will appear on WhatsApp:</p>
+      <ul>
+        <li><strong>Profile picture</strong> — 500 × 500 px (or 640 × 640 px for sharper results on high-DPI screens). WhatsApp crops it into a circle, so use a square image.</li>
+        <li><strong>Status / Story image</strong> — 1080 × 1920 px (9:16 portrait). Fills the full screen on most phones.</li>
+        <li><strong>Chat / inline photo</strong> — up to 1280 × 1280 px. Larger images will be downscaled automatically.</li>
+        <li><strong>Group icon</strong> — 500 × 500 px square, same rules as a profile picture.</li>
+        <li><strong>Sticker</strong> — exactly 512 × 512 px, keep the file under 100 KB.</li>
+      </ul>
 
-      <table class="size-table">
-        <thead>
-          <tr>
-            <th>Use Case</th>
-            <th>Recommended Size</th>
-            <th>Aspect Ratio</th>
-            <th>Max File Size</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Profile Picture</td>
-            <td>500 × 500 px (or 640 × 640 px)</td>
-            <td>1:1 (square)</td>
-            <td>~5 MB</td>
-          </tr>
-          <tr>
-            <td>Status / Story Image</td>
-            <td>1080 × 1920 px</td>
-            <td>9:16 (portrait)</td>
-            <td>~16 MB</td>
-          </tr>
-          <tr>
-            <td>Chat / In-line Photo</td>
-            <td>1280 × 1280 px (max)</td>
-            <td>Any</td>
-            <td>~16 MB</td>
-          </tr>
-          <tr>
-            <td>Group Icon</td>
-            <td>500 × 500 px</td>
-            <td>1:1 (square)</td>
-            <td>~5 MB</td>
-          </tr>
-          <tr>
-            <td>Sticker</td>
-            <td>512 × 512 px</td>
-            <td>1:1 (square)</td>
-            <td>~100 KB</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <h2 id="section3">3. Step-by-Step: Resize in Your Browser</h2>
+      <h2 id="section3">3. Step by Step</h2>
       <ul>
         <li><strong>Open the resize tool</strong> — no installation or sign-up needed.</li>
         <li><strong>Upload your image</strong> — drag and drop a JPG, PNG, or WebP file.</li>
-        <li><strong>Enter the target dimensions</strong> — type the width and height from the cheat sheet above, or choose a WhatsApp preset if available.</li>
+        <li><strong>Enter the target dimensions</strong> — use the sizes from Section 2 for your WhatsApp use case.</li>
         <li><strong>Lock the aspect ratio</strong> — enable the lock icon so the image scales proportionally without distortion.</li>
         <li><strong>Download</strong> — save the resized file and send it on WhatsApp.</li>
       </ul>
@@ -262,7 +222,7 @@ footer p{font-size:.8rem;color:var(--muted);}
       <ul>
         <li><strong>Start from the highest-resolution original</strong> — downscaling a 12 MP photo to 500 px always looks sharper than starting from a 480 px thumbnail.</li>
         <li><strong>Use PNG for graphics and text</strong> — logos and screenshots with hard edges look best saved as PNG rather than JPEG.</li>
-        <li><strong>Keep JPEG quality at 85–95 %</strong> — below 80 % introduces noticeable artefacts that WhatsApp's second round of compression makes worse.</li>
+        <li><strong>Keep JPEG quality at 85–95 %</strong> — below 80 % introduces artefacts that WhatsApp's second round of compression makes worse.</li>
         <li><strong>Crop before you resize</strong> — removing unwanted background first means the subject fills more pixels at the final size.</li>
         <li><strong>Send as a document for zero compression</strong> — if quality is critical, bypass WhatsApp's pipeline entirely by sharing the file as a document.</li>
       </ul>
