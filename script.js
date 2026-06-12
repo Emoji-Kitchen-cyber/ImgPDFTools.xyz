@@ -254,12 +254,6 @@ function toggleMenu(show) {
   }
 }
 
-document.getElementById('themeToggle').addEventListener('click', function() {
-  var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('imgpdftools-theme', next);
-});
-
 document.addEventListener('keydown', function(e) {
   if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
     e.preventDefault();
@@ -306,24 +300,5 @@ document.getElementById('toolSearch').addEventListener('input', evaluateLiveSear
   try { localStorage.setItem('redirect_' + shortId, JSON.stringify(entry)); } catch(e) {}
   window.location.replace(entry.long);
 })();
-
-/* ============================================================
-   SERVICE WORKER — auto-reload on new SW install
-   ============================================================ */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(reg) {
-      reg.addEventListener('updatefound', function() {
-        var nw = reg.installing;
-        if (nw) nw.addEventListener('statechange', function() {
-          if (nw.state === 'installed' && navigator.serviceWorker.controller) {
-            nw.postMessage('SKIP_WAITING');
-            window.location.reload();
-          }
-        });
-      });
-    }).catch(function(err) { console.warn('SW registration failed:', err); });
-  });
-}
 
 renderUI();
