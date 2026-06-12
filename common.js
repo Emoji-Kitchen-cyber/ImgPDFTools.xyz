@@ -4,10 +4,15 @@
    only need to be maintained in ONE place.
    ============================================================ */
 
-/* THEME TOGGLE (initial theme is set by the inline <head> script) */
+/* THEME TOGGLE (initial theme is set by the inline <head> script).
+   The data-themeBound guard guarantees the click handler is attached
+   only ONCE, even if another script (e.g. an inline head script on the
+   homepage) already bound it — this prevents the "button does nothing"
+   double-toggle bug. */
 (function () {
   var themeToggle = document.getElementById('themeToggle');
-  if (!themeToggle) return;
+  if (!themeToggle || themeToggle.dataset.themeBound) return;
+  themeToggle.dataset.themeBound = '1';
   themeToggle.addEventListener('click', function () {
     var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', next);
