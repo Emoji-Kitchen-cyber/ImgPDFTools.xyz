@@ -1,19 +1,16 @@
-// Service Worker for ImgPDFTools.xyz
-// Strategy: Network-first for HTML, stale-while-revalidate for assets
-// On install: forcefully delete ALL old caches (fixes stale homepage bug)
+const CACHE_NAME = 'imgpdftools-cache-v5';
 
-const CACHE_NAME = 'imgpdftools-cache-v6';
+// Sirf offline fallback + manifest pre-cache karte hain.
+// HTML pages cache nahi karte taa-ke hamesha fresh milein.
 const ASSETS_TO_CACHE = [
   '/offline.html',
   '/site.webmanifest'
 ];
 
-// Install: delete all old caches + precache new assets + activate immediately
+// Install: core fallback cache karo aur turant activate ho jao
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.map(k => caches.delete(k))))
-      .then(() => caches.open(CACHE_NAME))
+    caches.open(CACHE_NAME)
       .then(cache => cache.addAll(
         ASSETS_TO_CACHE.map(url => new Request(url, { cache: 'reload' }))
       ))
@@ -21,7 +18,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// Activate: double-safety cleanup + take control of all clients
+// Activate: SAARE purane caches delete karo, foran control le lo
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
@@ -32,7 +29,7 @@ self.addEventListener('activate', event => {
   );
 });
 
-// When the page sends a 'SKIP_WAITING' message, activate the new SW immediately
+// Page se 'SKIP_WAITING' message aaye to naya SW turant chalu kar do
 self.addEventListener('message', event => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
@@ -43,14 +40,8 @@ self.addEventListener('fetch', event => {
   if (!req.url.startsWith(self.location.origin)) return;
   if (!req.url.startsWith('http')) return;
 
-  // Never serve sw.js or manifest from cache — always fresh
-  const url = new URL(req.url);
-  if (url.pathname === '/sw.js' || url.pathname === '/site.webmanifest') {
-    event.respondWith(fetch(req, { cache: 'no-store' }).catch(() => caches.match(req)));
-    return;
-  }
-
-  // HTML / navigation requests => ALWAYS fresh from network (no-store)
+  // HTML / navigation requests => HAMESHA network se fresh (no-store)
+  // Isse purana index.html kabhi serve nahi hoga jab online ho.
   const isHTML = req.mode === 'navigate' ||
     (req.headers.get('accept') || '').includes('text/html');
 
@@ -69,7 +60,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  // Other assets (css/js/img/font) => stale-while-revalidate
+  // Baaki assets (css/js/img) => stale-while-revalidate (fast + background update)
   event.respondWith(
     caches.match(req).then(cached => {
       const networkFetch = fetch(req).then(res => {
