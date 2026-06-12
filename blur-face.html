@@ -30,131 +30,32 @@
 <meta name="theme-color" content="#6366f1" />
 <meta name="apple-mobile-web-app-title" content="ImgPDFTools" />
 
+<!-- Anti-flash theme + global error logger (shared behaviour) -->
+<script>
+  (function(){
+    try{
+      var t = localStorage.getItem('imgpdftools-theme')
+        || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', t);
+    }catch(e){}
+  })();
+  window.addEventListener('error', function(e){
+    try{
+      var log = JSON.parse(localStorage.getItem('imgpdftools_errors') || '[]');
+      log.push({ msg: e.message, src: e.filename, line: e.lineno, col: e.colno, t: Date.now(), page: location.pathname });
+      localStorage.setItem('imgpdftools_errors', JSON.stringify(log.slice(-50)));
+    }catch(_){}
+  });
+</script>
+
+<!-- Shared site styles -->
+<link rel="stylesheet" href="/style.css" />
+
+<!-- Face detection library -->
 <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 
 <style>
-/* ══════════════════════════════════════════════
-   DESIGN TOKENS — ImgPDFTools
-   Palette: Deep indigo + electric violet + warm white
-   ══════════════════════════════════════════════ */
-:root {
-  --bg: #f8f8fc;
-  --bg2: #f0f0f8;
-  --surface: rgba(255,255,255,0.90);
-  --card: #ffffff;
-  --border: rgba(99,102,241,0.10);
-  --border2: rgba(0,0,0,0.06);
-  --text: #18181b;
-  --muted: #71717a;
-  --accent: #6366f1;
-  --accent2: #8b5cf6;
-  --accent3: #06b6d4;
-  --glow: rgba(99,102,241,0.14);
-  --glow2: rgba(139,92,246,0.10);
-  --r: 18px;
-  --r-sm: 12px;
-  --fhead: 'Space Grotesk', sans-serif;
-  --fbody: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --nav-h: 66px;
-}
-[data-theme="dark"] {
-  --bg: #0c0c14;
-  --bg2: #111120;
-  --surface: rgba(18,18,30,0.92);
-  --card: #16162a;
-  --border: rgba(99,102,241,0.18);
-  --border2: rgba(255,255,255,0.07);
-  --text: #e4e4f0;
-  --muted: #8888aa;
-  --glow: rgba(99,102,241,0.28);
-  --glow2: rgba(139,92,246,0.20);
-}
-
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--fbody);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: background 0.3s, color 0.3s;
-  -webkit-font-smoothing: antialiased;
-}
-a { color: inherit; text-decoration: none; }
-
-/* ── NOISE TEXTURE OVERLAY ── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.4;
-}
-
-/* ── NAV ── */
-nav {
-  position: sticky;
-  top: 0;
-  z-index: 200;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 clamp(1rem, 5vw, 3rem);
-  height: var(--nav-h);
-  background: var(--surface);
-  backdrop-filter: blur(28px) saturate(200%);
-  -webkit-backdrop-filter: blur(28px) saturate(200%);
-  border-bottom: 1px solid var(--border);
-}
-.nav-left { display: flex; align-items: center; gap: 1rem; }
-.back-btn {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text); font-size: 1rem; cursor: pointer;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-.back-btn:hover { transform: scale(1.08); border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
-
-.nav-logo {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--fhead); font-weight: 700;
-  font-size: 1.15rem; letter-spacing: -0.3px;
-}
-.logo-icon {
-  width: 32px; height: 32px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  box-shadow: 0 4px 14px var(--glow);
-  flex-shrink: 0;
-}
-.logo-text-img { color: var(--text); }
-.logo-text-pdf {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.logo-text-tools { color: var(--muted); font-weight: 600; }
-
-.control-btn {
-  background: var(--card);
-  border: 1px solid var(--border2);
-  width: 38px; height: 38px;
-  border-radius: 50%; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--text); font-size: 1rem;
-  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
-.control-btn:hover { transform: scale(1.08); border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
-
-/* ── LAYOUT ── */
+/* ── BLUR-FACE TOOL-SPECIFIC STYLES (shared chrome removed → /style.css) ── */
 .main { flex: 1; max-width: 1300px; margin: 0 auto; width: 100%; padding: 2.5rem 20px; position: relative; z-index: 1; }
 
 /* ── HERO ── */
@@ -233,7 +134,7 @@ canvas { display: block; max-width: 100%; height: auto; margin: 0 auto; }
 }
 .section-title i { color: var(--accent); }
 
-/* ── BUTTONS ── */
+/* ── BUTTONS (tool-local, override shared on this page) ── */
 .btn {
   padding: 10px 18px; border: none; border-radius: 11px;
   font-weight: 600; cursor: pointer; transition: 0.2s;
@@ -278,25 +179,6 @@ select {
 .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); box-shadow: 0 4px 14px var(--glow); }
 .hidden { display: none !important; }
 .status-msg { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
-
-/* ── FOOTER ── */
-footer {
-  text-align: center; padding: 32px 20px;
-  font-size: 13px; color: var(--muted);
-  border-top: 1px solid var(--border2);
-  background: var(--card); margin-top: auto;
-  position: relative; z-index: 1;
-}
-.footer-logo {
-  display: inline-flex; align-items: center; gap: 7px;
-  margin-bottom: 12px; font-family: var(--fhead);
-  font-weight: 700; font-size: 1rem;
-}
-.footer-divider {
-  width: 40px; height: 2px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  border-radius: 2px; margin: 0 auto 12px;
-}
 </style>
 </head>
 <body>
@@ -395,22 +277,11 @@ footer {
     <p>© 2026 ImgPDFTools — All processing happens locally in your browser</p>
   </footer>
 
+  <!-- Shared theme + service worker -->
+  <script src="/common.js"></script>
+
   <script>
     (function() {
-      // ---- THEME ----
-      function syncTheme() {
-        const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
-        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
-      }
-      document.getElementById('themeToggle').addEventListener('click', () => {
-        const curr = document.documentElement.getAttribute('data-theme');
-        const next = curr === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('imgpdftools-theme', next);
-      });
-      syncTheme();
-
       // ---- DOM ----
       const uploadZone = document.getElementById('uploadZone');
       const fileInput = document.getElementById('fileInput');
