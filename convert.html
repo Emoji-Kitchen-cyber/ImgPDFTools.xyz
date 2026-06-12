@@ -21,37 +21,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" />
-
-  <!-- Shared site styles -->
-  <link rel="stylesheet" href="/style.css" />
-
-  <!-- Apply saved theme before paint to avoid flash (MUST stay inline in head) -->
-  <script>
-  (function(){
-    document.documentElement.setAttribute('data-theme',
-      localStorage.getItem('imgpdftools-theme') ||
-      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-    );
-  })();
-
-  /* Global error logger */
-  window.onerror = function(msg, src, line){
-    try {
-      var e = JSON.parse(localStorage.getItem('imgpdftools_errors') || '[]');
-      e.push({msg: msg, src: src, line: line, time: new Date().toISOString()});
-      if(e.length > 30) e.shift();
-      localStorage.setItem('imgpdftools_errors', JSON.stringify(e));
-    } catch(_) {}
-    return false;
-  };
-  </script>
-
-  <!-- Tool-specific styles ONLY (shared parts now live in /style.css) -->
   <style>
+    :root {
+      --bg:#f8f8fc; --bg2:#f0f0f8; --surface:rgba(255,255,255,0.90); --card:#ffffff;
+      --border:rgba(99,102,241,0.10); --border2:rgba(0,0,0,0.06);
+      --text:#18181b; --muted:#71717a;
+      --accent:#6366f1; --accent2:#8b5cf6; --accent3:#06b6d4; --glow:rgba(99,102,241,0.14);
+      --green:#10b981; --red:#ef4444;
+      --r:18px; --r-sm:12px;
+      --fhead:'Space Grotesk',sans-serif; --fbody:'Plus Jakarta Sans',system-ui,sans-serif; --nav-h:66px;
+    }
+    [data-theme="dark"] {
+      --bg:#0c0c14; --bg2:#111120; --surface:rgba(18,18,30,0.92); --card:#16162a;
+      --border:rgba(99,102,241,0.18); --border2:rgba(255,255,255,0.07);
+      --text:#e4e4f0; --muted:#8888aa; --glow:rgba(99,102,241,0.28);
+    }
+    *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:var(--fbody); min-height:100vh;
+      display:flex; flex-direction:column; transition:background .3s,color .3s; -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
+
+    nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+      padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
+      backdrop-filter:blur(28px) saturate(180%); -webkit-backdrop-filter:blur(28px) saturate(180%); border-bottom:1px solid var(--border); }
+    .nav-left { display:flex; align-items:center; gap:1rem; }
+    .back-btn,.control-btn { background:var(--card); border:1px solid var(--border2); width:40px; height:40px;
+      border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--text);
+      font-size:1rem; cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
+    .back-btn:hover,.control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
+    .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-.3px; }
+    .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px;
+      display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); }
+    .logo-text-img { color:var(--text); }
+    .logo-text-pdf { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .logo-text-tools { color:var(--muted); font-weight:600; }
+
     .main { flex:1; max-width:1120px; margin:0 auto; width:100%; padding:2rem 20px 4rem; display:grid; grid-template-columns:1fr 360px; gap:1.6rem; }
     @media (max-width:850px){ .main { grid-template-columns:1fr; } .settings-panel { position:static !important; } }
 
-    .upload-panel { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r); padding:1.8rem; display:flex; flex-direction:column; }
+    .upload-panel { background:var(--card); border:1.5px solid var(--border2); border-radius:var(--r);
+      padding:1.8rem; display:flex; flex-direction:column; }
     .drop-zone { border:2px dashed var(--border2); border-radius:var(--r); padding:2.5rem; text-align:center; cursor:pointer; transition:.2s; margin-bottom:1.5rem; }
     .drop-zone:hover { border-color:var(--accent); background:var(--glow); }
     .drop-zone i { font-size:2.5rem; color:var(--accent); }
@@ -71,6 +80,19 @@
     .badge-processing { background:var(--glow); color:var(--accent); }
     .badge-done { background:rgba(16,185,129,0.12); color:var(--green); }
     .badge-error { background:rgba(239,68,68,0.12); color:var(--red); }
+
+    .btn { padding:9px 16px; border-radius:10px; border:none; font-weight:600; cursor:pointer; font-size:.85rem;
+      transition:.2s; display:inline-flex; align-items:center; gap:6px; font-family:var(--fbody); }
+    .btn-primary { background:var(--accent); color:#fff; box-shadow:0 4px 14px var(--glow); }
+    .btn-primary:hover { background:var(--accent2); }
+    .btn-success { background:var(--green); color:#fff; }
+    .btn-success:hover { background:#059669; }
+    .btn-danger { background:var(--red); color:#fff; width:34px; height:34px; justify-content:center; padding:0; }
+    .btn-outline { background:transparent; border:1.5px solid var(--border2); color:var(--text); }
+    .btn-outline:hover { border-color:var(--accent); color:var(--accent); }
+    .btn-icon { background:var(--card); border:1px solid var(--border2); color:var(--text); width:34px; height:34px; justify-content:center; padding:0; border-radius:8px; }
+    .btn-icon:hover { border-color:var(--accent); color:var(--accent); }
+    .btn:disabled { opacity:.5; pointer-events:none; }
 
     .progress-bar { height:7px; background:var(--bg2); border-radius:10px; margin:1rem 0; display:none; overflow:hidden; }
     .progress-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent3)); width:0%; border-radius:10px; transition:width .3s; }
@@ -93,7 +115,8 @@
     .section-title i { color:var(--accent); }
     .input-group { margin-bottom:1.2rem; }
     .input-group > label { display:block; font-size:.74rem; font-weight:700; color:var(--muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:.4px; }
-    .input-group select, .input-group input[type=number], .input-group input[type=text] { width:100%; padding:10px 12px; border:1.5px solid var(--border2); border-radius:10px; background:var(--bg); color:var(--text); font-size:.9rem; font-family:var(--fbody); outline:none; transition:border-color .2s,box-shadow .2s; }
+    .input-group select, .input-group input[type=number], .input-group input[type=text] {
+      width:100%; padding:10px 12px; border:1.5px solid var(--border2); border-radius:10px; background:var(--bg); color:var(--text); font-size:.9rem; font-family:var(--fbody); outline:none; transition:border-color .2s,box-shadow .2s; }
     .input-group select:focus, .input-group input:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
     .input-group input[type=range] { width:100%; accent-color:var(--accent); cursor:pointer; }
     .range-row { display:flex; align-items:center; gap:10px; }
@@ -120,6 +143,14 @@
     .history-panel.show { display:block; }
     .history-panel div { padding:4px 0; border-bottom:1px dashed var(--border2); }
     .history-panel div:last-child { border-bottom:none; }
+
+    #toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--text);
+      color:var(--bg); padding:11px 20px; border-radius:99px; font-size:13px; font-weight:600; opacity:0;
+      pointer-events:none; transition:opacity .3s,transform .3s; z-index:999; box-shadow:0 8px 24px rgba(0,0,0,.2); }
+    #toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+    footer { text-align:center; padding:30px 20px; color:var(--muted); font-size:13px; border-top:1px solid var(--border2); background:var(--card); margin-top:auto; }
+    .footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:10px; font-family:var(--fhead); font-weight:700; font-size:1rem; }
   </style>
 </head>
 <body>
@@ -262,15 +293,23 @@
     <p>© 2026 ImgPDFTools — All conversions happen in your browser.</p>
   </footer>
 
-  <!-- Shared theme toggle + service worker -->
-  <script src="/common.js"></script>
   <script>
   (function(){
     const $ = id => document.getElementById(id);
     let toastTimer;
     function toast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),1800); }
 
-    /* Theme + service worker are handled globally by common.js */
+    /* Theme (shared key with homepage) */
+    function syncTheme(){
+      const saved = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme');
+      document.documentElement.setAttribute('data-theme', saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark':'light'));
+    }
+    $('themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light':'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('imgpdftools-theme', next);
+    });
+    syncTheme();
 
     /* DOM */
     const dropZone=$('dropZone'), fileInput=$('fileInput'), queueContainer=$('queueContainer'),
