@@ -701,7 +701,7 @@ nav {
   z-index: 1;
   display: block;
   clear: both;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .seo-section-inner {
@@ -738,7 +738,7 @@ nav {
   position: relative;
   width: 100%;
   margin: 0 0 2.5rem;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .seo-cat h3 {
@@ -754,34 +754,45 @@ nav {
 }
 
 .seo-link-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
   gap: 10px;
   width: 100%;
   margin: 0;
   padding: 0;
   list-style: none;
-  position: relative;
-  z-index: 0;
 }
 
 .seo-link-grid a {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  max-width: 100%;
-  padding: 8px 15px;
+  gap: 9px;
+  min-height: 46px;
+  padding: 11px 16px;
   background: var(--card);
   border: 1px solid var(--border2);
-  border-radius: 99px;
+  border-radius: 12px;
   color: var(--text);
   font-size: 13.5px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.35;
   overflow-wrap: break-word;
   word-break: break-word;
-  transition: border-color 0.15s, color 0.15s, background 0.15s;
-  white-space: nowrap;
+  transition: border-color 0.15s, color 0.15s, background 0.15s, transform 0.15s;
 }
+
+.seo-link-grid a::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.55;
+  flex-shrink: 0;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.seo-link-grid a:hover::before { opacity: 1; transform: scale(1.25); }
 
 .seo-link-grid a:hover {
   color: var(--accent);
@@ -928,8 +939,8 @@ footer {
   .seo-section-inner { padding-top: 1.5rem; }
   .seo-cat { margin-bottom: 2rem; }
   .seo-cat h3 { font-size: 0.95rem; margin-bottom: 0.75rem; }
-  .seo-link-grid { gap: 8px; }
-  .seo-link-grid a { padding: 7px 13px; font-size: 12.5px; }
+  .seo-link-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+  .seo-link-grid a { min-height: 42px; padding: 9px 13px; font-size: 12.5px; }
 
   .sidebar { width: 86vw; max-width: 320px; left: -90vw; }
 
