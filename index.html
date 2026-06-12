@@ -11,24 +11,29 @@
 </script>
 
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="google-site-verification" content="S_xtKI5JCRkkoHtqpOZ35xBeybTS056a9DXNtNMAUZ0" />
 <title id="siteTitle">ImgPDFTools — Free Online Image & PDF Toolkit</title>
-<meta name="description" content="Free online image & PDF tools: compress, resize, crop, convert, remove background, merge PDFs, and more. All processing happens in your browser – private and fast." />
+<meta name="description" content="27 free online image & PDF tools: compress, resize, crop, convert, remove background, merge & split PDFs, OCR, and more. 100% private — everything runs in your browser. No sign-up." />
 <meta name="keywords" content="image tools, pdf tools, compress image, resize image, convert image, remove background, merge pdf, split pdf, compress pdf, pdf to jpg, jpg to pdf, qr generator, ocr, free online tools" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="author" content="ImgPDFTools" />
+<meta name="theme-color" content="#6366f1" />
 <link rel="canonical" href="https://imgpdftools.xyz/" />
+
 <meta property="og:title" content="ImgPDFTools — Free Online Image & PDF Toolkit" />
-<meta property="og:description" content="Free online image & PDF tools. All processing happens in your browser – private and fast." />
+<meta property="og:description" content="27 free image & PDF tools that run 100% in your browser. Private, fast, no sign-up." />
 <meta property="og:url" content="https://imgpdftools.xyz/" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="ImgPDFTools" />
+<meta property="og:locale" content="en_US" />
 <meta property="og:image" content="https://imgpdftools.xyz/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta property="og:image:alt" content="ImgPDFTools — Free Online Image & PDF Toolkit" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="ImgPDFTools — Free Online Image & PDF Toolkit" />
-<meta name="twitter:description" content="25+ free image & PDF tools that run 100% in your browser. Private, fast, no sign-up." />
+<meta name="twitter:description" content="27 free image & PDF tools that run 100% in your browser. Private, fast, no sign-up." />
 <meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png" />
 
 <meta http-equiv="Content-Security-Policy"
@@ -53,6 +58,23 @@
 <!-- Main stylesheet -->
 <link rel="stylesheet" href="/style.css" />
 
+<!-- Homepage-only styles: FAQ accordion -->
+<style>
+  .faq-accordion { display:flex; flex-direction:column; gap:10px; margin-top:1.3rem; }
+  .faq-item { background:var(--card); border:1px solid var(--border2); border-radius:14px; overflow:hidden; transition:border-color .2s, box-shadow .2s; }
+  .faq-item[open] { border-color:var(--accent); box-shadow:0 6px 20px -8px var(--glow); }
+  .faq-item summary { list-style:none; cursor:pointer; padding:16px 18px; font-family:var(--fhead); font-weight:600; font-size:15px; color:var(--text); display:flex; justify-content:space-between; align-items:center; gap:14px; }
+  .faq-item summary::-webkit-details-marker { display:none; }
+  .faq-item summary::after { content:'\002B'; font-size:1.45rem; font-weight:400; color:var(--accent); transition:transform .25s ease; line-height:1; flex-shrink:0; }
+  .faq-item[open] summary::after { transform:rotate(45deg); }
+  .faq-item summary:hover { color:var(--accent); }
+  .faq-item .faq-a { padding:0 18px 16px; color:var(--muted); line-height:1.7; font-size:14.5px; }
+  @media (max-width:600px){
+    .faq-item summary { font-size:14px; padding:14px 15px; }
+    .faq-item .faq-a { font-size:13.5px; padding:0 15px 14px; }
+  }
+</style>
+
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
@@ -60,7 +82,6 @@
 <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#6366f1" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-title" content="ImgPDFTools" />
 
@@ -68,10 +89,37 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "ImgPDFTools",
-  "url": "https://imgpdftools.xyz/",
-  "description": "Free online image & PDF tools: compress, resize, crop, convert, remove background, merge PDFs, and more. All processing happens in your browser."
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://imgpdftools.xyz/#org",
+      "name": "ImgPDFTools",
+      "url": "https://imgpdftools.xyz/",
+      "logo": "https://imgpdftools.xyz/favicon-192x192.png"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://imgpdftools.xyz/#website",
+      "name": "ImgPDFTools",
+      "url": "https://imgpdftools.xyz/",
+      "publisher": { "@id": "https://imgpdftools.xyz/#org" },
+      "description": "27 free online image & PDF tools that run entirely in your browser."
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "ImgPDFTools",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any (web browser)",
+      "url": "https://imgpdftools.xyz/",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://imgpdftools.xyz/" }
+      ]
+    }
+  ]
 }
 </script>
 <script type="application/ld+json">
@@ -115,20 +163,42 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {"@type":"Question","name":"Are these image and PDF tools free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool on ImgPDFTools is 100% free with no sign-up and no usage limits."}},
-    {"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens locally in your browser, so your images and PDFs never leave your device."}},
-    {"@type":"Question","name":"Do I need to install anything?","acceptedAnswer":{"@type":"Answer","text":"No installation is needed. The tools work directly in any modern browser, and many work offline too."}}
+    {"@type":"Question","name":"Are ImgPDFTools completely free to use?","acceptedAnswer":{"@type":"Answer","text":"Yes. Every tool on ImgPDFTools is 100% free — no account, no subscriptions, no watermarks, and no usage limits."}},
+    {"@type":"Question","name":"Are my files uploaded to a server?","acceptedAnswer":{"@type":"Answer","text":"No. All processing happens locally inside your browser, so your images and PDFs never leave your device."}},
+    {"@type":"Question","name":"Do I need to install an app or create an account?","acceptedAnswer":{"@type":"Answer","text":"Neither. The tools run instantly in any modern browser — desktop or mobile — with no sign-up and nothing to install."}},
+    {"@type":"Question","name":"Which file formats are supported?","acceptedAnswer":{"@type":"Answer","text":"Images include JPG, PNG, WebP, AVIF, GIF and BMP, and the PDF tools work with standard PDF files. The exact options vary slightly per tool."}},
+    {"@type":"Question","name":"Do the tools work offline?","acceptedAnswer":{"@type":"Answer","text":"Most tools keep working without an internet connection after your first visit, because the site can be installed as a Progressive Web App (PWA)."}},
+    {"@type":"Question","name":"Is there a limit on file size or the number of files?","acceptedAnswer":{"@type":"Answer","text":"There are no artificial limits. The only practical limit is your device's available memory, since everything is processed on-device."}},
+    {"@type":"Question","name":"Do the tools work on phones and tablets?","acceptedAnswer":{"@type":"Answer","text":"Yes. The entire site is fully responsive and touch-friendly, so every tool adapts to phones, tablets, laptops and large screens."}},
+    {"@type":"Question","name":"Is my data private and secure?","acceptedAnswer":{"@type":"Answer","text":"Completely. Because nothing is uploaded, your files stay private to you — we can't see, store, or access anything you process."}}
   ]
 }
 </script>
 
-<!-- Apply saved theme before paint to avoid flash (MUST stay inline in head) -->
+<!-- Apply saved theme before paint + reliably bind the theme toggle (single, guarded) -->
 <script>
 (function(){
-  document.documentElement.setAttribute('data-theme',
-    localStorage.getItem('imgpdftools-theme') ||
-    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-  );
+  // 1) Set theme before first paint to avoid a flash
+  try {
+    var saved = localStorage.getItem('imgpdftools-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', saved);
+  } catch(e){}
+
+  // 2) Bind the toggle exactly ONCE (the data-themeBound guard blocks any
+  //    duplicate binding from common.js / script.js, so one click = one flip)
+  function bindThemeToggle(){
+    var btn = document.getElementById('themeToggle');
+    if (!btn || btn.dataset.themeBound) return;
+    btn.dataset.themeBound = '1';
+    btn.addEventListener('click', function(){
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('imgpdftools-theme', next); } catch(e){}
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindThemeToggle);
+  else bindThemeToggle();
 })();
 
 /* Global error logger */
@@ -177,7 +247,7 @@ window.onerror = function(msg, src, line){
     </a>
   </div>
   <div class="nav-actions">
-    <button class="control-btn" id="themeToggle" aria-label="Toggle dark/light theme">🌓</button>
+    <button class="control-btn" id="themeToggle" type="button" aria-label="Toggle dark/light theme">🌓</button>
   </div>
 </nav>
 
@@ -190,7 +260,7 @@ window.onerror = function(msg, src, line){
   <h1 id="heroTitle">Every Image &amp; PDF tool <span class="h1-line2" id="heroSpan">you'll ever need</span></h1>
   <p class="hero-sub" id="heroDesc">Process images and PDFs directly in your browser. No servers, no sign-up, no waiting — just instant results.</p>
   <div class="hero-stats">
-    <div class="stat-pill"><span class="sp-icon">🛠️</span> <span class="stat-num">25+</span> Tools</div>
+    <div class="stat-pill"><span class="sp-icon">🛠️</span> <span class="stat-num">27</span> Tools</div>
     <div class="stat-pill"><span class="sp-icon">🔒</span> 100% Private</div>
     <div class="stat-pill"><span class="sp-icon">⚡</span> Instant</div>
     <div class="stat-pill"><span class="sp-icon">🌐</span> Works Offline</div>
@@ -409,7 +479,7 @@ window.onerror = function(msg, src, line){
 <section class="seo-section" aria-label="About ImgPDFTools and tool directory">
   <div class="seo-section-inner">
     <h2 id="seoH2Main">Free Online Image &amp; PDF Tools — Right in Your Browser</h2>
-    <p id="seoIntro">ImgPDFTools is a collection of 25+ free, privacy-first tools to compress, resize, convert, and edit images, plus a full set of PDF utilities like merge, split, compress, and annotate. Everything runs entirely in your browser — your files are never uploaded to a server, so your work stays private and fast.</p>
+    <p id="seoIntro">ImgPDFTools is a collection of 27 free, privacy-first tools to compress, resize, convert, and edit images, plus a full set of PDF utilities like merge, split, compress, and annotate. Everything runs entirely in your browser — your files are never uploaded to a server, so your work stays private and fast.</p>
 
     <div class="seo-cat">
       <h3 id="seoCat1">Image Tools</h3>
@@ -461,12 +531,40 @@ window.onerror = function(msg, src, line){
 
     <div class="seo-faq">
       <h2 id="seoFaqH2">Frequently Asked Questions</h2>
-      <h3 id="seoFaqQ1">Are these tools really free?</h3>
-      <p id="seoFaqA1">Yes — every tool is completely free with no account, no watermarks, and no limits.</p>
-      <h3 id="seoFaqQ2">Are my files uploaded anywhere?</h3>
-      <p id="seoFaqA2">No. All processing happens locally in your browser, so your images and PDFs never leave your device.</p>
-      <h3 id="seoFaqQ3">Do I need to install anything?</h3>
-      <p id="seoFaqA3">No installation required. The tools run in any modern browser, and many work offline as well.</p>
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary>Are ImgPDFTools completely free to use?</summary>
+          <div class="faq-a">Yes. Every tool on ImgPDFTools is 100% free — no account, no subscriptions, no watermarks, and no usage limits.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Are my files uploaded to a server?</summary>
+          <div class="faq-a">No. All processing happens locally inside your browser, so your images and PDFs never leave your device.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do I need to install an app or create an account?</summary>
+          <div class="faq-a">Neither. The tools run instantly in any modern browser — desktop or mobile — with no sign-up and nothing to install.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Which file formats are supported?</summary>
+          <div class="faq-a">Images include JPG, PNG, WebP, AVIF, GIF and BMP, and the PDF tools work with standard PDF files. The exact options vary slightly per tool.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do the tools work offline?</summary>
+          <div class="faq-a">Most tools keep working without an internet connection after your first visit, because the site can be installed as a Progressive Web App (PWA).</div>
+        </details>
+        <details class="faq-item">
+          <summary>Is there a limit on file size or the number of files?</summary>
+          <div class="faq-a">There are no artificial limits. The only practical limit is your device's available memory, since everything is processed on-device.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Do the tools work on phones and tablets?</summary>
+          <div class="faq-a">Yes. The entire site is fully responsive and touch-friendly, so every tool adapts to phones, tablets, laptops and large screens.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Is my data private and secure?</summary>
+          <div class="faq-a">Completely. Because nothing is uploaded, your files stay private to you — we can't see, store, or access anything you process.</div>
+        </details>
+      </div>
     </div>
   </div>
 </section>
@@ -483,7 +581,7 @@ window.onerror = function(msg, src, line){
   <p id="footerCopyright">© 2026 ImgPDFTools — All Rights Reserved</p>
 </footer>
 
-<!-- Shared theme toggle + service worker (MUST load before script.js) -->
+<!-- Shared theme toggle + service worker (loads before script.js) -->
 <script src="/common.js"></script>
 <!-- Main script -->
 <script src="/script.js"></script>
