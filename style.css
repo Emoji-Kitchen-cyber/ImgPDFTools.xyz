@@ -15,6 +15,8 @@
   --accent3: #06b6d4;
   --glow: rgba(99,102,241,0.14);
   --glow2: rgba(139,92,246,0.10);
+  --green: #10b981;
+  --red: #ef4444;
   --r: 18px;
   --r-sm: 12px;
   --fhead: 'Space Grotesk', sans-serif;
@@ -178,6 +180,75 @@ nav {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--glow);
 }
+
+/* ============================================================
+   BACK BUTTON + BUTTONS + TOAST  (shared with tool pages)
+   ============================================================ */
+.back-btn {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.back-btn:hover {
+  transform: scale(1.08);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--glow);
+}
+
+.btn {
+  padding: 9px 16px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fbody);
+}
+
+.btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 14px var(--glow); }
+.btn-primary:hover { background: var(--accent2); }
+.btn-success { background: var(--green); color: #fff; }
+.btn-success:hover { background: #059669; }
+.btn-danger { background: var(--red); color: #fff; width: 34px; height: 34px; justify-content: center; padding: 0; }
+.btn-outline { background: transparent; border: 1.5px solid var(--border2); color: var(--text); }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+.btn-icon { background: var(--card); border: 1px solid var(--border2); color: var(--text); width: 34px; height: 34px; justify-content: center; padding: 0; border-radius: 8px; }
+.btn-icon:hover { border-color: var(--accent); color: var(--accent); }
+.btn:disabled { opacity: 0.5; pointer-events: none; }
+
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--text);
+  color: var(--bg);
+  padding: 11px 20px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 /* ============================================================
    SIDEBAR / DRAWER
