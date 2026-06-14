@@ -49,8 +49,11 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       fetch(req, { cache: 'no-store' })
         .then(res => {
+          // Zaroori: caching ko waitUntil mein wrap karo
           const clone = res.clone();
-          caches.open(CACHE_NAME).then(c => c.put(req, clone));
+          event.waitUntil(
+            caches.open(CACHE_NAME).then(c => c.put(req, clone))
+          );
           return res;
         })
         .catch(() =>
@@ -66,7 +69,10 @@ self.addEventListener('fetch', event => {
       const networkFetch = fetch(req).then(res => {
         if (res && res.status === 200) {
           const clone = res.clone();
-          caches.open(CACHE_NAME).then(c => c.put(req, clone));
+          // Zaroori: caching ko waitUntil mein wrap karo
+          event.waitUntil(
+            caches.open(CACHE_NAME).then(c => c.put(req, clone))
+          );
         }
         return res;
       }).catch(() => cached);
