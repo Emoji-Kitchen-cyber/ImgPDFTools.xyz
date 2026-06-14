@@ -1527,7 +1527,7 @@ footer {
     var a = el('a', {href: t.href});
     var i = el('i', {className: 'fa-solid ' + t.icon, 'aria-hidden': 'true'});
     a.appendChild(i);
-    a.appendChild(document.createTextNode(' ' + t.text));
+    a.appendChild(document.createTextNode(' ' + (t.title || t.text)));
     return a;
   }
 
