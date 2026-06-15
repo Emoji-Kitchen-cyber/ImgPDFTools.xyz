@@ -45,14 +45,33 @@
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
 
-<!-- PDF.js -->
+<!-- PDF.js (UMD build → exposes global pdfjsLib) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 
-<!-- docx.js for .docx generation -->
-<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
-
-<!-- FileSaver.js -->
+<!-- FileSaver.js (optional; we also have a built-in fallback) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<!-- ============================================================
+     docx v8.5.0 — loaded as an ES module.
+     docx@8 does NOT expose a global automatically when loaded via a
+     plain <script> (that was the cause of "docx is not defined").
+     We import the ESM build and attach it to window.docx ourselves.
+     Using .then()/.catch() (no top-level await) for maximum
+     browser compatibility + proper error surfacing.
+     ============================================================ -->
+<script type="module">
+  import("https://cdn.jsdelivr.net/npm/docx@8.5.0/+esm")
+    .then(function (mod) {
+      window.docx = mod;
+      window.__docxReady = true;
+      window.dispatchEvent(new Event("docx-ready"));
+    })
+    .catch(function (err) {
+      console.error("[docx] failed to load via ESM:", err);
+      window.__docxError = err;
+      window.dispatchEvent(new Event("docx-error"));
+    });
+</script>
 
 <style>
 /* ============================================================
@@ -806,8 +825,10 @@ footer {
   'use strict';
 
   /* ── PDF.js worker ── */
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  if (window.pdfjsLib && pdfjsLib.GlobalWorkerOptions) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  }
 
   /* ── DOM refs ── */
   var $dropZone    = document.getElementById('dropZone');
@@ -839,9 +860,9 @@ footer {
   var $optFontSize   = document.getElementById('optFontSize');
 
   /* ── State ── */
-  var currentFile   = null;
-  var docxBlob      = null;
-  var outputName    = 'document.docx';
+  var currentFile = null;
+  var docxBlob    = null;
+  var outputName  = 'document.docx';
 
   /* ── Theme ── */
   $themeToggle.addEventListener('click', function () {
@@ -864,10 +885,7 @@ footer {
     $errorText.textContent = msg;
     $errorMsg.classList.add('show');
   }
-
-  function hideError() {
-    $errorMsg.classList.remove('show');
-  }
+  function hideError() { $errorMsg.classList.remove('show'); }
 
   function setProgress(pct, label) {
     $progressFill.style.width = pct + '%';
@@ -876,9 +894,9 @@ footer {
   }
 
   function resetUI() {
-    currentFile  = null;
-    docxBlob     = null;
-    $dropZone.style.display   = '';
+    currentFile = null;
+    docxBlob    = null;
+    $dropZone.style.display = '';
     $fileBar.classList.remove('show');
     $optPanel.classList.remove('show');
     $convertWrap.classList.remove('show');
@@ -890,7 +908,10 @@ footer {
   }
 
   function loadFile(file) {
-    if (!file || file.type !== 'application/pdf') {
+    hideError();
+    if (!file) return;
+    var isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
+    if (!isPdf) {
       showError('Please select a valid PDF file.');
       return;
     }
@@ -906,7 +927,34 @@ footer {
     $convertWrap.classList.add('show');
     $resultCard.classList.remove('show');
     $progressWrap.classList.remove('show');
-    hideError();
+  }
+
+  /* Wait until a library global is ready (with timeout). */
+  function waitForLib(check, name, timeoutMs) {
+    return new Promise(function (resolve, reject) {
+      if (check()) { resolve(); return; }
+      var start = Date.now();
+      var id = setInterval(function () {
+        if (check()) { clearInterval(id); resolve(); }
+        else if (Date.now() - start > timeoutMs) {
+          clearInterval(id);
+          reject(new Error(name + ' could not be loaded. Check your internet connection and reload.'));
+        }
+      }, 100);
+    });
+  }
+
+  /* Cross-browser save (FileSaver if present, otherwise native fallback). */
+  function downloadBlob(blob, filename) {
+    if (typeof window.saveAs === 'function') { window.saveAs(blob, filename); return; }
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
   }
 
   /* ── Drag & drop ── */
@@ -923,25 +971,25 @@ footer {
     var file = e.dataTransfer.files && e.dataTransfer.files[0];
     if (file) loadFile(file);
   });
+  $dropZone.addEventListener('click', function (e) {
+    if (e.target.closest('#uploadBtn')) return; // button has its own handler
+    $fileInput.click();
+  });
   $dropZone.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $fileInput.click(); }
   });
 
   /* ── File input ── */
-  $uploadBtn.addEventListener('click', function () { $fileInput.click(); });
+  $uploadBtn.addEventListener('click', function (e) { e.stopPropagation(); $fileInput.click(); });
   $fileInput.addEventListener('change', function () {
     if ($fileInput.files && $fileInput.files[0]) loadFile($fileInput.files[0]);
   });
 
-  /* ── Remove file ── */
+  /* ── Remove / reset / download ── */
   $removeFile.addEventListener('click', resetUI);
-
-  /* ── Reset ── */
   $resetBtn.addEventListener('click', resetUI);
-
-  /* ── Download ── */
   $downloadBtn.addEventListener('click', function () {
-    if (docxBlob) saveAs(docxBlob, outputName);
+    if (docxBlob) downloadBlob(docxBlob, outputName);
   });
 
   /* ── Convert ── */
@@ -950,108 +998,108 @@ footer {
     runConversion(currentFile);
   });
 
+  function readFileAsArrayBuffer(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload  = function (e) { resolve(e.target.result); };
+      reader.onerror = function () { reject(new Error('Could not read the file. Please try again.')); };
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
   /* ============================================================
-     CORE: PDF → DOCX
+     CORE: PDF → DOCX  (async / await, fully guarded)
      ============================================================ */
-  function runConversion(file) {
+  async function runConversion(file) {
     hideError();
     $convertWrap.classList.remove('show');
     $progressWrap.classList.add('show');
     $resultCard.classList.remove('show');
     $convertBtn.disabled = true;
-    setProgress(2, 'Reading PDF…');
+    setProgress(2, 'Preparing…');
 
-    var reader = new FileReader();
-    reader.onload = function (e) {
-      var buffer = e.target.result;
-      processPdf(buffer);
-    };
-    reader.onerror = function () {
-      showError('Could not read the file. Please try again.');
-      finishFail();
-    };
-    reader.readAsArrayBuffer(file);
-  }
-
-  async function processPdf(buffer) {
     try {
+      /* 1) Make sure both libraries are ready */
+      await waitForLib(function () {
+        return window.pdfjsLib && typeof pdfjsLib.getDocument === 'function';
+      }, 'PDF engine (PDF.js)', 15000);
+
+      await waitForLib(function () {
+        return window.docx && window.docx.Document && window.docx.Packer;
+      }, 'Word engine (docx)', 20000);
+
+      /* 2) Read file */
+      setProgress(6, 'Reading PDF…');
+      var buffer = await readFileAsArrayBuffer(file);
+
+      /* 3) Parse PDF */
       var loadingTask = pdfjsLib.getDocument({ data: buffer });
       var pdfDoc = await loadingTask.promise;
       var numPages = pdfDoc.numPages;
+      setProgress(12, 'Loaded PDF (' + numPages + ' page' + (numPages === 1 ? '' : 's') + ')…');
 
-      setProgress(10, 'Loaded PDF (' + numPages + ' pages)…');
+      var opts = {
+        useHeadings:   $optHeadings.checked,
+        useParagraphs: $optParagraphs.checked,
+        usePageBreaks: $optPageBreaks.checked,
+        baseFontSize:  parseInt($optFontSize.value, 10) || 11
+      };
 
-      var useHeadings   = $optHeadings.checked;
-      var useParagraphs = $optParagraphs.checked;
-      var usePageBreaks = $optPageBreaks.checked;
-      var baseFontSize  = parseInt($optFontSize.value, 10) || 11;
-
-      /* Collect text items per page */
-      var allPages = [];
-
+      /* 4) Extract entries per page */
+      var pagesEntries = [];
       for (var p = 1; p <= numPages; p++) {
-        var page    = await pdfDoc.getPage(p);
-        var content = await page.getTextContent();
-        allPages.push(content.items);
-        var pct = 10 + ((p / numPages) * 50);
-        setProgress(pct, 'Extracting page ' + p + ' of ' + numPages + '…');
+        var page = await pdfDoc.getPage(p);
+        var tc   = await page.getTextContent();
+        pagesEntries.push(buildEntries(tc.items, tc.styles));
+        if (typeof page.cleanup === 'function') page.cleanup();
+        setProgress(12 + (p / numPages) * 48, 'Extracting page ' + p + ' of ' + numPages + '…');
       }
 
-      setProgress(62, 'Building Word document…');
+      /* 5) Detect document body font size, then group into lines */
+      setProgress(64, 'Analyzing layout…');
+      var bodySize = detectBodySize(pagesEntries);
+      var pagesLines = pagesEntries.map(groupIntoLines);
 
-      /* Build DOCX */
-      var docxChildren = buildDocxChildren(allPages, {
-        useHeadings: useHeadings,
-        useParagraphs: useParagraphs,
-        usePageBreaks: usePageBreaks,
-        baseFontSize: baseFontSize
-      });
+      /* 6) Build DOCX content */
+      setProgress(72, 'Building Word document…');
+      var children = buildDocxChildren(pagesLines, opts, bodySize);
 
-      setProgress(80, 'Generating .docx file…');
-
-      var { Document, Paragraph, TextRun, HeadingLevel, PageBreak, AlignmentType } = docx;
+      /* 7) Generate file */
+      setProgress(86, 'Generating .docx file…');
+      var Document = window.docx.Document;
+      var baseTitle = file.name.replace(/\.pdf$/i, '');
 
       var wordDoc = new Document({
         creator:     'ImgPDFTools',
-        title:       currentFile.name.replace(/\.pdf$/i, ''),
+        title:       baseTitle,
         description: 'Converted from PDF by ImgPDFTools (imgpdftools.xyz)',
         styles: {
           default: {
-            document: {
-              run: {
-                size: baseFontSize * 2,
-                font: 'Calibri'
-              }
-            }
+            document: { run: { size: opts.baseFontSize * 2, font: 'Calibri' } }
           }
         },
-        sections: [{
-          properties: {},
-          children: docxChildren
-        }]
+        sections: [{ properties: {}, children: children }]
       });
 
-      setProgress(92, 'Packaging document…');
-
-      var blob = await docx.Packer.toBlob(wordDoc);
+      setProgress(94, 'Packaging document…');
+      var blob = await window.docx.Packer.toBlob(wordDoc);
       docxBlob = blob;
 
       setProgress(100, 'Done!');
-
       setTimeout(function () {
         $progressWrap.classList.remove('show');
         $resultCard.classList.add('show');
-        $resultSub.textContent = 'Your Word document is ready — ' + formatBytes(blob.size) + ' · ' + currentFile.name.replace(/\.pdf$/i, '') + '.docx';
+        $resultSub.textContent = 'Your Word document is ready — ' + formatBytes(blob.size) + ' · ' + baseTitle + '.docx';
         $convertBtn.disabled = false;
-      }, 400);
+      }, 350);
 
     } catch (err) {
       console.error('[PDF→DOCX]', err);
       var msg = 'Conversion failed.';
       if (err && err.message) {
-        if (err.message.indexOf('password') !== -1) msg = 'This PDF is password-protected. Please remove the password first.';
-        else if (err.message.indexOf('Invalid PDF') !== -1) msg = 'The file does not appear to be a valid PDF.';
-        else msg = 'Conversion failed: ' + err.message;
+        if (/password/i.test(err.message))         msg = 'This PDF is password-protected. Please remove the password first.';
+        else if (/invalid pdf/i.test(err.message)) msg = 'The file does not appear to be a valid PDF.';
+        else                                        msg = 'Conversion failed: ' + err.message;
       }
       showError(msg);
       finishFail();
@@ -1066,139 +1114,239 @@ footer {
   }
 
   /* ============================================================
-     BUILD DOCX CHILDREN from page text items
+     EXTRACTION HELPERS
      ============================================================ */
-  function buildDocxChildren(allPages, opts) {
-    var { Document, Paragraph, TextRun, HeadingLevel, PageBreak, AlignmentType } = docx;
-    var children = [];
 
-    for (var pageIdx = 0; pageIdx < allPages.length; pageIdx++) {
-      var items = allPages[pageIdx];
+  /* Convert PDF.js text items → normalized entries with style info. */
+  function buildEntries(items, styles) {
+    var entries = [];
+    if (!items) return entries;
+    for (var i = 0; i < items.length; i++) {
+      var it = items[i];
+      if (!it || typeof it.str !== 'string' || !it.str.trim()) continue;
 
-      /* Group items into visual lines by Y position */
-      var lines = groupIntoLines(items);
+      var t  = it.transform || [1, 0, 0, 1, 0, 0];
+      var x  = t[4];
+      var y  = Math.round(t[5]);
+      var fs = Math.abs(t[3]) || Math.abs(t[0]) || 12;
 
-      for (var li = 0; li < lines.length; li++) {
-        var line = lines[li];
-        var text = line.text.trim();
-        if (!text) continue;
-
-        var avgFontSize = line.avgFontSize;
-        var isHeading   = opts.useHeadings && avgFontSize > 14;
-        var isBold      = avgFontSize > 13;
-
-        var runs = [
-          new TextRun({
-            text: text,
-            size: Math.round(avgFontSize * 2) || (opts.baseFontSize * 2),
-            bold: isHeading || isBold,
-            font: 'Calibri'
-          })
-        ];
-
-        var para;
-        if (isHeading) {
-          para = new Paragraph({
-            children: runs,
-            heading: avgFontSize > 18 ? HeadingLevel.HEADING_1 : HeadingLevel.HEADING_2,
-            spacing: { before: 240, after: 120 }
-          });
-        } else {
-          para = new Paragraph({
-            children: runs,
-            spacing: opts.useParagraphs
-              ? { before: 0, after: 120, line: 276, lineRule: 'auto' }
-              : { before: 0, after: 40 }
-          });
-        }
-        children.push(para);
-      }
-
-      /* Page break between pages (except last) */
-      if (opts.usePageBreaks && pageIdx < allPages.length - 1) {
-        children.push(
-          new Paragraph({
-            children: [new PageBreak()],
-            spacing: { before: 0, after: 0 }
-          })
-        );
-      }
+      var family = (styles && styles[it.fontName] && styles[it.fontName].fontFamily) || it.fontName || '';
+      entries.push({
+        str:    it.str,
+        x:      x,
+        y:      y,
+        fs:     fs,
+        width:  it.width || 0,
+        bold:   /bold|black|heavy|semibold|demibold/i.test(family),
+        italic: /italic|oblique/i.test(family)
+      });
     }
-
-    /* Ensure at least one paragraph */
-    if (children.length === 0) {
-      children.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
-    }
-
-    return children;
+    return entries;
   }
 
-  /* Group PDF text items into lines by Y coordinate */
-  function groupIntoLines(items) {
-    if (!items || !items.length) return [];
-
-    /* Build flat list with Y and font size */
-    var entries = [];
-    for (var i = 0; i < items.length; i++) {
-      var item = items[i];
-      if (!item.str || !item.str.trim()) continue;
-      var y   = item.transform ? Math.round(item.transform[5]) : 0;
-      var fs  = item.transform ? Math.abs(item.transform[3]) : 12;
-      entries.push({ str: item.str, y: y, fs: fs, x: item.transform ? item.transform[4] : 0 });
+  /* Detect the dominant body font size (weighted by character count). */
+  function detectBodySize(pagesEntries) {
+    var freq = {};
+    for (var i = 0; i < pagesEntries.length; i++) {
+      var arr = pagesEntries[i];
+      for (var j = 0; j < arr.length; j++) {
+        var e   = arr[j];
+        var key = Math.round(e.fs);
+        if (key <= 0) continue;
+        freq[key] = (freq[key] || 0) + e.str.replace(/\s/g, '').length;
+      }
     }
+    var bodySize = 12, max = -1;
+    Object.keys(freq).forEach(function (k) {
+      if (freq[k] > max) { max = freq[k]; bodySize = parseInt(k, 10); }
+    });
+    return bodySize || 12;
+  }
 
-    if (!entries.length) return [];
+  /* Group entries into visual lines by Y, then build formatted runs. */
+  function groupIntoLines(entries) {
+    if (!entries || !entries.length) return [];
 
-    /* Sort by Y descending (PDF Y is bottom-up), then X */
+    /* Sort top→bottom (PDF Y is bottom-up), then left→right */
     entries.sort(function (a, b) {
       if (b.y !== a.y) return b.y - a.y;
       return a.x - b.x;
     });
 
-    /* Group entries within ~3pt vertical tolerance */
     var lines = [];
-    var currentLine = null;
+    var current = null;
 
-    for (var j = 0; j < entries.length; j++) {
-      var e = entries[j];
-      if (!currentLine) {
-        currentLine = { y: e.y, parts: [e] };
+    for (var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+      if (!current) {
+        current = { y: e.y, fs: e.fs, parts: [e] };
       } else {
-        if (Math.abs(e.y - currentLine.y) <= 3) {
-          currentLine.parts.push(e);
+        var tol = Math.max(2, current.fs * 0.4);
+        if (Math.abs(e.y - current.y) <= tol) {
+          current.parts.push(e);
         } else {
-          lines.push(finalizeLine(currentLine));
-          currentLine = { y: e.y, parts: [e] };
+          lines.push(finalizeLine(current));
+          current = { y: e.y, fs: e.fs, parts: [e] };
         }
       }
     }
-    if (currentLine) lines.push(finalizeLine(currentLine));
-
+    if (current) lines.push(finalizeLine(current));
     return lines;
   }
 
+  /* Turn a line's parts into merged, formatted text runs. */
   function finalizeLine(line) {
-    /* Sort parts by X within the line */
     line.parts.sort(function (a, b) { return a.x - b.x; });
 
-    var text = '';
+    var segments = [];
+    var maxFs = 0, weighted = 0, chars = 0;
+
     for (var k = 0; k < line.parts.length; k++) {
+      var p = line.parts[k];
+      var prefix = '';
+
       if (k > 0) {
-        /* Add a space if parts aren't joined */
-        var last = line.parts[k - 1].str;
-        if (last.length && last[last.length - 1] !== ' ' &&
-            line.parts[k].str.length && line.parts[k].str[0] !== ' ') {
-          text += ' ';
+        var prev = line.parts[k - 1];
+        var gap  = p.x - (prev.x + prev.width);
+        var endsSpace   = /\s$/.test(prev.str);
+        var startsSpace = /^\s/.test(p.str);
+        if (!endsSpace && !startsSpace && gap > Math.max(prev.fs, p.fs) * 0.2) {
+          prefix = ' ';
         }
       }
-      text += line.parts[k].str;
+
+      segments.push({
+        text:   prefix + p.str,
+        bold:   p.bold,
+        italic: p.italic,
+        size:   Math.round(p.fs)
+      });
+
+      if (p.fs > maxFs) maxFs = p.fs;
+      var len = p.str.replace(/\s/g, '').length || 1;
+      weighted += p.fs * len;
+      chars += len;
     }
 
-    var totalFs = 0;
-    for (var m = 0; m < line.parts.length; m++) totalFs += line.parts[m].fs;
-    var avgFontSize = line.parts.length ? (totalFs / line.parts.length) : 12;
+    /* Merge adjacent segments that share the same formatting */
+    var runs = [];
+    for (var s = 0; s < segments.length; s++) {
+      var seg  = segments[s];
+      var last = runs[runs.length - 1];
+      if (last && last.bold === seg.bold && last.italic === seg.italic && last.size === seg.size) {
+        last.text += seg.text;
+      } else {
+        runs.push({ text: seg.text, bold: seg.bold, italic: seg.italic, size: seg.size });
+      }
+    }
 
-    return { text: text, avgFontSize: avgFontSize, y: line.y };
+    var avgFs = chars ? (weighted / chars) : line.fs;
+    return {
+      text:  runs.map(function (r) { return r.text; }).join('').trim(),
+      runs:  runs,
+      avgFs: avgFs,
+      maxFs: maxFs || line.fs,
+      y:     line.y
+    };
+  }
+
+  /* ============================================================
+     BUILD DOCX CHILDREN
+     ============================================================ */
+  function buildDocxChildren(pagesLines, opts, bodySize) {
+    var Paragraph    = window.docx.Paragraph;
+    var TextRun      = window.docx.TextRun;
+    var HeadingLevel = window.docx.HeadingLevel;
+    var PageBreak    = window.docx.PageBreak;
+
+    var children = [];
+    var scale    = opts.baseFontSize / (bodySize || opts.baseFontSize);
+
+    function makeRuns(runs, forceBold) {
+      return runs.map(function (r) {
+        var ptSize = (r.size || bodySize) * scale;
+        return new TextRun({
+          text:    r.text,
+          bold:    forceBold ? true : !!r.bold,
+          italics: !!r.italic,
+          size:    Math.max(2, Math.round(ptSize * 2)),
+          font:    'Calibri'
+        });
+      });
+    }
+
+    function makeBodyParagraph(runs) {
+      return new Paragraph({
+        children: makeRuns(runs, false),
+        spacing: opts.useParagraphs
+          ? { before: 0, after: 120, line: 276, lineRule: 'auto' }
+          : { before: 0, after: 40 }
+      });
+    }
+
+    function makeHeadingParagraph(line) {
+      var ratio = line.maxFs / (bodySize || line.maxFs);
+      var level = ratio >= 1.8 ? HeadingLevel.HEADING_1
+                : ratio >= 1.45 ? HeadingLevel.HEADING_2
+                : HeadingLevel.HEADING_3;
+      return new Paragraph({
+        children: makeRuns(line.runs, true),
+        heading:  level,
+        spacing:  { before: 240, after: 120 }
+      });
+    }
+
+    function isSameParagraph(prev, cur) {
+      if (!prev) return false;
+      var lineHeight  = Math.max(prev.maxFs, cur.maxFs) * 1.2;
+      var gap         = prev.y - cur.y;                  // positive when stacked normally
+      var closeEnough = gap > 0 && gap <= lineHeight * 1.7;
+      var similarSize = Math.abs(prev.avgFs - cur.avgFs) <= 1.5;
+      return closeEnough && similarSize;
+    }
+
+    for (var pageIdx = 0; pageIdx < pagesLines.length; pageIdx++) {
+      var lines = pagesLines[pageIdx];
+      var buffer = null;     // accumulated body runs for the current paragraph
+      var prevLine = null;
+
+      for (var li = 0; li < lines.length; li++) {
+        var line = lines[li];
+        if (!line.text) continue;
+
+        var isHeading = opts.useHeadings && line.maxFs >= bodySize * 1.25 && line.text.length < 200;
+
+        if (isHeading) {
+          if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
+          buffer = null;
+          children.push(makeHeadingParagraph(line));
+          prevLine = null;
+          continue;
+        }
+
+        if (opts.useParagraphs && buffer && isSameParagraph(prevLine, line)) {
+          buffer.push({ text: ' ', bold: false, italic: false, size: Math.round(line.avgFs) });
+          buffer = buffer.concat(line.runs);
+        } else {
+          if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
+          buffer = line.runs.slice();
+        }
+        prevLine = line;
+      }
+
+      if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
+
+      /* Page break between pages (except after the last) */
+      if (opts.usePageBreaks && pageIdx < pagesLines.length - 1) {
+        children.push(new Paragraph({ children: [new PageBreak()] }));
+      }
+    }
+
+    /* Always return at least one paragraph */
+    if (!children.length) {
+      children.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
+    }
+    return children;
   }
 
 })();
