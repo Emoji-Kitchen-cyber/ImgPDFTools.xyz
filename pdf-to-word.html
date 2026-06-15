@@ -51,7 +51,8 @@
 <!-- FileSaver.js (optional; we also have a built-in fallback) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-<!-- docx v8.5.0 — loaded as an ES module, attached to window.docx -->
+<!-- docx v8.5.0 — loaded as an ES module, attached to window.docx.
+     A non-module fallback is attempted too, for maximum device coverage. -->
 <script type="module">
   import("https://cdn.jsdelivr.net/npm/docx@8.5.0/+esm")
     .then(function (mod) {
@@ -65,6 +66,8 @@
       window.dispatchEvent(new Event("docx-error"));
     });
 </script>
+<!-- Fallback for very old browsers without ES-module support -->
+<script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js"></script>
 
 <style>
 :root {
@@ -289,7 +292,7 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     <div class="options-panel" id="optionsPanel" aria-label="Conversion options">
       <div class="options-title"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Conversion Options</div>
       <div class="option-row">
-        <div><div class="option-label">Preserve Headings</div><div class="option-desc">Detect and format large text as headings</div></div>
+        <div><div class="option-label">Preserve Headings</div><div class="option-desc">Detect big &amp; bold lines as headings</div></div>
         <label class="toggle" aria-label="Preserve headings"><input type="checkbox" id="optHeadings" checked /><span class="toggle-slider"></span></label>
       </div>
       <div class="option-row">
@@ -420,6 +423,13 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   var docxBlob    = null;
   var outputName  = 'document.docx';
 
+  /* ── docx may load as ESM (window.docx) or UMD fallback (window.docx). Normalize. ── */
+  function getDocx() {
+    if (window.docx && window.docx.Document) return window.docx;
+    if (window.docx && window.docx.default && window.docx.default.Document) return window.docx.default;
+    return null;
+  }
+
   /* ── Theme ── */
   $themeToggle.addEventListener('click', function () {
     try {
@@ -449,8 +459,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   }
   function showError(msg) { $errorText.textContent = msg; $errorMsg.classList.add('show'); }
   function hideError() { $errorMsg.classList.remove('show'); }
-  function showNotice(msg) { $noticeText.textContent = msg; $noticeMsg.classList.add('show'); }
-  function hideNotice() { $noticeMsg.classList.remove('show'); }
   function setProgress(pct, label) {
     $progressFill.style.width = pct + '%';
     $progressText.textContent = label || 'Processing…';
@@ -464,11 +472,11 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     $convertWrap.classList.remove('show');
     $progressWrap.classList.remove('show');
     $resultCard.classList.remove('show');
-    hideError(); hideNotice(); setProgress(0, '');
+    hideError(); $noticeMsg.classList.remove('show'); setProgress(0, '');
     $fileInput.value = '';
   }
   function loadFile(file) {
-    hideError(); hideNotice();
+    hideError(); $noticeMsg.classList.remove('show');
     if (!file) return;
     var isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
     if (!isPdf) { showError('Please select a valid PDF file.'); return; }
@@ -548,7 +556,7 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
      CORE: PDF → DOCX
      ============================================================ */
   async function runConversion(file) {
-    hideError(); hideNotice();
+    hideError(); $noticeMsg.classList.remove('show');
     $convertWrap.classList.remove('show');
     $progressWrap.classList.add('show');
     $resultCard.classList.remove('show');
@@ -559,9 +567,9 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       await waitForLib(function () {
         return window.pdfjsLib && typeof pdfjsLib.getDocument === 'function';
       }, 'PDF engine (PDF.js)', 15000);
-      await waitForLib(function () {
-        return window.docx && window.docx.Document && window.docx.Packer;
-      }, 'Word engine (docx)', 20000);
+      await waitForLib(function () { return !!getDocx(); }, 'Word engine (docx)', 20000);
+
+      var docx = getDocx();
 
       setProgress(6, 'Reading PDF…');
       var buffer = await readFileAsArrayBuffer(file);
@@ -579,7 +587,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
         baseFontSize:  parseInt($optFontSize.value, 10) || 11
       };
 
-      /* Reconstruct each page geometrically (reading order + columns) */
       var pagesLines = [];
       var totalTokens = 0;
       for (var p = 1; p <= numPages; p++) {
@@ -591,22 +598,18 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
         setProgress(12 + (p / numPages) * 52, 'Extracting page ' + p + ' of ' + numPages + '…');
       }
 
-      /* Scanned/image-only PDF detection (no extractable text) */
-      if (totalTokens === 0) {
-        throw new Error('NO_TEXT');
-      }
+      if (totalTokens === 0) { throw new Error('NO_TEXT'); }
 
       setProgress(66, 'Analyzing layout…');
       var bodySize = detectBodySize(pagesLines);
 
       setProgress(74, 'Building Word document…');
-      var children = buildDocxChildren(pagesLines, opts, bodySize);
+      var children = buildDocxChildren(docx, pagesLines, opts, bodySize);
 
       setProgress(88, 'Generating .docx file…');
-      var Document  = window.docx.Document;
       var baseTitle = cleanXmlText(file.name.replace(/\.pdf$/i, '')) || 'document';
 
-      var wordDoc = new Document({
+      var wordDoc = new docx.Document({
         creator:     'ImgPDFTools',
         title:       baseTitle,
         description: 'Converted from PDF by ImgPDFTools (imgpdftools.xyz)',
@@ -615,7 +618,7 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       });
 
       setProgress(94, 'Packaging document…');
-      var blob = await window.docx.Packer.toBlob(wordDoc);
+      var blob = await docx.Packer.toBlob(wordDoc);
       docxBlob = blob;
 
       setProgress(100, 'Done!');
@@ -649,17 +652,11 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   }
 
   /* ============================================================
-     GEOMETRIC RECONSTRUCTION
-     PDF.js returns text in internal order, not reading order.
-     We rebuild the true reading order from coordinates:
-       1) normalize tokens   2) cluster into lines by Y
-       3) detect columns     4) order columns L→R, lines T→B
-       5) build runs with gap-based spacing
+     GEOMETRIC RECONSTRUCTION (true reading order + columns)
      ============================================================ */
   function reconstructPage(items, styles, useColumns) {
     if (!items || !items.length) return [];
 
-    /* 1) Normalize tokens (skip pure-whitespace for geometry) */
     var toks = [];
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
@@ -688,7 +685,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
 
     var medFs = median(toks.map(function (t) { return t.fs; })) || 12;
 
-    /* 2) Cluster into lines by Y (top→bottom, then left→right) */
     toks.sort(function (a, b) {
       if (Math.abs(b.y - a.y) > 0.1) return b.y - a.y;
       return a.x - b.x;
@@ -710,10 +706,8 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       }
     }
 
-    /* 3) Column detection + 4) ordering */
     var ordered;
     var bands = useColumns ? detectColumns(rawLines, medFs) : null;
-
     if (bands && bands.length > 1) {
       ordered = [];
       var used = [];
@@ -731,14 +725,11 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       ordered = rawLines.slice().sort(function (a, b) { return b.y - a.y; });
     }
 
-    /* 5) Build runs for each line */
     return ordered.map(function (l) { return buildLineRuns(l, medFs); });
   }
 
-  /* Detect column bands via vertical-whitespace (gutter) analysis. */
   function detectColumns(rawLines, medFs) {
     if (rawLines.length < 8) return null;
-
     var pageMin = Infinity, pageMax = -Infinity;
     for (var i = 0; i < rawLines.length; i++) {
       if (rawLines[i].xMin < pageMin) pageMin = rawLines[i].xMin;
@@ -751,7 +742,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     var binW  = width / BINS;
     var cover = [];
     for (var b = 0; b < BINS; b++) cover[b] = 0;
-
     for (var k = 0; k < rawLines.length; k++) {
       var a  = Math.max(0, Math.floor((rawLines[k].xMin - pageMin) / binW));
       var bb = Math.min(BINS - 1, Math.floor((rawLines[k].xMax - pageMin) / binW));
@@ -760,8 +750,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
 
     var nLines    = rawLines.length;
     var threshold = Math.max(1, nLines * 0.06);
-
-    /* Find internal gutters (low-coverage runs not touching the margins) */
     var gutters = [];
     var p = 0;
     while (p < BINS) {
@@ -778,7 +766,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     });
     if (!internal.length) return null;
 
-    /* Build bands between gutters */
     var bands  = [];
     var startX = pageMin - 1;
     internal.forEach(function (g) {
@@ -788,7 +775,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     });
     bands.push({ start: startX, end: pageMax + 1 });
 
-    /* Require each band to actually contain a fair share of lines */
     var ok = bands.every(function (band) {
       var count = rawLines.filter(function (l) {
         var cc = (l.xMin + l.xMax) / 2;
@@ -799,7 +785,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     return ok ? bands : null;
   }
 
-  /* Turn one clustered line into merged, formatted runs. */
   function buildLineRuns(line, medFs) {
     var toks = line.tokens.slice().sort(function (a, b) { return a.x - b.x; });
     var parts = [];
@@ -844,7 +829,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     };
   }
 
-  /* Dominant body font size (weighted by character count). */
   function detectBodySize(pagesLines) {
     var freq = {};
     for (var i = 0; i < pagesLines.length; i++) {
@@ -869,13 +853,14 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   }
 
   /* ============================================================
-     BUILD DOCX CHILDREN
+     BUILD DOCX CHILDREN  (LTR-forced + smart heading detection)
      ============================================================ */
-  function buildDocxChildren(pagesLines, opts, bodySize) {
-    var Paragraph    = window.docx.Paragraph;
-    var TextRun      = window.docx.TextRun;
-    var HeadingLevel = window.docx.HeadingLevel;
-    var PageBreak    = window.docx.PageBreak;
+  function buildDocxChildren(docx, pagesLines, opts, bodySize) {
+    var Paragraph     = docx.Paragraph;
+    var TextRun       = docx.TextRun;
+    var HeadingLevel  = docx.HeadingLevel;
+    var PageBreak     = docx.PageBreak;
+    var AlignmentType = docx.AlignmentType;
 
     var children = [];
     var scale    = opts.baseFontSize / (bodySize || opts.baseFontSize);
@@ -892,9 +877,14 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
         });
       });
     }
+
+    /* Force Left-to-Right + LEFT alignment so Arabic/RTL Word installs
+       don't push English text to the right side. */
     function makeBodyParagraph(runs) {
       return new Paragraph({
-        children: makeRuns(runs, false),
+        children:      makeRuns(runs, false),
+        alignment:     AlignmentType.LEFT,
+        bidirectional: false,
         spacing: opts.useParagraphs
           ? { before: 0, after: 120, line: 276, lineRule: 'auto' }
           : { before: 0, after: 40 }
@@ -902,15 +892,34 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     }
     function makeHeadingParagraph(line) {
       var ratio = line.maxFs / (bodySize || line.maxFs);
-      var level = ratio >= 1.8 ? HeadingLevel.HEADING_1
-                : ratio >= 1.45 ? HeadingLevel.HEADING_2
+      var level = ratio >= 1.8  ? HeadingLevel.HEADING_1
+                : ratio >= 1.4  ? HeadingLevel.HEADING_2
                 : HeadingLevel.HEADING_3;
-      return new Paragraph({ children: makeRuns(line.runs, true), heading: level, spacing: { before: 240, after: 120 } });
+      return new Paragraph({
+        children:      makeRuns(line.runs, true),
+        heading:       level,
+        alignment:     AlignmentType.LEFT,
+        bidirectional: false,
+        spacing: { before: 240, after: 120 }
+      });
     }
+
+    /* Is the WHOLE line bold? (catches small bold sub-headings) */
+    function lineAllBold(line) {
+      var any = false;
+      for (var i = 0; i < line.runs.length; i++) {
+        var r = line.runs[i];
+        if (r.text.replace(/\s/g, '').length === 0) continue;
+        any = true;
+        if (!r.bold) return false;
+      }
+      return any;
+    }
+
     function isSameParagraph(prev, curL) {
       if (!prev) return false;
       var lineHeight  = Math.max(prev.maxFs, curL.maxFs) * 1.2;
-      var gap         = prev.y - curL.y;                 // positive when stacked normally
+      var gap         = prev.y - curL.y;
       var closeEnough = gap > 0 && gap <= lineHeight * 1.6;
       var similarSize = Math.abs(prev.avgFs - curL.avgFs) <= 1.5;
       var alignedLeft = Math.abs((prev.xMin || 0) - (curL.xMin || 0)) <= Math.max(prev.maxFs, curL.maxFs) * 2.5;
@@ -926,7 +935,12 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
         var line = lines[li];
         if (!line.text) continue;
 
-        var isHeading = opts.useHeadings && line.maxFs >= bodySize * 1.25 && line.text.length < 200;
+        var ratio   = line.maxFs / (bodySize || line.maxFs);
+        var allBold = lineAllBold(line);
+        var isHeading = opts.useHeadings && line.text.length < 200 && (
+          ratio >= 1.25 ||
+          (allBold && ratio >= 1.03 && line.text.length < 90)
+        );
 
         if (isHeading) {
           if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
@@ -949,12 +963,12 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
 
       if (opts.usePageBreaks && pageIdx < pagesLines.length - 1) {
-        children.push(new Paragraph({ children: [new PageBreak()] }));
+        children.push(new Paragraph({ children: [new PageBreak()], bidirectional: false }));
       }
     }
 
     if (!children.length) {
-      children.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
+      children.push(new Paragraph({ children: [new TextRun({ text: '' })], bidirectional: false }));
     }
     return children;
   }
