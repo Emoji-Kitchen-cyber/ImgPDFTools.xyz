@@ -55,8 +55,8 @@
      docx v8.5.0 — loaded as an ES module.
      docx@8 does NOT expose a global automatically when loaded via a
      plain <script> (that was the cause of "docx is not defined").
-     We import the ESM build and attach it to window.docx ourselves.
-     Using .then()/.catch() (no top-level await) for maximum
+     We import the ESM build and attach it to window.docx ourselves,
+     using .then()/.catch() (no top-level await) for maximum
      browser compatibility + proper error surfacing.
      ============================================================ -->
 <script type="module">
@@ -874,6 +874,25 @@ footer {
     } catch (e) {}
   });
 
+  /* ============================================================
+     XML SAFETY
+     Strip characters that are illegal in XML 1.0. PDFs often
+     contain control chars / lone surrogates which, if written
+     into word/document.xml, make Word throw "Xml parsing error".
+     ============================================================ */
+  function cleanXmlText(s) {
+    if (s == null) return '';
+    s = String(s);
+    // Remove control chars (keep tab \t, newline \n, carriage return \r)
+    s = s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+    // Remove Unicode non-characters
+    s = s.replace(/[\uFFFE\uFFFF]/g, '');
+    // Remove unpaired (lone) surrogates
+    s = s.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '');
+    s = s.replace(/(^|)([\uDC00-\uDFFF])/g, '$1');
+    return s;
+  }
+
   /* ── Helpers ── */
   function formatBytes(bytes) {
     if (bytes < 1024)        return bytes + ' B';
@@ -1067,7 +1086,7 @@ footer {
       /* 7) Generate file */
       setProgress(86, 'Generating .docx file…');
       var Document = window.docx.Document;
-      var baseTitle = file.name.replace(/\.pdf$/i, '');
+      var baseTitle = cleanXmlText(file.name.replace(/\.pdf$/i, '')) || 'document';
 
       var wordDoc = new Document({
         creator:     'ImgPDFTools',
@@ -1123,7 +1142,11 @@ footer {
     if (!items) return entries;
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
-      if (!it || typeof it.str !== 'string' || !it.str.trim()) continue;
+      if (!it || typeof it.str !== 'string') continue;
+
+      /* Sanitize text up front so no illegal XML chars reach the .docx */
+      var cleanStr = cleanXmlText(it.str);
+      if (!cleanStr.trim()) continue;
 
       var t  = it.transform || [1, 0, 0, 1, 0, 0];
       var x  = t[4];
@@ -1132,7 +1155,7 @@ footer {
 
       var family = (styles && styles[it.fontName] && styles[it.fontName].fontFamily) || it.fontName || '';
       entries.push({
-        str:    it.str,
+        str:    cleanStr,
         x:      x,
         y:      y,
         fs:     fs,
@@ -1266,7 +1289,7 @@ footer {
       return runs.map(function (r) {
         var ptSize = (r.size || bodySize) * scale;
         return new TextRun({
-          text:    r.text,
+          text:    cleanXmlText(r.text),   /* extra safety */
           bold:    forceBold ? true : !!r.bold,
           italics: !!r.italic,
           size:    Math.max(2, Math.round(ptSize * 2)),
