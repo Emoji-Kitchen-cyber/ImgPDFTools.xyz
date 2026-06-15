@@ -51,14 +51,7 @@
 <!-- FileSaver.js (optional; we also have a built-in fallback) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 
-<!-- ============================================================
-     docx v8.5.0 — loaded as an ES module.
-     docx@8 does NOT expose a global automatically when loaded via a
-     plain <script> (that was the cause of "docx is not defined").
-     We import the ESM build and attach it to window.docx ourselves,
-     using .then()/.catch() (no top-level await) for maximum
-     browser compatibility + proper error surfacing.
-     ============================================================ -->
+<!-- docx v8.5.0 — loaded as an ES module, attached to window.docx -->
 <script type="module">
   import("https://cdn.jsdelivr.net/npm/docx@8.5.0/+esm")
     .then(function (mod) {
@@ -74,9 +67,6 @@
 </script>
 
 <style>
-/* ============================================================
-   CSS CUSTOM PROPERTIES — identical to main site
-   ============================================================ */
 :root {
   --bg: #f8f8fc;
   --bg2: #f0f0f8;
@@ -100,7 +90,6 @@
   --shadow-md: 0 4px 12px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.04);
   --shadow-lg: 0 16px 32px -6px rgba(99,102,241,0.14), 0 4px 8px -2px rgba(0,0,0,0.05);
 }
-
 [data-theme="dark"] {
   --bg: #0c0c14;
   --bg2: #111120;
@@ -116,455 +105,127 @@
   --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
   --shadow-lg: 0 16px 32px -6px rgba(99,102,241,0.25), 0 4px 8px -2px rgba(0,0,0,0.3);
 }
-
-/* Reset & Base */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; overflow-x: hidden; -webkit-text-size-adjust:100%; }
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--fbody);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: background 0.3s, color 0.3s;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  background: var(--bg); color: var(--text); font-family: var(--fbody);
+  min-height: 100vh; display: flex; flex-direction: column;
+  transition: background 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; overflow-x: hidden;
 }
 a { color: inherit; text-decoration: none; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; }
-}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; } }
 body::before {
-  content:'';
-  position:fixed; inset:0;
+  content:''; position:fixed; inset:0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
   pointer-events:none; z-index:0; opacity:0.4;
 }
-
-/* Skip link */
-.skip-link {
-  position:absolute; top:-100px; left:1rem;
-  background:var(--accent); color:#fff;
-  padding:10px 18px; border-radius:8px;
-  font-weight:700; font-size:14px; z-index:9999;
-  transition:top 0.2s;
-}
+.skip-link { position:absolute; top:-100px; left:1rem; background:var(--accent); color:#fff; padding:10px 18px; border-radius:8px; font-weight:700; font-size:14px; z-index:9999; transition:top 0.2s; }
 .skip-link:focus { top:1rem; }
-
-/* Nav */
 nav {
-  position:sticky; top:0; z-index:200;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 clamp(1rem,5vw,3rem);
-  height:var(--nav-h);
-  background:var(--surface);
-  backdrop-filter:blur(28px) saturate(200%);
-  -webkit-backdrop-filter:blur(28px) saturate(200%);
-  border-bottom:1px solid var(--border);
-  box-shadow:var(--shadow-sm);
+  position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
+  padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
+  backdrop-filter:blur(28px) saturate(200%); -webkit-backdrop-filter:blur(28px) saturate(200%);
+  border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm);
 }
 .nav-left { display:flex; align-items:center; gap:1.1rem; }
-.nav-logo {
-  display:flex; align-items:center; gap:8px;
-  font-family:var(--fhead); font-weight:700; font-size:1.15rem;
-  letter-spacing:-0.3px;
-}
-.logo-icon {
-  width:32px; height:32px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border-radius:9px; display:flex; align-items:center;
-  justify-content:center; font-size:16px;
-  box-shadow:0 4px 14px var(--glow); flex-shrink:0;
-}
+.nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-0.3px; }
+.logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); flex-shrink:0; }
 .logo-text-img  { color:var(--text); }
-.logo-text-pdf  {
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-}
+.logo-text-pdf  { background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
 .logo-text-tools { color:var(--muted); font-weight:600; }
 .nav-actions { display:flex; align-items:center; gap:0.9rem; }
-.control-btn {
-  background:var(--card); border:1px solid var(--border2);
-  width:38px; height:38px; border-radius:50%;
-  cursor:pointer; display:flex; align-items:center; justify-content:center;
-  color:var(--text); font-size:1rem;
-  transition:transform 0.2s, border-color 0.2s, box-shadow 0.2s;
-}
+.control-btn { background:var(--card); border:1px solid var(--border2); width:38px; height:38px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--text); font-size:1rem; transition:transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
 .control-btn:hover { transform:scale(1.08); border-color:var(--accent); box-shadow:0 0 0 3px var(--glow); }
-
-/* Page header */
-.page-header {
-  position:relative; z-index:1;
-  padding:clamp(2rem,5vw,3.5rem) 1rem 0;
-  text-align:center;
-  overflow:hidden;
-}
-.page-header::before {
-  content:''; position:absolute; top:-60px; left:50%;
-  transform:translateX(-50%);
-  width:600px; height:360px;
-  background:radial-gradient(ellipse at center, rgba(99,102,241,0.11) 0%, transparent 70%);
-  pointer-events:none; z-index:-1;
-}
-.breadcrumb {
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:13px; color:var(--muted); margin-bottom:1.2rem;
-}
+.page-header { position:relative; z-index:1; padding:clamp(2rem,5vw,3.5rem) 1rem 0; text-align:center; overflow:hidden; }
+.page-header::before { content:''; position:absolute; top:-60px; left:50%; transform:translateX(-50%); width:600px; height:360px; background:radial-gradient(ellipse at center, rgba(99,102,241,0.11) 0%, transparent 70%); pointer-events:none; z-index:-1; }
+.breadcrumb { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); margin-bottom:1.2rem; }
 .breadcrumb a { color:var(--accent); font-weight:500; }
 .breadcrumb a:hover { text-decoration:underline; }
 .breadcrumb i { font-size:10px; color:var(--muted); }
-
-.tool-page-icon {
-  width:72px; height:72px;
-  background:linear-gradient(135deg,var(--bg2),var(--bg));
-  border:1.5px solid var(--border2);
-  border-radius:20px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:34px; margin:0 auto 1.2rem;
-  box-shadow:var(--shadow-md);
-}
-.page-header h1 {
-  font-family:var(--fhead);
-  font-size:clamp(1.7rem,4vw,2.8rem);
-  font-weight:700; letter-spacing:-0.4px;
-  line-height:1.15; margin-bottom:0.75rem;
-}
-.page-header h1 span {
-  background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3));
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
-}
-.page-header p {
-  color:var(--muted); font-size:15px; max-width:520px;
-  margin:0 auto 2rem; line-height:1.65;
-}
-
-/* Feature pills */
-.feature-pills {
-  display:flex; justify-content:center; flex-wrap:wrap;
-  gap:8px; margin-bottom:2.5rem;
-}
-.feature-pill {
-  display:inline-flex; align-items:center; gap:6px;
-  background:var(--card); border:1px solid var(--border2);
-  padding:6px 14px; border-radius:99px;
-  font-size:12.5px; font-weight:600; color:var(--muted);
-  box-shadow:var(--shadow-sm);
-}
+.tool-page-icon { width:72px; height:72px; background:linear-gradient(135deg,var(--bg2),var(--bg)); border:1.5px solid var(--border2); border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:34px; margin:0 auto 1.2rem; box-shadow:var(--shadow-md); }
+.page-header h1 { font-family:var(--fhead); font-size:clamp(1.7rem,4vw,2.8rem); font-weight:700; letter-spacing:-0.4px; line-height:1.15; margin-bottom:0.75rem; }
+.page-header h1 span { background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.page-header p { color:var(--muted); font-size:15px; max-width:520px; margin:0 auto 2rem; line-height:1.65; }
+.feature-pills { display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-bottom:2.5rem; }
+.feature-pill { display:inline-flex; align-items:center; gap:6px; background:var(--card); border:1px solid var(--border2); padding:6px 14px; border-radius:99px; font-size:12.5px; font-weight:600; color:var(--muted); box-shadow:var(--shadow-sm); }
 .feature-pill i { color:var(--accent); font-size:11px; }
-
-/* Main tool area */
 .tool-outer { width:100%; flex:1; position:relative; z-index:1; }
-.tool-inner {
-  max-width:820px; margin:0 auto;
-  padding:0 18px 5rem;
-}
-
-/* Drop zone */
-.drop-zone {
-  background:var(--card);
-  border:2px dashed var(--border2);
-  border-radius:24px;
-  padding:clamp(2.5rem,6vw,4rem) 2rem;
-  text-align:center;
-  cursor:pointer;
-  transition:border-color 0.2s, background 0.2s, box-shadow 0.2s;
-  position:relative;
-  outline:none;
-  box-shadow:var(--shadow-sm);
-}
-.drop-zone:hover, .drop-zone.drag-over {
-  border-color:var(--accent);
-  background:var(--glow);
-  box-shadow:0 0 0 4px var(--glow), var(--shadow-md);
-}
+.tool-inner { max-width:820px; margin:0 auto; padding:0 18px 5rem; }
+.drop-zone { background:var(--card); border:2px dashed var(--border2); border-radius:24px; padding:clamp(2.5rem,6vw,4rem) 2rem; text-align:center; cursor:pointer; transition:border-color 0.2s, background 0.2s, box-shadow 0.2s; position:relative; outline:none; box-shadow:var(--shadow-sm); }
+.drop-zone:hover, .drop-zone.drag-over { border-color:var(--accent); background:var(--glow); box-shadow:0 0 0 4px var(--glow), var(--shadow-md); }
 .drop-zone.drag-over { border-style:solid; }
-
-.drop-icon {
-  width:64px; height:64px; border-radius:18px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  display:flex; align-items:center; justify-content:center;
-  font-size:26px; color:#fff; margin:0 auto 1.2rem;
-  box-shadow:0 8px 20px var(--glow);
-}
-.drop-title {
-  font-family:var(--fhead); font-size:1.2rem; font-weight:700;
-  margin-bottom:0.5rem;
-}
+.drop-icon { width:64px; height:64px; border-radius:18px; background:linear-gradient(135deg,var(--accent),var(--accent2)); display:flex; align-items:center; justify-content:center; font-size:26px; color:#fff; margin:0 auto 1.2rem; box-shadow:0 8px 20px var(--glow); }
+.drop-title { font-family:var(--fhead); font-size:1.2rem; font-weight:700; margin-bottom:0.5rem; }
 .drop-sub { font-size:13.5px; color:var(--muted); margin-bottom:1.4rem; }
-
-.btn-upload {
-  display:inline-flex; align-items:center; gap:8px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff; font-family:var(--fbody);
-  font-size:14.5px; font-weight:700;
-  padding:13px 28px; border-radius:14px; border:none;
-  cursor:pointer; letter-spacing:0.2px;
-  box-shadow:0 6px 20px var(--glow);
-  transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-}
+.btn-upload { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-family:var(--fbody); font-size:14.5px; font-weight:700; padding:13px 28px; border-radius:14px; border:none; cursor:pointer; letter-spacing:0.2px; box-shadow:0 6px 20px var(--glow); transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s; }
 .btn-upload:hover { transform:translateY(-2px); box-shadow:0 10px 28px var(--glow); }
 .btn-upload:active { transform:translateY(0); }
-
-.drop-hint {
-  margin-top:1rem; font-size:12px; color:var(--muted);
-  display:flex; align-items:center; justify-content:center; gap:5px;
-}
+.drop-hint { margin-top:1rem; font-size:12px; color:var(--muted); display:flex; align-items:center; justify-content:center; gap:5px; }
 .drop-hint i { font-size:11px; }
-
-/* File input hidden */
 #fileInput { display:none; }
-
-/* Loaded state */
-.file-loaded {
-  background:var(--card);
-  border:1.5px solid var(--border2);
-  border-radius:20px;
-  padding:20px 22px;
-  display:none;
-  align-items:center; gap:14px;
-  box-shadow:var(--shadow-sm);
-  margin-bottom:0;
-}
+.file-loaded { background:var(--card); border:1.5px solid var(--border2); border-radius:20px; padding:20px 22px; display:none; align-items:center; gap:14px; box-shadow:var(--shadow-sm); margin-bottom:0; }
 .file-loaded.show { display:flex; }
-.fl-icon {
-  width:48px; height:48px; border-radius:14px;
-  background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(139,92,246,0.10));
-  border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center;
-  font-size:22px; flex-shrink:0;
-}
+.fl-icon { width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(139,92,246,0.10)); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
 .fl-info { flex:1; min-width:0; }
-.fl-name {
-  font-weight:700; font-size:14px;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-  margin-bottom:3px;
-}
+.fl-name { font-weight:700; font-size:14px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:3px; }
 .fl-meta { font-size:12px; color:var(--muted); }
-.fl-remove {
-  background:none; border:none; cursor:pointer;
-  color:var(--muted); font-size:1rem;
-  width:32px; height:32px; border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  transition:color 0.2s, background 0.2s;
-}
+.fl-remove { background:none; border:none; cursor:pointer; color:var(--muted); font-size:1rem; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:color 0.2s, background 0.2s; }
 .fl-remove:hover { color:#ef4444; background:rgba(239,68,68,0.1); }
-
-/* Options panel */
-.options-panel {
-  background:var(--card);
-  border:1.5px solid var(--border2);
-  border-radius:20px;
-  padding:22px 24px;
-  margin-top:14px;
-  display:none;
-  box-shadow:var(--shadow-sm);
-}
+.options-panel { background:var(--card); border:1.5px solid var(--border2); border-radius:20px; padding:22px 24px; margin-top:14px; display:none; box-shadow:var(--shadow-sm); }
 .options-panel.show { display:block; }
-.options-title {
-  font-family:var(--fhead); font-weight:700; font-size:14px;
-  margin-bottom:16px; display:flex; align-items:center; gap:8px;
-}
+.options-title { font-family:var(--fhead); font-weight:700; font-size:14px; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
 .options-title i { color:var(--accent); }
-
-.option-row {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid var(--border2);
-}
+.option-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border2); }
 .option-row:last-child { border-bottom:none; padding-bottom:0; }
 .option-label { font-size:13.5px; font-weight:600; }
 .option-desc { font-size:12px; color:var(--muted); margin-top:2px; }
-
-/* Toggle switch */
 .toggle-wrap { display:flex; align-items:center; gap:8px; }
-.toggle {
-  position:relative; width:40px; height:22px;
-  cursor:pointer;
-}
+.toggle { position:relative; width:40px; height:22px; cursor:pointer; }
 .toggle input { opacity:0; width:0; height:0; }
-.toggle-slider {
-  position:absolute; inset:0; border-radius:99px;
-  background:var(--border2); transition:background 0.2s;
-}
-.toggle-slider::before {
-  content:''; position:absolute;
-  width:16px; height:16px; border-radius:50%;
-  background:#fff; left:3px; top:3px;
-  transition:transform 0.2s;
-  box-shadow:0 1px 4px rgba(0,0,0,0.2);
-}
+.toggle-slider { position:absolute; inset:0; border-radius:99px; background:var(--border2); transition:background 0.2s; }
+.toggle-slider::before { content:''; position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; left:3px; top:3px; transition:transform 0.2s; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
 .toggle input:checked + .toggle-slider { background:var(--accent); }
 .toggle input:checked + .toggle-slider::before { transform:translateX(18px); }
-
-/* Select */
-.opt-select {
-  background:var(--bg); border:1.5px solid var(--border2);
-  color:var(--text); font-family:var(--fbody);
-  font-size:13px; padding:7px 12px;
-  border-radius:10px; outline:none;
-  transition:border-color 0.2s;
-  cursor:pointer;
-}
+.opt-select { background:var(--bg); border:1.5px solid var(--border2); color:var(--text); font-family:var(--fbody); font-size:13px; padding:7px 12px; border-radius:10px; outline:none; transition:border-color 0.2s; cursor:pointer; }
 .opt-select:focus { border-color:var(--accent); }
-
-/* Convert button */
-.convert-btn-wrap {
-  margin-top:14px;
-  display:none;
-}
+.convert-btn-wrap { margin-top:14px; display:none; }
 .convert-btn-wrap.show { display:block; }
-
-.btn-convert {
-  width:100%; padding:16px;
-  background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff; border:none; border-radius:16px;
-  font-family:var(--fhead); font-size:16px; font-weight:700;
-  cursor:pointer; letter-spacing:0.2px;
-  box-shadow:0 8px 24px var(--glow);
-  transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s;
-  display:flex; align-items:center; justify-content:center; gap:10px;
-}
+.btn-convert { width:100%; padding:16px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; border-radius:16px; font-family:var(--fhead); font-size:16px; font-weight:700; cursor:pointer; letter-spacing:0.2px; box-shadow:0 8px 24px var(--glow); transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s; display:flex; align-items:center; justify-content:center; gap:10px; }
 .btn-convert:hover { transform:translateY(-2px); box-shadow:0 14px 32px var(--glow); }
 .btn-convert:active { transform:translateY(0); }
 .btn-convert:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
-
-/* Progress */
-.progress-wrap {
-  margin-top:14px;
-  display:none;
-}
+.progress-wrap { margin-top:14px; display:none; }
 .progress-wrap.show { display:block; }
-.progress-bar-bg {
-  background:var(--bg2); border-radius:99px;
-  height:8px; overflow:hidden;
-}
-.progress-bar-fill {
-  height:100%;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:99px;
-  width:0%;
-  transition:width 0.3s ease;
-}
-.progress-label {
-  font-size:13px; color:var(--muted); margin-top:8px;
-  display:flex; align-items:center; justify-content:space-between;
-}
+.progress-bar-bg { background:var(--bg2); border-radius:99px; height:8px; overflow:hidden; }
+.progress-bar-fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:99px; width:0%; transition:width 0.3s ease; }
+.progress-label { font-size:13px; color:var(--muted); margin-top:8px; display:flex; align-items:center; justify-content:space-between; }
 .progress-status { display:flex; align-items:center; gap:6px; }
-.progress-spin {
-  width:13px; height:13px; border-radius:50%;
-  border:2px solid var(--border2);
-  border-top-color:var(--accent);
-  animation:spin 0.8s linear infinite;
-  display:inline-block;
-}
+.progress-spin { width:13px; height:13px; border-radius:50%; border:2px solid var(--border2); border-top-color:var(--accent); animation:spin 0.8s linear infinite; display:inline-block; }
 @keyframes spin { to { transform:rotate(360deg); } }
-
-/* Result */
-.result-card {
-  background:var(--card);
-  border:1.5px solid rgba(34,197,94,0.3);
-  border-radius:20px;
-  padding:24px;
-  margin-top:14px;
-  display:none;
-  text-align:center;
-  box-shadow:0 4px 20px rgba(34,197,94,0.08);
-}
+.result-card { background:var(--card); border:1.5px solid rgba(34,197,94,0.3); border-radius:20px; padding:24px; margin-top:14px; display:none; text-align:center; box-shadow:0 4px 20px rgba(34,197,94,0.08); }
 .result-card.show { display:block; }
-.result-icon {
-  font-size:40px; margin-bottom:10px;
-}
-.result-title {
-  font-family:var(--fhead); font-size:1.1rem; font-weight:700;
-  margin-bottom:6px;
-}
+.result-icon { font-size:40px; margin-bottom:10px; }
+.result-title { font-family:var(--fhead); font-size:1.1rem; font-weight:700; margin-bottom:6px; }
 .result-sub { font-size:13px; color:var(--muted); margin-bottom:18px; }
-
-.btn-download {
-  display:inline-flex; align-items:center; gap:8px;
-  background:linear-gradient(135deg,#22c55e,#16a34a);
-  color:#fff; border:none;
-  font-family:var(--fbody); font-size:14.5px; font-weight:700;
-  padding:13px 28px; border-radius:14px; cursor:pointer;
-  box-shadow:0 6px 20px rgba(34,197,94,0.3);
-  transition:transform 0.2s, box-shadow 0.2s;
-  margin-bottom:10px;
-}
+.btn-download { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,#22c55e,#16a34a); color:#fff; border:none; font-family:var(--fbody); font-size:14.5px; font-weight:700; padding:13px 28px; border-radius:14px; cursor:pointer; box-shadow:0 6px 20px rgba(34,197,94,0.3); transition:transform 0.2s, box-shadow 0.2s; margin-bottom:10px; }
 .btn-download:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(34,197,94,0.35); }
-
-.btn-reset {
-  display:inline-flex; align-items:center; gap:7px;
-  background:none; border:1.5px solid var(--border2);
-  color:var(--muted); font-family:var(--fbody);
-  font-size:13.5px; font-weight:600;
-  padding:10px 20px; border-radius:12px; cursor:pointer;
-  transition:border-color 0.2s, color 0.2s;
-  margin-left:8px;
-}
+.btn-reset { display:inline-flex; align-items:center; gap:7px; background:none; border:1.5px solid var(--border2); color:var(--muted); font-family:var(--fbody); font-size:13.5px; font-weight:600; padding:10px 20px; border-radius:12px; cursor:pointer; transition:border-color 0.2s, color 0.2s; margin-left:8px; }
 .btn-reset:hover { border-color:var(--accent); color:var(--accent); }
-
-/* Error */
-.error-msg {
-  background:rgba(239,68,68,0.08);
-  border:1.5px solid rgba(239,68,68,0.25);
-  border-radius:14px; padding:14px 18px;
-  font-size:13.5px; color:#ef4444;
-  display:none; align-items:center; gap:10px;
-  margin-top:14px;
-}
+.error-msg { background:rgba(239,68,68,0.08); border:1.5px solid rgba(239,68,68,0.25); border-radius:14px; padding:14px 18px; font-size:13.5px; color:#ef4444; display:none; align-items:center; gap:10px; margin-top:14px; }
 .error-msg.show { display:flex; }
 .error-msg i { flex-shrink:0; font-size:15px; }
-
-/* Info cards */
-.info-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:14px; margin-top:3rem;
-}
-.info-card {
-  background:var(--card); border:1.5px solid var(--border2);
-  border-radius:18px; padding:20px;
-  box-shadow:var(--shadow-sm);
-}
-.info-card-icon {
-  font-size:22px; margin-bottom:10px;
-}
-.info-card h3 {
-  font-family:var(--fhead); font-size:14px; font-weight:700;
-  margin-bottom:6px;
-}
+.info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:3rem; }
+.info-card { background:var(--card); border:1.5px solid var(--border2); border-radius:18px; padding:20px; box-shadow:var(--shadow-sm); }
+.info-card-icon { font-size:22px; margin-bottom:10px; }
+.info-card h3 { font-family:var(--fhead); font-size:14px; font-weight:700; margin-bottom:6px; }
 .info-card p { font-size:13px; color:var(--muted); line-height:1.55; }
-
-/* Footer */
-footer {
-  text-align:center; padding:36px 20px;
-  font-size:13px; color:var(--muted);
-  border-top:1px solid var(--border2);
-  background:var(--card); position:relative; z-index:1;
-}
-.footer-logo {
-  display:inline-flex; align-items:center; gap:7px;
-  margin-bottom:14px; font-family:var(--fhead);
-  font-weight:700; font-size:1rem; color:var(--text);
-}
-.footer-links {
-  display:flex; justify-content:center; flex-wrap:wrap;
-  gap:6px 18px; margin-bottom:14px;
-}
-.footer-links a {
-  color:var(--muted); font-weight:500; font-size:13px;
-  transition:color 0.2s;
-}
+footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted); border-top:1px solid var(--border2); background:var(--card); position:relative; z-index:1; }
+.footer-logo { display:inline-flex; align-items:center; gap:7px; margin-bottom:14px; font-family:var(--fhead); font-weight:700; font-size:1rem; color:var(--text); }
+.footer-links { display:flex; justify-content:center; flex-wrap:wrap; gap:6px 18px; margin-bottom:14px; }
+.footer-links a { color:var(--muted); font-weight:500; font-size:13px; transition:color 0.2s; }
 .footer-links a:hover { color:var(--accent); }
-.footer-divider {
-  width:40px; height:2px;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  border-radius:2px; margin:0 auto 14px;
-}
-
-/* Responsive */
+.footer-divider { width:40px; height:2px; background:linear-gradient(90deg,var(--accent),var(--accent2)); border-radius:2px; margin:0 auto 14px; }
 @media (max-width:600px) {
   :root { --nav-h:58px; }
   nav { padding:0 14px; }
@@ -582,7 +243,6 @@ footer {
 }
 </style>
 
-<!-- Apply theme before paint -->
 <script>
 (function(){
   try {
@@ -598,25 +258,19 @@ footer {
 
 <a class="skip-link" href="#mainContent">Skip to main content</a>
 
-<!-- Nav -->
 <nav role="navigation" aria-label="Main navigation">
   <div class="nav-left">
     <a href="./index.html" class="nav-logo" aria-label="ImgPDFTools Home">
       <div class="logo-icon" aria-hidden="true">🛠️</div>
-      <span>
-        <span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span>
-      </span>
+      <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
     </a>
   </div>
   <div class="nav-actions">
-    <a href="./index.html" class="control-btn" aria-label="All Tools" title="All Tools" style="text-decoration:none">
-      <i class="fa-solid fa-grid-2" aria-hidden="true"></i>
-    </a>
+    <a href="./index.html" class="control-btn" aria-label="All Tools" title="All Tools" style="text-decoration:none"><i class="fa-solid fa-grid-2" aria-hidden="true"></i></a>
     <button class="control-btn" id="themeToggle" aria-label="Toggle dark/light theme" title="Toggle theme">🌓</button>
   </div>
 </nav>
 
-<!-- Page header -->
 <header class="page-header" id="mainContent">
   <nav class="breadcrumb" aria-label="Breadcrumb">
     <a href="./index.html">Home</a>
@@ -635,86 +289,45 @@ footer {
   </div>
 </header>
 
-<!-- Tool -->
 <div class="tool-outer">
   <div class="tool-inner">
 
-    <!-- Drop zone (hidden when file loaded) -->
-    <div class="drop-zone" id="dropZone" role="button" tabindex="0"
-         aria-label="Drop PDF here or click to upload">
-      <div class="drop-icon" aria-hidden="true">
-        <i class="fa-solid fa-file-pdf"></i>
-      </div>
+    <div class="drop-zone" id="dropZone" role="button" tabindex="0" aria-label="Drop PDF here or click to upload">
+      <div class="drop-icon" aria-hidden="true"><i class="fa-solid fa-file-pdf"></i></div>
       <p class="drop-title">Drop your PDF here</p>
       <p class="drop-sub">or choose a file from your device</p>
       <button class="btn-upload" type="button" id="uploadBtn" aria-label="Select PDF file">
-        <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i>
-        Select PDF
+        <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Select PDF
       </button>
-      <p class="drop-hint">
-        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
-        Files never leave your device
-      </p>
+      <p class="drop-hint"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Files never leave your device</p>
       <input type="file" id="fileInput" accept=".pdf,application/pdf" aria-hidden="true" />
     </div>
 
-    <!-- File loaded bar -->
     <div class="file-loaded" id="fileLoadedBar" role="status" aria-live="polite">
       <div class="fl-icon" aria-hidden="true">📄</div>
       <div class="fl-info">
         <div class="fl-name" id="flName">—</div>
         <div class="fl-meta" id="flMeta">—</div>
       </div>
-      <button class="fl-remove" id="removeFile" aria-label="Remove file and start over" title="Remove file">
-        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-      </button>
+      <button class="fl-remove" id="removeFile" aria-label="Remove file and start over" title="Remove file"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
     </div>
 
-    <!-- Options -->
     <div class="options-panel" id="optionsPanel" aria-label="Conversion options">
-      <div class="options-title">
-        <i class="fa-solid fa-sliders" aria-hidden="true"></i>
-        Conversion Options
-      </div>
-
+      <div class="options-title"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Conversion Options</div>
       <div class="option-row">
-        <div>
-          <div class="option-label">Preserve Headings</div>
-          <div class="option-desc">Detect and format large text as headings</div>
-        </div>
-        <label class="toggle" aria-label="Preserve headings">
-          <input type="checkbox" id="optHeadings" checked />
-          <span class="toggle-slider"></span>
-        </label>
+        <div><div class="option-label">Preserve Headings</div><div class="option-desc">Detect and format large text as headings</div></div>
+        <label class="toggle" aria-label="Preserve headings"><input type="checkbox" id="optHeadings" checked /><span class="toggle-slider"></span></label>
       </div>
-
       <div class="option-row">
-        <div>
-          <div class="option-label">Preserve Paragraphs</div>
-          <div class="option-desc">Group lines into paragraphs with spacing</div>
-        </div>
-        <label class="toggle" aria-label="Preserve paragraphs">
-          <input type="checkbox" id="optParagraphs" checked />
-          <span class="toggle-slider"></span>
-        </label>
+        <div><div class="option-label">Preserve Paragraphs</div><div class="option-desc">Join wrapped lines into flowing paragraphs</div></div>
+        <label class="toggle" aria-label="Preserve paragraphs"><input type="checkbox" id="optParagraphs" checked /><span class="toggle-slider"></span></label>
       </div>
-
       <div class="option-row">
-        <div>
-          <div class="option-label">Page Breaks</div>
-          <div class="option-desc">Insert a page break between PDF pages</div>
-        </div>
-        <label class="toggle" aria-label="Insert page breaks">
-          <input type="checkbox" id="optPageBreaks" checked />
-          <span class="toggle-slider"></span>
-        </label>
+        <div><div class="option-label">Page Breaks</div><div class="option-desc">Insert a page break between PDF pages</div></div>
+        <label class="toggle" aria-label="Insert page breaks"><input type="checkbox" id="optPageBreaks" checked /><span class="toggle-slider"></span></label>
       </div>
-
       <div class="option-row">
-        <div>
-          <div class="option-label">Font Size</div>
-          <div class="option-desc">Base font size for body text</div>
-        </div>
+        <div><div class="option-label">Font Size</div><div class="option-desc">Base font size for body text</div></div>
         <select class="opt-select" id="optFontSize" aria-label="Base font size">
           <option value="10">10pt</option>
           <option value="11" selected>11pt</option>
@@ -724,85 +337,47 @@ footer {
       </div>
     </div>
 
-    <!-- Convert button -->
     <div class="convert-btn-wrap" id="convertWrap">
-      <button class="btn-convert" id="convertBtn" type="button">
-        <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
-        Convert to Word
-      </button>
+      <button class="btn-convert" id="convertBtn" type="button"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> Convert to Word</button>
     </div>
 
-    <!-- Progress -->
     <div class="progress-wrap" id="progressWrap" role="status" aria-live="polite" aria-label="Conversion progress">
-      <div class="progress-bar-bg">
-        <div class="progress-bar-fill" id="progressFill"></div>
-      </div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
       <div class="progress-label">
-        <span class="progress-status">
-          <span class="progress-spin" aria-hidden="true"></span>
-          <span id="progressText">Processing…</span>
-        </span>
+        <span class="progress-status"><span class="progress-spin" aria-hidden="true"></span><span id="progressText">Processing…</span></span>
         <span id="progressPct">0%</span>
       </div>
     </div>
 
-    <!-- Error -->
     <div class="error-msg" id="errorMsg" role="alert">
       <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
       <span id="errorText">Something went wrong.</span>
     </div>
 
-    <!-- Result -->
     <div class="result-card" id="resultCard">
       <div class="result-icon" aria-hidden="true">✅</div>
       <div class="result-title">Conversion complete!</div>
       <div class="result-sub" id="resultSub">Your Word document is ready to download.</div>
       <div>
-        <button class="btn-download" id="downloadBtn" type="button">
-          <i class="fa-solid fa-download" aria-hidden="true"></i>
-          Download .docx
-        </button>
-        <button class="btn-reset" id="resetBtn" type="button">
-          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
-          Convert Another
-        </button>
+        <button class="btn-download" id="downloadBtn" type="button"><i class="fa-solid fa-download" aria-hidden="true"></i> Download .docx</button>
+        <button class="btn-reset" id="resetBtn" type="button"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Convert Another</button>
       </div>
     </div>
 
-    <!-- Info cards -->
     <div class="info-grid" aria-label="Tool information">
-      <div class="info-card">
-        <div class="info-card-icon" aria-hidden="true">🔒</div>
-        <h3>Fully Private</h3>
-        <p>Your PDF is processed entirely on your device using PDF.js. Nothing is ever sent to a server.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon" aria-hidden="true">📄</div>
-        <h3>Real .docx Output</h3>
-        <p>Generates a proper Word document using the docx library — open in Microsoft Word, Google Docs, or LibreOffice.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon" aria-hidden="true">🗂️</div>
-        <h3>All Pages Extracted</h3>
-        <p>Every page of your PDF is extracted and placed in sequence in the Word document with correct page breaks.</p>
-      </div>
-      <div class="info-card">
-        <div class="info-card-icon" aria-hidden="true">⚡</div>
-        <h3>No Waiting</h3>
-        <p>Conversion happens instantly in your browser with no queue, no size limit based on a server plan, and no ads.</p>
-      </div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🔒</div><h3>Fully Private</h3><p>Your PDF is processed entirely on your device using PDF.js. Nothing is ever sent to a server.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">📄</div><h3>Real .docx Output</h3><p>Generates a proper Word document using the docx library — open in Microsoft Word, Google Docs, or LibreOffice.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🗂️</div><h3>All Pages Extracted</h3><p>Every page of your PDF is extracted in correct reading order with page breaks.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">⚡</div><h3>No Waiting</h3><p>Conversion happens instantly in your browser with no queue and no ads.</p></div>
     </div>
 
   </div>
 </div>
 
-<!-- Footer -->
 <footer role="contentinfo">
   <a href="./index.html" class="footer-logo" aria-label="ImgPDFTools Home">
     <div class="logo-icon" style="width:26px;height:26px;font-size:13px;" aria-hidden="true">🛠️</div>
-    <span>
-      <span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span>
-    </span>
+    <span><span class="logo-text-img">Img</span><span class="logo-text-pdf">PDF</span><span class="logo-text-tools">Tools</span></span>
   </a>
   <div class="footer-divider" aria-hidden="true"></div>
   <nav class="footer-links" aria-label="Footer navigation">
@@ -817,9 +392,6 @@ footer {
   <p>© 2026 ImgPDFTools — All Rights Reserved</p>
 </footer>
 
-<!-- ============================================================
-   JAVASCRIPT
-   ============================================================ -->
 <script>
 (function () {
   'use strict';
@@ -853,13 +425,11 @@ footer {
   var $resetBtn    = document.getElementById('resetBtn');
   var $themeToggle = document.getElementById('themeToggle');
 
-  /* ── Options ── */
   var $optHeadings   = document.getElementById('optHeadings');
   var $optParagraphs = document.getElementById('optParagraphs');
   var $optPageBreaks = document.getElementById('optPageBreaks');
   var $optFontSize   = document.getElementById('optFontSize');
 
-  /* ── State ── */
   var currentFile = null;
   var docxBlob    = null;
   var outputName  = 'document.docx';
@@ -874,20 +444,12 @@ footer {
     } catch (e) {}
   });
 
-  /* ============================================================
-     XML SAFETY
-     Strip characters that are illegal in XML 1.0. PDFs often
-     contain control chars / lone surrogates which, if written
-     into word/document.xml, make Word throw "Xml parsing error".
-     ============================================================ */
+  /* ── XML safety: strip chars illegal in XML 1.0 (prevents Word "Xml parsing error") ── */
   function cleanXmlText(s) {
     if (s == null) return '';
     s = String(s);
-    // Remove control chars (keep tab \t, newline \n, carriage return \r)
     s = s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
-    // Remove Unicode non-characters
     s = s.replace(/[\uFFFE\uFFFF]/g, '');
-    // Remove unpaired (lone) surrogates
     s = s.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '');
     s = s.replace(/(^|)([\uDC00-\uDFFF])/g, '$1');
     return s;
@@ -899,47 +461,33 @@ footer {
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
     return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
   }
-
-  function showError(msg) {
-    $errorText.textContent = msg;
-    $errorMsg.classList.add('show');
-  }
+  function showError(msg) { $errorText.textContent = msg; $errorMsg.classList.add('show'); }
   function hideError() { $errorMsg.classList.remove('show'); }
-
   function setProgress(pct, label) {
     $progressFill.style.width = pct + '%';
     $progressText.textContent = label || 'Processing…';
     $progressPct.textContent  = Math.round(pct) + '%';
   }
-
   function resetUI() {
-    currentFile = null;
-    docxBlob    = null;
+    currentFile = null; docxBlob = null;
     $dropZone.style.display = '';
     $fileBar.classList.remove('show');
     $optPanel.classList.remove('show');
     $convertWrap.classList.remove('show');
     $progressWrap.classList.remove('show');
     $resultCard.classList.remove('show');
-    hideError();
-    setProgress(0, '');
+    hideError(); setProgress(0, '');
     $fileInput.value = '';
   }
-
   function loadFile(file) {
     hideError();
     if (!file) return;
     var isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
-    if (!isPdf) {
-      showError('Please select a valid PDF file.');
-      return;
-    }
+    if (!isPdf) { showError('Please select a valid PDF file.'); return; }
     currentFile = file;
     outputName  = file.name.replace(/\.pdf$/i, '') + '.docx';
-
     $flName.textContent = file.name;
     $flMeta.textContent = formatBytes(file.size) + ' · PDF';
-
     $dropZone.style.display = 'none';
     $fileBar.classList.add('show');
     $optPanel.classList.add('show');
@@ -947,8 +495,6 @@ footer {
     $resultCard.classList.remove('show');
     $progressWrap.classList.remove('show');
   }
-
-  /* Wait until a library global is ready (with timeout). */
   function waitForLib(check, name, timeoutMs) {
     return new Promise(function (resolve, reject) {
       if (check()) { resolve(); return; }
@@ -962,60 +508,39 @@ footer {
       }, 100);
     });
   }
-
-  /* Cross-browser save (FileSaver if present, otherwise native fallback). */
   function downloadBlob(blob, filename) {
     if (typeof window.saveAs === 'function') { window.saveAs(blob, filename); return; }
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
   }
 
   /* ── Drag & drop ── */
-  $dropZone.addEventListener('dragover', function (e) {
-    e.preventDefault();
-    $dropZone.classList.add('drag-over');
-  });
-  $dropZone.addEventListener('dragleave', function () {
-    $dropZone.classList.remove('drag-over');
-  });
+  $dropZone.addEventListener('dragover', function (e) { e.preventDefault(); $dropZone.classList.add('drag-over'); });
+  $dropZone.addEventListener('dragleave', function () { $dropZone.classList.remove('drag-over'); });
   $dropZone.addEventListener('drop', function (e) {
-    e.preventDefault();
-    $dropZone.classList.remove('drag-over');
+    e.preventDefault(); $dropZone.classList.remove('drag-over');
     var file = e.dataTransfer.files && e.dataTransfer.files[0];
     if (file) loadFile(file);
   });
   $dropZone.addEventListener('click', function (e) {
-    if (e.target.closest('#uploadBtn')) return; // button has its own handler
+    if (e.target.closest('#uploadBtn')) return;
     $fileInput.click();
   });
   $dropZone.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $fileInput.click(); }
   });
 
-  /* ── File input ── */
   $uploadBtn.addEventListener('click', function (e) { e.stopPropagation(); $fileInput.click(); });
   $fileInput.addEventListener('change', function () {
     if ($fileInput.files && $fileInput.files[0]) loadFile($fileInput.files[0]);
   });
-
-  /* ── Remove / reset / download ── */
   $removeFile.addEventListener('click', resetUI);
   $resetBtn.addEventListener('click', resetUI);
-  $downloadBtn.addEventListener('click', function () {
-    if (docxBlob) downloadBlob(docxBlob, outputName);
-  });
-
-  /* ── Convert ── */
-  $convertBtn.addEventListener('click', function () {
-    if (!currentFile) return;
-    runConversion(currentFile);
-  });
+  $downloadBtn.addEventListener('click', function () { if (docxBlob) downloadBlob(docxBlob, outputName); });
+  $convertBtn.addEventListener('click', function () { if (currentFile) runConversion(currentFile); });
 
   function readFileAsArrayBuffer(file) {
     return new Promise(function (resolve, reject) {
@@ -1027,7 +552,7 @@ footer {
   }
 
   /* ============================================================
-     CORE: PDF → DOCX  (async / await, fully guarded)
+     CORE: PDF → DOCX
      ============================================================ */
   async function runConversion(file) {
     hideError();
@@ -1038,20 +563,16 @@ footer {
     setProgress(2, 'Preparing…');
 
     try {
-      /* 1) Make sure both libraries are ready */
       await waitForLib(function () {
         return window.pdfjsLib && typeof pdfjsLib.getDocument === 'function';
       }, 'PDF engine (PDF.js)', 15000);
-
       await waitForLib(function () {
         return window.docx && window.docx.Document && window.docx.Packer;
       }, 'Word engine (docx)', 20000);
 
-      /* 2) Read file */
       setProgress(6, 'Reading PDF…');
       var buffer = await readFileAsArrayBuffer(file);
 
-      /* 3) Parse PDF */
       var loadingTask = pdfjsLib.getDocument({ data: buffer });
       var pdfDoc = await loadingTask.promise;
       var numPages = pdfDoc.numPages;
@@ -1064,39 +585,31 @@ footer {
         baseFontSize:  parseInt($optFontSize.value, 10) || 11
       };
 
-      /* 4) Extract entries per page */
-      var pagesEntries = [];
+      /* Extract lines per page — PRESERVING natural reading order */
+      var pagesLines = [];
       for (var p = 1; p <= numPages; p++) {
         var page = await pdfDoc.getPage(p);
         var tc   = await page.getTextContent();
-        pagesEntries.push(buildEntries(tc.items, tc.styles));
+        pagesLines.push(extractLines(tc.items, tc.styles));
         if (typeof page.cleanup === 'function') page.cleanup();
-        setProgress(12 + (p / numPages) * 48, 'Extracting page ' + p + ' of ' + numPages + '…');
+        setProgress(12 + (p / numPages) * 52, 'Extracting page ' + p + ' of ' + numPages + '…');
       }
 
-      /* 5) Detect document body font size, then group into lines */
-      setProgress(64, 'Analyzing layout…');
-      var bodySize = detectBodySize(pagesEntries);
-      var pagesLines = pagesEntries.map(groupIntoLines);
+      setProgress(66, 'Analyzing layout…');
+      var bodySize = detectBodySize(pagesLines);
 
-      /* 6) Build DOCX content */
-      setProgress(72, 'Building Word document…');
+      setProgress(74, 'Building Word document…');
       var children = buildDocxChildren(pagesLines, opts, bodySize);
 
-      /* 7) Generate file */
-      setProgress(86, 'Generating .docx file…');
-      var Document = window.docx.Document;
+      setProgress(88, 'Generating .docx file…');
+      var Document  = window.docx.Document;
       var baseTitle = cleanXmlText(file.name.replace(/\.pdf$/i, '')) || 'document';
 
       var wordDoc = new Document({
         creator:     'ImgPDFTools',
         title:       baseTitle,
         description: 'Converted from PDF by ImgPDFTools (imgpdftools.xyz)',
-        styles: {
-          default: {
-            document: { run: { size: opts.baseFontSize * 2, font: 'Calibri' } }
-          }
-        },
+        styles: { default: { document: { run: { size: opts.baseFontSize * 2, font: 'Calibri' } } } },
         sections: [{ properties: {}, children: children }]
       });
 
@@ -1133,50 +646,117 @@ footer {
   }
 
   /* ============================================================
-     EXTRACTION HELPERS
+     EXTRACTION — keep PDF.js reading order, break lines by
+     hasEOL / Y-change. NO global coordinate re-sorting.
      ============================================================ */
+  function extractLines(items, styles) {
+    var lines = [];
+    var cur = null;
 
-  /* Convert PDF.js text items → normalized entries with style info. */
-  function buildEntries(items, styles) {
-    var entries = [];
-    if (!items) return entries;
+    function startLine(y) {
+      cur = { parts: [], y: y, lastFs: 0, maxFs: 0, weighted: 0, chars: 0, lastEndX: null };
+    }
+    function pushLine() {
+      if (cur && cur.parts.length) lines.push(finalizeLine(cur));
+      cur = null;
+    }
+
+    if (!items) return lines;
+
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
-      if (!it || typeof it.str !== 'string') continue;
+      if (!it || typeof it.str !== 'string') {
+        if (it && it.hasEOL) pushLine();
+        continue;
+      }
 
-      /* Sanitize text up front so no illegal XML chars reach the .docx */
       var cleanStr = cleanXmlText(it.str);
-      if (!cleanStr.trim()) continue;
+      if (cleanStr === '') { if (it.hasEOL) pushLine(); continue; }
 
       var t  = it.transform || [1, 0, 0, 1, 0, 0];
       var x  = t[4];
-      var y  = Math.round(t[5]);
+      var y  = t[5];
       var fs = Math.abs(t[3]) || Math.abs(t[0]) || 12;
+      var w  = it.width || 0;
 
       var family = (styles && styles[it.fontName] && styles[it.fontName].fontFamily) || it.fontName || '';
-      entries.push({
-        str:    cleanStr,
-        x:      x,
-        y:      y,
-        fs:     fs,
-        width:  it.width || 0,
-        bold:   /bold|black|heavy|semibold|demibold/i.test(family),
-        italic: /italic|oblique/i.test(family)
-      });
+      var bold   = /bold|black|heavy|semibold|demibold/i.test(family);
+      var italic = /italic|oblique/i.test(family);
+
+      if (!cur) startLine(y);
+
+      /* Fallback line break if a big vertical jump happens without hasEOL */
+      if (cur.parts.length && Math.abs(y - cur.y) > Math.max(fs, cur.lastFs || fs) * 0.6) {
+        pushLine();
+        startLine(y);
+      }
+
+      /* Decide whether to insert a space (based on horizontal gap) */
+      var prefix = '';
+      if (cur.parts.length && cur.lastEndX != null) {
+        var gap = x - cur.lastEndX;
+        var startsSpace = /^\s/.test(cleanStr);
+        var prevPart    = cur.parts[cur.parts.length - 1];
+        var endsSpace   = /\s$/.test(prevPart.str);
+        if (!startsSpace && !endsSpace && gap > fs * 0.25) prefix = ' ';
+      }
+
+      cur.parts.push({ str: prefix + cleanStr, fs: Math.round(fs), bold: bold, italic: italic });
+      cur.lastEndX = x + w;
+      cur.lastFs   = fs;
+      cur.y        = y;
+
+      var len = cleanStr.replace(/\s/g, '').length;
+      if (len > 0) {
+        cur.weighted += fs * len;
+        cur.chars    += len;
+        if (fs > cur.maxFs) cur.maxFs = fs;
+      }
+
+      if (it.hasEOL) pushLine();
     }
-    return entries;
+    pushLine();
+    return lines;
   }
 
-  /* Detect the dominant body font size (weighted by character count). */
-  function detectBodySize(pagesEntries) {
+  /* Merge adjacent same-format parts into runs; compute line stats. */
+  function finalizeLine(cur) {
+    var runs = [];
+    for (var i = 0; i < cur.parts.length; i++) {
+      var p    = cur.parts[i];
+      var last = runs[runs.length - 1];
+      if (last && last.bold === p.bold && last.italic === p.italic && last.size === p.fs) {
+        last.text += p.str;
+      } else {
+        runs.push({ text: p.str, bold: p.bold, italic: p.italic, size: p.fs });
+      }
+    }
+    var avgFs = cur.chars ? (cur.weighted / cur.chars) : (cur.maxFs || 12);
+    var fullText = runs.map(function (r) { return r.text; }).join('');
+    return {
+      text:  fullText.replace(/\s+$/, ''),
+      runs:  runs,
+      avgFs: avgFs,
+      maxFs: cur.maxFs || avgFs,
+      y:     cur.y
+    };
+  }
+
+  /* Dominant body font size (weighted by character count). */
+  function detectBodySize(pagesLines) {
     var freq = {};
-    for (var i = 0; i < pagesEntries.length; i++) {
-      var arr = pagesEntries[i];
-      for (var j = 0; j < arr.length; j++) {
-        var e   = arr[j];
-        var key = Math.round(e.fs);
-        if (key <= 0) continue;
-        freq[key] = (freq[key] || 0) + e.str.replace(/\s/g, '').length;
+    for (var i = 0; i < pagesLines.length; i++) {
+      var lines = pagesLines[i];
+      for (var j = 0; j < lines.length; j++) {
+        var runs = lines[j].runs;
+        for (var k = 0; k < runs.length; k++) {
+          var r   = runs[k];
+          var key = Math.round(r.size);
+          if (key <= 0) continue;
+          var len = r.text.replace(/\s/g, '').length;
+          if (len <= 0) continue;
+          freq[key] = (freq[key] || 0) + len;
+        }
       }
     }
     var bodySize = 12, max = -1;
@@ -1184,93 +764,6 @@ footer {
       if (freq[k] > max) { max = freq[k]; bodySize = parseInt(k, 10); }
     });
     return bodySize || 12;
-  }
-
-  /* Group entries into visual lines by Y, then build formatted runs. */
-  function groupIntoLines(entries) {
-    if (!entries || !entries.length) return [];
-
-    /* Sort top→bottom (PDF Y is bottom-up), then left→right */
-    entries.sort(function (a, b) {
-      if (b.y !== a.y) return b.y - a.y;
-      return a.x - b.x;
-    });
-
-    var lines = [];
-    var current = null;
-
-    for (var i = 0; i < entries.length; i++) {
-      var e = entries[i];
-      if (!current) {
-        current = { y: e.y, fs: e.fs, parts: [e] };
-      } else {
-        var tol = Math.max(2, current.fs * 0.4);
-        if (Math.abs(e.y - current.y) <= tol) {
-          current.parts.push(e);
-        } else {
-          lines.push(finalizeLine(current));
-          current = { y: e.y, fs: e.fs, parts: [e] };
-        }
-      }
-    }
-    if (current) lines.push(finalizeLine(current));
-    return lines;
-  }
-
-  /* Turn a line's parts into merged, formatted text runs. */
-  function finalizeLine(line) {
-    line.parts.sort(function (a, b) { return a.x - b.x; });
-
-    var segments = [];
-    var maxFs = 0, weighted = 0, chars = 0;
-
-    for (var k = 0; k < line.parts.length; k++) {
-      var p = line.parts[k];
-      var prefix = '';
-
-      if (k > 0) {
-        var prev = line.parts[k - 1];
-        var gap  = p.x - (prev.x + prev.width);
-        var endsSpace   = /\s$/.test(prev.str);
-        var startsSpace = /^\s/.test(p.str);
-        if (!endsSpace && !startsSpace && gap > Math.max(prev.fs, p.fs) * 0.2) {
-          prefix = ' ';
-        }
-      }
-
-      segments.push({
-        text:   prefix + p.str,
-        bold:   p.bold,
-        italic: p.italic,
-        size:   Math.round(p.fs)
-      });
-
-      if (p.fs > maxFs) maxFs = p.fs;
-      var len = p.str.replace(/\s/g, '').length || 1;
-      weighted += p.fs * len;
-      chars += len;
-    }
-
-    /* Merge adjacent segments that share the same formatting */
-    var runs = [];
-    for (var s = 0; s < segments.length; s++) {
-      var seg  = segments[s];
-      var last = runs[runs.length - 1];
-      if (last && last.bold === seg.bold && last.italic === seg.italic && last.size === seg.size) {
-        last.text += seg.text;
-      } else {
-        runs.push({ text: seg.text, bold: seg.bold, italic: seg.italic, size: seg.size });
-      }
-    }
-
-    var avgFs = chars ? (weighted / chars) : line.fs;
-    return {
-      text:  runs.map(function (r) { return r.text; }).join('').trim(),
-      runs:  runs,
-      avgFs: avgFs,
-      maxFs: maxFs || line.fs,
-      y:     line.y
-    };
   }
 
   /* ============================================================
@@ -1289,7 +782,7 @@ footer {
       return runs.map(function (r) {
         var ptSize = (r.size || bodySize) * scale;
         return new TextRun({
-          text:    cleanXmlText(r.text),   /* extra safety */
+          text:    cleanXmlText(r.text),
           bold:    forceBold ? true : !!r.bold,
           italics: !!r.italic,
           size:    Math.max(2, Math.round(ptSize * 2)),
@@ -1297,7 +790,6 @@ footer {
         });
       });
     }
-
     function makeBodyParagraph(runs) {
       return new Paragraph({
         children: makeRuns(runs, false),
@@ -1306,31 +798,25 @@ footer {
           : { before: 0, after: 40 }
       });
     }
-
     function makeHeadingParagraph(line) {
       var ratio = line.maxFs / (bodySize || line.maxFs);
       var level = ratio >= 1.8 ? HeadingLevel.HEADING_1
                 : ratio >= 1.45 ? HeadingLevel.HEADING_2
                 : HeadingLevel.HEADING_3;
-      return new Paragraph({
-        children: makeRuns(line.runs, true),
-        heading:  level,
-        spacing:  { before: 240, after: 120 }
-      });
+      return new Paragraph({ children: makeRuns(line.runs, true), heading: level, spacing: { before: 240, after: 120 } });
     }
-
     function isSameParagraph(prev, cur) {
       if (!prev) return false;
       var lineHeight  = Math.max(prev.maxFs, cur.maxFs) * 1.2;
-      var gap         = prev.y - cur.y;                  // positive when stacked normally
-      var closeEnough = gap > 0 && gap <= lineHeight * 1.7;
+      var gap         = prev.y - cur.y;               // positive when stacked normally
+      var closeEnough = gap > 0 && gap <= lineHeight * 1.6;
       var similarSize = Math.abs(prev.avgFs - cur.avgFs) <= 1.5;
       return closeEnough && similarSize;
     }
 
     for (var pageIdx = 0; pageIdx < pagesLines.length; pageIdx++) {
       var lines = pagesLines[pageIdx];
-      var buffer = null;     // accumulated body runs for the current paragraph
+      var buffer = null;
       var prevLine = null;
 
       for (var li = 0; li < lines.length; li++) {
@@ -1359,13 +845,11 @@ footer {
 
       if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
 
-      /* Page break between pages (except after the last) */
       if (opts.usePageBreaks && pageIdx < pagesLines.length - 1) {
         children.push(new Paragraph({ children: [new PageBreak()] }));
       }
     }
 
-    /* Always return at least one paragraph */
     if (!children.length) {
       children.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
     }
