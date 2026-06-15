@@ -14,7 +14,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PDF to Word — Free Online PDF to DOCX Converter | ImgPDFTools</title>
-<meta name="description" content="Convert PDF to Word (DOCX) for free, directly in your browser. No upload, no sign-up. Preserves text layout across all pages." />
+<meta name="description" content="Convert PDF to Word (DOCX) for free, directly in your browser. No upload, no sign-up. Smart layout & reading-order reconstruction." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://imgpdftools.xyz/pdf-to-word.html" />
 
@@ -68,21 +68,12 @@
 
 <style>
 :root {
-  --bg: #f8f8fc;
-  --bg2: #f0f0f8;
-  --surface: rgba(255,255,255,0.92);
-  --card: #ffffff;
-  --border: rgba(99,102,241,0.12);
-  --border2: rgba(0,0,0,0.07);
-  --text: #18181b;
-  --muted: #71717a;
-  --accent: #6366f1;
-  --accent2: #8b5cf6;
-  --accent3: #06b6d4;
-  --glow: rgba(99,102,241,0.14);
-  --glow2: rgba(139,92,246,0.10);
-  --r: 18px;
-  --r-sm: 12px;
+  --bg: #f8f8fc; --bg2: #f0f0f8; --surface: rgba(255,255,255,0.92); --card: #ffffff;
+  --border: rgba(99,102,241,0.12); --border2: rgba(0,0,0,0.07);
+  --text: #18181b; --muted: #71717a;
+  --accent: #6366f1; --accent2: #8b5cf6; --accent3: #06b6d4;
+  --glow: rgba(99,102,241,0.14); --glow2: rgba(139,92,246,0.10);
+  --r: 18px; --r-sm: 12px;
   --fhead: 'Space Grotesk', sans-serif;
   --fbody: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --nav-h: 66px;
@@ -91,43 +82,23 @@
   --shadow-lg: 0 16px 32px -6px rgba(99,102,241,0.14), 0 4px 8px -2px rgba(0,0,0,0.05);
 }
 [data-theme="dark"] {
-  --bg: #0c0c14;
-  --bg2: #111120;
-  --surface: rgba(18,18,30,0.94);
-  --card: #16162a;
-  --border: rgba(99,102,241,0.20);
-  --border2: rgba(255,255,255,0.08);
-  --text: #e4e4f0;
-  --muted: #8888aa;
-  --glow: rgba(99,102,241,0.28);
-  --glow2: rgba(139,92,246,0.20);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --bg: #0c0c14; --bg2: #111120; --surface: rgba(18,18,30,0.94); --card: #16162a;
+  --border: rgba(99,102,241,0.20); --border2: rgba(255,255,255,0.08);
+  --text: #e4e4f0; --muted: #8888aa;
+  --glow: rgba(99,102,241,0.28); --glow2: rgba(139,92,246,0.20);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.3); --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
   --shadow-lg: 0 16px 32px -6px rgba(99,102,241,0.25), 0 4px 8px -2px rgba(0,0,0,0.3);
 }
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { scroll-behavior: smooth; overflow-x: hidden; -webkit-text-size-adjust:100%; }
-body {
-  background: var(--bg); color: var(--text); font-family: var(--fbody);
-  min-height: 100vh; display: flex; flex-direction: column;
-  transition: background 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; overflow-x: hidden;
-}
+body { background: var(--bg); color: var(--text); font-family: var(--fbody); min-height: 100vh; display: flex; flex-direction: column; transition: background 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 a { color: inherit; text-decoration: none; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration:0.01ms !important; transition-duration:0.01ms !important; } }
-body::before {
-  content:''; position:fixed; inset:0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events:none; z-index:0; opacity:0.4;
-}
+body::before { content:''; position:fixed; inset:0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:0.4; }
 .skip-link { position:absolute; top:-100px; left:1rem; background:var(--accent); color:#fff; padding:10px 18px; border-radius:8px; font-weight:700; font-size:14px; z-index:9999; transition:top 0.2s; }
 .skip-link:focus { top:1rem; }
-nav {
-  position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between;
-  padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface);
-  backdrop-filter:blur(28px) saturate(200%); -webkit-backdrop-filter:blur(28px) saturate(200%);
-  border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm);
-}
+nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1rem,5vw,3rem); height:var(--nav-h); background:var(--surface); backdrop-filter:blur(28px) saturate(200%); -webkit-backdrop-filter:blur(28px) saturate(200%); border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm); }
 .nav-left { display:flex; align-items:center; gap:1.1rem; }
 .nav-logo { display:flex; align-items:center; gap:8px; font-family:var(--fhead); font-weight:700; font-size:1.15rem; letter-spacing:-0.3px; }
 .logo-icon { width:32px; height:32px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:9px; display:flex; align-items:center; justify-content:center; font-size:16px; box-shadow:0 4px 14px var(--glow); flex-shrink:0; }
@@ -180,7 +151,6 @@ nav {
 .option-row:last-child { border-bottom:none; padding-bottom:0; }
 .option-label { font-size:13.5px; font-weight:600; }
 .option-desc { font-size:12px; color:var(--muted); margin-top:2px; }
-.toggle-wrap { display:flex; align-items:center; gap:8px; }
 .toggle { position:relative; width:40px; height:22px; cursor:pointer; }
 .toggle input { opacity:0; width:0; height:0; }
 .toggle-slider { position:absolute; inset:0; border-radius:99px; background:var(--border2); transition:background 0.2s; }
@@ -215,6 +185,10 @@ nav {
 .error-msg { background:rgba(239,68,68,0.08); border:1.5px solid rgba(239,68,68,0.25); border-radius:14px; padding:14px 18px; font-size:13.5px; color:#ef4444; display:none; align-items:center; gap:10px; margin-top:14px; }
 .error-msg.show { display:flex; }
 .error-msg i { flex-shrink:0; font-size:15px; }
+.notice-msg { background:rgba(245,158,11,0.08); border:1.5px solid rgba(245,158,11,0.28); border-radius:14px; padding:12px 16px; font-size:12.5px; color:#b45309; display:none; align-items:flex-start; gap:9px; margin-top:14px; line-height:1.5; }
+[data-theme="dark"] .notice-msg { color:#fbbf24; }
+.notice-msg.show { display:flex; }
+.notice-msg i { flex-shrink:0; font-size:14px; margin-top:1px; }
 .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:3rem; }
 .info-card { background:var(--card); border:1.5px solid var(--border2); border-radius:18px; padding:20px; box-shadow:var(--shadow-sm); }
 .info-card-icon { font-size:22px; margin-bottom:10px; }
@@ -279,12 +253,12 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   </nav>
   <div class="tool-page-icon" aria-hidden="true">📝</div>
   <h1>PDF to <span>Word</span></h1>
-  <p>Convert your PDF into an editable Word document (.docx) — right in your browser. No upload, no account, completely private.</p>
+  <p>Convert your PDF into an editable Word document (.docx) — right in your browser. Smart reading-order &amp; column reconstruction. No upload, completely private.</p>
   <div class="feature-pills" aria-label="Key features">
     <span class="feature-pill"><i class="fa-solid fa-lock" aria-hidden="true"></i> 100% Private</span>
     <span class="feature-pill"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Instant</span>
     <span class="feature-pill"><i class="fa-solid fa-file-word" aria-hidden="true"></i> Real .docx</span>
-    <span class="feature-pill"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> All Pages</span>
+    <span class="feature-pill"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Column-Aware</span>
     <span class="feature-pill"><i class="fa-solid fa-wifi-slash" aria-hidden="true"></i> Works Offline</span>
   </div>
 </header>
@@ -323,6 +297,10 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
         <label class="toggle" aria-label="Preserve paragraphs"><input type="checkbox" id="optParagraphs" checked /><span class="toggle-slider"></span></label>
       </div>
       <div class="option-row">
+        <div><div class="option-label">Detect Columns</div><div class="option-desc">Reconstruct reading order for multi-column pages</div></div>
+        <label class="toggle" aria-label="Detect columns"><input type="checkbox" id="optColumns" checked /><span class="toggle-slider"></span></label>
+      </div>
+      <div class="option-row">
         <div><div class="option-label">Page Breaks</div><div class="option-desc">Insert a page break between PDF pages</div></div>
         <label class="toggle" aria-label="Insert page breaks"><input type="checkbox" id="optPageBreaks" checked /><span class="toggle-slider"></span></label>
       </div>
@@ -354,6 +332,11 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       <span id="errorText">Something went wrong.</span>
     </div>
 
+    <div class="notice-msg" id="noticeMsg" role="status">
+      <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+      <span id="noticeText"></span>
+    </div>
+
     <div class="result-card" id="resultCard">
       <div class="result-icon" aria-hidden="true">✅</div>
       <div class="result-title">Conversion complete!</div>
@@ -366,8 +349,8 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
 
     <div class="info-grid" aria-label="Tool information">
       <div class="info-card"><div class="info-card-icon" aria-hidden="true">🔒</div><h3>Fully Private</h3><p>Your PDF is processed entirely on your device using PDF.js. Nothing is ever sent to a server.</p></div>
-      <div class="info-card"><div class="info-card-icon" aria-hidden="true">📄</div><h3>Real .docx Output</h3><p>Generates a proper Word document using the docx library — open in Microsoft Word, Google Docs, or LibreOffice.</p></div>
-      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🗂️</div><h3>All Pages Extracted</h3><p>Every page of your PDF is extracted in correct reading order with page breaks.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🧭</div><h3>Smart Reading Order</h3><p>A geometric engine rebuilds the true human reading order — including multi-column pages.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">📄</div><h3>Real .docx Output</h3><p>Generates a proper Word document — open in Microsoft Word, Google Docs, or LibreOffice.</p></div>
       <div class="info-card"><div class="info-card-icon" aria-hidden="true">⚡</div><h3>No Waiting</h3><p>Conversion happens instantly in your browser with no queue and no ads.</p></div>
     </div>
 
@@ -419,6 +402,8 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   var $progressPct = document.getElementById('progressPct');
   var $errorMsg    = document.getElementById('errorMsg');
   var $errorText   = document.getElementById('errorText');
+  var $noticeMsg   = document.getElementById('noticeMsg');
+  var $noticeText  = document.getElementById('noticeText');
   var $resultCard  = document.getElementById('resultCard');
   var $resultSub   = document.getElementById('resultSub');
   var $downloadBtn = document.getElementById('downloadBtn');
@@ -427,6 +412,7 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
 
   var $optHeadings   = document.getElementById('optHeadings');
   var $optParagraphs = document.getElementById('optParagraphs');
+  var $optColumns    = document.getElementById('optColumns');
   var $optPageBreaks = document.getElementById('optPageBreaks');
   var $optFontSize   = document.getElementById('optFontSize');
 
@@ -463,6 +449,8 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   }
   function showError(msg) { $errorText.textContent = msg; $errorMsg.classList.add('show'); }
   function hideError() { $errorMsg.classList.remove('show'); }
+  function showNotice(msg) { $noticeText.textContent = msg; $noticeMsg.classList.add('show'); }
+  function hideNotice() { $noticeMsg.classList.remove('show'); }
   function setProgress(pct, label) {
     $progressFill.style.width = pct + '%';
     $progressText.textContent = label || 'Processing…';
@@ -476,11 +464,11 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     $convertWrap.classList.remove('show');
     $progressWrap.classList.remove('show');
     $resultCard.classList.remove('show');
-    hideError(); setProgress(0, '');
+    hideError(); hideNotice(); setProgress(0, '');
     $fileInput.value = '';
   }
   function loadFile(file) {
-    hideError();
+    hideError(); hideNotice();
     if (!file) return;
     var isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
     if (!isPdf) { showError('Please select a valid PDF file.'); return; }
@@ -516,6 +504,12 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
   }
+  function median(arr) {
+    if (!arr.length) return 0;
+    var s = arr.slice().sort(function (a, b) { return a - b; });
+    var m = Math.floor(s.length / 2);
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  }
 
   /* ── Drag & drop ── */
   $dropZone.addEventListener('dragover', function (e) { e.preventDefault(); $dropZone.classList.add('drag-over'); });
@@ -532,7 +526,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   $dropZone.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $fileInput.click(); }
   });
-
   $uploadBtn.addEventListener('click', function (e) { e.stopPropagation(); $fileInput.click(); });
   $fileInput.addEventListener('change', function () {
     if ($fileInput.files && $fileInput.files[0]) loadFile($fileInput.files[0]);
@@ -555,7 +548,7 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
      CORE: PDF → DOCX
      ============================================================ */
   async function runConversion(file) {
-    hideError();
+    hideError(); hideNotice();
     $convertWrap.classList.remove('show');
     $progressWrap.classList.add('show');
     $resultCard.classList.remove('show');
@@ -581,18 +574,26 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       var opts = {
         useHeadings:   $optHeadings.checked,
         useParagraphs: $optParagraphs.checked,
+        useColumns:    $optColumns.checked,
         usePageBreaks: $optPageBreaks.checked,
         baseFontSize:  parseInt($optFontSize.value, 10) || 11
       };
 
-      /* Extract lines per page — PRESERVING natural reading order */
+      /* Reconstruct each page geometrically (reading order + columns) */
       var pagesLines = [];
+      var totalTokens = 0;
       for (var p = 1; p <= numPages; p++) {
         var page = await pdfDoc.getPage(p);
         var tc   = await page.getTextContent();
-        pagesLines.push(extractLines(tc.items, tc.styles));
+        totalTokens += (tc.items ? tc.items.length : 0);
+        pagesLines.push(reconstructPage(tc.items, tc.styles, opts.useColumns));
         if (typeof page.cleanup === 'function') page.cleanup();
         setProgress(12 + (p / numPages) * 52, 'Extracting page ' + p + ' of ' + numPages + '…');
+      }
+
+      /* Scanned/image-only PDF detection (no extractable text) */
+      if (totalTokens === 0) {
+        throw new Error('NO_TEXT');
       }
 
       setProgress(66, 'Analyzing layout…');
@@ -628,7 +629,9 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     } catch (err) {
       console.error('[PDF→DOCX]', err);
       var msg = 'Conversion failed.';
-      if (err && err.message) {
+      if (err && err.message === 'NO_TEXT') {
+        msg = 'This PDF has no selectable text — it looks scanned (image-only). This tool extracts real text and cannot OCR scanned pages.';
+      } else if (err && err.message) {
         if (/password/i.test(err.message))         msg = 'This PDF is password-protected. Please remove the password first.';
         else if (/invalid pdf/i.test(err.message)) msg = 'The file does not appear to be a valid PDF.';
         else                                        msg = 'Conversion failed: ' + err.message;
@@ -646,99 +649,198 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   }
 
   /* ============================================================
-     EXTRACTION — keep PDF.js reading order, break lines by
-     hasEOL / Y-change. NO global coordinate re-sorting.
+     GEOMETRIC RECONSTRUCTION
+     PDF.js returns text in internal order, not reading order.
+     We rebuild the true reading order from coordinates:
+       1) normalize tokens   2) cluster into lines by Y
+       3) detect columns     4) order columns L→R, lines T→B
+       5) build runs with gap-based spacing
      ============================================================ */
-  function extractLines(items, styles) {
-    var lines = [];
-    var cur = null;
+  function reconstructPage(items, styles, useColumns) {
+    if (!items || !items.length) return [];
 
-    function startLine(y) {
-      cur = { parts: [], y: y, lastFs: 0, maxFs: 0, weighted: 0, chars: 0, lastEndX: null };
-    }
-    function pushLine() {
-      if (cur && cur.parts.length) lines.push(finalizeLine(cur));
-      cur = null;
-    }
-
-    if (!items) return lines;
-
+    /* 1) Normalize tokens (skip pure-whitespace for geometry) */
+    var toks = [];
     for (var i = 0; i < items.length; i++) {
       var it = items[i];
-      if (!it || typeof it.str !== 'string') {
-        if (it && it.hasEOL) pushLine();
-        continue;
-      }
-
-      var cleanStr = cleanXmlText(it.str);
-      if (cleanStr === '') { if (it.hasEOL) pushLine(); continue; }
+      if (!it || typeof it.str !== 'string') continue;
+      var s = cleanXmlText(it.str);
+      if (s === '' || s.replace(/\s/g, '').length === 0) continue;
 
       var t  = it.transform || [1, 0, 0, 1, 0, 0];
+      var fs = Math.abs(t[3]) || Math.abs(t[0]) || 12;
       var x  = t[4];
       var y  = t[5];
-      var fs = Math.abs(t[3]) || Math.abs(t[0]) || 12;
-      var w  = it.width || 0;
+      var w  = (typeof it.width === 'number' && it.width > 0) ? it.width : s.length * fs * 0.5;
 
       var family = (styles && styles[it.fontName] && styles[it.fontName].fontFamily) || it.fontName || '';
-      var bold   = /bold|black|heavy|semibold|demibold/i.test(family);
-      var italic = /italic|oblique/i.test(family);
-
-      if (!cur) startLine(y);
-
-      /* Fallback line break if a big vertical jump happens without hasEOL */
-      if (cur.parts.length && Math.abs(y - cur.y) > Math.max(fs, cur.lastFs || fs) * 0.6) {
-        pushLine();
-        startLine(y);
-      }
-
-      /* Decide whether to insert a space (based on horizontal gap) */
-      var prefix = '';
-      if (cur.parts.length && cur.lastEndX != null) {
-        var gap = x - cur.lastEndX;
-        var startsSpace = /^\s/.test(cleanStr);
-        var prevPart    = cur.parts[cur.parts.length - 1];
-        var endsSpace   = /\s$/.test(prevPart.str);
-        if (!startsSpace && !endsSpace && gap > fs * 0.25) prefix = ' ';
-      }
-
-      cur.parts.push({ str: prefix + cleanStr, fs: Math.round(fs), bold: bold, italic: italic });
-      cur.lastEndX = x + w;
-      cur.lastFs   = fs;
-      cur.y        = y;
-
-      var len = cleanStr.replace(/\s/g, '').length;
-      if (len > 0) {
-        cur.weighted += fs * len;
-        cur.chars    += len;
-        if (fs > cur.maxFs) cur.maxFs = fs;
-      }
-
-      if (it.hasEOL) pushLine();
+      toks.push({
+        text:   s,
+        x:      x,
+        x2:     x + w,
+        y:      y,
+        fs:     fs,
+        bold:   /bold|black|heavy|semibold|demibold/i.test(family),
+        italic: /italic|oblique/i.test(family)
+      });
     }
-    pushLine();
-    return lines;
+    if (!toks.length) return [];
+
+    var medFs = median(toks.map(function (t) { return t.fs; })) || 12;
+
+    /* 2) Cluster into lines by Y (top→bottom, then left→right) */
+    toks.sort(function (a, b) {
+      if (Math.abs(b.y - a.y) > 0.1) return b.y - a.y;
+      return a.x - b.x;
+    });
+
+    var rawLines = [];
+    var cur = null;
+    for (var j = 0; j < toks.length; j++) {
+      var tk = toks[j];
+      var tol = Math.max(2, Math.max(tk.fs, cur ? cur.fs : tk.fs) * 0.5);
+      if (cur && Math.abs(tk.y - cur.y) <= tol) {
+        cur.tokens.push(tk);
+        cur.xMin = Math.min(cur.xMin, tk.x);
+        cur.xMax = Math.max(cur.xMax, tk.x2);
+        if (tk.fs > cur.fs) cur.fs = tk.fs;
+      } else {
+        cur = { y: tk.y, fs: tk.fs, tokens: [tk], xMin: tk.x, xMax: tk.x2 };
+        rawLines.push(cur);
+      }
+    }
+
+    /* 3) Column detection + 4) ordering */
+    var ordered;
+    var bands = useColumns ? detectColumns(rawLines, medFs) : null;
+
+    if (bands && bands.length > 1) {
+      ordered = [];
+      var used = [];
+      bands.forEach(function (band) {
+        var inBand = rawLines.filter(function (l, idx) {
+          if (used[idx]) return false;
+          var c = (l.xMin + l.xMax) / 2;
+          if (c >= band.start && c < band.end) { used[idx] = true; return true; }
+          return false;
+        }).sort(function (a, b) { return b.y - a.y; });
+        ordered = ordered.concat(inBand);
+      });
+      rawLines.forEach(function (l, idx) { if (!used[idx]) ordered.push(l); });
+    } else {
+      ordered = rawLines.slice().sort(function (a, b) { return b.y - a.y; });
+    }
+
+    /* 5) Build runs for each line */
+    return ordered.map(function (l) { return buildLineRuns(l, medFs); });
   }
 
-  /* Merge adjacent same-format parts into runs; compute line stats. */
-  function finalizeLine(cur) {
+  /* Detect column bands via vertical-whitespace (gutter) analysis. */
+  function detectColumns(rawLines, medFs) {
+    if (rawLines.length < 8) return null;
+
+    var pageMin = Infinity, pageMax = -Infinity;
+    for (var i = 0; i < rawLines.length; i++) {
+      if (rawLines[i].xMin < pageMin) pageMin = rawLines[i].xMin;
+      if (rawLines[i].xMax > pageMax) pageMax = rawLines[i].xMax;
+    }
+    var width = pageMax - pageMin;
+    if (!(width > 0)) return null;
+
+    var BINS  = 120;
+    var binW  = width / BINS;
+    var cover = [];
+    for (var b = 0; b < BINS; b++) cover[b] = 0;
+
+    for (var k = 0; k < rawLines.length; k++) {
+      var a  = Math.max(0, Math.floor((rawLines[k].xMin - pageMin) / binW));
+      var bb = Math.min(BINS - 1, Math.floor((rawLines[k].xMax - pageMin) / binW));
+      for (var c = a; c <= bb; c++) cover[c]++;
+    }
+
+    var nLines    = rawLines.length;
+    var threshold = Math.max(1, nLines * 0.06);
+
+    /* Find internal gutters (low-coverage runs not touching the margins) */
+    var gutters = [];
+    var p = 0;
+    while (p < BINS) {
+      if (cover[p] < threshold) {
+        var q = p;
+        while (q < BINS && cover[q] < threshold) q++;
+        gutters.push({ a: p, b: q - 1 });
+        p = q;
+      } else { p++; }
+    }
+    var minGutterBins = Math.max(2, Math.ceil((medFs * 1.5) / binW));
+    var internal = gutters.filter(function (g) {
+      return g.a > 0 && g.b < BINS - 1 && (g.b - g.a + 1) >= minGutterBins;
+    });
+    if (!internal.length) return null;
+
+    /* Build bands between gutters */
+    var bands  = [];
+    var startX = pageMin - 1;
+    internal.forEach(function (g) {
+      var gutterMid = pageMin + ((g.a + g.b + 1) / 2) * binW;
+      bands.push({ start: startX, end: gutterMid });
+      startX = gutterMid;
+    });
+    bands.push({ start: startX, end: pageMax + 1 });
+
+    /* Require each band to actually contain a fair share of lines */
+    var ok = bands.every(function (band) {
+      var count = rawLines.filter(function (l) {
+        var cc = (l.xMin + l.xMax) / 2;
+        return cc >= band.start && cc < band.end;
+      }).length;
+      return count >= Math.max(2, nLines * 0.1);
+    });
+    return ok ? bands : null;
+  }
+
+  /* Turn one clustered line into merged, formatted runs. */
+  function buildLineRuns(line, medFs) {
+    var toks = line.tokens.slice().sort(function (a, b) { return a.x - b.x; });
+    var parts = [];
+    var maxFs = 0, weighted = 0, chars = 0;
+
+    for (var i = 0; i < toks.length; i++) {
+      var tk = toks[i];
+      var prefix = '';
+      if (i > 0) {
+        var prev = toks[i - 1];
+        var gap  = tk.x - prev.x2;
+        var endsSpace   = /\s$/.test(prev.text);
+        var startsSpace = /^\s/.test(tk.text);
+        if (!endsSpace && !startsSpace && gap > Math.max(tk.fs, prev.fs) * 0.2) prefix = ' ';
+      }
+      parts.push({ str: prefix + tk.text, fs: Math.round(tk.fs), bold: tk.bold, italic: tk.italic });
+      if (tk.fs > maxFs) maxFs = tk.fs;
+      var len = tk.text.replace(/\s/g, '').length || 1;
+      weighted += tk.fs * len; chars += len;
+    }
+
     var runs = [];
-    for (var i = 0; i < cur.parts.length; i++) {
-      var p    = cur.parts[i];
+    for (var k = 0; k < parts.length; k++) {
+      var pt   = parts[k];
       var last = runs[runs.length - 1];
-      if (last && last.bold === p.bold && last.italic === p.italic && last.size === p.fs) {
-        last.text += p.str;
+      if (last && last.bold === pt.bold && last.italic === pt.italic && last.size === pt.fs) {
+        last.text += pt.str;
       } else {
-        runs.push({ text: p.str, bold: p.bold, italic: p.italic, size: p.fs });
+        runs.push({ text: pt.str, bold: pt.bold, italic: pt.italic, size: pt.fs });
       }
     }
-    var avgFs = cur.chars ? (cur.weighted / cur.chars) : (cur.maxFs || 12);
-    var fullText = runs.map(function (r) { return r.text; }).join('');
+
+    var avgFs = chars ? (weighted / chars) : (maxFs || medFs);
+    var full  = runs.map(function (r) { return r.text; }).join('');
     return {
-      text:  fullText.replace(/\s+$/, ''),
+      text:  full.replace(/\s+$/, ''),
       runs:  runs,
       avgFs: avgFs,
-      maxFs: cur.maxFs || avgFs,
-      y:     cur.y
+      maxFs: maxFs || avgFs,
+      y:     line.y,
+      xMin:  line.xMin
     };
   }
 
@@ -805,13 +907,14 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
                 : HeadingLevel.HEADING_3;
       return new Paragraph({ children: makeRuns(line.runs, true), heading: level, spacing: { before: 240, after: 120 } });
     }
-    function isSameParagraph(prev, cur) {
+    function isSameParagraph(prev, curL) {
       if (!prev) return false;
-      var lineHeight  = Math.max(prev.maxFs, cur.maxFs) * 1.2;
-      var gap         = prev.y - cur.y;               // positive when stacked normally
+      var lineHeight  = Math.max(prev.maxFs, curL.maxFs) * 1.2;
+      var gap         = prev.y - curL.y;                 // positive when stacked normally
       var closeEnough = gap > 0 && gap <= lineHeight * 1.6;
-      var similarSize = Math.abs(prev.avgFs - cur.avgFs) <= 1.5;
-      return closeEnough && similarSize;
+      var similarSize = Math.abs(prev.avgFs - curL.avgFs) <= 1.5;
+      var alignedLeft = Math.abs((prev.xMin || 0) - (curL.xMin || 0)) <= Math.max(prev.maxFs, curL.maxFs) * 2.5;
+      return closeEnough && similarSize && alignedLeft;
     }
 
     for (var pageIdx = 0; pageIdx < pagesLines.length; pageIdx++) {
