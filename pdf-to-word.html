@@ -14,13 +14,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>PDF to Word — Free Online PDF to DOCX Converter | ImgPDFTools</title>
-<meta name="description" content="Convert PDF to Word (DOCX) for free, directly in your browser. No upload, no sign-up. Smart layout & reading-order reconstruction." />
+<meta name="description" content="Convert PDF to Word (DOCX) online for free. High-fidelity Adobe-powered conversion with layout, tables & OCR support." />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://imgpdftools.xyz/pdf-to-word.html" />
 
 <!-- Open Graph -->
 <meta property="og:title" content="PDF to Word — Free Online Converter | ImgPDFTools" />
-<meta property="og:description" content="Convert PDF to DOCX in your browser. Private, instant, free." />
+<meta property="og:description" content="High-fidelity PDF to DOCX conversion. Layout, tables & OCR. Free." />
 <meta property="og:url" content="https://imgpdftools.xyz/pdf-to-word.html" />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="https://imgpdftools.xyz/og-image.png" />
@@ -44,30 +44,6 @@
 <!-- Font Awesome -->
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" /></noscript>
-
-<!-- PDF.js (UMD build → exposes global pdfjsLib) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-
-<!-- FileSaver.js (optional; we also have a built-in fallback) -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-
-<!-- docx v8.5.0 — loaded as an ES module, attached to window.docx.
-     A non-module fallback is attempted too, for maximum device coverage. -->
-<script type="module">
-  import("https://cdn.jsdelivr.net/npm/docx@8.5.0/+esm")
-    .then(function (mod) {
-      window.docx = mod;
-      window.__docxReady = true;
-      window.dispatchEvent(new Event("docx-ready"));
-    })
-    .catch(function (err) {
-      console.error("[docx] failed to load via ESM:", err);
-      window.__docxError = err;
-      window.dispatchEvent(new Event("docx-error"));
-    });
-</script>
-<!-- Fallback for very old browsers without ES-module support -->
-<script nomodule src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.min.js"></script>
 
 <style>
 :root {
@@ -146,22 +122,6 @@ nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; jus
 .fl-meta { font-size:12px; color:var(--muted); }
 .fl-remove { background:none; border:none; cursor:pointer; color:var(--muted); font-size:1rem; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; transition:color 0.2s, background 0.2s; }
 .fl-remove:hover { color:#ef4444; background:rgba(239,68,68,0.1); }
-.options-panel { background:var(--card); border:1.5px solid var(--border2); border-radius:20px; padding:22px 24px; margin-top:14px; display:none; box-shadow:var(--shadow-sm); }
-.options-panel.show { display:block; }
-.options-title { font-family:var(--fhead); font-weight:700; font-size:14px; margin-bottom:16px; display:flex; align-items:center; gap:8px; }
-.options-title i { color:var(--accent); }
-.option-row { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border2); }
-.option-row:last-child { border-bottom:none; padding-bottom:0; }
-.option-label { font-size:13.5px; font-weight:600; }
-.option-desc { font-size:12px; color:var(--muted); margin-top:2px; }
-.toggle { position:relative; width:40px; height:22px; cursor:pointer; }
-.toggle input { opacity:0; width:0; height:0; }
-.toggle-slider { position:absolute; inset:0; border-radius:99px; background:var(--border2); transition:background 0.2s; }
-.toggle-slider::before { content:''; position:absolute; width:16px; height:16px; border-radius:50%; background:#fff; left:3px; top:3px; transition:transform 0.2s; box-shadow:0 1px 4px rgba(0,0,0,0.2); }
-.toggle input:checked + .toggle-slider { background:var(--accent); }
-.toggle input:checked + .toggle-slider::before { transform:translateX(18px); }
-.opt-select { background:var(--bg); border:1.5px solid var(--border2); color:var(--text); font-family:var(--fbody); font-size:13px; padding:7px 12px; border-radius:10px; outline:none; transition:border-color 0.2s; cursor:pointer; }
-.opt-select:focus { border-color:var(--accent); }
 .convert-btn-wrap { margin-top:14px; display:none; }
 .convert-btn-wrap.show { display:block; }
 .btn-convert { width:100%; padding:16px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; border:none; border-radius:16px; font-family:var(--fhead); font-size:16px; font-weight:700; cursor:pointer; letter-spacing:0.2px; box-shadow:0 8px 24px var(--glow); transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s; display:flex; align-items:center; justify-content:center; gap:10px; }
@@ -188,10 +148,6 @@ nav { position:sticky; top:0; z-index:200; display:flex; align-items:center; jus
 .error-msg { background:rgba(239,68,68,0.08); border:1.5px solid rgba(239,68,68,0.25); border-radius:14px; padding:14px 18px; font-size:13.5px; color:#ef4444; display:none; align-items:center; gap:10px; margin-top:14px; }
 .error-msg.show { display:flex; }
 .error-msg i { flex-shrink:0; font-size:15px; }
-.notice-msg { background:rgba(245,158,11,0.08); border:1.5px solid rgba(245,158,11,0.28); border-radius:14px; padding:12px 16px; font-size:12.5px; color:#b45309; display:none; align-items:flex-start; gap:9px; margin-top:14px; line-height:1.5; }
-[data-theme="dark"] .notice-msg { color:#fbbf24; }
-.notice-msg.show { display:flex; }
-.notice-msg i { flex-shrink:0; font-size:14px; margin-top:1px; }
 .info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:3rem; }
 .info-card { background:var(--card); border:1.5px solid var(--border2); border-radius:18px; padding:20px; box-shadow:var(--shadow-sm); }
 .info-card-icon { font-size:22px; margin-bottom:10px; }
@@ -211,7 +167,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   .control-btn { width:34px; height:34px; }
   .tool-inner { padding:0 12px 4rem; }
   .drop-zone { padding:2rem 1.2rem; }
-  .options-panel { padding:16px; }
   .info-grid { grid-template-columns:1fr 1fr; gap:10px; }
 }
 @media (max-width:400px) {
@@ -256,13 +211,13 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   </nav>
   <div class="tool-page-icon" aria-hidden="true">📝</div>
   <h1>PDF to <span>Word</span></h1>
-  <p>Convert your PDF into an editable Word document (.docx) — right in your browser. Smart reading-order &amp; column reconstruction. No upload, completely private.</p>
+  <p>Convert your PDF into a fully editable Word document (.docx) with high-fidelity layout, tables and OCR — powered by Adobe's conversion engine.</p>
   <div class="feature-pills" aria-label="Key features">
-    <span class="feature-pill"><i class="fa-solid fa-lock" aria-hidden="true"></i> 100% Private</span>
-    <span class="feature-pill"><i class="fa-solid fa-bolt" aria-hidden="true"></i> Instant</span>
+    <span class="feature-pill"><i class="fa-solid fa-award" aria-hidden="true"></i> Adobe-Powered</span>
+    <span class="feature-pill"><i class="fa-solid fa-table-cells" aria-hidden="true"></i> Tables &amp; Layout</span>
+    <span class="feature-pill"><i class="fa-solid fa-language" aria-hidden="true"></i> OCR (Scanned PDF)</span>
     <span class="feature-pill"><i class="fa-solid fa-file-word" aria-hidden="true"></i> Real .docx</span>
-    <span class="feature-pill"><i class="fa-solid fa-table-columns" aria-hidden="true"></i> Column-Aware</span>
-    <span class="feature-pill"><i class="fa-solid fa-wifi-slash" aria-hidden="true"></i> Works Offline</span>
+    <span class="feature-pill"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Secure</span>
   </div>
 </header>
 
@@ -276,7 +231,7 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       <button class="btn-upload" type="button" id="uploadBtn" aria-label="Select PDF file">
         <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i> Select PDF
       </button>
-      <p class="drop-hint"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Files never leave your device</p>
+      <p class="drop-hint"><i class="fa-solid fa-lock" aria-hidden="true"></i> Secure conversion · files auto-deleted after processing</p>
       <input type="file" id="fileInput" accept=".pdf,application/pdf" aria-hidden="true" />
     </div>
 
@@ -287,35 +242,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
         <div class="fl-meta" id="flMeta">—</div>
       </div>
       <button class="fl-remove" id="removeFile" aria-label="Remove file and start over" title="Remove file"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
-    </div>
-
-    <div class="options-panel" id="optionsPanel" aria-label="Conversion options">
-      <div class="options-title"><i class="fa-solid fa-sliders" aria-hidden="true"></i> Conversion Options</div>
-      <div class="option-row">
-        <div><div class="option-label">Preserve Headings</div><div class="option-desc">Detect big &amp; bold lines as headings</div></div>
-        <label class="toggle" aria-label="Preserve headings"><input type="checkbox" id="optHeadings" checked /><span class="toggle-slider"></span></label>
-      </div>
-      <div class="option-row">
-        <div><div class="option-label">Preserve Paragraphs</div><div class="option-desc">Join wrapped lines into flowing paragraphs</div></div>
-        <label class="toggle" aria-label="Preserve paragraphs"><input type="checkbox" id="optParagraphs" checked /><span class="toggle-slider"></span></label>
-      </div>
-      <div class="option-row">
-        <div><div class="option-label">Detect Columns</div><div class="option-desc">Reconstruct reading order for multi-column pages</div></div>
-        <label class="toggle" aria-label="Detect columns"><input type="checkbox" id="optColumns" checked /><span class="toggle-slider"></span></label>
-      </div>
-      <div class="option-row">
-        <div><div class="option-label">Page Breaks</div><div class="option-desc">Insert a page break between PDF pages</div></div>
-        <label class="toggle" aria-label="Insert page breaks"><input type="checkbox" id="optPageBreaks" checked /><span class="toggle-slider"></span></label>
-      </div>
-      <div class="option-row">
-        <div><div class="option-label">Font Size</div><div class="option-desc">Base font size for body text</div></div>
-        <select class="opt-select" id="optFontSize" aria-label="Base font size">
-          <option value="10">10pt</option>
-          <option value="11" selected>11pt</option>
-          <option value="12">12pt</option>
-          <option value="14">14pt</option>
-        </select>
-      </div>
     </div>
 
     <div class="convert-btn-wrap" id="convertWrap">
@@ -335,11 +261,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
       <span id="errorText">Something went wrong.</span>
     </div>
 
-    <div class="notice-msg" id="noticeMsg" role="status">
-      <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
-      <span id="noticeText"></span>
-    </div>
-
     <div class="result-card" id="resultCard">
       <div class="result-icon" aria-hidden="true">✅</div>
       <div class="result-title">Conversion complete!</div>
@@ -351,10 +272,10 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     </div>
 
     <div class="info-grid" aria-label="Tool information">
-      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🔒</div><h3>Fully Private</h3><p>Your PDF is processed entirely on your device using PDF.js. Nothing is ever sent to a server.</p></div>
-      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🧭</div><h3>Smart Reading Order</h3><p>A geometric engine rebuilds the true human reading order — including multi-column pages.</p></div>
-      <div class="info-card"><div class="info-card-icon" aria-hidden="true">📄</div><h3>Real .docx Output</h3><p>Generates a proper Word document — open in Microsoft Word, Google Docs, or LibreOffice.</p></div>
-      <div class="info-card"><div class="info-card-icon" aria-hidden="true">⚡</div><h3>No Waiting</h3><p>Conversion happens instantly in your browser with no queue and no ads.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🏆</div><h3>Adobe Quality</h3><p>Powered by Adobe's professional engine — accurate layout, fonts, tables and structure.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🔤</div><h3>OCR Built-in</h3><p>Even scanned/image PDFs are recognized and turned into editable text.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">📄</div><h3>Real .docx</h3><p>Open the result in Microsoft Word, Google Docs, or LibreOffice — fully editable.</p></div>
+      <div class="info-card"><div class="info-card-icon" aria-hidden="true">🔒</div><h3>Secure</h3><p>Files are processed over an encrypted connection and automatically deleted after conversion.</p></div>
     </div>
 
   </div>
@@ -382,13 +303,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
 (function () {
   'use strict';
 
-  /* ── PDF.js worker ── */
-  if (window.pdfjsLib && pdfjsLib.GlobalWorkerOptions) {
-    pdfjsLib.GlobalWorkerOptions.workerSrc =
-      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-  }
-
-  /* ── DOM refs ── */
   var $dropZone    = document.getElementById('dropZone');
   var $fileInput   = document.getElementById('fileInput');
   var $uploadBtn   = document.getElementById('uploadBtn');
@@ -396,7 +310,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   var $flName      = document.getElementById('flName');
   var $flMeta      = document.getElementById('flMeta');
   var $removeFile  = document.getElementById('removeFile');
-  var $optPanel    = document.getElementById('optionsPanel');
   var $convertWrap = document.getElementById('convertWrap');
   var $convertBtn  = document.getElementById('convertBtn');
   var $progressWrap= document.getElementById('progressWrap');
@@ -405,32 +318,17 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   var $progressPct = document.getElementById('progressPct');
   var $errorMsg    = document.getElementById('errorMsg');
   var $errorText   = document.getElementById('errorText');
-  var $noticeMsg   = document.getElementById('noticeMsg');
-  var $noticeText  = document.getElementById('noticeText');
   var $resultCard  = document.getElementById('resultCard');
   var $resultSub   = document.getElementById('resultSub');
   var $downloadBtn = document.getElementById('downloadBtn');
   var $resetBtn    = document.getElementById('resetBtn');
   var $themeToggle = document.getElementById('themeToggle');
 
-  var $optHeadings   = document.getElementById('optHeadings');
-  var $optParagraphs = document.getElementById('optParagraphs');
-  var $optColumns    = document.getElementById('optColumns');
-  var $optPageBreaks = document.getElementById('optPageBreaks');
-  var $optFontSize   = document.getElementById('optFontSize');
-
   var currentFile = null;
   var docxBlob    = null;
   var outputName  = 'document.docx';
+  var progressTimer = null;
 
-  /* ── docx may load as ESM (window.docx) or UMD fallback (window.docx). Normalize. ── */
-  function getDocx() {
-    if (window.docx && window.docx.Document) return window.docx;
-    if (window.docx && window.docx.default && window.docx.default.Document) return window.docx.default;
-    return null;
-  }
-
-  /* ── Theme ── */
   $themeToggle.addEventListener('click', function () {
     try {
       var cur  = document.documentElement.getAttribute('data-theme');
@@ -440,18 +338,6 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     } catch (e) {}
   });
 
-  /* ── XML safety: strip chars illegal in XML 1.0 (prevents Word "Xml parsing error") ── */
-  function cleanXmlText(s) {
-    if (s == null) return '';
-    s = String(s);
-    s = s.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
-    s = s.replace(/[\uFFFE\uFFFF]/g, '');
-    s = s.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, '');
-    s = s.replace(/(^|)([\uDC00-\uDFFF])/g, '$1');
-    return s;
-  }
-
-  /* ── Helpers ── */
   function formatBytes(bytes) {
     if (bytes < 1024)        return bytes + ' B';
     if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
@@ -461,65 +347,53 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
   function hideError() { $errorMsg.classList.remove('show'); }
   function setProgress(pct, label) {
     $progressFill.style.width = pct + '%';
-    $progressText.textContent = label || 'Processing…';
-    $progressPct.textContent  = Math.round(pct) + '%';
+    if (label) $progressText.textContent = label;
+    $progressPct.textContent = Math.round(pct) + '%';
   }
+  function stopFakeProgress() { if (progressTimer) { clearInterval(progressTimer); progressTimer = null; } }
   function resetUI() {
+    stopFakeProgress();
     currentFile = null; docxBlob = null;
     $dropZone.style.display = '';
     $fileBar.classList.remove('show');
-    $optPanel.classList.remove('show');
     $convertWrap.classList.remove('show');
     $progressWrap.classList.remove('show');
     $resultCard.classList.remove('show');
-    hideError(); $noticeMsg.classList.remove('show'); setProgress(0, '');
+    hideError(); setProgress(0, 'Processing…');
     $fileInput.value = '';
   }
   function loadFile(file) {
-    hideError(); $noticeMsg.classList.remove('show');
+    hideError();
     if (!file) return;
     var isPdf = file.type === 'application/pdf' || /\.pdf$/i.test(file.name);
     if (!isPdf) { showError('Please select a valid PDF file.'); return; }
+    if (file.size > 25 * 1024 * 1024) { showError('File is too large (max 25MB).'); return; }
     currentFile = file;
     outputName  = file.name.replace(/\.pdf$/i, '') + '.docx';
     $flName.textContent = file.name;
     $flMeta.textContent = formatBytes(file.size) + ' · PDF';
     $dropZone.style.display = 'none';
     $fileBar.classList.add('show');
-    $optPanel.classList.add('show');
     $convertWrap.classList.add('show');
     $resultCard.classList.remove('show');
     $progressWrap.classList.remove('show');
   }
-  function waitForLib(check, name, timeoutMs) {
-    return new Promise(function (resolve, reject) {
-      if (check()) { resolve(); return; }
-      var start = Date.now();
-      var id = setInterval(function () {
-        if (check()) { clearInterval(id); resolve(); }
-        else if (Date.now() - start > timeoutMs) {
-          clearInterval(id);
-          reject(new Error(name + ' could not be loaded. Check your internet connection and reload.'));
-        }
-      }, 100);
-    });
-  }
   function downloadBlob(blob, filename) {
-    if (typeof window.saveAs === 'function') { window.saveAs(blob, filename); return; }
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
     a.href = url; a.download = filename;
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
   }
-  function median(arr) {
-    if (!arr.length) return 0;
-    var s = arr.slice().sort(function (a, b) { return a - b; });
-    var m = Math.floor(s.length / 2);
-    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+  function readFileAsArrayBuffer(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onload  = function (e) { resolve(e.target.result); };
+      reader.onerror = function () { reject(new Error('Could not read the file.')); };
+      reader.readAsArrayBuffer(file);
+    });
   }
 
-  /* ── Drag & drop ── */
   $dropZone.addEventListener('dragover', function (e) { e.preventDefault(); $dropZone.classList.add('drag-over'); });
   $dropZone.addEventListener('dragleave', function () { $dropZone.classList.remove('drag-over'); });
   $dropZone.addEventListener('drop', function (e) {
@@ -527,450 +401,71 @@ footer { text-align:center; padding:36px 20px; font-size:13px; color:var(--muted
     var file = e.dataTransfer.files && e.dataTransfer.files[0];
     if (file) loadFile(file);
   });
-  $dropZone.addEventListener('click', function (e) {
-    if (e.target.closest('#uploadBtn')) return;
-    $fileInput.click();
-  });
-  $dropZone.addEventListener('keydown', function (e) {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $fileInput.click(); }
-  });
+  $dropZone.addEventListener('click', function (e) { if (e.target.closest('#uploadBtn')) return; $fileInput.click(); });
+  $dropZone.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $fileInput.click(); } });
   $uploadBtn.addEventListener('click', function (e) { e.stopPropagation(); $fileInput.click(); });
-  $fileInput.addEventListener('change', function () {
-    if ($fileInput.files && $fileInput.files[0]) loadFile($fileInput.files[0]);
-  });
+  $fileInput.addEventListener('change', function () { if ($fileInput.files && $fileInput.files[0]) loadFile($fileInput.files[0]); });
   $removeFile.addEventListener('click', resetUI);
   $resetBtn.addEventListener('click', resetUI);
   $downloadBtn.addEventListener('click', function () { if (docxBlob) downloadBlob(docxBlob, outputName); });
   $convertBtn.addEventListener('click', function () { if (currentFile) runConversion(currentFile); });
 
-  function readFileAsArrayBuffer(file) {
-    return new Promise(function (resolve, reject) {
-      var reader = new FileReader();
-      reader.onload  = function (e) { resolve(e.target.result); };
-      reader.onerror = function () { reject(new Error('Could not read the file. Please try again.')); };
-      reader.readAsArrayBuffer(file);
-    });
-  }
-
-  /* ============================================================
-     CORE: PDF → DOCX
-     ============================================================ */
   async function runConversion(file) {
-    hideError(); $noticeMsg.classList.remove('show');
+    hideError();
     $convertWrap.classList.remove('show');
     $progressWrap.classList.add('show');
     $resultCard.classList.remove('show');
     $convertBtn.disabled = true;
-    setProgress(2, 'Preparing…');
+    setProgress(8, 'Uploading securely…');
+
+    // Smooth fake progress while Adobe processes (real status not streamed)
+    stopFakeProgress();
+    var pct = 8;
+    progressTimer = setInterval(function () {
+      pct += Math.random() * 4;
+      if (pct >= 90) { pct = 90; }
+      setProgress(pct, pct < 35 ? 'Uploading securely…' : 'Converting with Adobe engine…');
+    }, 600);
 
     try {
-      await waitForLib(function () {
-        return window.pdfjsLib && typeof pdfjsLib.getDocument === 'function';
-      }, 'PDF engine (PDF.js)', 15000);
-      await waitForLib(function () { return !!getDocx(); }, 'Word engine (docx)', 20000);
-
-      var docx = getDocx();
-
-      setProgress(6, 'Reading PDF…');
       var buffer = await readFileAsArrayBuffer(file);
 
-      var loadingTask = pdfjsLib.getDocument({ data: buffer });
-      var pdfDoc = await loadingTask.promise;
-      var numPages = pdfDoc.numPages;
-      setProgress(12, 'Loaded PDF (' + numPages + ' page' + (numPages === 1 ? '' : 's') + ')…');
-
-      var opts = {
-        useHeadings:   $optHeadings.checked,
-        useParagraphs: $optParagraphs.checked,
-        useColumns:    $optColumns.checked,
-        usePageBreaks: $optPageBreaks.checked,
-        baseFontSize:  parseInt($optFontSize.value, 10) || 11
-      };
-
-      var pagesLines = [];
-      var totalTokens = 0;
-      for (var p = 1; p <= numPages; p++) {
-        var page = await pdfDoc.getPage(p);
-        var tc   = await page.getTextContent();
-        totalTokens += (tc.items ? tc.items.length : 0);
-        pagesLines.push(reconstructPage(tc.items, tc.styles, opts.useColumns));
-        if (typeof page.cleanup === 'function') page.cleanup();
-        setProgress(12 + (p / numPages) * 52, 'Extracting page ' + p + ' of ' + numPages + '…');
-      }
-
-      if (totalTokens === 0) { throw new Error('NO_TEXT'); }
-
-      setProgress(66, 'Analyzing layout…');
-      var bodySize = detectBodySize(pagesLines);
-
-      setProgress(74, 'Building Word document…');
-      var children = buildDocxChildren(docx, pagesLines, opts, bodySize);
-
-      setProgress(88, 'Generating .docx file…');
-      var baseTitle = cleanXmlText(file.name.replace(/\.pdf$/i, '')) || 'document';
-
-      var wordDoc = new docx.Document({
-        creator:     'ImgPDFTools',
-        title:       baseTitle,
-        description: 'Converted from PDF by ImgPDFTools (imgpdftools.xyz)',
-        styles: { default: { document: { run: { size: opts.baseFontSize * 2, font: 'Calibri' } } } },
-        sections: [{ properties: {}, children: children }]
+      var res = await fetch('/api/convert', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/pdf' },
+        body: buffer
       });
 
-      setProgress(94, 'Packaging document…');
-      var blob = await docx.Packer.toBlob(wordDoc);
+      stopFakeProgress();
+      setProgress(94, 'Finalizing…');
+
+      if (!res.ok) {
+        var msg = 'Conversion failed. Please try again.';
+        try { var e = await res.json(); if (e && e.error) msg = e.error; } catch (_) {}
+        throw new Error(msg);
+      }
+
+      var blob = await res.blob();
+      if (!blob || blob.size === 0) throw new Error('Empty result received.');
       docxBlob = blob;
 
       setProgress(100, 'Done!');
       setTimeout(function () {
         $progressWrap.classList.remove('show');
         $resultCard.classList.add('show');
-        $resultSub.textContent = 'Your Word document is ready — ' + formatBytes(blob.size) + ' · ' + baseTitle + '.docx';
+        $resultSub.textContent = 'Your Word document is ready — ' + formatBytes(blob.size) + ' · ' + outputName;
         $convertBtn.disabled = false;
       }, 350);
 
     } catch (err) {
+      stopFakeProgress();
       console.error('[PDF→DOCX]', err);
-      var msg = 'Conversion failed.';
-      if (err && err.message === 'NO_TEXT') {
-        msg = 'This PDF has no selectable text — it looks scanned (image-only). This tool extracts real text and cannot OCR scanned pages.';
-      } else if (err && err.message) {
-        if (/password/i.test(err.message))         msg = 'This PDF is password-protected. Please remove the password first.';
-        else if (/invalid pdf/i.test(err.message)) msg = 'The file does not appear to be a valid PDF.';
-        else                                        msg = 'Conversion failed: ' + err.message;
-      }
-      showError(msg);
-      finishFail();
+      showError(err && err.message ? err.message : 'Conversion failed.');
+      $progressWrap.classList.remove('show');
+      $convertWrap.classList.add('show');
+      $convertBtn.disabled = false;
+      setProgress(0, 'Processing…');
     }
-  }
-
-  function finishFail() {
-    $progressWrap.classList.remove('show');
-    $convertWrap.classList.add('show');
-    $convertBtn.disabled = false;
-    setProgress(0, '');
-  }
-
-  /* ============================================================
-     GEOMETRIC RECONSTRUCTION (true reading order + columns)
-     ============================================================ */
-  function reconstructPage(items, styles, useColumns) {
-    if (!items || !items.length) return [];
-
-    var toks = [];
-    for (var i = 0; i < items.length; i++) {
-      var it = items[i];
-      if (!it || typeof it.str !== 'string') continue;
-      var s = cleanXmlText(it.str);
-      if (s === '' || s.replace(/\s/g, '').length === 0) continue;
-
-      var t  = it.transform || [1, 0, 0, 1, 0, 0];
-      var fs = Math.abs(t[3]) || Math.abs(t[0]) || 12;
-      var x  = t[4];
-      var y  = t[5];
-      var w  = (typeof it.width === 'number' && it.width > 0) ? it.width : s.length * fs * 0.5;
-
-      var family = (styles && styles[it.fontName] && styles[it.fontName].fontFamily) || it.fontName || '';
-      toks.push({
-        text:   s,
-        x:      x,
-        x2:     x + w,
-        y:      y,
-        fs:     fs,
-        bold:   /bold|black|heavy|semibold|demibold/i.test(family),
-        italic: /italic|oblique/i.test(family)
-      });
-    }
-    if (!toks.length) return [];
-
-    var medFs = median(toks.map(function (t) { return t.fs; })) || 12;
-
-    toks.sort(function (a, b) {
-      if (Math.abs(b.y - a.y) > 0.1) return b.y - a.y;
-      return a.x - b.x;
-    });
-
-    var rawLines = [];
-    var cur = null;
-    for (var j = 0; j < toks.length; j++) {
-      var tk = toks[j];
-      var tol = Math.max(2, Math.max(tk.fs, cur ? cur.fs : tk.fs) * 0.5);
-      if (cur && Math.abs(tk.y - cur.y) <= tol) {
-        cur.tokens.push(tk);
-        cur.xMin = Math.min(cur.xMin, tk.x);
-        cur.xMax = Math.max(cur.xMax, tk.x2);
-        if (tk.fs > cur.fs) cur.fs = tk.fs;
-      } else {
-        cur = { y: tk.y, fs: tk.fs, tokens: [tk], xMin: tk.x, xMax: tk.x2 };
-        rawLines.push(cur);
-      }
-    }
-
-    var ordered;
-    var bands = useColumns ? detectColumns(rawLines, medFs) : null;
-    if (bands && bands.length > 1) {
-      ordered = [];
-      var used = [];
-      bands.forEach(function (band) {
-        var inBand = rawLines.filter(function (l, idx) {
-          if (used[idx]) return false;
-          var c = (l.xMin + l.xMax) / 2;
-          if (c >= band.start && c < band.end) { used[idx] = true; return true; }
-          return false;
-        }).sort(function (a, b) { return b.y - a.y; });
-        ordered = ordered.concat(inBand);
-      });
-      rawLines.forEach(function (l, idx) { if (!used[idx]) ordered.push(l); });
-    } else {
-      ordered = rawLines.slice().sort(function (a, b) { return b.y - a.y; });
-    }
-
-    return ordered.map(function (l) { return buildLineRuns(l, medFs); });
-  }
-
-  function detectColumns(rawLines, medFs) {
-    if (rawLines.length < 8) return null;
-    var pageMin = Infinity, pageMax = -Infinity;
-    for (var i = 0; i < rawLines.length; i++) {
-      if (rawLines[i].xMin < pageMin) pageMin = rawLines[i].xMin;
-      if (rawLines[i].xMax > pageMax) pageMax = rawLines[i].xMax;
-    }
-    var width = pageMax - pageMin;
-    if (!(width > 0)) return null;
-
-    var BINS  = 120;
-    var binW  = width / BINS;
-    var cover = [];
-    for (var b = 0; b < BINS; b++) cover[b] = 0;
-    for (var k = 0; k < rawLines.length; k++) {
-      var a  = Math.max(0, Math.floor((rawLines[k].xMin - pageMin) / binW));
-      var bb = Math.min(BINS - 1, Math.floor((rawLines[k].xMax - pageMin) / binW));
-      for (var c = a; c <= bb; c++) cover[c]++;
-    }
-
-    var nLines    = rawLines.length;
-    var threshold = Math.max(1, nLines * 0.06);
-    var gutters = [];
-    var p = 0;
-    while (p < BINS) {
-      if (cover[p] < threshold) {
-        var q = p;
-        while (q < BINS && cover[q] < threshold) q++;
-        gutters.push({ a: p, b: q - 1 });
-        p = q;
-      } else { p++; }
-    }
-    var minGutterBins = Math.max(2, Math.ceil((medFs * 1.5) / binW));
-    var internal = gutters.filter(function (g) {
-      return g.a > 0 && g.b < BINS - 1 && (g.b - g.a + 1) >= minGutterBins;
-    });
-    if (!internal.length) return null;
-
-    var bands  = [];
-    var startX = pageMin - 1;
-    internal.forEach(function (g) {
-      var gutterMid = pageMin + ((g.a + g.b + 1) / 2) * binW;
-      bands.push({ start: startX, end: gutterMid });
-      startX = gutterMid;
-    });
-    bands.push({ start: startX, end: pageMax + 1 });
-
-    var ok = bands.every(function (band) {
-      var count = rawLines.filter(function (l) {
-        var cc = (l.xMin + l.xMax) / 2;
-        return cc >= band.start && cc < band.end;
-      }).length;
-      return count >= Math.max(2, nLines * 0.1);
-    });
-    return ok ? bands : null;
-  }
-
-  function buildLineRuns(line, medFs) {
-    var toks = line.tokens.slice().sort(function (a, b) { return a.x - b.x; });
-    var parts = [];
-    var maxFs = 0, weighted = 0, chars = 0;
-
-    for (var i = 0; i < toks.length; i++) {
-      var tk = toks[i];
-      var prefix = '';
-      if (i > 0) {
-        var prev = toks[i - 1];
-        var gap  = tk.x - prev.x2;
-        var endsSpace   = /\s$/.test(prev.text);
-        var startsSpace = /^\s/.test(tk.text);
-        if (!endsSpace && !startsSpace && gap > Math.max(tk.fs, prev.fs) * 0.2) prefix = ' ';
-      }
-      parts.push({ str: prefix + tk.text, fs: Math.round(tk.fs), bold: tk.bold, italic: tk.italic });
-      if (tk.fs > maxFs) maxFs = tk.fs;
-      var len = tk.text.replace(/\s/g, '').length || 1;
-      weighted += tk.fs * len; chars += len;
-    }
-
-    var runs = [];
-    for (var k = 0; k < parts.length; k++) {
-      var pt   = parts[k];
-      var last = runs[runs.length - 1];
-      if (last && last.bold === pt.bold && last.italic === pt.italic && last.size === pt.fs) {
-        last.text += pt.str;
-      } else {
-        runs.push({ text: pt.str, bold: pt.bold, italic: pt.italic, size: pt.fs });
-      }
-    }
-
-    var avgFs = chars ? (weighted / chars) : (maxFs || medFs);
-    var full  = runs.map(function (r) { return r.text; }).join('');
-    return {
-      text:  full.replace(/\s+$/, ''),
-      runs:  runs,
-      avgFs: avgFs,
-      maxFs: maxFs || avgFs,
-      y:     line.y,
-      xMin:  line.xMin
-    };
-  }
-
-  function detectBodySize(pagesLines) {
-    var freq = {};
-    for (var i = 0; i < pagesLines.length; i++) {
-      var lines = pagesLines[i];
-      for (var j = 0; j < lines.length; j++) {
-        var runs = lines[j].runs;
-        for (var k = 0; k < runs.length; k++) {
-          var r   = runs[k];
-          var key = Math.round(r.size);
-          if (key <= 0) continue;
-          var len = r.text.replace(/\s/g, '').length;
-          if (len <= 0) continue;
-          freq[key] = (freq[key] || 0) + len;
-        }
-      }
-    }
-    var bodySize = 12, max = -1;
-    Object.keys(freq).forEach(function (k) {
-      if (freq[k] > max) { max = freq[k]; bodySize = parseInt(k, 10); }
-    });
-    return bodySize || 12;
-  }
-
-  /* ============================================================
-     BUILD DOCX CHILDREN  (LTR-forced + smart heading detection)
-     ============================================================ */
-  function buildDocxChildren(docx, pagesLines, opts, bodySize) {
-    var Paragraph     = docx.Paragraph;
-    var TextRun       = docx.TextRun;
-    var HeadingLevel  = docx.HeadingLevel;
-    var PageBreak     = docx.PageBreak;
-    var AlignmentType = docx.AlignmentType;
-
-    var children = [];
-    var scale    = opts.baseFontSize / (bodySize || opts.baseFontSize);
-
-    function makeRuns(runs, forceBold) {
-      return runs.map(function (r) {
-        var ptSize = (r.size || bodySize) * scale;
-        return new TextRun({
-          text:    cleanXmlText(r.text),
-          bold:    forceBold ? true : !!r.bold,
-          italics: !!r.italic,
-          size:    Math.max(2, Math.round(ptSize * 2)),
-          font:    'Calibri'
-        });
-      });
-    }
-
-    /* Force Left-to-Right + LEFT alignment so Arabic/RTL Word installs
-       don't push English text to the right side. */
-    function makeBodyParagraph(runs) {
-      return new Paragraph({
-        children:      makeRuns(runs, false),
-        alignment:     AlignmentType.LEFT,
-        bidirectional: false,
-        spacing: opts.useParagraphs
-          ? { before: 0, after: 120, line: 276, lineRule: 'auto' }
-          : { before: 0, after: 40 }
-      });
-    }
-    function makeHeadingParagraph(line) {
-      var ratio = line.maxFs / (bodySize || line.maxFs);
-      var level = ratio >= 1.8  ? HeadingLevel.HEADING_1
-                : ratio >= 1.4  ? HeadingLevel.HEADING_2
-                : HeadingLevel.HEADING_3;
-      return new Paragraph({
-        children:      makeRuns(line.runs, true),
-        heading:       level,
-        alignment:     AlignmentType.LEFT,
-        bidirectional: false,
-        spacing: { before: 240, after: 120 }
-      });
-    }
-
-    /* Is the WHOLE line bold? (catches small bold sub-headings) */
-    function lineAllBold(line) {
-      var any = false;
-      for (var i = 0; i < line.runs.length; i++) {
-        var r = line.runs[i];
-        if (r.text.replace(/\s/g, '').length === 0) continue;
-        any = true;
-        if (!r.bold) return false;
-      }
-      return any;
-    }
-
-    function isSameParagraph(prev, curL) {
-      if (!prev) return false;
-      var lineHeight  = Math.max(prev.maxFs, curL.maxFs) * 1.2;
-      var gap         = prev.y - curL.y;
-      var closeEnough = gap > 0 && gap <= lineHeight * 1.6;
-      var similarSize = Math.abs(prev.avgFs - curL.avgFs) <= 1.5;
-      var alignedLeft = Math.abs((prev.xMin || 0) - (curL.xMin || 0)) <= Math.max(prev.maxFs, curL.maxFs) * 2.5;
-      return closeEnough && similarSize && alignedLeft;
-    }
-
-    for (var pageIdx = 0; pageIdx < pagesLines.length; pageIdx++) {
-      var lines = pagesLines[pageIdx];
-      var buffer = null;
-      var prevLine = null;
-
-      for (var li = 0; li < lines.length; li++) {
-        var line = lines[li];
-        if (!line.text) continue;
-
-        var ratio   = line.maxFs / (bodySize || line.maxFs);
-        var allBold = lineAllBold(line);
-        var isHeading = opts.useHeadings && line.text.length < 200 && (
-          ratio >= 1.25 ||
-          (allBold && ratio >= 1.03 && line.text.length < 90)
-        );
-
-        if (isHeading) {
-          if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
-          buffer = null;
-          children.push(makeHeadingParagraph(line));
-          prevLine = null;
-          continue;
-        }
-
-        if (opts.useParagraphs && buffer && isSameParagraph(prevLine, line)) {
-          buffer.push({ text: ' ', bold: false, italic: false, size: Math.round(line.avgFs) });
-          buffer = buffer.concat(line.runs);
-        } else {
-          if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
-          buffer = line.runs.slice();
-        }
-        prevLine = line;
-      }
-
-      if (buffer && buffer.length) children.push(makeBodyParagraph(buffer));
-
-      if (opts.usePageBreaks && pageIdx < pagesLines.length - 1) {
-        children.push(new Paragraph({ children: [new PageBreak()], bidirectional: false }));
-      }
-    }
-
-    if (!children.length) {
-      children.push(new Paragraph({ children: [new TextRun({ text: '' })], bidirectional: false }));
-    }
-    return children;
   }
 
 })();
