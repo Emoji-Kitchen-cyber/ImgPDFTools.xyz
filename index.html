@@ -21,7 +21,7 @@
 <meta name="google-site-verification" content="S_xtKI5JCRkkoHtqpOZ35xBeybTS056a9DXNtNMAUZ0" />
 
 <title>ImgPDFTools — Free Online Image & PDF Toolkit</title>
-<meta name="description" content="17+ free online image & PDF tools: compress, resize, crop, convert, remove background, merge PDFs, split PDFs, PDF to Word, and more. 100% browser-based — private, instant, no sign-up." />
+<meta name="description" content="17+ free image & PDF tools: compress, convert, merge, split & more. 100% browser-based — private, instant, no sign-up required." />
 <meta name="keywords" content="image tools, pdf tools, compress image, resize image, convert image, remove background, merge pdf, split pdf, compress pdf, pdf to jpg, jpg to pdf, pdf to word, pdf to docx, qr generator, free online tools, browser tools, privacy-first tools" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="author" content="ImgPDFTools" />
@@ -173,7 +173,7 @@
     {
       "@type": "Question",
       "name": "Which image formats are supported?",
-      "acceptedAnswer": {"@type": "Answer", "text": "ImgPDFTools supports JPG, PNG, WEBP, GIF, and more across its image tools."}
+      "acceptedAnswer": {"@type": "Answer", "text": "ImgPDFTools supports JPG, PNG, and WEBP across its image tools. Some tools also accept GIF and BMP files."}
     },
     {
       "@type": "Question",
@@ -1568,6 +1568,20 @@ footer {
     $searchClear.classList.toggle('visible', query.length > 0);
   }
 
+  /* ============================================================
+     Read ?q= from URL on page load and pre-fill the search box.
+     (Makes the WebSite SearchAction schema actually functional.)
+     ============================================================ */
+  function applyURLSearchParam() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var q = params.get('q');
+      if (q) {
+        $search.value = q;
+      }
+    } catch(e) {}
+  }
+
   function onFilterClick(category, btn) {
     _activeFilter = category;
     $filterRow.querySelectorAll('.filter-pill').forEach(function(p) {
@@ -1723,6 +1737,7 @@ footer {
     renderSidebar();
     renderFooter();
     handleHashRedirect();
+    applyURLSearchParam();
     applyFilters();
     window.addEventListener('load', registerSW);
   }
