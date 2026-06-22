@@ -5,34 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' www.googletagmanager.com www.google-analytics.com; style-src 'self' 'unsafe-inline' cdnjs.cloudflare.com fonts.googleapis.com; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; img-src 'self' data: https:; connect-src 'self' www.google-analytics.com; object-src 'none'; base-uri 'self';" />
 <title>ImgPDFTools Blog — Image, PDF & Developer Tools Knowledge Base</title>
-<meta name="description" content="Expert guides on image compression, background removal, PDF editing, OCR, QR codes, CAD conversion and more — all free, private, and 100% in your browser." />
-<meta name="keywords" content="image tools, compress images, remove background, PDF tools, merge pdf, split pdf, OCR, favicon generator, QR code, JSON formatter, DXF converter, free online tools" />
+<meta name="description" content="Expert guides on image compression, background removal, PDF editing, QR codes and more — all free, private, and 100% in your browser." />
+<meta name="keywords" content="image tools, compress images, remove background, PDF tools, merge pdf, split pdf, favicon generator, QR code, free online tools" />
 <meta name="author" content="ImgPDFTools" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 <meta name="theme-color" content="#6366f1" />
 <link rel="canonical" href="https://imgpdftools.xyz/blog/" />
-<link rel="icon" href="/favicon.ico" />
+
+<!-- Favicons (consistent with main site) -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
 <!-- Open Graph -->
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="ImgPDFTools" />
 <meta property="og:title" content="ImgPDFTools Blog — Tools Knowledge Base" />
-<meta property="og:description" content="Expert guides on image optimization, PDF editing, OCR, and developer utilities." />
+<meta property="og:description" content="Expert guides on image optimization, PDF editing, and developer utilities." />
 <meta property="og:url" content="https://imgpdftools.xyz/blog/" />
 <meta property="og:image" content="https://imgpdftools.xyz/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:locale" content="en_US" />
+
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="ImgPDFTools Blog — Tools Knowledge Base" />
-<meta name="twitter:description" content="Expert guides on image optimization, PDF editing, OCR, and developer utilities." />
+<meta name="twitter:description" content="Expert guides on image optimization, PDF editing, and developer utilities." />
 <meta name="twitter:image" content="https://imgpdftools.xyz/og-image.png" />
+
 <!-- Pre-paint theme (prevents flash) -->
 <script>
   (function(){
     try{
-      var t = localStorage.getItem('imgpdftools-theme') || localStorage.getItem('pixelpress-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+      var t = localStorage.getItem('imgpdftools-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', t);
     }catch(e){}
   })();
 </script>
+
+<!-- Preconnects -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+<link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3P7QPQKV3K"></script>
 <script>
@@ -41,6 +59,7 @@
   gtag('js', new Date());
   gtag('config', 'G-3P7QPQKV3K');
 </script>
+
 <!-- Structured data (SEO) -->
 <script type="application/ld+json">
 {
@@ -59,7 +78,7 @@
     {
       "@type": "Blog",
       "name": "ImgPDFTools Blog",
-      "description": "Guides and tutorials on image, PDF, OCR and developer tools.",
+      "description": "Guides and tutorials on image and PDF tools.",
       "url": "https://imgpdftools.xyz/blog/",
       "publisher": { "@type": "Organization", "name": "ImgPDFTools" }
     },
@@ -73,6 +92,7 @@
   ]
 }
 </script>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -115,7 +135,7 @@ nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-co
 .search-wrap{max-width:500px;margin:0 auto;position:relative;}
 .search-input{width:100%;padding:13px 44px 13px 44px;border:1px solid var(--border);border-radius:12px;background:var(--card);color:var(--text);font-size:.95rem;font-family:var(--fbody);outline:none;transition:.2s;}
 .search-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--glow);}
-.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.95rem;}
 .search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:.95rem;display:none;}
 .search-clear:hover{color:var(--accent);}
 
@@ -182,9 +202,9 @@ footer p{font-size:.8rem;color:var(--muted);}
 <section class="hero">
   <div class="hero-badge"><span></span> Knowledge Base</div>
   <h1>The ImgPDFTools <em>Knowledge Base</em></h1>
-  <p>Expert guides on image optimization, PDF editing, OCR, and developer utilities — all free and private.</p>
+  <p>Expert guides on image optimization, PDF editing, and developer utilities — all free and private.</p>
   <div class="search-wrap">
-    <span class="search-icon">🔍</span>
+    <span class="search-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
     <input type="text" class="search-input" id="blogSearch" placeholder="Search articles..." aria-label="Search articles" />
     <button class="search-clear" id="searchClear" aria-label="Clear search"><i class="fa-solid fa-xmark"></i></button>
   </div>
@@ -275,36 +295,6 @@ footer p{font-size:.8rem;color:var(--muted);}
       <p>Combine PDFs into a single file in any order. Fast, free, and entirely browser-based.</p>
       <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
     </article>
-    <article class="card" data-category="utility" data-href="./ocr-guide.html" role="link" tabindex="0" aria-label="Read: OCR Scanner">
-      <span class="card-category">OCR Scanner</span>
-      <h2>OCR Scanner – Extract Text from Images</h2>
-      <p>Extract text from any image with 100+ languages using Tesseract.js – fully client-side.</p>
-      <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
-    </article>
-    <article class="card" data-category="design" data-href="./palette-guide.html" role="link" tabindex="0" aria-label="Read: Palette Generator">
-      <span class="card-category">Color Tools</span>
-      <h2>Palette Generator – Create Beautiful Color Schemes</h2>
-      <p>Generate complementary, analogous, triadic palettes. Extract colors from images.</p>
-      <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
-    </article>
-    <article class="card" data-category="utility" data-href="./password-guide.html" role="link" tabindex="0" aria-label="Read: Password Generator">
-      <span class="card-category">Security</span>
-      <h2>Password Generator – Strong Random Passwords</h2>
-      <p>Cryptographically secure passwords with passphrase mode, batch generation, and entropy meter.</p>
-      <div class="card-meta"><span>📖 4 Min Read</span><span class="card-arrow">→</span></div>
-    </article>
-    <article class="card" data-category="pdf" data-href="./pdf-annotator-guide.html" role="link" tabindex="0" aria-label="Read: PDF Annotator">
-      <span class="card-category">PDF Editing</span>
-      <h2>PDF Annotator – Draw, Sign & Highlight</h2>
-      <p>Add text, draw, highlight, and sign PDFs directly in your browser. No software needed.</p>
-      <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
-    </article>
-    <article class="card" data-category="utility" data-href="./qr-guide.html" role="link" tabindex="0" aria-label="Read: QR Code Generator">
-      <span class="card-category">QR Codes</span>
-      <h2>QR Code Generator – Custom Styled Codes</h2>
-      <p>Generate trackable vector QR codes with logos, gradients, and batch export.</p>
-      <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
-    </article>
     <article class="card" data-category="design" data-href="./screenshot-editor-guide.html" role="link" tabindex="0" aria-label="Read: Screenshot Editor">
       <span class="card-category">Mockups</span>
       <h2>Screenshot Editor – Beautiful Device Frames</h2>
@@ -329,23 +319,11 @@ footer p{font-size:.8rem;color:var(--muted);}
       <p>Convert between hundreds of units with live rate display and history saving.</p>
       <div class="card-meta"><span>📖 3 Min Read</span><span class="card-arrow">→</span></div>
     </article>
-    <article class="card" data-category="utility" data-href="./json-formatter-guide.html" role="link" tabindex="0" aria-label="Read: JSON Formatter">
-      <span class="card-category">Developer Tools</span>
-      <h2>JSON Formatter – Beautify & Validate JSON</h2>
-      <p>Format, minify, and validate JSON data with real-time error detection. Essential for developers.</p>
-      <div class="card-meta"><span>📖 6 Min Read</span><span class="card-arrow">→</span></div>
-    </article>
-    <article class="card" data-category="utility" data-href="./cad-converter-guide.html" role="link" tabindex="0" aria-label="Read: CAD Converter">
-      <span class="card-category">CAD Tools</span>
-      <h2>CAD Converter – Parse DXF Files & Export</h2>
-      <p>Upload DXF files, preview drawings, and export as SVG, PDF, or JSON. Free & client-side.</p>
-      <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
-    </article>
-    <article class="card" data-category="utility" data-href="./url-shortener-guide.html" role="link" tabindex="0" aria-label="Read: URL Shortener">
-      <span class="card-category">Link Tools</span>
-      <h2>URL Shortener – Create Short Links & QR Codes</h2>
-      <p>Shorten long URLs, create custom aliases, generate QR codes, and track clicks. 100% client-side.</p>
-      <div class="card-meta"><span>📖 7 Min Read</span><span class="card-arrow">→</span></div>
+    <article class="card" data-category="utility" data-href="./qr-guide.html" role="link" tabindex="0" aria-label="Read: QR Code Generator">
+      <span class="card-category">QR Codes</span>
+      <h2>QR Code Generator – Custom Styled Codes</h2>
+      <p>Generate trackable vector QR codes with logos, gradients, and batch export.</p>
+      <div class="card-meta"><span>📖 5 Min Read</span><span class="card-arrow">→</span></div>
     </article>
 
   </div>
