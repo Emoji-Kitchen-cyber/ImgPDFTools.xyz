@@ -57,11 +57,13 @@
                img-src 'self' data: blob: https:;
                connect-src 'self' https: www.google-analytics.com;
                frame-src https:;
-               object-src 'none';" />
+               object-src 'none';
+               base-uri 'self';" />
 
 <!-- Preconnects -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
 <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
 
 <!-- Fonts (non-blocking) -->
@@ -395,6 +397,24 @@ nav {
 }
 .logo-text-tools { color: var(--muted); font-weight: 600; }
 
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.nav-center a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: color 0.2s;
+}
+
+.nav-center a:hover,
+.nav-center a.active {
+  color: var(--accent);
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
@@ -420,6 +440,10 @@ nav {
   transform: scale(1.08);
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--glow);
+}
+
+@media (max-width: 700px) {
+  .nav-center { display: none; }
 }
 
 /* ============================================================
@@ -1195,6 +1219,12 @@ footer {
       </span>
     </a>
   </div>
+  <div class="nav-center" aria-label="Secondary navigation">
+    <a href="./index.html">Home</a>
+    <a href="./blog/index.html">Blog</a>
+    <a href="./about.html">About</a>
+    <a href="./contact.html">Contact</a>
+  </div>
   <div class="nav-actions">
     <button class="control-btn" id="themeToggle" aria-label="Toggle dark/light theme" title="Toggle theme">🌓</button>
   </div>
@@ -1390,7 +1420,7 @@ footer {
     {href:'./about.html',          icon:'fa-circle-info',       text:'About Us'},
     {href:'./contact.html',        icon:'fa-envelope',          text:'Contact'},
     {href:'./faq.html',            icon:'fa-circle-question',   text:'FAQ'},
-    {href:'./blog/',               icon:'fa-pen-to-square',     text:'Blog'},
+    {href:'./blog/index.html',     icon:'fa-pen-to-square',     text:'Blog'},
     {href:'./privacy-policy.html', icon:'fa-shield-halved',     text:'Privacy Policy'},
     {href:'./terms.html',          icon:'fa-file-contract',     text:'Terms of Service'},
     {href:'./disclaimer.html',     icon:'fa-triangle-exclamation',text:'Disclaimer'}
@@ -1400,7 +1430,7 @@ footer {
     {href:'./about.html',          text:'About'},
     {href:'./contact.html',        text:'Contact'},
     {href:'./faq.html',            text:'FAQ'},
-    {href:'./blog/',               text:'Blog'},
+    {href:'./blog/index.html',     text:'Blog'},
     {href:'./privacy-policy.html', text:'Privacy'},
     {href:'./terms.html',          text:'Terms'},
     {href:'./disclaimer.html',     text:'Disclaimer'}
