@@ -220,6 +220,7 @@
     function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.classList.remove('show'),2000); }
 
     let qrCode = null;
+    let currentLogoData = null;
     const qrContainer = document.getElementById('qrContainer');
     const DEFAULT_DATA = "https://imgpdftools.xyz";
 
@@ -232,7 +233,10 @@
       backgroundOptions: { color: "#ffffff" },
     };
 
-    function initQR() { qrCode = new QRCodeStyling({ ...defaultOptions }); qrCode.append(qrContainer); }
+    function initQR() { 
+      qrCode = new QRCodeStyling({ ...defaultOptions }); 
+      qrCode.append(qrContainer); 
+    }
 
     // Build a fresh options object from current UI state (used for preview + export)
     function getCurrentOptions(size) {
@@ -250,7 +254,7 @@
         dotsOptions: { type: dotStyle, gradient: { type: "linear", rotation: 0, colorStops: [ { offset: 0, color: color1 }, { offset: 1, color: color2 } ] } },
         cornersSquareOptions: { type: cornerStyle, color: color1 },
         backgroundOptions: { color: bgColor },
-        image: qrCode?._options?.image || "",
+        image: currentLogoData || "",
         imageOptions: { hideBackgroundDots: true, imageSize: 0.4, margin: 10 }
       };
       if (size) { opts.width = size; opts.height = size; }
@@ -366,33 +370,7 @@
       if (mode !== 'batch') updateQR();
     }
 
-    // ---- Tab switching ----
-    document.querySelectorAll('#contentTabs .tab').forEach(tab => {
-      tab.addEventListener('click', function() {
-        document.querySelectorAll('#contentTabs .tab').forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        renderInputFields(this.dataset.mode);
-      });
-    });
 
-    // ---- Style change listeners ----
-    document.getElementById('dotStyle').addEventListener('change', updateQR);
-    document.getElementById('cornerStyle').addEventListener('change', updateQR);
-    document.getElementById('color1').addEventListener('input', function() { document.getElementById('color1Hex').textContent = this.value; updateQR(); });
-    document.getElementById('color2').addEventListener('input', function() { document.getElementById('color2Hex').textContent = this.value; updateQR(); });
-    document.getElementById('bgColor').addEventListener('input', updateQR);
-    document.getElementById('transparentBg').addEventListener('change', updateQR);
-    document.getElementById('margin').addEventListener('input', function() { document.getElementById('marginVal').textContent = this.value; updateQR(); });
-    document.getElementById('ecLevel').addEventListener('change', updateQR);
-
-    // Logo upload
-    document.getElementById('logoUpload').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = (ev) => { if (qrCode) qrCode.update({ image: ev.target.result }); toast('Logo added'); };
-      reader.readAsDataURL(file);
-    });
 
     // ---- Download (high-res via temp instance) ----
     function downloadQR(format) {
@@ -402,7 +380,7 @@
       const size = parseInt(document.getElementById('exportSize').value);
       const ext = format === 'jpeg' ? 'jpg' : format;
       const doDownload = (data) => {
-        const exportOpts = { ...defaultOptions, data: data || DEFAULT_DATA, ...getCurrentOptions(size) };
+        const exportOpts = { ...defaultOptions, type: "canvas", data: data || DEFAULT_DATA, ...getCurrentOptions(size) };
         // JPEG can't be transparent — force white bg
         if (format === 'jpeg' && document.getElementById('transparentBg').checked) {
           exportOpts.backgroundOptions = { color: '#ffffff' };
@@ -430,3 +408,195 @@
       localStorage.setItem('imgpdftools-qr-preset', JSON.stringify(preset));
       toast('Design saved');
     }
+
+    function loadPreset() {
+      const saved = localStorage.getItem('imgpdftools-qr-preset');
+      if (!saved) {
+        toast('No saved design found');
+        return;
+      }
+      try {
+        const preset = JSON.parse(saved);
+        document.getElementById('dotStyle').value = preset.dotStyle || 'dots';
+        document.getElementById('cornerStyle').value = preset.cornerStyle || 'extra-rounded';
+        document.getElementById('color1').value = preset.color1 || '#000000';
+        document.getElementById('color1Hex').textContent = preset.color1 || '#000000';
+        document.getElementById('color2').value = preset.color2 || '#6366f1';
+        document.getElementById('color2Hex').textContent = preset.color2 || '#6366f1';
+        document.getElementById('bgColor').value = preset.bgColor || '#ffffff';
+        document.getElementById('transparentBg').checked = preset.transparentBg || false;
+        document.getElementById('margin').value = preset.margin || 10;
+        document.getElementById('marginVal').textContent = preset.margin || 10;
+        document.getElementById('ecLevel').value = preset.ecLevel || 'H';
+        document.getElementById('exportSize').value = preset.exportSize || '512';
+        updateQR();
+        toast('Design loaded');
+      } catch (e) {
+        toast('Error loading design');
+      }
+    }
+
+    // ---- Batch QR Generation ----
+    function generateBatch() {
+      const input = document.getElementById('batchInput')?.value.trim();
+      if (!input) {
+        toast('Please enter URLs or texts');
+        return;
+      }
+      const lines = input.split('\n').filter(l => l.trim());
+      if (lines.length === 0) {
+        toast('No valid entries');
+        return;
+      }
+
+      const progress = document.getElementById('batchProgress');
+      progress.textContent = `Generating ${lines.length} QR codes...`;
+
+      const zip = new JSZip();
+      let completed = 0;
+      let failed = 0;
+
+      lines.forEach((line, idx) => {
+        try {
+          const data = line.trim();
+          const size = parseInt(document.getElementById('exportSize').value);
+          
+          // Batch QR - WITHOUT logo to avoid duplication
+          const exportOpts = { 
+            width: size, 
+            height: size,
+            type: "canvas",
+            data: data,
+            margin: parseInt(document.getElementById('margin').value),
+            qrOptions: { errorCorrectionLevel: document.getElementById('ecLevel').value },
+            dotsOptions: { 
+              type: document.getElementById('dotStyle').value,
+              gradient: { 
+                type: "linear", 
+                rotation: 0, 
+                colorStops: [ 
+                  { offset: 0, color: document.getElementById('color1').value }, 
+                  { offset: 1, color: document.getElementById('color2').value } 
+                ] 
+              } 
+            },
+            cornersSquareOptions: { 
+              type: document.getElementById('cornerStyle').value,
+              color: document.getElementById('color1').value 
+            },
+            backgroundOptions: { 
+              color: document.getElementById('transparentBg').checked ? 'rgba(0,0,0,0)' : document.getElementById('bgColor').value 
+            },
+            imageOptions: { hideBackgroundDots: true, imageSize: 0.4, margin: 10 }
+          };
+
+          const qr = new QRCodeStyling(exportOpts);
+          
+          // Use safe canvas-based approach
+          const tempDiv = document.createElement('div');
+          tempDiv.style.display = 'none';
+          document.body.appendChild(tempDiv);
+          
+          qr.append(tempDiv);
+          
+          setTimeout(() => {
+            const canvas = tempDiv.querySelector('canvas');
+            if (canvas) {
+              canvas.toBlob(blob => {
+                if (blob) {
+                  zip.file(`qr-${idx + 1}.png`, blob);
+                } else {
+                  failed++;
+                }
+                completed++;
+                document.body.removeChild(tempDiv);
+                progress.textContent = `Generating ${lines.length} QR codes... (${completed}/${lines.length})`;
+                
+                if (completed === lines.length) {
+                  if (failed > 0) {
+                    toast(`⚠️ ${failed} QR code(s) failed`);
+                  }
+                  zip.generateAsync({ type: 'blob' }).then(blob => {
+                    saveAs(blob, `qr-batch-${Date.now()}.zip`);
+                    progress.textContent = `✓ Downloaded ${lines.length - failed} QR codes`;
+                    toast(`✅ Batch complete: ${lines.length - failed}/${lines.length}`);
+                  }).catch(err => {
+                    toast('Error creating ZIP file');
+                    console.error(err);
+                  });
+                }
+              }, 'image/png');
+            } else {
+              failed++;
+              completed++;
+              document.body.removeChild(tempDiv);
+            }
+          }, 100);
+        } catch (err) {
+          failed++;
+          completed++;
+          console.error(`Error generating QR ${idx + 1}:`, err);
+        }
+      });
+    }
+
+    // ---- Initialize on Page Load ----
+    window.addEventListener('DOMContentLoaded', () => {
+      initQR();
+      renderInputFields('url');
+
+      // ---- Tab switching ----
+      document.querySelectorAll('#contentTabs .tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('#contentTabs .tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          renderInputFields(this.dataset.mode);
+        });
+      });
+
+      // ---- Style change listeners ----
+      document.getElementById('dotStyle').addEventListener('change', updateQR);
+      document.getElementById('cornerStyle').addEventListener('change', updateQR);
+      document.getElementById('color1').addEventListener('input', function() { document.getElementById('color1Hex').textContent = this.value; updateQR(); });
+      document.getElementById('color2').addEventListener('input', function() { document.getElementById('color2Hex').textContent = this.value; updateQR(); });
+      document.getElementById('bgColor').addEventListener('input', updateQR);
+      document.getElementById('transparentBg').addEventListener('change', updateQR);
+      document.getElementById('margin').addEventListener('input', function() { document.getElementById('marginVal').textContent = this.value; updateQR(); });
+      document.getElementById('ecLevel').addEventListener('change', updateQR);
+
+      // Logo upload
+      document.getElementById('logoUpload').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => { 
+          currentLogoData = ev.target.result;
+          if (qrCode) qrCode.update({ image: currentLogoData }); 
+          toast('Logo added'); 
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // ---- Theme Toggle ----
+      const html = document.documentElement;
+      const themeToggle = document.getElementById('themeToggle');
+      
+      // Check for saved theme or system preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+      html.setAttribute('data-theme', initialTheme);
+
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const current = html.getAttribute('data-theme');
+          const next = current === 'light' ? 'dark' : 'light';
+          html.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+          toast(`Switched to ${next} mode`);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
